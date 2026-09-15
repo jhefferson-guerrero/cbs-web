@@ -1,0 +1,75 @@
+@import "tailwindcss";
+@import "lenis/dist/lenis.css";
+
+@theme {
+  --font-display: "IBM Plex Sans", system-ui, sans-serif;
+  --font-sans: "IBM Plex Sans", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+
+  /* Brand navy — sampled from the CBS wordmark. Structural color: text, nav, dark surfaces. */
+  --color-navy-50: #eef2fb;
+  --color-navy-100: #dce4f5;
+  --color-navy-200: #b7c6e9;
+  --color-navy-300: #8fa7dc;
+  --color-navy-400: #5a78be;
+  --color-navy-500: #33529e;
+  --color-navy-600: #28489a;
+  --color-navy-700: #1e3a73;
+  --color-navy-800: #172d59;
+  --color-navy-900: #101f3f;
+  --color-navy-950: #0a1530;
+
+  /* Brand cyan — sampled from the water droplet mark. The single interactive accent. */
+  --color-cyan-50: #eaf8fd;
+  --color-cyan-100: #d2f0fa;
+  --color-cyan-200: #a6e1f5;
+  --color-cyan-300: #72cdec;
+  --color-cyan-400: #3bb4df;
+  --color-cyan-500: #0ea0d4;
+  --color-cyan-600: #0b92ce;
+  --color-cyan-700: #0a76a8;
+  --color-cyan-800: #0b5e85;
+  --color-cyan-900: #0d4d6c;
+
+  /* Brand red — sampled from the logo's vertical bar. Reserved for the logo mark only, never a UI accent. */
+  --color-brand-red: #e2081f;
+
+  --shadow-nav: 0 12px 30px -18px rgba(10, 21, 48, 0.35);
+  --shadow-card: 0 24px 48px -20px rgba(10, 21, 48, 0.28);
+}
+
+@layer base {
+  body {
+    @apply bg-white text-navy-900 antialiased;
+    font-family: var(--font-sans);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+  }
+
+  html {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(16, 31, 63, 0.18) transparent;
+  }
+
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: rgba(16, 31, 63, 0.18);
+    border-radius: 999px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: var(--color-cyan-600);
+  }
+}
