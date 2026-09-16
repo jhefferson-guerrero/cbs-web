@@ -3,6 +3,7 @@ import { AnimatePresence, motion, useReducedMotion } from 'motion/react'
 import { useLenis } from 'lenis/react'
 import { ArrowUpRightIcon } from '@phosphor-icons/react'
 import logoCbs from '@/assets/images/logo-cbs.webp'
+import logoMobileCbs from '@/assets/images/logo-mobile-cbs.webp'
 import { navLinks } from '@/lib/nav-links'
 import { Button } from '@/components/ui/Button'
 import { cn } from '@/lib/utils'
@@ -37,30 +38,54 @@ export function Navbar() {
   const isSolid = isScrolled || isMenuOpen
 
   return (
-    <header
+    <motion.header
+      initial={reduceMotion ? false : { opacity: 0, y: -12 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
       className={cn(
         'fixed inset-x-0 top-0 z-50 transition-colors duration-300',
         isSolid ? 'bg-white shadow-nav' : 'bg-transparent',
       )}
     >
       <nav className="mx-auto flex h-18 max-w-[1400px] items-center justify-between px-6 lg:px-10">
-        <a href="#top" className="relative block h-8 w-[127px] shrink-0 md:h-9 md:w-[143px]" aria-label="CBS - Inicio">
-          <img
-            src={logoCbs}
-            alt="CBS - Construtora Baiana de Saneamento"
-            className={cn(
-              'absolute inset-0 h-full w-auto transition-opacity duration-300',
-              isSolid ? 'opacity-100' : 'opacity-0',
-            )}
-          />
-          <img
-            src={logoCbs}
-            aria-hidden="true"
-            className={cn(
-              'absolute inset-0 h-full w-auto brightness-0 invert transition-opacity duration-300',
-              isSolid ? 'opacity-0' : 'opacity-100',
-            )}
-          />
+        <a href="#top" className="relative block shrink-0" aria-label="CBS - Inicio">
+          <span className="grid lg:hidden">
+            <img
+              src={logoMobileCbs}
+              alt="CBS - Construtora Baiana de Saneamento"
+              className={cn(
+                '[grid-area:1/1] h-9 w-auto transition-opacity duration-300',
+                isSolid ? 'opacity-100' : 'opacity-0',
+              )}
+            />
+            <img
+              src={logoMobileCbs}
+              aria-hidden="true"
+              className={cn(
+                '[grid-area:1/1] h-9 w-auto brightness-0 invert transition-opacity duration-300',
+                isSolid ? 'opacity-0' : 'opacity-100',
+              )}
+            />
+          </span>
+
+          <span className="hidden lg:grid">
+            <img
+              src={logoCbs}
+              alt="CBS - Construtora Baiana de Saneamento"
+              className={cn(
+                '[grid-area:1/1] h-10 w-auto transition-opacity duration-300',
+                isSolid ? 'opacity-100' : 'opacity-0',
+              )}
+            />
+            <img
+              src={logoCbs}
+              aria-hidden="true"
+              className={cn(
+                '[grid-area:1/1] h-10 w-auto brightness-0 invert transition-opacity duration-300',
+                isSolid ? 'opacity-0' : 'opacity-100',
+              )}
+            />
+          </span>
         </a>
 
         <div
@@ -75,7 +100,7 @@ export function Navbar() {
               onFocus={() => setHoveredHref(link.href)}
               onBlur={() => setHoveredHref(null)}
               className={cn(
-                'relative rounded-md px-4 py-2 text-sm font-semibold outline-none transition-colors focus-visible:ring-2 focus-visible:ring-cyan-400',
+                'relative rounded-lg px-4 py-2 text-base font-semibold outline-none transition-colors focus-visible:ring-2 focus-visible:ring-cyan-400',
                 isSolid ? 'text-navy-800 hover:text-navy-950' : 'text-white hover:text-white',
               )}
             >
@@ -83,8 +108,8 @@ export function Navbar() {
                 <motion.span
                   layoutId="nav-hover-pill"
                   className={cn(
-                    'absolute inset-0 -z-10 rounded-md',
-                    isSolid ? 'bg-cyan-50' : 'bg-white/10',
+                    'absolute inset-0 -z-10 rounded-lg',
+                    isSolid ? 'bg-navy-50' : 'bg-white/10',
                   )}
                   transition={
                     reduceMotion
@@ -166,6 +191,6 @@ export function Navbar() {
           </motion.div>
         )}
       </AnimatePresence>
-    </header>
+    </motion.header>
   )
 }
