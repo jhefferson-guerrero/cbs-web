@@ -12,6 +12,9 @@ dist
 dist-ssr
 *.local
 
+# Design mockup scratch files (Claude Design canvas drafts, not app code)
+.design-scratch/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

@@ -21,26 +21,20 @@ const fillClasses: Record<ButtonVariant, string | null> = {
   'outline-dark': 'bg-navy-50',
 }
 
-const iconChipClasses: Record<ButtonVariant, string> = {
-  solid: 'bg-white/15 group-hover:bg-white/25',
-  'outline-light': 'bg-white/10 group-hover:bg-white/20',
-  'outline-dark': 'bg-navy-100 group-hover:bg-navy-200',
-}
-
 export function Button({ variant = 'solid', icon, className, children, ...props }: ButtonProps) {
   const fill = fillClasses[variant]
 
   return (
     <a
       className={cn(
-        'group relative inline-flex items-center justify-center gap-2.5 whitespace-nowrap rounded-md px-6 py-3 text-sm font-semibold transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] active:translate-y-0 active:scale-[0.98]',
+        'group relative inline-flex items-center justify-center gap-2.5 whitespace-nowrap rounded-lg px-6 py-[11px] text-base font-semibold transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] active:translate-y-0 active:scale-[0.98]',
         variantClasses[variant],
         className,
       )}
       {...props}
     >
       {fill && (
-        <span aria-hidden="true" className="absolute inset-0 -z-10 overflow-hidden rounded-md">
+        <span aria-hidden="true" className="absolute inset-0 -z-10 overflow-hidden rounded-lg">
           <span
             className={cn(
               'absolute inset-0 origin-left scale-x-0 transition-transform duration-300 ease-out group-hover:scale-x-100',
@@ -53,12 +47,7 @@ export function Button({ variant = 'solid', icon, className, children, ...props 
       {children}
 
       {icon && (
-        <span
-          className={cn(
-            'inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-full transition-all duration-300 group-hover:translate-x-0.5',
-            iconChipClasses[variant],
-          )}
-        >
+        <span className="inline-flex shrink-0 items-center justify-center transition-transform duration-300 group-hover:translate-x-0.5">
           {icon}
         </span>
       )}
