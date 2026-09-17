@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { AnimatePresence, animate, motion, useMotionValue, useReducedMotion } from 'motion/react'
+import { animate, motion, useMotionValue, useReducedMotion } from 'motion/react'
 import logoMobileCbs from '@/assets/images/logo-mobile-cbs.webp'
 
 const HERO_IMAGE = '/hero-planta.webp'
@@ -19,8 +19,7 @@ function wait(ms: number) {
   return new Promise<void>((resolve) => setTimeout(resolve, ms))
 }
 
-export function Preloader({ onDone }: { onDone: () => void }) {
-  const [isDone, setIsDone] = useState(false)
+export function Preloader({ onReady }: { onReady: () => void }) {
   const [displayCount, setDisplayCount] = useState(0)
   const reduceMotion = useReducedMotion()
   const count = useMotionValue(0)
@@ -43,70 +42,87 @@ export function Preloader({ onDone }: { onDone: () => void }) {
     Promise.race([Promise.all([assetsReady, minTimer]), maxTimer]).then(() => {
       if (cancelled) return
 
-      const finish = () => {
-        setIsDone(true)
-        setTimeout(onDone, reduceMotion ? 200 : 650)
-      }
-
       if (reduceMotion) {
         count.set(100)
-        finish()
+        onReady()
       } else {
-        animate(count, 100, { duration: 0.35, ease: 'easeOut', onComplete: finish })
+        animate(count, 100, { duration: 0.35, ease: 'easeOut', onComplete: onReady })
       }
     })
 
     return () => {
       cancelled = true
     }
-  }, [count, onDone, reduceMotion])
+  }, [count, onReady, reduceMotion])
 
   return (
-    <AnimatePresence>
-      {!isDone && (
+    <motion.div
+      role="status"
+      aria-live="polite"
+      aria-label="Cargando sitio"
+      exit={{ opacity: 0, transition: { duration: reduceMotion ? 0.2 : 0.5, ease: [0.16, 1, 0.3, 1] } }}
+      className="fixed inset-0 z-[100] flex flex-col items-center justify-center gap-12 bg-navy-950"
+    >
+      <motion.div
+        initial={reduceMotion ? false : { opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={reduceMotion ? undefined : { opacity: 0 }}
+        transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+        className="relative flex h-36 w-52 items-center justify-center sm:h-40 sm:w-60"
+      >
         <motion.div
-          role="status"
-          aria-live="polite"
-          aria-label="Cargando sitio"
-          exit={{ opacity: 0, transition: { duration: reduceMotion ? 0.2 : 0.5, ease: [0.16, 1, 0.3, 1] } }}
-          className="fixed inset-0 z-[100] flex flex-col items-center justify-center gap-10 bg-navy-950"
+          aria-hidden="true"
+          className="absolute inset-0"
+          animate={reduceMotion ? undefined : { opacity: [1, 0.45, 1] }}
+          transition={{ duration: 2.2, delay: 0.7, repeat: Infinity, ease: 'easeInOut' }}
         >
-          <motion.div
-            initial={reduceMotion ? false : { scale: 0.94, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            exit={reduceMotion ? undefined : { scale: 1.15, opacity: 0 }}
-            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-            className="relative flex h-36 w-36 items-center justify-center sm:h-44 sm:w-44"
-          >
-            <motion.div
-              aria-hidden="true"
-              className="absolute inset-0"
-              animate={reduceMotion ? undefined : { opacity: [0.45, 1, 0.45] }}
-              transition={{ duration: 2.2, repeat: Infinity, ease: 'easeInOut' }}
-            >
-              <span className="absolute -left-px -top-px h-9 w-9 border-l-2 border-t-2 border-cyan-500" />
-              <span className="absolute -right-px -top-px h-9 w-9 border-r-2 border-t-2 border-cyan-500" />
-              <span className="absolute -bottom-px -left-px h-9 w-9 border-b-2 border-l-2 border-cyan-500" />
-              <span className="absolute -bottom-px -right-px h-9 w-9 border-b-2 border-r-2 border-cyan-500" />
-            </motion.div>
+          <span className="absolute -left-px -top-px h-10 w-10 border-l-2 border-t-2 border-cyan-500 sm:h-11 sm:w-11" />
+          <span className="absolute -right-px -top-px h-10 w-10 border-r-2 border-t-2 border-cyan-500 sm:h-11 sm:w-11" />
+          <span className="absolute -bottom-px -left-px h-10 w-10 border-b-2 border-l-2 border-cyan-500 sm:h-11 sm:w-11" />
+          <span className="absolute -bottom-px -right-px h-10 w-10 border-b-2 border-r-2 border-cyan-500 sm:h-11 sm:w-11" />
+        </motion.div>
 
-            <img src={logoMobileCbs} alt="" aria-hidden="true" className="h-16 w-auto brightness-0 invert sm:h-20" />
+        <div className="relative inline-block">
+          <motion.div
+            className="brightness-0 invert"
+            initial={reduceMotion ? false : { clipPath: 'inset(0 100% 0 0)' }}
+            animate={{ clipPath: 'inset(0 0% 0 0)' }}
+            transition={{ duration: 0.6, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
+          >
+            <img
+              src={logoMobileCbs}
+              alt=""
+              aria-hidden="true"
+              width={652}
+              height={296}
+              className="h-20 w-auto sm:h-24"
+            />
           </motion.div>
 
-          <div aria-hidden="true" className="flex flex-col items-center gap-3">
-            <div className="flex items-center gap-3 font-mono text-sm font-semibold uppercase tracking-[0.3em] text-navy-300">
-              <span>Cargando</span>
-              <span className="text-cyan-400 tabular-nums">{displayCount}%</span>
-            </div>
-            <div className="h-0.5 w-44 overflow-hidden bg-navy-800 sm:w-52">
-              <div
-                className="h-full bg-cyan-500 transition-[width] duration-150 ease-out"
-                style={{ width: `${displayCount}%` }}
-              />
-            </div>
-          </div>
-        </motion.div>
-      )}
-    </AnimatePresence>
+          {!reduceMotion && (
+            <motion.span
+              aria-hidden="true"
+              className="absolute inset-y-0 w-px bg-cyan-400 shadow-[0_0_10px_2px_rgba(14,160,212,0.85)]"
+              initial={{ left: '0%', opacity: 1 }}
+              animate={{ left: '100%', opacity: [1, 1, 0] }}
+              transition={{ duration: 0.6, delay: 0.25, times: [0, 0.85, 1], ease: [0.16, 1, 0.3, 1] }}
+            />
+          )}
+        </div>
+      </motion.div>
+
+      <div aria-hidden="true" className="flex flex-col items-center gap-3">
+        <div className="flex items-center gap-3 font-mono text-sm font-semibold uppercase tracking-[0.3em] text-white">
+          <span>Cargando</span>
+          <span className="text-cyan-400 tabular-nums">{displayCount}%</span>
+        </div>
+        <div className="h-0.5 w-44 overflow-hidden bg-white/15 sm:w-52">
+          <div
+            className="h-full bg-cyan-500 transition-[width] duration-150 ease-out"
+            style={{ width: `${displayCount}%` }}
+          />
+        </div>
+      </div>
+    </motion.div>
   )
 }

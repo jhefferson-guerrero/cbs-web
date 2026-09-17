@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { AnimatePresence } from 'motion/react'
 import { Navbar } from '@/components/layout/Navbar'
 import { Preloader } from '@/components/layout/Preloader'
 import { SmoothScroll } from '@/components/layout/SmoothScroll'
@@ -17,7 +18,7 @@ function App() {
 
   return (
     <>
-      {isLoading && <Preloader onDone={() => setIsLoading(false)} />}
+      <AnimatePresence>{isLoading && <Preloader onReady={() => setIsLoading(false)} />}</AnimatePresence>
       <SmoothScroll>
         <Navbar ready={!isLoading} />
         <main>
