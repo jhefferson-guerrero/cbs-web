@@ -8,7 +8,7 @@ import { navLinks } from '@/lib/nav-links'
 import { Button } from '@/components/ui/Button'
 import { cn } from '@/lib/utils'
 
-export function Navbar() {
+export function Navbar({ ready }: { ready: boolean }) {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [hoveredHref, setHoveredHref] = useState<string | null>(null)
@@ -40,7 +40,7 @@ export function Navbar() {
   return (
     <motion.header
       initial={reduceMotion ? false : { opacity: 0, y: -12 }}
-      animate={{ opacity: 1, y: 0 }}
+      animate={reduceMotion || ready ? { opacity: 1, y: 0 } : { opacity: 0, y: -12 }}
       transition={{ duration: 0.5, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
       className={cn(
         'fixed inset-x-0 top-0 z-50 transition-colors duration-300',
