@@ -41,18 +41,20 @@ export function Navbar({ ready }: { ready: boolean }) {
     <motion.header
       initial={reduceMotion ? false : { opacity: 0, y: -12 }}
       animate={reduceMotion || ready ? { opacity: 1, y: 0 } : { opacity: 0, y: -12 }}
-      transition={{ duration: 0.5, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+      transition={{ duration: 0.7, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
       className={cn(
         'fixed inset-x-0 top-0 z-50 transition-colors duration-300',
         isSolid ? 'bg-white shadow-nav' : 'bg-transparent',
       )}
     >
-      <nav className="mx-auto flex h-18 max-w-[1400px] items-center justify-between px-6 lg:px-10">
+      <nav className="mx-auto flex h-18 max-w-[1400px] items-center justify-between px-6 lg:px-10 xl:px-16">
         <a href="#top" className="relative block shrink-0" aria-label="CBS - Inicio">
           <span className="grid lg:hidden">
             <img
               src={logoMobileCbs}
               alt="CBS - Construtora Baiana de Saneamento"
+              width={652}
+              height={296}
               className={cn(
                 '[grid-area:1/1] h-9 w-auto transition-opacity duration-300',
                 isSolid ? 'opacity-100' : 'opacity-0',
@@ -61,6 +63,8 @@ export function Navbar({ ready }: { ready: boolean }) {
             <img
               src={logoMobileCbs}
               aria-hidden="true"
+              width={652}
+              height={296}
               className={cn(
                 '[grid-area:1/1] h-9 w-auto brightness-0 invert transition-opacity duration-300',
                 isSolid ? 'opacity-0' : 'opacity-100',
@@ -72,6 +76,8 @@ export function Navbar({ ready }: { ready: boolean }) {
             <img
               src={logoCbs}
               alt="CBS - Construtora Baiana de Saneamento"
+              width={1080}
+              height={211}
               className={cn(
                 '[grid-area:1/1] h-10 w-auto transition-opacity duration-300',
                 isSolid ? 'opacity-100' : 'opacity-0',
@@ -80,6 +86,8 @@ export function Navbar({ ready }: { ready: boolean }) {
             <img
               src={logoCbs}
               aria-hidden="true"
+              width={1080}
+              height={211}
               className={cn(
                 '[grid-area:1/1] h-10 w-auto brightness-0 invert transition-opacity duration-300',
                 isSolid ? 'opacity-0' : 'opacity-100',

@@ -1,7 +1,7 @@
 import { useEffect, type ReactNode } from 'react'
 import { ReactLenis, useLenis } from 'lenis/react'
 
-const NAV_OFFSET = 88
+const NAV_OFFSET = 72
 
 function AnchorScrollBridge() {
   const lenis = useLenis()

@@ -49,7 +49,14 @@ export function Nosotros() {
 
           <div className="mt-10 max-w-xl">
             {timeline.map((item, i) => (
-              <div key={item.year} className="flex gap-4">
+              <motion.div
+                key={item.year}
+                initial={reduceMotion ? false : { opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.8 }}
+                transition={{ duration: 0.5, delay: i * 0.15, ease: [0.16, 1, 0.3, 1] }}
+                className="flex gap-4"
+              >
                 <div className="flex flex-col items-center">
                   <span
                     className={
@@ -66,7 +73,7 @@ export function Nosotros() {
                     {item.label}
                   </p>
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
         </motion.div>
@@ -95,7 +102,7 @@ export function Nosotros() {
       </div>
 
       <div className="border-t border-navy-100">
-        <div className="mx-auto w-full max-w-[1400px] px-6 py-16 lg:px-10 lg:py-20">
+        <div className="mx-auto w-full max-w-[1400px] px-6 py-16 lg:px-10 lg:py-20 xl:px-16">
           <motion.div {...reveal(0.2)}>
             <p className="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-cyan-700">
               Calidad certificada
