@@ -1,8 +1,9 @@
 import { useEffect, useRef } from 'react'
 import { animate, motion, useInView, useMotionValue, useReducedMotion, useTransform } from 'motion/react'
 import { ArrowRightIcon } from '@phosphor-icons/react'
-import heroPlanta from '@/assets/images/hero-planta.webp'
 import { Button } from '@/components/ui/Button'
+
+const heroPlanta = '/hero-planta.webp'
 
 const withCommas = (n: number) => n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
 
@@ -38,12 +39,15 @@ function Counter({ to, format }: { to: number; format: (n: number) => string }) 
   return <motion.span ref={ref}>{display}</motion.span>
 }
 
-export function Hero() {
+export function Hero({ ready }: { ready: boolean }) {
   const reduceMotion = useReducedMotion()
+  const play = reduceMotion || ready
 
   const fadeUp = (delay: number) => ({
     initial: reduceMotion ? false : { opacity: 0, y: 18, filter: 'blur(4px)' },
-    animate: { opacity: 1, y: 0, filter: 'blur(0px)' },
+    animate: play
+      ? { opacity: 1, y: 0, filter: 'blur(0px)' }
+      : { opacity: 0, y: 18, filter: 'blur(4px)' },
     transition: { duration: 1, delay, ease: [0.16, 1, 0.3, 1] as const },
   })
 
@@ -54,20 +58,24 @@ export function Hero() {
           src={heroPlanta}
           alt=""
           aria-hidden="true"
+          width={2574}
+          height={1664}
+          fetchPriority="high"
+          decoding="async"
           initial={reduceMotion ? false : { scale: 1.06 }}
-          animate={{ scale: 1 }}
+          animate={{ scale: play ? 1 : 1.06 }}
           transition={{ duration: 2.4, ease: [0.16, 1, 0.3, 1] }}
           className="absolute inset-0 h-full w-full object-cover object-[72%_50%] saturate-[1.4] contrast-[1.12] brightness-[1.12]"
         />
         <motion.div
           initial={reduceMotion ? false : { opacity: 0 }}
-          animate={{ opacity: 1 }}
+          animate={{ opacity: play ? 1 : 0 }}
           transition={{ duration: 1.2, delay: 0.2, ease: 'easeOut' }}
           className="absolute inset-0 bg-gradient-to-r from-navy-950/96 via-navy-950/65 to-navy-950/10"
         />
         <motion.div
           initial={reduceMotion ? false : { opacity: 0 }}
-          animate={{ opacity: 1 }}
+          animate={{ opacity: play ? 1 : 0 }}
           transition={{ duration: 1.2, delay: 0.2, ease: 'easeOut' }}
           className="absolute inset-0 bg-gradient-to-t from-navy-950/80 via-transparent to-navy-950/10"
         />
@@ -80,7 +88,11 @@ export function Hero() {
                 <motion.span
                   key={line}
                   initial={reduceMotion ? false : { opacity: 0, y: 22, filter: 'blur(6px)' }}
-                  animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+                  animate={
+                    play
+                      ? { opacity: 1, y: 0, filter: 'blur(0px)' }
+                      : { opacity: 0, y: 22, filter: 'blur(6px)' }
+                  }
                   transition={{ duration: 0.9, delay: i * 0.16, ease: [0.16, 1, 0.3, 1] }}
                   className="block"
                 >

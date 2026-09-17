@@ -75,6 +75,10 @@ export function Nosotros() {
           <img
             src={nosotrosPhoto}
             alt="Obra de infraestructura ejecutada por CBS"
+            width={1372}
+            height={768}
+            loading="lazy"
+            decoding="async"
             className="absolute inset-0 h-full w-full object-cover object-[65%_65%]"
           />
           <div className="absolute inset-0 bg-gradient-to-br from-cyan-700/70 via-navy-900/30 to-navy-950/70" />
