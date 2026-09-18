@@ -43,16 +43,12 @@ export function Navbar({ ready }: { ready: boolean }) {
       animate={reduceMotion || ready ? { opacity: 1, y: 0 } : { opacity: 0, y: -12 }}
       transition={{ duration: 0.7, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
       className={cn(
-        'fixed inset-x-0 top-0 z-50 transition-colors duration-300',
+        'fixed inset-x-0 top-0 z-50 transition-colors',
+        isMenuOpen ? 'duration-0' : 'duration-300',
         isSolid ? 'bg-white shadow-nav' : 'bg-transparent',
       )}
     >
-      <nav
-        className={cn(
-          'mx-auto flex max-w-[1400px] items-center justify-between px-6 transition-[height] duration-300 lg:px-10 xl:max-w-[1600px] xl:px-12 2xl:max-w-[1850px] 2xl:px-16',
-          isSolid ? 'h-16 lg:h-20 2xl:h-24' : 'h-18 lg:h-24 2xl:h-28',
-        )}
-      >
+      <nav className="mx-auto flex h-16 max-w-[1400px] items-center justify-between px-6 lg:h-20 lg:px-10 xl:max-w-[1600px] xl:px-12 2xl:h-24 2xl:max-w-[1850px] 2xl:px-16">
         <a href="#top" className="relative block shrink-0" aria-label="CBS - Inicio">
           <span className="grid lg:hidden">
             <img
@@ -179,27 +175,50 @@ export function Navbar({ ready }: { ready: boolean }) {
             animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
-            className="min-h-[calc(100dvh-4rem)] overflow-hidden border-t border-navy-100 bg-white lg:hidden"
+            className="relative min-h-[calc(100dvh-4rem)] overflow-hidden border-t border-navy-100 bg-white lg:hidden"
           >
-            <div className="flex flex-col gap-1 px-6 py-6">
-              {navLinks.map((link) => (
-                <a
-                  key={link.href}
-                  href={link.href}
-                  onClick={() => setIsMenuOpen(false)}
-                  className="rounded-lg px-3 py-3 text-base font-semibold text-navy-800 hover:bg-navy-50"
-                >
-                  {link.label}
-                </a>
-              ))}
-              <Button
-                href="#contacto"
-                variant="solid"
-                className="mt-3 justify-center"
-                icon={<ArrowUpRightIcon size={18} weight="regular" />}
+            <span
+              aria-hidden="true"
+              className="pointer-events-none absolute bottom-6 right-6 h-7 w-7 border-b-2 border-r-2 border-cyan-500/40"
+            />
+
+            <div className="flex flex-col px-6 py-8">
+              <nav className="flex flex-col divide-y divide-navy-100">
+                {navLinks.map((link, i) => (
+                  <motion.a
+                    key={link.href}
+                    href={link.href}
+                    onClick={() => setIsMenuOpen(false)}
+                    initial={reduceMotion ? false : { opacity: 0, x: -12 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.35, delay: 0.1 + i * 0.06, ease: [0.16, 1, 0.3, 1] }}
+                    className="group flex items-center gap-4 py-4 text-lg font-semibold text-navy-800"
+                  >
+                    <span className="font-mono text-xs text-cyan-500">{String(i + 1).padStart(2, '0')}</span>
+                    <span className="flex-1 transition-colors group-active:text-navy-950">{link.label}</span>
+                    <ArrowUpRightIcon
+                      size={16}
+                      weight="regular"
+                      className="text-navy-300 transition-colors group-active:text-cyan-600"
+                    />
+                  </motion.a>
+                ))}
+              </nav>
+
+              <motion.div
+                initial={reduceMotion ? false : { opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: 0.1 + navLinks.length * 0.06, ease: [0.16, 1, 0.3, 1] }}
               >
-                Contáctanos
-              </Button>
+                <Button
+                  href="#contacto"
+                  variant="solid"
+                  className="mt-6 w-full justify-center"
+                  icon={<ArrowUpRightIcon size={18} weight="regular" />}
+                >
+                  Contáctanos
+                </Button>
+              </motion.div>
             </div>
           </motion.div>
         )}

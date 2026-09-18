@@ -68,8 +68,9 @@ export function Hero({ ready }: { ready: boolean }) {
           initial={reduceMotion ? false : { scale: 1.06 }}
           animate={{ scale: play ? 1 : 1.06 }}
           transition={{ duration: 1.6, ease: [0.16, 1, 0.3, 1] }}
-          className="absolute inset-0 h-full w-full object-cover object-[90%_50%] saturate-[1.1] contrast-[1.02] brightness-[1.03] sm:object-[72%_50%]"
+          className="absolute inset-0 h-full w-full object-cover object-[90%_50%] saturate-[1.02] contrast-[1.02] brightness-[0.92] sm:object-[72%_50%]"
         />
+        <div className="absolute inset-0 bg-navy-950/20" />
         <motion.div
           initial={reduceMotion ? false : { opacity: 0 }}
           animate={{ opacity: play ? 1 : 0 }}
@@ -85,10 +86,10 @@ export function Hero({ ready }: { ready: boolean }) {
         <div className="absolute inset-x-0 top-0 h-36 bg-gradient-to-b from-navy-950/55 to-transparent" />
       </div>
 
-      <section id="top" className="relative flex min-h-[100dvh] items-center pt-18 lg:pt-24 2xl:pt-28">
+      <section id="top" className="relative flex min-h-[100dvh] items-center pt-16 lg:pt-20 2xl:pt-24">
         <div className="relative z-10 mx-auto w-full max-w-[1400px] px-6 lg:px-10 xl:px-16 2xl:max-w-[1700px] 2xl:px-14">
           <div className="max-w-2xl lg:max-w-3xl 2xl:max-w-4xl">
-            <h1 className="break-words text-4xl font-semibold leading-[1.1] text-white sm:text-5xl md:text-6xl lg:text-7xl 2xl:text-8xl [@media(max-height:600px)]:lg:text-5xl [@media(max-height:600px)]:xl:text-6xl">
+            <h1 className="break-words text-[2.5rem] font-semibold leading-[1.1] text-white sm:text-5xl md:text-6xl lg:text-7xl 2xl:text-8xl [@media(max-height:600px)]:lg:text-5xl [@media(max-height:600px)]:xl:text-6xl">
               {headline.map((line, i) => (
                 <motion.span
                   key={line}
@@ -108,7 +109,7 @@ export function Hero({ ready }: { ready: boolean }) {
 
             <motion.p
               {...fadeUp(0.72)}
-              className="mt-6 max-w-[54ch] text-base leading-relaxed text-white/85 md:text-lg 2xl:max-w-[62ch] 2xl:text-xl [@media(max-height:600px)]:mt-4"
+              className="mt-8 max-w-[54ch] text-base leading-relaxed text-white/85 sm:mt-6 md:text-lg 2xl:max-w-[62ch] 2xl:text-xl [@media(max-height:600px)]:mt-4"
             >
               Ejecutamos proyectos de infraestructura de mediana y gran escala: abastecimiento
               de agua, represas, alcantarillado sanitario, drenaje urbano, defensa ribereña e
@@ -117,7 +118,7 @@ export function Hero({ ready }: { ready: boolean }) {
 
             <motion.div
               {...fadeUp(0.92)}
-              className="mt-9 flex flex-wrap items-center gap-4 [@media(max-height:600px)]:mt-6"
+              className="mt-10 flex flex-wrap items-center gap-4 sm:mt-9 [@media(max-height:600px)]:mt-6"
             >
               <Button href="#proyectos" variant="solid" icon={<ArrowRightIcon size={18} weight="regular" />}>
                 Ver proyectos
