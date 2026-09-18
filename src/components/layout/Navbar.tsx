@@ -47,7 +47,12 @@ export function Navbar({ ready }: { ready: boolean }) {
         isSolid ? 'bg-white shadow-nav' : 'bg-transparent',
       )}
     >
-      <nav className="mx-auto flex h-18 max-w-[1400px] items-center justify-between px-6 lg:px-10 xl:px-16">
+      <nav
+        className={cn(
+          'mx-auto flex max-w-[1400px] items-center justify-between px-6 transition-[height] duration-300 lg:px-10 xl:max-w-[1600px] xl:px-12 2xl:max-w-[1850px] 2xl:px-16',
+          isSolid ? 'h-16 lg:h-20 2xl:h-24' : 'h-18 lg:h-24 2xl:h-28',
+        )}
+      >
         <a href="#top" className="relative block shrink-0" aria-label="CBS - Inicio">
           <span className="grid lg:hidden">
             <img
@@ -79,7 +84,7 @@ export function Navbar({ ready }: { ready: boolean }) {
               width={1080}
               height={211}
               className={cn(
-                '[grid-area:1/1] h-10 w-auto transition-opacity duration-300',
+                '[grid-area:1/1] h-10 w-auto transition-opacity duration-300 2xl:h-12',
                 isSolid ? 'opacity-100' : 'opacity-0',
               )}
             />
@@ -89,7 +94,7 @@ export function Navbar({ ready }: { ready: boolean }) {
               width={1080}
               height={211}
               className={cn(
-                '[grid-area:1/1] h-10 w-auto brightness-0 invert transition-opacity duration-300',
+                '[grid-area:1/1] h-10 w-auto brightness-0 invert transition-opacity duration-300 2xl:h-12',
                 isSolid ? 'opacity-0' : 'opacity-100',
               )}
             />
@@ -108,7 +113,7 @@ export function Navbar({ ready }: { ready: boolean }) {
               onFocus={() => setHoveredHref(link.href)}
               onBlur={() => setHoveredHref(null)}
               className={cn(
-                'relative rounded-lg px-4 py-2 text-base font-semibold outline-none transition-colors focus-visible:ring-2 focus-visible:ring-cyan-400',
+                'relative rounded-lg px-4 py-2 text-base font-semibold outline-none transition-colors focus-visible:ring-2 focus-visible:ring-cyan-400 2xl:px-5 2xl:text-lg',
                 isSolid ? 'text-navy-800 hover:text-navy-950' : 'text-white hover:text-white',
               )}
             >
@@ -174,7 +179,7 @@ export function Navbar({ ready }: { ready: boolean }) {
             animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
-            className="min-h-[calc(100dvh-4.5rem)] overflow-hidden border-t border-navy-100 bg-white lg:hidden"
+            className="min-h-[calc(100dvh-4rem)] overflow-hidden border-t border-navy-100 bg-white lg:hidden"
           >
             <div className="flex flex-col gap-1 px-6 py-6">
               {navLinks.map((link) => (
