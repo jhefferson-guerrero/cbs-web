@@ -63,6 +63,18 @@ export function Preloader({ onReady }: { onReady: () => void }) {
       exit={{ opacity: 0, transition: { duration: reduceMotion ? 0.2 : 0.5, ease: [0.16, 1, 0.3, 1] } }}
       className="fixed inset-0 z-[100] flex flex-col items-center justify-center gap-12 bg-navy-950"
     >
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0"
+        style={{
+          backgroundImage:
+            'linear-gradient(rgba(148, 177, 216, 0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(148, 177, 216, 0.08) 1px, transparent 1px)',
+          backgroundSize: '48px 48px',
+          maskImage: 'radial-gradient(circle at center, black 0%, transparent 72%)',
+          WebkitMaskImage: 'radial-gradient(circle at center, black 0%, transparent 72%)',
+        }}
+      />
+
       <motion.div
         initial={reduceMotion ? false : { opacity: 0 }}
         animate={{ opacity: 1 }}
