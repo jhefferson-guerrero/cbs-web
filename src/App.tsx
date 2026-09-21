@@ -5,6 +5,7 @@ import { Preloader } from '@/components/layout/Preloader'
 import { SmoothScroll } from '@/components/layout/SmoothScroll'
 import { Hero } from '@/components/sections/Hero'
 import { Nosotros } from '@/components/sections/Nosotros'
+import { Experiencia } from '@/components/sections/Experiencia'
 
 function App() {
   const [isLoading, setIsLoading] = useState(true)
@@ -24,6 +25,7 @@ function App() {
         <main>
           <Hero ready={!isLoading} />
           <Nosotros />
+          <Experiencia />
         </main>
       </SmoothScroll>
     </>

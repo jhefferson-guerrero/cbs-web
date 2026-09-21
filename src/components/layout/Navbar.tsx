@@ -39,6 +39,7 @@ export function Navbar({ ready }: { ready: boolean }) {
 
   return (
     <motion.header
+      id="site-header"
       initial={reduceMotion ? false : { opacity: 0, y: -12 }}
       animate={reduceMotion || ready ? { opacity: 1, y: 0 } : { opacity: 0, y: -12 }}
       transition={{ duration: 0.7, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}

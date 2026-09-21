@@ -1,8 +1,6 @@
 import { useEffect, type ReactNode } from 'react'
 import { ReactLenis, useLenis } from 'lenis/react'
 
-const NAV_OFFSET = 72
-
 function AnchorScrollBridge() {
   const lenis = useLenis()
 
@@ -20,8 +18,9 @@ function AnchorScrollBridge() {
       if (!target) return
 
       event.preventDefault()
+      const navHeight = document.getElementById('site-header')?.offsetHeight ?? 0
       lenis.scrollTo(target as HTMLElement, {
-        offset: -NAV_OFFSET,
+        offset: -navHeight,
         duration: 1.4,
         easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       })
