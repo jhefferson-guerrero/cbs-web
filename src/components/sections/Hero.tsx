@@ -1,11 +1,10 @@
-import { useEffect, useRef } from 'react'
-import { animate, motion, useInView, useMotionValue, useReducedMotion, useTransform } from 'motion/react'
+import { motion, useReducedMotion } from 'motion/react'
 import { ArrowRightIcon } from '@phosphor-icons/react'
 import { Button } from '@/components/ui/Button'
+import { Counter } from '@/components/ui/Counter'
+import { withCommas } from '@/lib/utils'
 
 const heroPlanta = '/hero-planta.webp'
-
-const withCommas = (n: number) => n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
 
 const headline = ['Infraestructura,', 'agua y', 'saneamiento']
 
@@ -20,26 +19,6 @@ const stats: Stat[] = [
   { index: '02', label: 'Portafolio ejecutado', kind: 'count', to: 1300, format: (n) => `S/ ${withCommas(n)} M+` },
   { index: '03', label: 'Experiencia en el sector', kind: 'count', to: yearsSince2009, format: (n) => `+${n} años` },
 ]
-
-function Counter({ to, format }: { to: number; format: (n: number) => string }) {
-  const reduceMotion = useReducedMotion()
-  const ref = useRef<HTMLSpanElement>(null)
-  const isInView = useInView(ref, { once: true, margin: '-80px' })
-  const count = useMotionValue(0)
-  const display = useTransform(count, (v) => format(Math.round(v)))
-
-  useEffect(() => {
-    if (!isInView) return
-    if (reduceMotion) {
-      count.set(to)
-      return
-    }
-    const controls = animate(count, to, { duration: 2.2, ease: [0.16, 1, 0.3, 1], delay: 0.4 })
-    return () => controls.stop()
-  }, [isInView, to, reduceMotion, count])
-
-  return <motion.span ref={ref}>{display}</motion.span>
-}
 
 export function Hero({ ready }: { ready: boolean }) {
   const reduceMotion = useReducedMotion()
