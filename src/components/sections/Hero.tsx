@@ -56,7 +56,7 @@ export function Hero({ ready }: { ready: boolean }) {
   return (
     <>
       {/* Fixed backdrop: stays pinned behind every section; content scrolls up and covers it */}
-      <div className="fixed inset-x-0 top-0 -z-10 h-svh bg-navy-950">
+      <div className="fixed inset-x-0 top-0 -z-10 h-lvh bg-navy-950">
         <motion.img
           src={heroPlanta}
           alt=""
@@ -86,7 +86,7 @@ export function Hero({ ready }: { ready: boolean }) {
         <div className="absolute inset-x-0 top-0 h-36 bg-gradient-to-b from-navy-950/55 to-transparent" />
       </div>
 
-      <section id="top" className="relative flex min-h-[100dvh] items-center pt-16 lg:pt-20 2xl:pt-24">
+      <section id="top" className="relative flex min-h-[100svh] items-center pt-16 lg:pt-20 2xl:pt-24">
         <div className="relative z-10 mx-auto w-full max-w-[1400px] px-6 lg:px-10 xl:px-16 2xl:max-w-[1700px] 2xl:px-14">
           <div className="max-w-2xl lg:max-w-3xl 2xl:max-w-4xl">
             <h1 className="break-words text-[2.5rem] font-semibold leading-[1.1] text-white sm:text-5xl md:text-6xl lg:text-7xl 2xl:text-[5.75rem] [@media(max-height:600px)]:lg:text-5xl [@media(max-height:600px)]:xl:text-6xl">
