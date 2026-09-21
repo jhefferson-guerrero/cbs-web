@@ -56,7 +56,7 @@ export function Hero({ ready }: { ready: boolean }) {
   return (
     <>
       {/* Fixed backdrop: stays pinned behind every section; content scrolls up and covers it */}
-      <div className="fixed inset-0 -z-10 bg-navy-950">
+      <div className="fixed inset-x-0 top-0 -z-10 h-svh bg-navy-950">
         <motion.img
           src={heroPlanta}
           alt=""
@@ -89,7 +89,7 @@ export function Hero({ ready }: { ready: boolean }) {
       <section id="top" className="relative flex min-h-[100dvh] items-center pt-16 lg:pt-20 2xl:pt-24">
         <div className="relative z-10 mx-auto w-full max-w-[1400px] px-6 lg:px-10 xl:px-16 2xl:max-w-[1700px] 2xl:px-14">
           <div className="max-w-2xl lg:max-w-3xl 2xl:max-w-4xl">
-            <h1 className="break-words text-[2.5rem] font-semibold leading-[1.1] text-white sm:text-5xl md:text-6xl lg:text-7xl 2xl:text-8xl [@media(max-height:600px)]:lg:text-5xl [@media(max-height:600px)]:xl:text-6xl">
+            <h1 className="break-words text-[2.5rem] font-semibold leading-[1.1] text-white sm:text-5xl md:text-6xl lg:text-7xl 2xl:text-[5.75rem] [@media(max-height:600px)]:lg:text-5xl [@media(max-height:600px)]:xl:text-6xl">
               {headline.map((line, i) => (
                 <motion.span
                   key={line}
@@ -109,7 +109,7 @@ export function Hero({ ready }: { ready: boolean }) {
 
             <motion.p
               {...fadeUp(0.72)}
-              className="mt-8 max-w-[54ch] text-base leading-relaxed text-white/85 sm:mt-6 md:text-lg 2xl:max-w-[62ch] 2xl:text-xl [@media(max-height:600px)]:mt-4"
+              className="mt-8 max-w-[54ch] text-base leading-relaxed text-white/85 sm:mt-6 md:text-lg 2xl:max-w-[46ch] 2xl:text-xl [@media(max-height:600px)]:mt-4"
             >
               Ejecutamos proyectos de infraestructura de mediana y gran escala: abastecimiento
               de agua, represas, alcantarillado sanitario, drenaje urbano, defensa ribereña e
