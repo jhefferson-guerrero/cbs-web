@@ -18,7 +18,7 @@ function AnchorScrollBridge() {
       if (!target) return
 
       event.preventDefault()
-      const navHeight = document.getElementById('site-header')?.offsetHeight ?? 0
+      const navHeight = document.getElementById('site-navbar')?.offsetHeight ?? 0
       lenis.scrollTo(target as HTMLElement, {
         offset: -navHeight,
         duration: 1.4,
