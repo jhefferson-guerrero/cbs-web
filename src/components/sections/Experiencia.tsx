@@ -44,7 +44,7 @@ export function Experiencia() {
       <motion.div
         viewport={{ once: true, amount: 0.3 }}
         onViewportEnter={() => setInView(true)}
-        className="relative z-10 mx-auto flex w-full max-w-[1400px] flex-col justify-between gap-12 px-6 py-14 lg:px-10 lg:py-16 xl:px-16 2xl:max-w-[1700px] 2xl:min-h-[720px] 2xl:px-14 2xl:py-24"
+        className="relative z-10 mx-auto flex w-full max-w-[1400px] flex-col justify-between gap-12 px-6 py-14 lg:px-10 lg:py-20 xl:px-16 2xl:max-w-[1700px] 2xl:min-h-[760px] 2xl:px-14 2xl:py-28"
       >
         <div>
           <motion.p
