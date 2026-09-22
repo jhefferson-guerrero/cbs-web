@@ -38,8 +38,8 @@ export function Experiencia() {
       <div className="absolute inset-0 bg-gradient-to-t from-navy-950 via-navy-950/55 to-navy-950/10" />
       <div className="absolute inset-0 bg-gradient-to-r from-navy-950/70 via-transparent to-navy-950/40" />
 
-      <span aria-hidden="true" className="absolute right-9 top-9 h-7 w-7 border-r-2 border-t-2 border-white/70" />
-      <span aria-hidden="true" className="absolute bottom-9 left-9 h-7 w-7 border-b-2 border-l-2 border-white/70" />
+      <span aria-hidden="true" className="absolute right-6 top-6 h-6 w-6 border-r-2 border-t-2 border-white/70 lg:right-9 lg:top-9 lg:h-7 lg:w-7" />
+      <span aria-hidden="true" className="absolute bottom-6 left-6 h-6 w-6 border-b-2 border-l-2 border-white/70 lg:bottom-9 lg:left-9 lg:h-7 lg:w-7" />
 
       <motion.div
         viewport={{ once: true, amount: 0.3 }}
