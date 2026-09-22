@@ -38,7 +38,7 @@ export function Nosotros() {
             initial={reduceMotion ? false : { clipPath: 'inset(0% 100% 0% 0%)', opacity: 0.6 }}
             animate={showText ? { clipPath: 'inset(0% 0% 0% 0%)', opacity: 1 } : undefined}
             transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-            className="h-full bg-navy-950 px-6 py-20 sm:px-10 sm:py-24 lg:px-16 lg:py-28 2xl:px-24 2xl:py-32"
+            className="h-full bg-navy-950 px-6 py-20 sm:px-10 sm:py-24 lg:px-16 lg:py-24 2xl:px-24 2xl:py-32"
           >
             <p className="font-mono text-sm font-semibold uppercase tracking-[0.2em] text-cyan-400 2xl:text-base">Sobre CBS</p>
             <h2 className="mt-4 text-3xl font-bold leading-tight text-white md:text-4xl 2xl:text-5xl">Nosotros</h2>
