@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import { motion, useReducedMotion } from 'motion/react'
-import { ShieldCheckIcon } from '@phosphor-icons/react'
 import nosotrosPhoto from '@/assets/images/nosotros.jpg'
 
 const timeline = [
@@ -165,19 +164,17 @@ export function Nosotros() {
               {certifications.map(({ code, label }, i) => (
                 <motion.div
                   key={code}
-                  initial={reduceMotion ? false : { opacity: 0, scale: 0.5, y: -14, rotate: -8 }}
-                  whileInView={{ opacity: 1, scale: 1, y: 0, rotate: 0 }}
+                  initial={reduceMotion ? false : { opacity: 0, y: 16 }}
+                  whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, amount: 0.6 }}
-                  transition={{ type: 'spring', stiffness: 300, damping: 15, delay: i * 0.08 }}
-                  className="flex flex-col items-center gap-4 text-center sm:px-6 sm:first:pl-0 sm:last:pr-0 2xl:px-8"
+                  transition={{ duration: 0.6, delay: i * 0.08, ease: [0.16, 1, 0.3, 1] }}
+                  className="flex flex-col gap-2 sm:px-6 sm:first:pl-0 sm:last:pr-0 2xl:px-8"
                 >
-                  <span className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-cyan-50 2xl:h-14 2xl:w-14">
-                    <ShieldCheckIcon size={26} weight="regular" className="text-cyan-600" />
+                  <span className="font-mono text-xs font-semibold tracking-[0.2em] text-cyan-600 2xl:text-sm">
+                    {String(i + 1).padStart(2, '0')}
                   </span>
-                  <div>
-                    <dt className="font-mono text-lg font-semibold text-navy-900 md:text-xl 2xl:text-2xl">{code}</dt>
-                    <dd className="mt-1 text-sm leading-snug text-navy-600 2xl:text-base">{label}</dd>
-                  </div>
+                  <dt className="font-mono text-xl font-bold text-navy-900 md:text-2xl 2xl:text-3xl">{code}</dt>
+                  <dd className="text-sm leading-snug text-navy-600 2xl:text-base">{label}</dd>
                 </motion.div>
               ))}
             </dl>
