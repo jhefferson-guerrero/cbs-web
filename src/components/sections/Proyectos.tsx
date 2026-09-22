@@ -21,7 +21,7 @@ export function Proyectos() {
           <h2 className="mt-4 text-3xl font-bold leading-tight text-navy-900 md:text-4xl 2xl:text-5xl">
             Presencia real en el territorio peruano
           </h2>
-          <p className="mt-5 text-[15.5px] leading-relaxed text-navy-700 2xl:text-lg">
+          <p className="mt-5 text-[15.5px] leading-relaxed text-slate-700 2xl:text-lg">
             Obras de agua y saneamiento en ejecución en distintas regiones del país, desarrolladas
             junto a los organismos públicos y financiadas por entidades multilaterales.
           </p>
