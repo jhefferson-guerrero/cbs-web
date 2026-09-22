@@ -155,7 +155,7 @@ export function Nosotros() {
             <h3 className="mt-3 text-2xl font-bold leading-tight text-navy-900 md:text-3xl 2xl:text-4xl">
               Certificaciones internacionales
             </h3>
-            <p className="mt-4 max-w-2xl text-[15.5px] leading-relaxed text-navy-700 2xl:text-lg">
+            <p className="mt-4 max-w-2xl text-[15.5px] leading-relaxed text-slate-700 2xl:text-lg">
               Cumplimos con los estándares internacionales de gestión, calidad y seguridad que exige la
               industria, respaldando cada proyecto que ejecutamos.
             </p>
@@ -174,7 +174,7 @@ export function Nosotros() {
                     {String(i + 1).padStart(2, '0')}
                   </span>
                   <dt className="font-mono text-xl font-bold text-navy-900 md:text-2xl 2xl:text-3xl">{code}</dt>
-                  <dd className="text-sm leading-snug text-navy-700 2xl:text-base">{label}</dd>
+                  <dd className="text-sm leading-snug text-slate-700 2xl:text-base">{label}</dd>
                 </motion.div>
               ))}
             </dl>
