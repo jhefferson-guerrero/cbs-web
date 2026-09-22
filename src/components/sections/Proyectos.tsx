@@ -1,4 +1,5 @@
 import { motion, useReducedMotion } from 'motion/react'
+import { Link } from 'react-router-dom'
 import { ArrowUpRightIcon, MapPinIcon } from '@phosphor-icons/react'
 import { projects } from '@/lib/projects'
 
@@ -37,6 +38,11 @@ export function Proyectos() {
               transition={{ type: 'spring', stiffness: 70, damping: 18, delay: i * 0.12 }}
               className="group relative bg-navy-950"
             >
+              <Link
+                to={`/proyectos/${project.slug}`}
+                aria-label={project.title}
+                className="absolute inset-0 z-30 outline-none focus-visible:ring-2 focus-visible:ring-cyan-400"
+              />
               <span aria-hidden="true" className="absolute -left-px -top-px z-10 h-7 w-7 border-l-2 border-t-2 border-cyan-500 transition-opacity duration-300 group-hover:opacity-60" />
               <span aria-hidden="true" className="absolute -right-px -top-px z-10 h-7 w-7 border-r-2 border-t-2 border-cyan-500 transition-opacity duration-300 group-hover:opacity-60" />
               <span aria-hidden="true" className="absolute -bottom-px -left-px z-10 h-7 w-7 border-b-2 border-l-2 border-cyan-500 transition-opacity duration-300 group-hover:opacity-60" />

@@ -1,12 +1,11 @@
 import { useEffect, useState } from 'react'
 import { AnimatePresence } from 'motion/react'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { Navbar } from '@/components/layout/Navbar'
 import { Preloader } from '@/components/layout/Preloader'
 import { SmoothScroll } from '@/components/layout/SmoothScroll'
-import { Hero } from '@/components/sections/Hero'
-import { Nosotros } from '@/components/sections/Nosotros'
-import { Experiencia } from '@/components/sections/Experiencia'
-import { Proyectos } from '@/components/sections/Proyectos'
+import { Home } from '@/pages/Home'
+import { ProjectDetail } from '@/pages/ProjectDetail'
 
 function App() {
   const [isLoading, setIsLoading] = useState(true)
@@ -19,18 +18,16 @@ function App() {
   }, [isLoading])
 
   return (
-    <>
+    <BrowserRouter>
       <AnimatePresence>{isLoading && <Preloader onReady={() => setIsLoading(false)} />}</AnimatePresence>
       <SmoothScroll>
         <Navbar ready={!isLoading} />
-        <main>
-          <Hero ready={!isLoading} />
-          <Nosotros />
-          <Experiencia />
-          <Proyectos />
-        </main>
+        <Routes>
+          <Route path="/" element={<Home ready={!isLoading} />} />
+          <Route path="/proyectos/:slug" element={<ProjectDetail />} />
+        </Routes>
       </SmoothScroll>
-    </>
+    </BrowserRouter>
   )
 }
 
