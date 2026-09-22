@@ -6,6 +6,7 @@ import { SmoothScroll } from '@/components/layout/SmoothScroll'
 import { Hero } from '@/components/sections/Hero'
 import { Nosotros } from '@/components/sections/Nosotros'
 import { Experiencia } from '@/components/sections/Experiencia'
+import { Proyectos } from '@/components/sections/Proyectos'
 
 function App() {
   const [isLoading, setIsLoading] = useState(true)
@@ -26,6 +27,7 @@ function App() {
           <Hero ready={!isLoading} />
           <Nosotros />
           <Experiencia />
+          <Proyectos />
         </main>
       </SmoothScroll>
     </>
