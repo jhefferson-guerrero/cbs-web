@@ -79,8 +79,9 @@ export function Experiencia() {
             <motion.div
               key={stat.label}
               initial={reduceMotion ? false : { opacity: 0, y: 16 }}
-              animate={show ? { opacity: 1, y: 0 } : undefined}
-              transition={{ duration: 0.6, delay: 0.25 + i * 0.1, ease: [0.16, 1, 0.3, 1] }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.6 }}
+              transition={{ duration: 0.6, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
               className="flex flex-col gap-2 sm:px-6 sm:first:pl-0 sm:last:pr-0"
             >
               <span className="font-mono text-xs font-semibold tracking-[0.2em] text-cyan-400 2xl:text-sm">
