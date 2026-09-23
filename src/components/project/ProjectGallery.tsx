@@ -56,6 +56,7 @@ export function ProjectGallery({ images }: { images: GalleryImage[] }) {
                 key={active}
                 src={images[active].src}
                 alt={images[active].alt}
+                loading="lazy"
                 onLoad={() => markLoaded(active)}
                 initial={reduceMotion ? false : { opacity: 0 }}
                 animate={{ opacity: isLoaded(active) ? 1 : 0 }}
@@ -92,7 +93,7 @@ export function ProjectGallery({ images }: { images: GalleryImage[] }) {
                     {String(i + 1).padStart(2, '0')}
                   </span>
                   <span className="h-16 w-24 shrink-0 overflow-hidden">
-                    <img src={img.src} alt="" className="h-full w-full object-cover" />
+                    <img src={img.src} alt="" loading="lazy" className="h-full w-full object-cover" />
                   </span>
                 </button>
               ))}
@@ -114,7 +115,7 @@ export function ProjectGallery({ images }: { images: GalleryImage[] }) {
                       : 'opacity-60 hover:scale-[1.04] hover:opacity-100'
                   }`}
                 >
-                  <img src={img.src} alt="" className="h-full w-full object-cover" />
+                  <img src={img.src} alt="" loading="lazy" className="h-full w-full object-cover" />
                 </button>
               ))}
             </div>
