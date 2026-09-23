@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { animate, motion, useMotionValue, useReducedMotion } from 'motion/react'
+import { useLocation } from 'react-router-dom'
 import logoMobileCbs from '@/assets/images/logo-mobile-cbs.webp'
 
 const HERO_IMAGE = '/hero-planta.webp'
@@ -23,6 +24,7 @@ export function Preloader({ onReady }: { onReady: () => void }) {
   const [displayCount, setDisplayCount] = useState(0)
   const reduceMotion = useReducedMotion()
   const count = useMotionValue(0)
+  const isHome = useLocation().pathname === '/'
 
   useEffect(() => {
     return count.on('change', (v) => setDisplayCount(Math.round(v)))
@@ -33,7 +35,10 @@ export function Preloader({ onReady }: { onReady: () => void }) {
 
     const minTimer = wait(MIN_DISPLAY_MS)
     const maxTimer = wait(MAX_DISPLAY_MS)
-    const assetsReady = Promise.all([preloadImage(HERO_IMAGE), document.fonts?.ready ?? Promise.resolve()])
+    // The Hero background only renders on the home route; don't spend bandwidth
+    // fetching it while the preloader gates a project detail page.
+    const heroReady = isHome ? preloadImage(HERO_IMAGE) : Promise.resolve()
+    const assetsReady = Promise.all([heroReady, document.fonts?.ready ?? Promise.resolve()])
 
     if (!reduceMotion) {
       animate(count, 92, { duration: 1.6, ease: [0.16, 1, 0.3, 1] })

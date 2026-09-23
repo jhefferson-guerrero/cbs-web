@@ -25,6 +25,7 @@ export function PartnerLogosSection() {
               <img
                 src={partner.logo}
                 alt={partner.name}
+                loading="lazy"
                 className={cn(
                   'w-auto object-contain grayscale opacity-60 transition-all duration-300 hover:opacity-100 hover:grayscale-0',
                   partner.large ? 'h-14 2xl:h-16' : 'h-12 2xl:h-14',
