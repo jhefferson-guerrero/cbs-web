@@ -11,7 +11,7 @@ export function PartnerLogosSection() {
           Aliados y financiamiento
         </p>
 
-        <div className="mt-8 grid grid-cols-2 gap-x-8 gap-y-8 sm:grid-cols-5">
+        <div className="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-5">
           {partnerLogos.map((partner, i) => (
             <motion.div
               key={partner.name}
@@ -19,12 +19,12 @@ export function PartnerLogosSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.5 }}
               transition={{ duration: 0.5, delay: i * 0.05, ease: [0.16, 1, 0.3, 1] }}
-              className="flex items-center justify-center"
+              className="flex items-center justify-center border border-navy-100 p-6 2xl:p-8"
             >
               <img
                 src={partner.logo}
                 alt={partner.name}
-                className="h-8 w-auto object-contain grayscale opacity-60 transition-all duration-300 hover:opacity-100 hover:grayscale-0 2xl:h-10"
+                className="h-12 w-auto object-contain grayscale opacity-60 transition-all duration-300 hover:opacity-100 hover:grayscale-0 2xl:h-14"
               />
             </motion.div>
           ))}
