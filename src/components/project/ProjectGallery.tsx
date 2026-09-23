@@ -36,7 +36,7 @@ export function ProjectGallery({ images }: { images: GalleryImage[] }) {
           Galería del proyecto
         </p>
 
-        <div className="mx-auto mt-8 grid max-w-5xl gap-4 sm:grid-cols-[2fr_1fr]">
+        <div className="mx-auto mt-8 grid max-w-5xl gap-4 sm:grid-cols-[1fr_auto]">
           <button
             type="button"
             onClick={() => setLightboxOpen(true)}
@@ -60,7 +60,7 @@ export function ProjectGallery({ images }: { images: GalleryImage[] }) {
           </button>
 
           {images.length > 1 && (
-            <div className="hidden gap-2 overflow-y-auto sm:flex sm:flex-col sm:pr-1 sm:h-[420px] 2xl:h-[480px]">
+            <div className="scrollbar-thin hidden gap-2 overflow-y-auto sm:flex sm:flex-col sm:pr-3 sm:h-[420px] 2xl:h-[480px]">
               {images.map((img, i) => (
                 <button
                   key={img.src}
