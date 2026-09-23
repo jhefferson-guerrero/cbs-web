@@ -36,7 +36,7 @@ export function ProjectGallery({ images }: { images: GalleryImage[] }) {
           Galería del proyecto
         </p>
 
-        <div className="mx-auto max-w-3xl">
+        <div className="mx-auto max-w-4xl">
           <button
             type="button"
             onClick={() => setLightboxOpen(true)}
@@ -53,7 +53,7 @@ export function ProjectGallery({ images }: { images: GalleryImage[] }) {
           </button>
 
           {images.length > 1 && (
-            <div className="mt-4 flex gap-3 overflow-x-auto pb-1">
+            <div className="mt-4 flex flex-wrap gap-3">
               {images.map((img, i) => (
                 <button
                   key={img.src}
@@ -61,7 +61,7 @@ export function ProjectGallery({ images }: { images: GalleryImage[] }) {
                   onClick={() => setActive(i)}
                   aria-label={`Ver foto ${i + 1}`}
                   aria-current={i === active}
-                  className={`h-14 w-20 shrink-0 overflow-hidden border-2 transition-colors sm:h-16 sm:w-24 ${
+                  className={`h-16 w-24 shrink-0 overflow-hidden border-2 transition-colors sm:h-20 sm:w-28 ${
                     i === active ? 'border-cyan-500' : 'border-transparent opacity-70 hover:opacity-100'
                   }`}
                 >
