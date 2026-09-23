@@ -49,19 +49,19 @@ export function ProjectDetail() {
             to="/"
             className="inline-flex items-center gap-2 text-sm font-semibold text-navy-200 transition-colors hover:text-white"
           >
-            <ArrowLeftIcon size={16} weight="regular" />
+            <ArrowLeftIcon size={20} weight="regular" className="shrink-0" />
             Volver al inicio
           </Link>
           {nextProject && (
             <Link
               to={`/proyectos/${nextProject.slug}`}
-              className="group inline-flex items-center gap-2 text-lg font-bold text-white transition-colors hover:text-cyan-300"
+              className="group inline-flex items-center gap-3 text-lg font-bold text-white transition-colors hover:text-cyan-300"
             >
               Siguiente proyecto: {nextProject.title}
               <ArrowUpRightIcon
-                size={18}
+                size={24}
                 weight="regular"
-                className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                className="shrink-0 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
               />
             </Link>
           )}
