@@ -9,8 +9,11 @@ export function ProjectGallery({ images }: { images: GalleryImage[] }) {
   const lenis = useLenis()
   const [active, setActive] = useState(0)
   const [lightboxOpen, setLightboxOpen] = useState(false)
+  const [loaded, setLoaded] = useState<Record<number, boolean>>({})
 
   const goTo = (i: number) => setActive((i + images.length) % images.length)
+  const markLoaded = (i: number) => setLoaded((prev) => (prev[i] ? prev : { ...prev, [i]: true }))
+  const isLoaded = (i: number) => reduceMotion || loaded[i]
 
   useEffect(() => {
     if (!lightboxOpen) return
@@ -47,15 +50,16 @@ export function ProjectGallery({ images }: { images: GalleryImage[] }) {
             aria-label="Ver foto en pantalla completa"
             className="group relative block aspect-video w-full overflow-hidden bg-navy-950 sm:aspect-auto sm:h-[480px] 2xl:h-[560px]"
           >
-            <AnimatePresence mode="wait">
+            <AnimatePresence>
               <motion.img
                 key={active}
                 src={images[active].src}
                 alt={images[active].alt}
+                onLoad={() => markLoaded(active)}
                 initial={reduceMotion ? false : { opacity: 0 }}
-                animate={{ opacity: 1 }}
+                animate={{ opacity: isLoaded(active) ? 1 : 0 }}
                 exit={reduceMotion ? undefined : { opacity: 0 }}
-                transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
                 className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.02]"
               />
             </AnimatePresence>
@@ -171,11 +175,12 @@ export function ProjectGallery({ images }: { images: GalleryImage[] }) {
                 <motion.img
                   key={active}
                   initial={reduceMotion ? false : { opacity: 0 }}
-                  animate={{ opacity: 1 }}
+                  animate={{ opacity: isLoaded(active) ? 1 : 0 }}
                   exit={reduceMotion ? undefined : { opacity: 0 }}
                   transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
                   src={images[active].src}
                   alt={images[active].alt}
+                  onLoad={() => markLoaded(active)}
                   className="absolute inset-0 h-full w-full object-contain"
                 />
               </AnimatePresence>
