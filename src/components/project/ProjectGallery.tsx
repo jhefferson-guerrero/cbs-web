@@ -163,19 +163,23 @@ export function ProjectGallery({ images }: { images: GalleryImage[] }) {
               </>
             )}
 
-            <AnimatePresence mode="wait">
-              <motion.img
-                key={active}
-                initial={reduceMotion ? false : { opacity: 0, scale: 0.98 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={reduceMotion ? undefined : { opacity: 0, scale: 0.98 }}
-                transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-                src={images[active].src}
-                alt={images[active].alt}
-                onClick={(event) => event.stopPropagation()}
-                className="max-h-[85vh] max-w-full object-contain"
-              />
-            </AnimatePresence>
+            <div
+              className="relative h-[85vh] w-full max-w-5xl"
+              onClick={(event) => event.stopPropagation()}
+            >
+              <AnimatePresence>
+                <motion.img
+                  key={active}
+                  initial={reduceMotion ? false : { opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={reduceMotion ? undefined : { opacity: 0 }}
+                  transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                  src={images[active].src}
+                  alt={images[active].alt}
+                  className="absolute inset-0 h-full w-full object-contain"
+                />
+              </AnimatePresence>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
