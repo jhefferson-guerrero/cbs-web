@@ -93,12 +93,12 @@ export const projects: Project[] = [
   },
 ]
 
-export const partnerLogos: { name: string; logo: string }[] = [
+export const partnerLogos: { name: string; logo: string; large?: boolean }[] = [
   { name: 'Ministerio de Vivienda, Construcción y Saneamiento', logo: aliado01 },
   { name: 'Grupo Banco Mundial', logo: aliado02 },
   { name: 'OTASS', logo: aliado03 },
   { name: 'SUNASS', logo: aliado04 },
-  { name: 'EPS Sedacusco', logo: aliado05 },
+  { name: 'EPS Sedacusco', logo: aliado05, large: true },
   { name: 'Agua Barranca', logo: aliado06 },
   { name: 'Sedapar', logo: aliado07 },
   { name: 'Agua Huaral', logo: aliado08 },
