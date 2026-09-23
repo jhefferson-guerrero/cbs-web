@@ -11,7 +11,7 @@ export function PartnerLogosSection() {
           Aliados y financiamiento
         </p>
 
-        <div className="mt-8 grid grid-cols-2 gap-x-8 gap-y-8 sm:grid-cols-4 lg:grid-cols-8">
+        <div className="mt-8 grid grid-cols-2 gap-x-8 gap-y-8 sm:grid-cols-5">
           {partnerLogos.map((partner, i) => (
             <motion.div
               key={partner.name}
