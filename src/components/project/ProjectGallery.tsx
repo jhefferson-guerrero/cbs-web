@@ -43,11 +43,18 @@ export function ProjectGallery({ images }: { images: GalleryImage[] }) {
             aria-label="Ver foto en pantalla completa"
             className="group relative mt-8 block aspect-video w-full overflow-hidden bg-navy-950"
           >
-            <img
-              src={images[active].src}
-              alt={images[active].alt}
-              className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.02]"
-            />
+            <AnimatePresence mode="wait">
+              <motion.img
+                key={active}
+                src={images[active].src}
+                alt={images[active].alt}
+                initial={reduceMotion ? false : { opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={reduceMotion ? undefined : { opacity: 0 }}
+                transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.02]"
+              />
+            </AnimatePresence>
             <span aria-hidden="true" className="absolute -right-px -top-px h-7 w-7 border-r-2 border-t-2 border-cyan-500" />
             <span aria-hidden="true" className="absolute -bottom-px -left-px h-7 w-7 border-b-2 border-l-2 border-cyan-500" />
           </button>
@@ -61,8 +68,10 @@ export function ProjectGallery({ images }: { images: GalleryImage[] }) {
                   onClick={() => setActive(i)}
                   aria-label={`Ver foto ${i + 1}`}
                   aria-current={i === active}
-                  className={`h-16 w-24 shrink-0 overflow-hidden border-2 transition-colors sm:h-20 sm:w-28 ${
-                    i === active ? 'border-cyan-500' : 'border-transparent opacity-70 hover:opacity-100'
+                  className={`h-16 w-24 shrink-0 overflow-hidden transition-all duration-300 sm:h-20 sm:w-28 ${
+                    i === active
+                      ? 'ring-2 ring-cyan-500 ring-offset-2 ring-offset-navy-50'
+                      : 'opacity-60 hover:scale-[1.04] hover:opacity-100'
                   }`}
                 >
                   <img src={img.src} alt="" className="h-full w-full object-cover" />
