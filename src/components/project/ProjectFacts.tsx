@@ -39,7 +39,7 @@ export function ProjectFacts({ project }: { project: Project }) {
                 <img
                   src={fact.logo}
                   alt={`Logo de ${fact.value}`}
-                  className="h-14 w-auto shrink-0 object-contain 2xl:h-16"
+                  className="h-16 w-auto shrink-0 object-contain 2xl:h-20"
                 />
               )}
             </motion.div>
