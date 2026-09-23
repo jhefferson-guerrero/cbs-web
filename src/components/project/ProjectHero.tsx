@@ -7,7 +7,7 @@ export function ProjectHero({ project }: { project: Project }) {
   const reduceMotion = useReducedMotion()
 
   return (
-    <section className="relative isolate overflow-hidden bg-navy-950">
+    <section className="relative isolate flex overflow-hidden bg-navy-950 lg:min-h-[560px] 2xl:min-h-[680px]">
       <motion.img
         src={project.cover}
         alt=""

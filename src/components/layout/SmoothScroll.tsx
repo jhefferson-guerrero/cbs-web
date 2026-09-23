@@ -2,7 +2,7 @@ import { useEffect, useRef, type ReactNode } from 'react'
 import { ReactLenis, useLenis } from 'lenis/react'
 import { useLocation, useNavigate } from 'react-router-dom'
 
-const scrollToHash = (lenis: ReturnType<typeof useLenis>, hash: string) => {
+const scrollToHash = (lenis: ReturnType<typeof useLenis>, hash: string, immediate = false) => {
   const target = document.getElementById(hash.slice(1))
   if (!target || !lenis) return
   // After a route change the document height changes drastically; Lenis's cached
@@ -10,6 +10,10 @@ const scrollToHash = (lenis: ReturnType<typeof useLenis>, hash: string) => {
   // clamps scrollTo short of the real target. Force a synchronous recalculation first.
   lenis.resize()
   const navHeight = document.getElementById('site-navbar')?.offsetHeight ?? 0
+  if (immediate) {
+    lenis.scrollTo(target, { offset: -navHeight, immediate: true })
+    return
+  }
   lenis.scrollTo(target, {
     offset: -navHeight,
     duration: 1.4,
@@ -53,12 +57,15 @@ function AnchorScrollBridge() {
   }, [lenis, navigate, location.pathname])
 
   // Handles both cross-page anchor navigation (Link to="/#nosotros" from a
-  // detail page) and scrolling back to top on a plain route change.
+  // detail page) and scrolling back to top on a plain route change. This only
+  // fires for navigations made through react-router (Link/navigate), i.e.
+  // arriving fresh on a page -- so the jump is instant, not animated: there's
+  // no "current" scroll position for a smooth scroll to give continuity from.
   useEffect(() => {
     if (!lenis) return
 
     if (location.hash) {
-      const raf = requestAnimationFrame(() => scrollToHash(lenis, location.hash))
+      const raf = requestAnimationFrame(() => scrollToHash(lenis, location.hash, true))
       prevPathname.current = location.pathname
       return () => cancelAnimationFrame(raf)
     }
