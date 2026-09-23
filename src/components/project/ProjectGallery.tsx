@@ -30,7 +30,7 @@ export function ProjectGallery({ images }: { images: GalleryImage[] }) {
   if (images.length === 0) return null
 
   return (
-    <section className="border-t border-navy-100 bg-navy-50">
+    <section className="border-t border-navy-100 bg-slate-50">
       <div className="mx-auto w-full max-w-[1400px] px-6 py-14 lg:px-10 lg:py-16 xl:px-16 2xl:max-w-[1700px] 2xl:px-14 2xl:py-20">
         <p className="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-cyan-700 2xl:text-sm">
           Galería del proyecto
@@ -41,7 +41,7 @@ export function ProjectGallery({ images }: { images: GalleryImage[] }) {
             type="button"
             onClick={() => setLightboxOpen(true)}
             aria-label="Ver foto en pantalla completa"
-            className="group relative block aspect-video w-full overflow-hidden bg-navy-950 sm:aspect-auto sm:h-[420px] 2xl:h-[480px]"
+            className="group relative block aspect-video w-full overflow-hidden bg-navy-950 sm:aspect-auto sm:h-[480px] 2xl:h-[560px]"
           >
             <AnimatePresence mode="wait">
               <motion.img
@@ -60,7 +60,7 @@ export function ProjectGallery({ images }: { images: GalleryImage[] }) {
           </button>
 
           {images.length > 1 && (
-            <div className="scrollbar-thin hidden gap-2 overflow-y-auto sm:flex sm:flex-col sm:pr-3 sm:h-[420px] 2xl:h-[480px]">
+            <div className="scrollbar-thin hidden gap-2 overflow-y-auto sm:flex sm:flex-col sm:pr-3 sm:h-[480px] 2xl:h-[560px]">
               {images.map((img, i) => (
                 <button
                   key={img.src}
@@ -94,7 +94,7 @@ export function ProjectGallery({ images }: { images: GalleryImage[] }) {
                   aria-current={i === active}
                   className={`h-16 w-24 shrink-0 overflow-hidden transition-all duration-300 ${
                     i === active
-                      ? 'ring-2 ring-cyan-500 ring-offset-2 ring-offset-navy-50'
+                      ? 'ring-2 ring-cyan-500 ring-offset-2 ring-offset-slate-50'
                       : 'opacity-60 hover:scale-[1.04] hover:opacity-100'
                   }`}
                 >
