@@ -39,7 +39,7 @@ export function ProjectGallery({ images }: { images: GalleryImage[] }) {
   return (
     <section className="border-t border-navy-100 bg-slate-50">
       <div className="mx-auto w-full max-w-[1400px] px-6 py-14 lg:px-10 lg:py-16 xl:px-16 2xl:max-w-[1700px] 2xl:px-14 2xl:py-20">
-        <div className="mx-auto max-w-5xl 2xl:max-w-6xl">
+        <div className="mx-auto max-w-5xl 2xl:max-w-[1450px]">
           <p className="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-cyan-700 2xl:text-sm">
             Galería del proyecto
           </p>
@@ -49,7 +49,7 @@ export function ProjectGallery({ images }: { images: GalleryImage[] }) {
             type="button"
             onClick={() => setLightboxOpen(true)}
             aria-label="Ver foto en pantalla completa"
-            className="group relative block aspect-video w-full overflow-hidden bg-navy-950 sm:aspect-auto sm:h-[480px] 2xl:h-[620px]"
+            className="group relative block aspect-video w-full overflow-hidden bg-navy-950 sm:aspect-auto sm:h-[480px] 2xl:h-[700px]"
           >
             <AnimatePresence>
               <motion.img
@@ -69,7 +69,7 @@ export function ProjectGallery({ images }: { images: GalleryImage[] }) {
           </button>
 
           {images.length > 1 && (
-            <div className="scrollbar-thin hidden gap-2 overflow-y-auto sm:flex sm:flex-col sm:pr-3 sm:h-[480px] 2xl:h-[620px]">
+            <div className="scrollbar-thin hidden gap-2 overflow-y-auto sm:flex sm:flex-col sm:pr-3 sm:h-[480px] 2xl:h-[700px]">
               {images.map((img, i) => (
                 <button
                   key={img.src}
