@@ -39,11 +39,12 @@ export function ProjectGallery({ images }: { images: GalleryImage[] }) {
   return (
     <section className="border-t border-navy-100 bg-slate-50">
       <div className="mx-auto w-full max-w-[1400px] px-6 py-14 lg:px-10 lg:py-16 xl:px-16 2xl:max-w-[1700px] 2xl:px-14 2xl:py-20">
-        <p className="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-cyan-700 2xl:text-sm">
-          Galería del proyecto
-        </p>
+        <div className="mx-auto max-w-5xl">
+          <p className="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-cyan-700 2xl:text-sm">
+            Galería del proyecto
+          </p>
 
-        <div className="mx-auto mt-8 grid max-w-5xl gap-4 sm:grid-cols-[1fr_auto]">
+          <div className="mt-8 grid gap-4 sm:grid-cols-[1fr_auto]">
           <button
             type="button"
             onClick={() => setLightboxOpen(true)}
@@ -118,6 +119,7 @@ export function ProjectGallery({ images }: { images: GalleryImage[] }) {
               ))}
             </div>
           )}
+          </div>
         </div>
       </div>
 
