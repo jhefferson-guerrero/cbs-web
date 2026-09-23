@@ -1,4 +1,5 @@
 import { motion, useReducedMotion } from 'motion/react'
+import { cn } from '@/lib/utils'
 import { partnerLogos } from '@/lib/projects'
 
 export function PartnerLogosSection() {
@@ -24,7 +25,10 @@ export function PartnerLogosSection() {
               <img
                 src={partner.logo}
                 alt={partner.name}
-                className="h-12 w-auto object-contain grayscale opacity-60 transition-all duration-300 hover:opacity-100 hover:grayscale-0 2xl:h-14"
+                className={cn(
+                  'w-auto object-contain grayscale opacity-60 transition-all duration-300 hover:opacity-100 hover:grayscale-0',
+                  partner.large ? 'h-14 2xl:h-16' : 'h-12 2xl:h-14',
+                )}
               />
             </motion.div>
           ))}
