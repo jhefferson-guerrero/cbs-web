@@ -36,39 +36,41 @@ export function ProjectGallery({ images }: { images: GalleryImage[] }) {
           Galería del proyecto
         </p>
 
-        <button
-          type="button"
-          onClick={() => setLightboxOpen(true)}
-          aria-label="Ver foto en pantalla completa"
-          className="group relative mt-8 block aspect-video w-full overflow-hidden bg-navy-950"
-        >
-          <img
-            src={images[active].src}
-            alt={images[active].alt}
-            className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.02]"
-          />
-          <span aria-hidden="true" className="absolute -right-px -top-px h-7 w-7 border-r-2 border-t-2 border-cyan-500" />
-          <span aria-hidden="true" className="absolute -bottom-px -left-px h-7 w-7 border-b-2 border-l-2 border-cyan-500" />
-        </button>
+        <div className="mx-auto max-w-3xl">
+          <button
+            type="button"
+            onClick={() => setLightboxOpen(true)}
+            aria-label="Ver foto en pantalla completa"
+            className="group relative mt-8 block aspect-video w-full overflow-hidden bg-navy-950"
+          >
+            <img
+              src={images[active].src}
+              alt={images[active].alt}
+              className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.02]"
+            />
+            <span aria-hidden="true" className="absolute -right-px -top-px h-7 w-7 border-r-2 border-t-2 border-cyan-500" />
+            <span aria-hidden="true" className="absolute -bottom-px -left-px h-7 w-7 border-b-2 border-l-2 border-cyan-500" />
+          </button>
 
-        {images.length > 1 && (
-          <div className="mt-4 flex gap-3 overflow-x-auto pb-1">
-            {images.map((img, i) => (
-              <button
-                key={img.src}
-                type="button"
-                onClick={() => setActive(i)}
-                aria-label={`Ver foto ${i + 1}`}
-                aria-current={i === active}
-                className={`h-16 w-24 shrink-0 overflow-hidden border-2 transition-colors sm:h-20 sm:w-28 ${
-                  i === active ? 'border-cyan-500' : 'border-transparent opacity-70 hover:opacity-100'
-                }`}
-              >
-                <img src={img.src} alt="" className="h-full w-full object-cover" />
-              </button>
-            ))}
-          </div>
-        )}
+          {images.length > 1 && (
+            <div className="mt-4 flex gap-3 overflow-x-auto pb-1">
+              {images.map((img, i) => (
+                <button
+                  key={img.src}
+                  type="button"
+                  onClick={() => setActive(i)}
+                  aria-label={`Ver foto ${i + 1}`}
+                  aria-current={i === active}
+                  className={`h-14 w-20 shrink-0 overflow-hidden border-2 transition-colors sm:h-16 sm:w-24 ${
+                    i === active ? 'border-cyan-500' : 'border-transparent opacity-70 hover:opacity-100'
+                  }`}
+                >
+                  <img src={img.src} alt="" className="h-full w-full object-cover" />
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
       </div>
 
       <AnimatePresence>
