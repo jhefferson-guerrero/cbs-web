@@ -41,7 +41,7 @@ export function ProjectGallery({ images }: { images: GalleryImage[] }) {
             type="button"
             onClick={() => setLightboxOpen(true)}
             aria-label="Ver foto en pantalla completa"
-            className="group relative block aspect-video w-full overflow-hidden bg-navy-950"
+            className="group relative block aspect-video w-full overflow-hidden bg-navy-950 sm:aspect-auto sm:h-[420px] 2xl:h-[480px]"
           >
             <AnimatePresence mode="wait">
               <motion.img
@@ -60,7 +60,7 @@ export function ProjectGallery({ images }: { images: GalleryImage[] }) {
           </button>
 
           {images.length > 1 && (
-            <div className="hidden gap-1 overflow-y-auto sm:flex sm:flex-col sm:pr-1">
+            <div className="hidden gap-2 overflow-y-auto sm:flex sm:flex-col sm:pr-1 sm:h-[420px] 2xl:h-[480px]">
               {images.map((img, i) => (
                 <button
                   key={img.src}
@@ -75,7 +75,7 @@ export function ProjectGallery({ images }: { images: GalleryImage[] }) {
                   <span className="shrink-0 font-mono text-xs font-semibold text-cyan-500">
                     {String(i + 1).padStart(2, '0')}
                   </span>
-                  <span className="h-14 w-20 shrink-0 overflow-hidden">
+                  <span className="h-16 w-24 shrink-0 overflow-hidden">
                     <img src={img.src} alt="" className="h-full w-full object-cover" />
                   </span>
                 </button>
