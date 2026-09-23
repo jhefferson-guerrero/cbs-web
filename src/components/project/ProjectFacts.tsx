@@ -26,7 +26,7 @@ export function ProjectFacts({ project }: { project: Project }) {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.5 }}
               transition={{ duration: 0.6, delay: i * 0.08, ease: [0.16, 1, 0.3, 1] }}
-              className="flex items-start justify-between gap-6 border-t border-navy-100 pt-6"
+              className="flex items-center justify-between gap-6 border-t border-navy-100 pt-6"
             >
               <div>
                 <dt className="font-mono text-xs font-semibold tracking-[0.2em] text-cyan-600 2xl:text-sm">
@@ -39,7 +39,7 @@ export function ProjectFacts({ project }: { project: Project }) {
                 <img
                   src={fact.logo}
                   alt={`Logo de ${fact.value}`}
-                  className="h-10 w-auto shrink-0 object-contain grayscale opacity-80 2xl:h-12"
+                  className="h-14 w-auto shrink-0 object-contain 2xl:h-16"
                 />
               )}
             </motion.div>
