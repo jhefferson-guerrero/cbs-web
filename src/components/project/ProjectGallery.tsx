@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react'
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react'
+import { useLenis } from 'lenis/react'
 import { ArrowLeftIcon, ArrowRightIcon, XIcon } from '@phosphor-icons/react'
 import type { GalleryImage } from '@/lib/projects'
 
 export function ProjectGallery({ images }: { images: GalleryImage[] }) {
   const reduceMotion = useReducedMotion()
+  const lenis = useLenis()
   const [active, setActive] = useState(0)
   const [lightboxOpen, setLightboxOpen] = useState(false)
 
@@ -21,11 +23,13 @@ export function ProjectGallery({ images }: { images: GalleryImage[] }) {
 
     window.addEventListener('keydown', onKey)
     document.documentElement.style.overflow = 'hidden'
+    lenis?.stop()
     return () => {
       window.removeEventListener('keydown', onKey)
       document.documentElement.style.overflow = ''
+      lenis?.start()
     }
-  }, [lightboxOpen, active, images.length])
+  }, [lightboxOpen, active, images.length, lenis])
 
   if (images.length === 0) return null
 
@@ -68,10 +72,17 @@ export function ProjectGallery({ images }: { images: GalleryImage[] }) {
                   onClick={() => setActive(i)}
                   aria-label={`Ver foto ${i + 1}`}
                   aria-current={i === active}
-                  className={`flex shrink-0 items-center gap-3 border-l-2 p-1.5 text-left transition-colors duration-200 ${
-                    i === active ? 'border-cyan-500 bg-white' : 'border-transparent hover:bg-white/70'
+                  className={`relative flex shrink-0 items-center gap-3 p-1.5 pl-3 text-left transition-colors duration-200 ${
+                    i === active ? 'bg-white' : 'hover:bg-white/70'
                   }`}
                 >
+                  {i === active && (
+                    <motion.span
+                      layoutId="gallery-rail-indicator"
+                      className="absolute inset-y-0 left-0 w-0.5 bg-cyan-500"
+                      transition={reduceMotion ? { duration: 0 } : { type: 'spring', stiffness: 420, damping: 34 }}
+                    />
+                  )}
                   <span className="shrink-0 font-mono text-xs font-semibold text-cyan-500">
                     {String(i + 1).padStart(2, '0')}
                   </span>
@@ -152,16 +163,19 @@ export function ProjectGallery({ images }: { images: GalleryImage[] }) {
               </>
             )}
 
-            <motion.img
-              key={active}
-              initial={reduceMotion ? false : { opacity: 0, scale: 0.98 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-              src={images[active].src}
-              alt={images[active].alt}
-              onClick={(event) => event.stopPropagation()}
-              className="max-h-[85vh] max-w-full object-contain"
-            />
+            <AnimatePresence mode="wait">
+              <motion.img
+                key={active}
+                initial={reduceMotion ? false : { opacity: 0, scale: 0.98 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={reduceMotion ? undefined : { opacity: 0, scale: 0.98 }}
+                transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                src={images[active].src}
+                alt={images[active].alt}
+                onClick={(event) => event.stopPropagation()}
+                className="max-h-[85vh] max-w-full object-contain"
+              />
+            </AnimatePresence>
           </motion.div>
         )}
       </AnimatePresence>
