@@ -5,20 +5,8 @@ export function Clientes() {
   const reduceMotion = useReducedMotion()
 
   return (
-    <section id="clientes" className="relative isolate overflow-hidden bg-navy-950">
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0"
-        style={{
-          backgroundImage:
-            'linear-gradient(rgba(148, 177, 216, 0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(148, 177, 216, 0.06) 1px, transparent 1px)',
-          backgroundSize: '48px 48px',
-          maskImage: 'radial-gradient(circle at center, black 0%, transparent 75%)',
-          WebkitMaskImage: 'radial-gradient(circle at center, black 0%, transparent 75%)',
-        }}
-      />
-
-      <div className="relative mx-auto w-full max-w-[1400px] px-6 py-16 lg:px-10 lg:py-20 xl:px-16 2xl:max-w-[1700px] 2xl:px-14 2xl:py-24">
+    <section id="clientes" className="bg-white">
+      <div className="mx-auto w-full max-w-[1400px] px-6 py-16 lg:px-10 lg:py-20 xl:px-16 2xl:max-w-[1700px] 2xl:px-14 2xl:py-24">
         <motion.div
           initial={reduceMotion ? false : { opacity: 0, y: 28 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -26,13 +14,13 @@ export function Clientes() {
           transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
           className="max-w-2xl"
         >
-          <p className="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-cyan-400 2xl:text-sm">
+          <p className="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-cyan-700 2xl:text-sm">
             Nuestros clientes
           </p>
-          <h2 className="mt-4 text-3xl font-bold leading-tight text-white md:text-4xl 2xl:text-5xl">
+          <h2 className="mt-4 text-3xl font-bold leading-tight text-navy-900 md:text-4xl 2xl:text-5xl">
             Confianza institucional en dos países
           </h2>
-          <p className="mt-5 text-[15.5px] leading-relaxed text-navy-200 2xl:text-lg">
+          <p className="mt-5 text-[15.5px] leading-relaxed text-slate-700 2xl:text-lg">
             Organismos públicos y empresas de saneamiento en Perú y Brasil respaldan cada
             proyecto que ejecutamos, desde nuestro origen hasta la operación actual.
           </p>
@@ -43,8 +31,20 @@ export function Clientes() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.2 }}
           transition={{ type: 'spring', stiffness: 70, damping: 18, delay: 0.1 }}
-          className="relative mt-12 bg-navy-900 p-8 sm:p-10 2xl:mt-14"
+          className="relative isolate mt-12 overflow-hidden bg-navy-900 p-8 sm:p-10 2xl:mt-14"
         >
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0"
+            style={{
+              backgroundImage:
+                'linear-gradient(rgba(148, 177, 216, 0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(148, 177, 216, 0.06) 1px, transparent 1px)',
+              backgroundSize: '48px 48px',
+              maskImage: 'radial-gradient(circle at center, black 0%, transparent 75%)',
+              WebkitMaskImage: 'radial-gradient(circle at center, black 0%, transparent 75%)',
+            }}
+          />
+
           <span aria-hidden="true" className="absolute -left-px -top-px h-7 w-7 border-l-2 border-t-2 border-cyan-500" />
           <span aria-hidden="true" className="absolute -right-px -top-px h-7 w-7 border-r-2 border-t-2 border-cyan-500" />
           <span aria-hidden="true" className="absolute -bottom-px -left-px h-7 w-7 border-b-2 border-l-2 border-cyan-500" />
