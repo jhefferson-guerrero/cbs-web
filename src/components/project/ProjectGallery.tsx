@@ -21,12 +21,18 @@ export function ProjectGallery({ images }: { images: GalleryImage[] }) {
   // Alternative to pinch-zoom (disabled above via touch-none): double-tap the
   // fullscreen photo to zoom in, drag to pan while zoomed, double-tap again
   // (or switch photos / close) to reset.
+  const ZOOM_SCALE = 2.4
   const lightboxFrameRef = useRef<HTMLDivElement>(null)
   const lastTapRef = useRef(0)
   const [zoomed, setZoomed] = useState(false)
   const zoomScale = useMotionValue(1)
   const zoomX = useMotionValue(0)
   const zoomY = useMotionValue(0)
+  // Computed explicitly from the frame's real size instead of letting Motion
+  // auto-measure the already-scaled element: that measurement was landing
+  // short, so dragging felt like it hit a wall well before reaching the
+  // actual corners of the zoomed photo.
+  const [dragBounds, setDragBounds] = useState({ top: 0, left: 0, right: 0, bottom: 0 })
 
   const resetZoom = useCallback(() => {
     setZoomed(false)
@@ -45,8 +51,14 @@ export function ProjectGallery({ images }: { images: GalleryImage[] }) {
     if (zoomed) {
       resetZoom()
     } else {
+      const rect = lightboxFrameRef.current?.getBoundingClientRect()
+      if (rect) {
+        const overflowX = ((ZOOM_SCALE - 1) / 2) * rect.width
+        const overflowY = ((ZOOM_SCALE - 1) / 2) * rect.height
+        setDragBounds({ left: -overflowX, right: overflowX, top: -overflowY, bottom: overflowY })
+      }
       setZoomed(true)
-      animate(zoomScale, 2.4, { duration: reduceMotion ? 0 : 0.3, ease: [0.16, 1, 0.3, 1] })
+      animate(zoomScale, ZOOM_SCALE, { duration: reduceMotion ? 0 : 0.3, ease: [0.16, 1, 0.3, 1] })
     }
   }, [zoomed, zoomScale, resetZoom, reduceMotion])
 
@@ -245,7 +257,7 @@ export function ProjectGallery({ images }: { images: GalleryImage[] }) {
                   onLoad={() => markLoaded(active)}
                   onTap={handleImageTap}
                   drag={zoomed}
-                  dragConstraints={lightboxFrameRef}
+                  dragConstraints={dragBounds}
                   dragElastic={0.5}
                   dragTransition={{ power: 0.3, timeConstant: 200, bounceStiffness: 300, bounceDamping: 30 }}
                   style={{ scale: zoomScale, x: zoomX, y: zoomY }}
