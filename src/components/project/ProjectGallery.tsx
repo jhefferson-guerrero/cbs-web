@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react'
 import { useLenis } from 'lenis/react'
 import { ArrowLeftIcon, ArrowRightIcon, XIcon } from '@phosphor-icons/react'
@@ -11,28 +11,40 @@ export function ProjectGallery({ images }: { images: GalleryImage[] }) {
   const [lightboxOpen, setLightboxOpen] = useState(false)
   const [loaded, setLoaded] = useState<Record<number, boolean>>({})
 
-  const goTo = (i: number) => setActive((i + images.length) % images.length)
+  const goTo = useCallback(
+    (delta: number) => setActive((current) => (current + delta + images.length) % images.length),
+    [images.length],
+  )
   const markLoaded = (i: number) => setLoaded((prev) => (prev[i] ? prev : { ...prev, [i]: true }))
   const isLoaded = (i: number) => reduceMotion || loaded[i]
+
+  // Kept separate from the keydown effect below: this one must NOT depend on
+  // `active`, otherwise switching photos re-runs it and toggles the scroll
+  // lock + Lenis stop/start on every navigation, which is what was causing
+  // the stutter on mobile when browsing images.
+  useEffect(() => {
+    if (!lightboxOpen) return
+
+    document.documentElement.style.overflow = 'hidden'
+    lenis?.stop()
+    return () => {
+      document.documentElement.style.overflow = ''
+      lenis?.start()
+    }
+  }, [lightboxOpen, lenis])
 
   useEffect(() => {
     if (!lightboxOpen) return
 
     const onKey = (event: KeyboardEvent) => {
       if (event.key === 'Escape') setLightboxOpen(false)
-      if (event.key === 'ArrowRight') goTo(active + 1)
-      if (event.key === 'ArrowLeft') goTo(active - 1)
+      if (event.key === 'ArrowRight') goTo(1)
+      if (event.key === 'ArrowLeft') goTo(-1)
     }
 
     window.addEventListener('keydown', onKey)
-    document.documentElement.style.overflow = 'hidden'
-    lenis?.stop()
-    return () => {
-      window.removeEventListener('keydown', onKey)
-      document.documentElement.style.overflow = ''
-      lenis?.start()
-    }
-  }, [lightboxOpen, active, images.length, lenis])
+    return () => window.removeEventListener('keydown', onKey)
+  }, [lightboxOpen, goTo])
 
   if (images.length === 0) return null
 
@@ -93,7 +105,7 @@ export function ProjectGallery({ images }: { images: GalleryImage[] }) {
                     {String(i + 1).padStart(2, '0')}
                   </span>
                   <span className="h-16 w-24 shrink-0 overflow-hidden">
-                    <img src={img.src} alt="" loading="lazy" className="h-full w-full object-cover" />
+                    <img src={img.src} alt="" loading="lazy" decoding="async" className="h-full w-full object-cover" />
                   </span>
                 </button>
               ))}
@@ -115,7 +127,7 @@ export function ProjectGallery({ images }: { images: GalleryImage[] }) {
                       : 'opacity-60 hover:scale-[1.04] hover:opacity-100'
                   }`}
                 >
-                  <img src={img.src} alt="" loading="lazy" className="h-full w-full object-cover" />
+                  <img src={img.src} alt="" loading="lazy" decoding="async" className="h-full w-full object-cover" />
                 </button>
               ))}
             </div>
@@ -149,7 +161,7 @@ export function ProjectGallery({ images }: { images: GalleryImage[] }) {
                   type="button"
                   onClick={(event) => {
                     event.stopPropagation()
-                    goTo(active - 1)
+                    goTo(-1)
                   }}
                   aria-label="Foto anterior"
                   className="absolute left-4 text-white/80 transition-colors hover:text-white sm:left-8"
@@ -160,7 +172,7 @@ export function ProjectGallery({ images }: { images: GalleryImage[] }) {
                   type="button"
                   onClick={(event) => {
                     event.stopPropagation()
-                    goTo(active + 1)
+                    goTo(1)
                   }}
                   aria-label="Foto siguiente"
                   className="absolute right-4 text-white/80 transition-colors hover:text-white sm:right-8"
@@ -174,7 +186,7 @@ export function ProjectGallery({ images }: { images: GalleryImage[] }) {
               className="relative h-[85vh] w-full max-w-5xl"
               onClick={(event) => event.stopPropagation()}
             >
-              <AnimatePresence>
+              <AnimatePresence mode="wait">
                 <motion.img
                   key={active}
                   initial={reduceMotion ? false : { opacity: 0 }}
@@ -183,6 +195,7 @@ export function ProjectGallery({ images }: { images: GalleryImage[] }) {
                   transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
                   src={images[active].src}
                   alt={images[active].alt}
+                  decoding="async"
                   onLoad={() => markLoaded(active)}
                   className="absolute inset-0 h-full w-full object-contain"
                 />

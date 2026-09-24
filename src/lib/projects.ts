@@ -3,7 +3,6 @@ import galeriaRioHuatanay02 from '@/assets/images/proyectos/rio-huatanay/galeria
 import galeriaRioHuatanay03 from '@/assets/images/proyectos/rio-huatanay/galeria-03.webp'
 import galeriaRioHuatanay04 from '@/assets/images/proyectos/rio-huatanay/galeria-04.webp'
 import galeriaRioHuatanay05 from '@/assets/images/proyectos/rio-huatanay/galeria-05.webp'
-import galeriaRioHuatanay06 from '@/assets/images/proyectos/rio-huatanay/galeria-06.webp'
 import galeriaRioHuatanay07 from '@/assets/images/proyectos/rio-huatanay/galeria-07.webp'
 import galeriaRioHuatanay08 from '@/assets/images/proyectos/rio-huatanay/galeria-08.webp'
 import galeriaTambopata01 from '@/assets/images/proyectos/drenaje-tambopata/galeria-01.webp'
@@ -68,7 +67,6 @@ export const projects: Project[] = [
       { src: galeriaRioHuatanay03, alt: 'Vista aérea del trazo de la línea de conducción sobre el cerro' },
       { src: galeriaRioHuatanay04, alt: 'Vista aérea de la losa circular del reservorio con equipo de trabajo' },
       { src: galeriaRioHuatanay05, alt: 'Encofrado perimetral del reservorio con trabajador en obra' },
-      { src: galeriaRioHuatanay06, alt: 'Detalle del encofrado y armadura de acero en obra' },
       { src: galeriaRioHuatanay07, alt: 'Maquinaria pesada del Consorcio Río Huatanay en obra' },
       { src: galeriaRioHuatanay08, alt: 'Armado de acero y vaciado de concreto del reservorio' },
     ],
