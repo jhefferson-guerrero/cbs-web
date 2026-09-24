@@ -246,8 +246,8 @@ export function ProjectGallery({ images }: { images: GalleryImage[] }) {
                   onTap={handleImageTap}
                   drag={zoomed}
                   dragConstraints={lightboxFrameRef}
-                  dragElastic={0.15}
-                  dragMomentum={false}
+                  dragElastic={0.5}
+                  dragTransition={{ power: 0.3, timeConstant: 200, bounceStiffness: 300, bounceDamping: 30 }}
                   style={{ scale: zoomScale, x: zoomX, y: zoomY }}
                   className="absolute inset-0 h-full w-full object-contain"
                 />
