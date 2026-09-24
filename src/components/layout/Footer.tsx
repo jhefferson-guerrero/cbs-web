@@ -22,19 +22,19 @@ export function Footer() {
                 className="h-9 w-auto brightness-0 invert 2xl:h-10"
               />
             </a>
-            <p className="max-w-xs text-sm leading-relaxed text-navy-300">
+            <p className="max-w-xs text-base leading-relaxed text-navy-300 2xl:text-lg">
               Infraestructura, agua y saneamiento en Perú y Brasil.
             </p>
           </div>
 
-          <div className="flex flex-col gap-4">
-            <p className="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-cyan-400">Navegación</p>
-            <nav aria-label="Enlaces del sitio" className="flex flex-col gap-3">
+          <div className="flex flex-col gap-5">
+            <p className="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-cyan-400 2xl:text-sm">Navegación</p>
+            <nav aria-label="Enlaces del sitio" className="flex flex-col gap-4">
               {footerLinks.map((link) => (
                 <a
                   key={link.href}
                   href={link.href}
-                  className="w-fit text-sm font-semibold text-navy-200 outline-none transition-colors hover:text-white focus-visible:ring-2 focus-visible:ring-cyan-400"
+                  className="w-fit text-base font-semibold text-navy-200 outline-none transition-colors hover:text-white focus-visible:ring-2 focus-visible:ring-cyan-400 2xl:text-lg"
                 >
                   {link.label}
                 </a>
@@ -42,13 +42,13 @@ export function Footer() {
             </nav>
           </div>
 
-          <div className="flex flex-col gap-4">
-            <p className="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-cyan-400">Contacto</p>
+          <div className="flex flex-col gap-5">
+            <p className="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-cyan-400 2xl:text-sm">Contacto</p>
             <a
               href={`mailto:${CONTACT_EMAIL}`}
-              className="inline-flex w-fit items-center gap-2 text-sm font-semibold text-navy-200 outline-none transition-colors hover:text-white focus-visible:ring-2 focus-visible:ring-cyan-400"
+              className="inline-flex w-fit items-center gap-2 text-base font-semibold text-navy-200 outline-none transition-colors hover:text-white focus-visible:ring-2 focus-visible:ring-cyan-400 2xl:text-lg"
             >
-              <EnvelopeSimpleIcon size={16} weight="regular" className="shrink-0 text-cyan-400" />
+              <EnvelopeSimpleIcon size={18} weight="regular" className="shrink-0 text-cyan-400" />
               {CONTACT_EMAIL}
             </a>
           </div>
