@@ -65,21 +65,9 @@ export function Actuacion() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-            className="relative isolate overflow-hidden bg-navy-950 p-8 sm:p-10 2xl:p-12"
+            className="bg-navy-950 p-8 sm:p-10 2xl:p-12"
           >
-            <div
-              aria-hidden="true"
-              className="pointer-events-none absolute inset-0"
-              style={{
-                backgroundImage:
-                  'linear-gradient(rgba(148, 177, 216, 0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(148, 177, 216, 0.06) 1px, transparent 1px)',
-                backgroundSize: '48px 48px',
-                maskImage: 'radial-gradient(circle at 70% 30%, black 0%, transparent 70%)',
-                WebkitMaskImage: 'radial-gradient(circle at 70% 30%, black 0%, transparent 70%)',
-              }}
-            />
-
-            <div className="relative flex flex-col divide-y divide-white/15">
+            <div className="flex flex-col divide-y divide-white/15">
               {locationGroups.map((group) => (
                 <div key={group.country} className="pt-8 first:pt-0">
                   <p className="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-cyan-400 2xl:text-sm">

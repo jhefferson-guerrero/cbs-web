@@ -31,20 +31,8 @@ export function Clientes() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.2 }}
           transition={{ type: 'spring', stiffness: 70, damping: 18, delay: 0.1 }}
-          className="relative isolate mt-12 overflow-hidden bg-navy-900 p-8 sm:p-10 2xl:mt-14"
+          className="relative mt-12 bg-navy-900 p-8 sm:p-10 2xl:mt-14"
         >
-          <div
-            aria-hidden="true"
-            className="pointer-events-none absolute inset-0"
-            style={{
-              backgroundImage:
-                'linear-gradient(rgba(148, 177, 216, 0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(148, 177, 216, 0.06) 1px, transparent 1px)',
-              backgroundSize: '48px 48px',
-              maskImage: 'radial-gradient(circle at center, black 0%, transparent 75%)',
-              WebkitMaskImage: 'radial-gradient(circle at center, black 0%, transparent 75%)',
-            }}
-          />
-
           <span aria-hidden="true" className="absolute -left-px -top-px h-7 w-7 border-l-2 border-t-2 border-cyan-500" />
           <span aria-hidden="true" className="absolute -right-px -top-px h-7 w-7 border-r-2 border-t-2 border-cyan-500" />
           <span aria-hidden="true" className="absolute -bottom-px -left-px h-7 w-7 border-b-2 border-l-2 border-cyan-500" />
