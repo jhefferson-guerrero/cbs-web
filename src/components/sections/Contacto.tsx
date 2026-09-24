@@ -2,8 +2,7 @@ import { useId, useState, type ChangeEvent, type FormEvent, type ReactNode } fro
 import { motion, useReducedMotion } from 'motion/react'
 import { ArrowRightIcon, CheckCircleIcon, EnvelopeSimpleIcon, WarningCircleIcon } from '@phosphor-icons/react'
 import { Button } from '@/components/ui/Button'
-
-const CONTACT_EMAIL = 'contacto@cbsperu.com'
+import { CONTACT_EMAIL } from '@/lib/contact'
 
 interface FormValues {
   name: string
