@@ -89,7 +89,7 @@ export function Contacto() {
   }
 
   return (
-    <section id="contacto" className="bg-white">
+    <section id="contacto" className="border-t border-navy-100 bg-white">
       <div className="grid lg:grid-cols-2">
         <motion.div
           initial={reduceMotion ? false : { opacity: 0, y: 24 }}
