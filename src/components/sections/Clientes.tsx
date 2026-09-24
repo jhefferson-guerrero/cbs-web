@@ -5,7 +5,7 @@ export function Clientes() {
   const reduceMotion = useReducedMotion()
 
   return (
-    <section id="clientes" className="bg-white">
+    <section id="clientes" className="border-t border-navy-100 bg-white">
       <div className="mx-auto w-full max-w-[1400px] px-6 py-16 lg:px-10 lg:py-20 xl:px-16 2xl:max-w-[1700px] 2xl:px-14 2xl:py-24">
         <motion.div
           initial={reduceMotion ? false : { opacity: 0, y: 28 }}
