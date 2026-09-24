@@ -150,10 +150,9 @@ export function ProjectGallery({ images }: { images: GalleryImage[] }) {
               type="button"
               onClick={() => setLightboxOpen(false)}
               aria-label="Cerrar galería"
-              style={{ top: 'calc(env(safe-area-inset-top) + 0.75rem)', right: 'calc(env(safe-area-inset-right) + 0.75rem)' }}
-              className="absolute z-10 rounded-full p-2.5 text-white/80 transition-colors hover:text-white"
+              className="absolute inset-x-0 bottom-[calc(env(safe-area-inset-bottom)+1rem)] z-10 mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-white/10 text-white/80 backdrop-blur-sm transition-colors hover:bg-white/15 hover:text-white sm:inset-x-auto sm:bottom-auto sm:right-[calc(env(safe-area-inset-right)+1.5rem)] sm:top-[calc(env(safe-area-inset-top)+1.5rem)] sm:mx-0 sm:h-auto sm:w-auto sm:bg-transparent sm:backdrop-blur-none sm:hover:bg-transparent"
             >
-              <XIcon size={24} weight="regular" />
+              <XIcon size={22} weight="regular" className="sm:size-6" />
             </button>
 
             {images.length > 1 && (
