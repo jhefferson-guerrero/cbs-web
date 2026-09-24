@@ -96,21 +96,9 @@ export function Contacto() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-          className="relative isolate flex flex-col justify-center overflow-hidden bg-navy-950 px-6 py-20 sm:px-10 sm:py-24 lg:px-16 lg:py-24 2xl:px-24 2xl:py-32"
+          className="flex flex-col justify-center bg-navy-950 px-6 py-20 sm:px-10 sm:py-24 lg:px-16 lg:py-24 2xl:px-24 2xl:py-32"
         >
-          <div
-            aria-hidden="true"
-            className="pointer-events-none absolute inset-0"
-            style={{
-              backgroundImage:
-                'linear-gradient(rgba(148, 177, 216, 0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(148, 177, 216, 0.06) 1px, transparent 1px)',
-              backgroundSize: '48px 48px',
-              maskImage: 'radial-gradient(circle at 30% 30%, black 0%, transparent 70%)',
-              WebkitMaskImage: 'radial-gradient(circle at 30% 30%, black 0%, transparent 70%)',
-            }}
-          />
-
-          <div className="relative">
+          <div>
             <p className="font-mono text-sm font-semibold uppercase tracking-[0.2em] text-cyan-400 2xl:text-base">
               Contacto
             </p>
