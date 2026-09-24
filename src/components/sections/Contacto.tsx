@@ -88,35 +88,35 @@ export function Contacto() {
   }
 
   return (
-    <section id="contacto" className="border-t border-navy-100 bg-white">
-      <div className="grid lg:grid-cols-2">
+    <section id="contacto" className="bg-white">
+      <div className="grid lg:grid-cols-2 lg:divide-x lg:divide-navy-100">
         <motion.div
           initial={reduceMotion ? false : { opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-          className="flex flex-col justify-center bg-navy-950 px-6 py-20 sm:px-10 sm:py-24 lg:px-16 lg:py-24 2xl:px-24 2xl:py-32"
+          className="flex flex-col justify-center px-6 py-20 sm:px-10 sm:py-24 lg:px-16 lg:py-24 2xl:px-24 2xl:py-32"
         >
           <div>
-            <p className="font-mono text-sm font-semibold uppercase tracking-[0.2em] text-cyan-400 2xl:text-base">
+            <p className="font-mono text-sm font-semibold uppercase tracking-[0.2em] text-cyan-700 2xl:text-base">
               Contacto
             </p>
-            <h2 className="mt-4 text-3xl font-bold leading-tight text-white md:text-4xl 2xl:text-5xl">
+            <h2 className="mt-4 text-3xl font-bold leading-tight text-navy-900 md:text-4xl 2xl:text-5xl">
               Hablemos de tu próximo proyecto
             </h2>
-            <p className="mt-5 max-w-md text-[15.5px] leading-relaxed text-navy-200 2xl:text-lg">
+            <p className="mt-5 max-w-md text-[15.5px] leading-relaxed text-slate-700 2xl:text-lg">
               Escribinos y te contactamos a la brevedad, o hacelo directo por correo.
             </p>
 
             <div className="mt-10 flex flex-col gap-1">
-              <span className="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-cyan-400 2xl:text-sm">
+              <span className="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-cyan-700 2xl:text-sm">
                 Correo
               </span>
               <a
                 href={`mailto:${CONTACT_EMAIL}`}
-                className="inline-flex items-center gap-2 text-lg font-semibold text-white transition-colors hover:text-cyan-300 2xl:text-xl"
+                className="inline-flex items-center gap-2 text-lg font-semibold text-navy-900 transition-colors hover:text-cyan-700 2xl:text-xl"
               >
-                <EnvelopeSimpleIcon size={20} weight="regular" className="shrink-0 text-cyan-400" />
+                <EnvelopeSimpleIcon size={20} weight="regular" className="shrink-0 text-cyan-600" />
                 {CONTACT_EMAIL}
               </a>
             </div>
