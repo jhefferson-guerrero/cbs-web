@@ -113,7 +113,7 @@ export function ProjectGallery({ images }: { images: GalleryImage[] }) {
           )}
 
           {images.length > 1 && (
-            <div className="flex flex-wrap gap-3 sm:hidden">
+            <div className="grid grid-cols-3 gap-3 sm:hidden">
               {images.map((img, i) => (
                 <button
                   key={img.src}
@@ -121,13 +121,13 @@ export function ProjectGallery({ images }: { images: GalleryImage[] }) {
                   onClick={() => setActive(i)}
                   aria-label={`Ver foto ${i + 1}`}
                   aria-current={i === active}
-                  className={`h-16 w-24 shrink-0 overflow-hidden transition-all duration-300 ${
+                  className={`relative aspect-[3/2] w-full overflow-hidden transition-all duration-300 ${
                     i === active
                       ? 'ring-2 ring-cyan-500 ring-offset-2 ring-offset-slate-50'
-                      : 'opacity-60 hover:scale-[1.04] hover:opacity-100'
+                      : 'opacity-60 hover:opacity-100'
                   }`}
                 >
-                  <img src={img.src} alt="" loading="lazy" decoding="async" className="h-full w-full object-cover" />
+                  <img src={img.src} alt="" loading="lazy" decoding="async" className="absolute inset-0 h-full w-full object-cover" />
                 </button>
               ))}
             </div>
@@ -143,16 +143,17 @@ export function ProjectGallery({ images }: { images: GalleryImage[] }) {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.25 }}
-            className="fixed inset-0 z-[90] flex items-center justify-center bg-navy-950/95 p-6"
+            className="fixed inset-0 z-[90] flex touch-none items-center justify-center bg-navy-950/95 p-6"
             onClick={() => setLightboxOpen(false)}
           >
             <button
               type="button"
               onClick={() => setLightboxOpen(false)}
               aria-label="Cerrar galería"
-              className="absolute right-6 top-6 text-white/80 transition-colors hover:text-white"
+              style={{ top: 'calc(env(safe-area-inset-top) + 0.75rem)', right: 'calc(env(safe-area-inset-right) + 0.75rem)' }}
+              className="absolute z-10 rounded-full p-2.5 text-white/80 transition-colors hover:text-white"
             >
-              <XIcon size={28} weight="regular" />
+              <XIcon size={24} weight="regular" />
             </button>
 
             {images.length > 1 && (
@@ -164,7 +165,7 @@ export function ProjectGallery({ images }: { images: GalleryImage[] }) {
                     goTo(-1)
                   }}
                   aria-label="Foto anterior"
-                  className="absolute left-4 text-white/80 transition-colors hover:text-white sm:left-8"
+                  className="absolute left-2 rounded-full p-2.5 text-white/80 transition-colors hover:text-white sm:left-6"
                 >
                   <ArrowLeftIcon size={28} weight="regular" />
                 </button>
@@ -175,7 +176,7 @@ export function ProjectGallery({ images }: { images: GalleryImage[] }) {
                     goTo(1)
                   }}
                   aria-label="Foto siguiente"
-                  className="absolute right-4 text-white/80 transition-colors hover:text-white sm:right-8"
+                  className="absolute right-2 rounded-full p-2.5 text-white/80 transition-colors hover:text-white sm:right-6"
                 >
                   <ArrowRightIcon size={28} weight="regular" />
                 </button>
