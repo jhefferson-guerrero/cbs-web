@@ -55,15 +55,15 @@ export function Footer() {
         </div>
 
         <div className="mt-10 flex flex-col gap-4 border-t border-white/10 pt-6 sm:flex-row sm:items-center sm:justify-between lg:mt-12">
-          <p className="text-xs text-navy-400">
+          <p className="text-sm text-navy-400">
             © {year} CBS — Construtora Baiana de Saneamento. Todos los derechos reservados.
           </p>
           <a
             href="#top"
-            className="inline-flex w-fit items-center gap-1.5 text-xs font-semibold text-navy-300 outline-none transition-colors hover:text-white focus-visible:ring-2 focus-visible:ring-cyan-400"
+            className="inline-flex w-fit items-center gap-1.5 text-sm font-semibold text-navy-300 outline-none transition-colors hover:text-white focus-visible:ring-2 focus-visible:ring-cyan-400"
           >
             Volver arriba
-            <ArrowUpIcon size={13} weight="regular" className="shrink-0" />
+            <ArrowUpIcon size={14} weight="regular" className="shrink-0" />
           </a>
         </div>
       </div>
