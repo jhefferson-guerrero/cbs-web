@@ -244,26 +244,31 @@ export function ProjectGallery({ images }: { images: GalleryImage[] }) {
               className="relative h-[85vh] w-full max-w-5xl"
               onClick={(event) => event.stopPropagation()}
             >
-              <AnimatePresence mode="wait">
-                <motion.img
-                  key={active}
-                  initial={reduceMotion ? false : { opacity: 0 }}
-                  animate={{ opacity: isLoaded(active) ? 1 : 0 }}
-                  exit={reduceMotion ? undefined : { opacity: 0 }}
-                  transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-                  src={images[active].src}
-                  alt={images[active].alt}
-                  decoding="async"
-                  onLoad={() => markLoaded(active)}
-                  onTap={handleImageTap}
-                  drag={zoomed}
-                  dragConstraints={dragBounds}
-                  dragElastic={0.5}
-                  dragTransition={{ power: 0.3, timeConstant: 200, bounceStiffness: 300, bounceDamping: 30 }}
-                  style={{ scale: zoomScale, x: zoomX, y: zoomY }}
-                  className="absolute inset-0 h-full w-full object-contain"
-                />
-              </AnimatePresence>
+              <motion.div
+                onTap={handleImageTap}
+                drag={zoomed}
+                dragConstraints={dragBounds}
+                dragElastic={0.5}
+                dragTransition={{ power: 0.3, timeConstant: 200, bounceStiffness: 300, bounceDamping: 30 }}
+                style={{ x: zoomX, y: zoomY }}
+                className="relative h-full w-full"
+              >
+                <AnimatePresence mode="wait">
+                  <motion.img
+                    key={active}
+                    initial={reduceMotion ? false : { opacity: 0 }}
+                    animate={{ opacity: isLoaded(active) ? 1 : 0 }}
+                    exit={reduceMotion ? undefined : { opacity: 0 }}
+                    transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                    src={images[active].src}
+                    alt={images[active].alt}
+                    decoding="async"
+                    onLoad={() => markLoaded(active)}
+                    style={{ scale: zoomScale }}
+                    className="absolute inset-0 h-full w-full object-contain"
+                  />
+                </AnimatePresence>
+              </motion.div>
             </div>
           </motion.div>
         )}
