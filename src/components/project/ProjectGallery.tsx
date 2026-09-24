@@ -1,5 +1,5 @@
-import { useCallback, useEffect, useState } from 'react'
-import { AnimatePresence, motion, useReducedMotion } from 'motion/react'
+import { useCallback, useEffect, useRef, useState } from 'react'
+import { AnimatePresence, animate, motion, useMotionValue, useReducedMotion } from 'motion/react'
 import { useLenis } from 'lenis/react'
 import { ArrowLeftIcon, ArrowRightIcon, XIcon } from '@phosphor-icons/react'
 import type { GalleryImage } from '@/lib/projects'
@@ -17,6 +17,51 @@ export function ProjectGallery({ images }: { images: GalleryImage[] }) {
   )
   const markLoaded = (i: number) => setLoaded((prev) => (prev[i] ? prev : { ...prev, [i]: true }))
   const isLoaded = (i: number) => reduceMotion || loaded[i]
+
+  // Alternative to pinch-zoom (disabled above via touch-none): double-tap the
+  // fullscreen photo to zoom in, drag to pan while zoomed, double-tap again
+  // (or switch photos / close) to reset.
+  const lightboxFrameRef = useRef<HTMLDivElement>(null)
+  const lastTapRef = useRef(0)
+  const [zoomed, setZoomed] = useState(false)
+  const zoomScale = useMotionValue(1)
+  const zoomX = useMotionValue(0)
+  const zoomY = useMotionValue(0)
+
+  const resetZoom = useCallback(() => {
+    setZoomed(false)
+    const duration = reduceMotion ? 0 : 0.25
+    animate(zoomScale, 1, { duration, ease: [0.16, 1, 0.3, 1] })
+    animate(zoomX, 0, { duration, ease: [0.16, 1, 0.3, 1] })
+    animate(zoomY, 0, { duration, ease: [0.16, 1, 0.3, 1] })
+  }, [zoomScale, zoomX, zoomY, reduceMotion])
+
+  const handleImageTap = useCallback(() => {
+    const now = Date.now()
+    const isDoubleTap = now - lastTapRef.current < 300
+    lastTapRef.current = now
+    if (!isDoubleTap) return
+
+    if (zoomed) {
+      resetZoom()
+    } else {
+      setZoomed(true)
+      animate(zoomScale, 2.4, { duration: reduceMotion ? 0 : 0.3, ease: [0.16, 1, 0.3, 1] })
+    }
+  }, [zoomed, zoomScale, resetZoom, reduceMotion])
+
+  // Reset zoom whenever the photo or open state changes, computed during
+  // render (React's recommended way to reset state on a prop change) instead
+  // of a useEffect, so switching photos doesn't cost an extra render pass.
+  const zoomResetKey = `${lightboxOpen}-${active}`
+  const [lastZoomResetKey, setLastZoomResetKey] = useState(zoomResetKey)
+  if (zoomResetKey !== lastZoomResetKey) {
+    setLastZoomResetKey(zoomResetKey)
+    setZoomed(false)
+    zoomScale.set(1)
+    zoomX.set(0)
+    zoomY.set(0)
+  }
 
   // Kept separate from the keydown effect below: this one must NOT depend on
   // `active`, otherwise switching photos re-runs it and toggles the scroll
@@ -150,7 +195,7 @@ export function ProjectGallery({ images }: { images: GalleryImage[] }) {
               type="button"
               onClick={() => setLightboxOpen(false)}
               aria-label="Cerrar galería"
-              className="absolute inset-x-0 bottom-[calc(env(safe-area-inset-bottom)+1rem)] z-10 mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-white/10 text-white/80 backdrop-blur-sm transition-colors hover:bg-white/15 hover:text-white sm:inset-x-auto sm:bottom-auto sm:right-[calc(env(safe-area-inset-right)+1.5rem)] sm:top-[calc(env(safe-area-inset-top)+1.5rem)] sm:mx-0 sm:h-auto sm:w-auto sm:bg-transparent sm:backdrop-blur-none sm:hover:bg-transparent"
+              className="absolute inset-x-0 bottom-[calc(env(safe-area-inset-bottom)+3rem)] z-20 mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-white/10 text-white/80 backdrop-blur-sm transition-colors hover:bg-white/15 hover:text-white sm:inset-x-auto sm:bottom-auto sm:right-[calc(env(safe-area-inset-right)+1.5rem)] sm:top-[calc(env(safe-area-inset-top)+1.5rem)] sm:mx-0 sm:h-auto sm:w-auto sm:bg-transparent sm:backdrop-blur-none sm:hover:bg-transparent"
             >
               <XIcon size={22} weight="regular" className="sm:size-6" />
             </button>
@@ -164,7 +209,7 @@ export function ProjectGallery({ images }: { images: GalleryImage[] }) {
                     goTo(-1)
                   }}
                   aria-label="Foto anterior"
-                  className="absolute left-2 rounded-full p-2.5 text-white/80 transition-colors hover:text-white sm:left-6"
+                  className="absolute left-2 z-10 rounded-full p-2.5 text-white/80 transition-colors hover:text-white sm:left-6"
                 >
                   <ArrowLeftIcon size={28} weight="regular" />
                 </button>
@@ -175,7 +220,7 @@ export function ProjectGallery({ images }: { images: GalleryImage[] }) {
                     goTo(1)
                   }}
                   aria-label="Foto siguiente"
-                  className="absolute right-2 rounded-full p-2.5 text-white/80 transition-colors hover:text-white sm:right-6"
+                  className="absolute right-2 z-10 rounded-full p-2.5 text-white/80 transition-colors hover:text-white sm:right-6"
                 >
                   <ArrowRightIcon size={28} weight="regular" />
                 </button>
@@ -183,6 +228,7 @@ export function ProjectGallery({ images }: { images: GalleryImage[] }) {
             )}
 
             <div
+              ref={lightboxFrameRef}
               className="relative h-[85vh] w-full max-w-5xl"
               onClick={(event) => event.stopPropagation()}
             >
@@ -197,6 +243,12 @@ export function ProjectGallery({ images }: { images: GalleryImage[] }) {
                   alt={images[active].alt}
                   decoding="async"
                   onLoad={() => markLoaded(active)}
+                  onTap={handleImageTap}
+                  drag={zoomed}
+                  dragConstraints={lightboxFrameRef}
+                  dragElastic={0.15}
+                  dragMomentum={false}
+                  style={{ scale: zoomScale, x: zoomX, y: zoomY }}
                   className="absolute inset-0 h-full w-full object-contain"
                 />
               </AnimatePresence>
