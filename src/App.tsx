@@ -4,6 +4,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { Navbar } from '@/components/layout/Navbar'
 import { Preloader } from '@/components/layout/Preloader'
 import { SmoothScroll } from '@/components/layout/SmoothScroll'
+import { Footer } from '@/components/layout/Footer'
 
 // Code-split by route: each page's JS only downloads when it's actually
 // visited, instead of home and every project page shipping in one bundle.
@@ -31,6 +32,7 @@ function App() {
             <Route path="/proyectos/:slug" element={<ProjectDetail />} />
           </Routes>
         </Suspense>
+        <Footer />
       </SmoothScroll>
     </BrowserRouter>
   )
