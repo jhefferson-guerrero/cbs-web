@@ -1,12 +1,16 @@
-import type { AnchorHTMLAttributes, ReactNode } from 'react'
+import type { AnchorHTMLAttributes, ButtonHTMLAttributes, ReactNode } from 'react'
 import { cn } from '@/lib/utils'
 
 type ButtonVariant = 'solid' | 'outline-light' | 'outline-dark'
 
-interface ButtonProps extends AnchorHTMLAttributes<HTMLAnchorElement> {
+interface ButtonOwnProps {
   variant?: ButtonVariant
   icon?: ReactNode
 }
+
+type ButtonProps =
+  | (ButtonOwnProps & AnchorHTMLAttributes<HTMLAnchorElement> & { href: string })
+  | (ButtonOwnProps & ButtonHTMLAttributes<HTMLButtonElement> & { href?: undefined })
 
 const variantClasses: Record<ButtonVariant, string> = {
   solid:
@@ -24,15 +28,14 @@ const fillClasses: Record<ButtonVariant, string | null> = {
 export function Button({ variant = 'solid', icon, className, children, ...props }: ButtonProps) {
   const fill = fillClasses[variant]
 
-  return (
-    <a
-      className={cn(
-        'group relative inline-flex items-center justify-center gap-2.5 whitespace-nowrap rounded-lg px-6 py-[11px] text-base font-semibold transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] active:translate-y-0 active:scale-[0.98] 2xl:px-7 2xl:py-3.5 2xl:text-lg',
-        variantClasses[variant],
-        className,
-      )}
-      {...props}
-    >
+  const classes = cn(
+    'group relative inline-flex items-center justify-center gap-2.5 whitespace-nowrap rounded-lg px-6 py-[11px] text-base font-semibold transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] active:translate-y-0 active:scale-[0.98] 2xl:px-7 2xl:py-3.5 2xl:text-lg',
+    variantClasses[variant],
+    className,
+  )
+
+  const content = (
+    <>
       {fill && (
         <span aria-hidden="true" className="absolute inset-0 -z-10 overflow-hidden rounded-lg">
           <span
@@ -51,6 +54,20 @@ export function Button({ variant = 'solid', icon, className, children, ...props 
           {icon}
         </span>
       )}
-    </a>
+    </>
+  )
+
+  if (props.href) {
+    return (
+      <a className={classes} {...(props as AnchorHTMLAttributes<HTMLAnchorElement>)}>
+        {content}
+      </a>
+    )
+  }
+
+  return (
+    <button type="button" className={classes} {...(props as ButtonHTMLAttributes<HTMLButtonElement>)}>
+      {content}
+    </button>
   )
 }
