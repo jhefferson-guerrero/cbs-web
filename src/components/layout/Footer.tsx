@@ -1,4 +1,4 @@
-import { EnvelopeSimpleIcon } from '@phosphor-icons/react'
+import { ArrowUpIcon, EnvelopeSimpleIcon } from '@phosphor-icons/react'
 import logoCbs from '@/assets/images/logo-cbs.webp'
 import { navLinks } from '@/lib/nav-links'
 import { CONTACT_EMAIL } from '@/lib/contact'
@@ -11,7 +11,7 @@ export function Footer() {
   return (
     <footer className="bg-navy-950">
       <div className="mx-auto w-full max-w-[1400px] px-6 py-14 lg:px-10 lg:py-16 xl:px-16 2xl:max-w-[1700px] 2xl:px-14 2xl:py-20">
-        <div className="flex flex-col gap-10 lg:flex-row lg:items-start lg:justify-between lg:gap-8">
+        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr] lg:gap-8">
           <div className="flex flex-col gap-4">
             <a href="#top" aria-label="CBS - Inicio" className="inline-block w-fit">
               <img
@@ -27,31 +27,44 @@ export function Footer() {
             </p>
           </div>
 
-          <nav aria-label="Enlaces del sitio" className="flex flex-wrap gap-x-6 gap-y-3 lg:justify-center">
-            {footerLinks.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                className="text-sm font-semibold text-navy-200 outline-none transition-colors hover:text-white focus-visible:ring-2 focus-visible:ring-cyan-400"
-              >
-                {link.label}
-              </a>
-            ))}
-          </nav>
+          <div className="flex flex-col gap-4">
+            <p className="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-cyan-400">Navegación</p>
+            <nav aria-label="Enlaces del sitio" className="flex flex-col gap-3">
+              {footerLinks.map((link) => (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  className="w-fit text-sm font-semibold text-navy-200 outline-none transition-colors hover:text-white focus-visible:ring-2 focus-visible:ring-cyan-400"
+                >
+                  {link.label}
+                </a>
+              ))}
+            </nav>
+          </div>
 
-          <a
-            href={`mailto:${CONTACT_EMAIL}`}
-            className="inline-flex items-center gap-2 text-sm font-semibold text-navy-200 outline-none transition-colors hover:text-white focus-visible:ring-2 focus-visible:ring-cyan-400"
-          >
-            <EnvelopeSimpleIcon size={16} weight="regular" className="shrink-0 text-cyan-400" />
-            {CONTACT_EMAIL}
-          </a>
+          <div className="flex flex-col gap-4">
+            <p className="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-cyan-400">Contacto</p>
+            <a
+              href={`mailto:${CONTACT_EMAIL}`}
+              className="inline-flex w-fit items-center gap-2 text-sm font-semibold text-navy-200 outline-none transition-colors hover:text-white focus-visible:ring-2 focus-visible:ring-cyan-400"
+            >
+              <EnvelopeSimpleIcon size={16} weight="regular" className="shrink-0 text-cyan-400" />
+              {CONTACT_EMAIL}
+            </a>
+          </div>
         </div>
 
-        <div className="mt-10 border-t border-white/10 pt-6 lg:mt-12">
+        <div className="mt-10 flex flex-col gap-4 border-t border-white/10 pt-6 sm:flex-row sm:items-center sm:justify-between lg:mt-12">
           <p className="text-xs text-navy-400">
             © {year} CBS — Construtora Baiana de Saneamento. Todos los derechos reservados.
           </p>
+          <a
+            href="#top"
+            className="inline-flex w-fit items-center gap-1.5 text-xs font-semibold text-navy-300 outline-none transition-colors hover:text-white focus-visible:ring-2 focus-visible:ring-cyan-400"
+          >
+            Volver arriba
+            <ArrowUpIcon size={13} weight="regular" className="shrink-0" />
+          </a>
         </div>
       </div>
     </footer>
