@@ -14,20 +14,45 @@ interface FormValues {
 interface FormErrors {
   name?: string
   email?: string
+  phone?: string
   message?: string
 }
 
 const initialValues: FormValues = { name: '', email: '', phone: '', message: '' }
 
+const NAME_MAX = 100
+const EMAIL_MAX = 254
+const PHONE_MAX = 20
+const MESSAGE_MAX = 1000
+const PHONE_PATTERN = /^[0-9+\-\s()]{6,20}$/
+
 function validate(values: FormValues): FormErrors {
   const errors: FormErrors = {}
-  if (!values.name.trim()) errors.name = 'Ingresa tu nombre.'
+
+  if (!values.name.trim()) {
+    errors.name = 'Ingresa tu nombre.'
+  } else if (values.name.length > NAME_MAX) {
+    errors.name = `Máximo ${NAME_MAX} caracteres.`
+  }
+
   if (!values.email.trim()) {
     errors.email = 'Ingresa tu correo.'
+  } else if (values.email.length > EMAIL_MAX) {
+    errors.email = `Máximo ${EMAIL_MAX} caracteres.`
   } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(values.email)) {
     errors.email = 'Ingresa un correo válido.'
   }
-  if (!values.message.trim()) errors.message = 'Contanos en qué podemos ayudarte.'
+
+  if (values.phone.trim() && !PHONE_PATTERN.test(values.phone.trim())) {
+    errors.phone = 'Ingresa un teléfono válido (solo números, espacios, +, - y paréntesis).'
+  }
+
+  if (!values.message.trim()) {
+    errors.message = 'Contanos en qué podemos ayudarte.'
+  } else if (values.message.length > MESSAGE_MAX) {
+    errors.message = `Máximo ${MESSAGE_MAX} caracteres.`
+  }
+
   return errors
 }
 
@@ -69,6 +94,11 @@ export function Contacto() {
     (field: keyof FormValues) => (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
       setValues((prev) => ({ ...prev, [field]: event.target.value }))
     }
+
+  const setPhone = (event: ChangeEvent<HTMLInputElement>) => {
+    const filtered = event.target.value.replace(/[^0-9+\-\s()]/g, '')
+    setValues((prev) => ({ ...prev, phone: filtered }))
+  }
 
   const inputClasses = (hasError: boolean) =>
     `border-b bg-transparent py-2 text-base text-navy-900 outline-none transition-colors placeholder:text-slate-400 focus:border-cyan-600 ${
@@ -146,6 +176,7 @@ export function Contacto() {
                   name="name"
                   type="text"
                   autoComplete="name"
+                  maxLength={NAME_MAX}
                   value={values.name}
                   onChange={setField('name')}
                   placeholder="Tu nombre completo"
@@ -159,6 +190,7 @@ export function Contacto() {
                   name="email"
                   type="email"
                   autoComplete="email"
+                  maxLength={EMAIL_MAX}
                   value={values.email}
                   onChange={setField('email')}
                   placeholder="tu@correo.com"
@@ -166,16 +198,18 @@ export function Contacto() {
                 />
               </FormField>
 
-              <FormField id={`${formId}-phone`} label="Teléfono (opcional)">
+              <FormField id={`${formId}-phone`} label="Teléfono (opcional)" error={errors.phone}>
                 <input
                   id={`${formId}-phone`}
                   name="phone"
                   type="tel"
+                  inputMode="tel"
                   autoComplete="tel"
+                  maxLength={PHONE_MAX}
                   value={values.phone}
-                  onChange={setField('phone')}
+                  onChange={setPhone}
                   placeholder="+51 999 999 999"
-                  className={inputClasses(false)}
+                  className={inputClasses(Boolean(errors.phone))}
                 />
               </FormField>
 
@@ -184,6 +218,7 @@ export function Contacto() {
                   id={`${formId}-message`}
                   name="message"
                   rows={4}
+                  maxLength={MESSAGE_MAX}
                   value={values.message}
                   onChange={setField('message')}
                   placeholder="Contanos sobre tu proyecto o consulta"
