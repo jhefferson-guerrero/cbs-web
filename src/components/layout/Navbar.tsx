@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react'
 import { useLenis } from 'lenis/react'
+import { useLocation } from 'react-router-dom'
 import { ArrowUpRightIcon } from '@phosphor-icons/react'
 import logoCbs from '@/assets/images/logo-cbs.webp'
 import logoMobileCbs from '@/assets/images/logo-mobile-cbs.webp'
@@ -12,8 +13,10 @@ export function Navbar({ ready }: { ready: boolean }) {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [hoveredHref, setHoveredHref] = useState<string | null>(null)
+  const [activeHref, setActiveHref] = useState<string | null>(null)
   const reduceMotion = useReducedMotion()
   const lenis = useLenis()
+  const { pathname } = useLocation()
 
   useEffect(() => {
     const onScroll = () => setIsScrolled(window.scrollY > 16)
@@ -21,6 +24,30 @@ export function Navbar({ ready }: { ready: boolean }) {
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
+
+  // Scrollspy: highlight the nav link for whichever section currently sits in a
+  // thin band near the vertical center of the viewport. Re-runs on route change
+  // since these sections only exist on the home page.
+  useEffect(() => {
+    const sections = navLinks
+      .map((link) => document.getElementById(link.href.slice(1)))
+      .filter((el): el is HTMLElement => el !== null)
+
+    if (sections.length === 0) return
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries.filter((entry) => entry.isIntersecting)
+        if (visible.length === 0) return
+        const topMost = visible.reduce((a, b) => (a.boundingClientRect.top < b.boundingClientRect.top ? a : b))
+        setActiveHref(`#${topMost.target.id}`)
+      },
+      { rootMargin: '-45% 0px -50% 0px', threshold: 0 },
+    )
+
+    sections.forEach((section) => observer.observe(section))
+    return () => observer.disconnect()
+  }, [pathname])
 
   useEffect(() => {
     document.documentElement.style.overflow = isMenuOpen ? 'hidden' : ''
@@ -102,35 +129,58 @@ export function Navbar({ ready }: { ready: boolean }) {
           className="hidden items-center gap-1 lg:flex"
           onMouseLeave={() => setHoveredHref(null)}
         >
-          {navLinks.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              onMouseEnter={() => setHoveredHref(link.href)}
-              onFocus={() => setHoveredHref(link.href)}
-              onBlur={() => setHoveredHref(null)}
-              className={cn(
-                'relative rounded-lg px-4 py-2 text-base font-semibold outline-none transition-colors focus-visible:ring-2 focus-visible:ring-cyan-400 2xl:px-5 2xl:text-lg',
-                isSolid ? 'text-navy-800 hover:text-navy-950' : 'text-white hover:text-white',
-              )}
-            >
-              {hoveredHref === link.href && (
-                <motion.span
-                  layoutId="nav-hover-pill"
-                  className={cn(
-                    'absolute inset-0 -z-10 rounded-lg',
-                    isSolid ? 'bg-navy-50' : 'bg-white/10',
-                  )}
-                  transition={
-                    reduceMotion
-                      ? { duration: 0 }
-                      : { type: 'spring', stiffness: 420, damping: 34 }
-                  }
-                />
-              )}
-              {link.label}
-            </a>
-          ))}
+          {navLinks.map((link) => {
+            const isActive = pathname === '/' && activeHref === link.href
+
+            return (
+              <a
+                key={link.href}
+                href={link.href}
+                onMouseEnter={() => setHoveredHref(link.href)}
+                onFocus={() => setHoveredHref(link.href)}
+                onBlur={() => setHoveredHref(null)}
+                aria-current={isActive ? 'true' : undefined}
+                className={cn(
+                  'relative rounded-lg px-4 py-2 text-base font-semibold outline-none transition-colors focus-visible:ring-2 focus-visible:ring-cyan-400 2xl:px-5 2xl:text-lg',
+                  isActive
+                    ? isSolid
+                      ? 'text-cyan-700'
+                      : 'text-cyan-300'
+                    : isSolid
+                      ? 'text-navy-800 hover:text-navy-950'
+                      : 'text-white hover:text-white',
+                )}
+              >
+                {hoveredHref === link.href && (
+                  <motion.span
+                    layoutId="nav-hover-pill"
+                    className={cn(
+                      'absolute inset-0 -z-10 rounded-lg',
+                      isSolid ? 'bg-navy-50' : 'bg-white/10',
+                    )}
+                    transition={
+                      reduceMotion
+                        ? { duration: 0 }
+                        : { type: 'spring', stiffness: 420, damping: 34 }
+                    }
+                  />
+                )}
+                {link.label}
+                {isActive && (
+                  <motion.span
+                    aria-hidden="true"
+                    layoutId="nav-active-indicator"
+                    className="absolute inset-x-4 bottom-1 h-0.5 rounded-full bg-cyan-500 2xl:inset-x-5"
+                    transition={
+                      reduceMotion
+                        ? { duration: 0 }
+                        : { type: 'spring', stiffness: 420, damping: 34 }
+                    }
+                  />
+                )}
+              </a>
+            )
+          })}
         </div>
 
         <div className="hidden lg:block">
@@ -185,25 +235,36 @@ export function Navbar({ ready }: { ready: boolean }) {
 
             <div className="flex flex-col px-6 py-8">
               <nav className="flex flex-col divide-y divide-navy-100">
-                {navLinks.map((link, i) => (
-                  <motion.a
-                    key={link.href}
-                    href={link.href}
-                    onClick={() => setIsMenuOpen(false)}
-                    initial={reduceMotion ? false : { opacity: 0, x: -12 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.35, delay: 0.1 + i * 0.06, ease: [0.16, 1, 0.3, 1] }}
-                    className="group flex items-center gap-4 py-4 text-lg font-semibold text-navy-800"
-                  >
-                    <span className="font-mono text-xs text-cyan-500">{String(i + 1).padStart(2, '0')}</span>
-                    <span className="flex-1 transition-colors group-active:text-navy-950">{link.label}</span>
-                    <ArrowUpRightIcon
-                      size={16}
-                      weight="regular"
-                      className="text-navy-300 transition-colors group-active:text-cyan-600"
-                    />
-                  </motion.a>
-                ))}
+                {navLinks.map((link, i) => {
+                  const isActive = pathname === '/' && activeHref === link.href
+
+                  return (
+                    <motion.a
+                      key={link.href}
+                      href={link.href}
+                      onClick={() => setIsMenuOpen(false)}
+                      aria-current={isActive ? 'true' : undefined}
+                      initial={reduceMotion ? false : { opacity: 0, x: -12 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ duration: 0.35, delay: 0.1 + i * 0.06, ease: [0.16, 1, 0.3, 1] }}
+                      className={cn(
+                        'group flex items-center gap-4 py-4 text-lg font-semibold transition-colors',
+                        isActive ? 'text-cyan-700' : 'text-navy-800',
+                      )}
+                    >
+                      <span className="font-mono text-xs text-cyan-500">{String(i + 1).padStart(2, '0')}</span>
+                      <span className="flex-1 transition-colors group-active:text-navy-950">{link.label}</span>
+                      <ArrowUpRightIcon
+                        size={16}
+                        weight="regular"
+                        className={cn(
+                          'transition-colors group-active:text-cyan-600',
+                          isActive ? 'text-cyan-500' : 'text-navy-300',
+                        )}
+                      />
+                    </motion.a>
+                  )
+                })}
               </nav>
 
               <motion.div
