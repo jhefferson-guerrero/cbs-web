@@ -11,7 +11,7 @@ export function Footer() {
       <span aria-hidden="true" className="absolute right-6 top-6 h-6 w-6 border-r-2 border-t-2 border-white/70 lg:right-9 lg:top-9 lg:h-7 lg:w-7" />
       <span aria-hidden="true" className="absolute bottom-6 left-6 h-6 w-6 border-b-2 border-l-2 border-white/70 lg:bottom-9 lg:left-9 lg:h-7 lg:w-7" />
 
-      <div className="mx-auto w-full max-w-[1400px] px-6 py-10 lg:px-10 lg:py-12 xl:px-16 2xl:max-w-[1700px] 2xl:px-14 2xl:py-14">
+      <div className="mx-auto w-full max-w-[1400px] px-10 py-10 lg:px-16 lg:py-12 xl:px-24 2xl:max-w-[1700px] 2xl:px-14 2xl:py-14">
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-[1fr_auto_1fr] lg:items-start lg:gap-12">
           <div className="flex flex-col gap-3 sm:col-span-2 lg:col-span-1 lg:max-w-xs">
             <a href="#top" aria-label="CBS - Inicio" className="inline-block w-fit">
