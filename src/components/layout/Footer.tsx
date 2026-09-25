@@ -23,7 +23,7 @@ export function Footer() {
                 className="h-8 w-auto brightness-0 invert 2xl:h-9"
               />
             </a>
-            <p className="text-base leading-relaxed text-navy-300 2xl:text-lg">
+            <p className="text-sm leading-relaxed text-navy-300 2xl:text-base">
               Infraestructura, agua y saneamiento en Perú y Brasil.
             </p>
           </div>
@@ -36,7 +36,7 @@ export function Footer() {
                   <a
                     key={link.href}
                     href={link.href}
-                    className="text-base font-semibold text-navy-200 outline-none transition-colors hover:text-white focus-visible:ring-2 focus-visible:ring-cyan-400 2xl:text-lg"
+                    className="text-sm font-semibold text-navy-200 outline-none transition-colors hover:text-white focus-visible:ring-2 focus-visible:ring-cyan-400 2xl:text-base"
                   >
                     {link.label}
                   </a>
@@ -48,7 +48,7 @@ export function Footer() {
               <p className="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-cyan-400 2xl:text-sm">Contacto</p>
               <a
                 href={`mailto:${CONTACT_EMAIL}`}
-                className="inline-flex w-fit items-center gap-2 text-base font-semibold text-navy-200 outline-none transition-colors hover:text-white focus-visible:ring-2 focus-visible:ring-cyan-400 2xl:text-lg"
+                className="inline-flex w-fit items-center gap-2 text-sm font-semibold text-navy-200 outline-none transition-colors hover:text-white focus-visible:ring-2 focus-visible:ring-cyan-400 2xl:text-base"
               >
                 <EnvelopeSimpleIcon size={18} weight="regular" className="shrink-0 text-cyan-400" />
                 {CONTACT_EMAIL}
