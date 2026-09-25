@@ -48,7 +48,7 @@ export function Proyectos() {
               <span aria-hidden="true" className="absolute -bottom-px -left-px z-10 h-7 w-7 border-b-2 border-l-2 border-cyan-500 transition-opacity duration-300 group-hover:opacity-60" />
               <span aria-hidden="true" className="absolute -bottom-px -right-px z-10 h-7 w-7 border-b-2 border-r-2 border-cyan-500 transition-opacity duration-300 group-hover:opacity-60" />
 
-              <div className="relative aspect-[4/3] overflow-hidden sm:aspect-[2/1]">
+              <div className="relative aspect-[4/3] overflow-hidden sm:aspect-[2/1] lg:aspect-[2.3/1]">
                 <img
                   src={project.cover}
                   alt={project.title}
