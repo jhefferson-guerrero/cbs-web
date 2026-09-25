@@ -26,45 +26,67 @@ export function Navbar({ ready }: { ready: boolean }) {
   }, [])
 
   // Scrollspy: highlight the nav link for whichever section currently sits in a
-  // thin band near the vertical center of the viewport. Re-runs on route change
-  // since these sections only exist on the home page.
+  // thin band near the vertical center of the viewport.
   useEffect(() => {
-    const sections = navLinks
-      .map((link) => document.getElementById(link.href.slice(1)))
-      .filter((el): el is HTMLElement => el !== null)
+    if (pathname !== '/') return
 
-    if (sections.length === 0) return
+    // Home's sections are behind a lazy-loaded route chunk + Suspense, so they
+    // may not exist in the DOM yet on the frame this effect first runs. Poll
+    // each frame until they show up instead of giving up permanently.
+    let cancelled = false
+    let rafId: number
+    let observer: IntersectionObserver | undefined
 
-    // The callback only receives entries whose intersection state just changed,
-    // not every observed section -- so we track the currently-visible set
-    // ourselves instead of deriving it from a single callback batch. Otherwise,
-    // scrolling back to the very top (nothing re-entering the band) left the
-    // last-active link stuck highlighted forever.
-    const visible = new Map<string, number>()
+    const trySetup = () => {
+      if (cancelled) return
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (entry.isIntersecting) {
-            visible.set(entry.target.id, entry.boundingClientRect.top)
-          } else {
-            visible.delete(entry.target.id)
+      const sections = navLinks
+        .map((link) => document.getElementById(link.href.slice(1)))
+        .filter((el): el is HTMLElement => el !== null)
+
+      if (sections.length === 0) {
+        rafId = requestAnimationFrame(trySetup)
+        return
+      }
+
+      // The callback only receives entries whose intersection state just
+      // changed, not every observed section -- so we track the
+      // currently-visible set ourselves instead of deriving it from a single
+      // callback batch. Otherwise, scrolling back to the very top (nothing
+      // re-entering the band) left the last-active link stuck highlighted.
+      const visible = new Map<string, number>()
+
+      observer = new IntersectionObserver(
+        (entries) => {
+          for (const entry of entries) {
+            if (entry.isIntersecting) {
+              visible.set(entry.target.id, entry.boundingClientRect.top)
+            } else {
+              visible.delete(entry.target.id)
+            }
           }
-        }
 
-        if (visible.size === 0) {
-          setActiveHref(null)
-          return
-        }
+          if (visible.size === 0) {
+            setActiveHref(null)
+            return
+          }
 
-        const [topId] = [...visible.entries()].sort((a, b) => a[1] - b[1])[0]
-        setActiveHref(`#${topId}`)
-      },
-      { rootMargin: '-45% 0px -50% 0px', threshold: 0 },
-    )
+          const [topId] = [...visible.entries()].sort((a, b) => a[1] - b[1])[0]
+          setActiveHref(`#${topId}`)
+        },
+        { rootMargin: '-45% 0px -50% 0px', threshold: 0 },
+      )
 
-    sections.forEach((section) => observer.observe(section))
-    return () => observer.disconnect()
+      sections.forEach((section) => observer?.observe(section))
+    }
+
+    trySetup()
+
+    return () => {
+      cancelled = true
+      cancelAnimationFrame(rafId)
+      observer?.disconnect()
+    }
   }, [pathname])
 
   useEffect(() => {
