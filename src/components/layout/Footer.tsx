@@ -12,8 +12,8 @@ export function Footer() {
       <span aria-hidden="true" className="absolute bottom-6 left-6 h-6 w-6 border-b-2 border-l-2 border-white/70 lg:bottom-9 lg:left-9 lg:h-7 lg:w-7" />
 
       <div className="mx-auto w-full max-w-[1400px] px-6 py-10 lg:px-10 lg:py-12 xl:px-16 2xl:max-w-[1700px] 2xl:px-14 2xl:py-14">
-        <div className="flex flex-col gap-8 lg:flex-row lg:items-start lg:gap-20 xl:gap-28">
-          <div className="flex flex-col gap-3 lg:max-w-xs">
+        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-[1fr_auto_1fr] lg:items-start lg:gap-12">
+          <div className="flex flex-col gap-3 sm:col-span-2 lg:col-span-1 lg:max-w-xs">
             <a href="#top" aria-label="CBS - Inicio" className="inline-block w-fit">
               <img
                 src={logoCbs}
@@ -28,32 +28,30 @@ export function Footer() {
             </p>
           </div>
 
-          <div className="flex flex-col gap-8 sm:flex-row sm:gap-14 lg:gap-20">
-            <div className="flex flex-col gap-3">
-              <p className="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-cyan-400 2xl:text-sm">Navegación</p>
-              <nav aria-label="Enlaces del sitio" className="flex flex-wrap gap-x-5 gap-y-2">
-                {navLinks.map((link) => (
-                  <a
-                    key={link.href}
-                    href={link.href}
-                    className="text-sm font-semibold text-navy-200 outline-none transition-colors hover:text-white focus-visible:ring-2 focus-visible:ring-cyan-400 2xl:text-base"
-                  >
-                    {link.label}
-                  </a>
-                ))}
-              </nav>
-            </div>
+          <div className="flex flex-col gap-3">
+            <p className="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-cyan-400 2xl:text-sm">Navegación</p>
+            <nav aria-label="Enlaces del sitio" className="flex flex-wrap gap-x-5 gap-y-2">
+              {navLinks.map((link) => (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  className="text-sm font-semibold text-navy-200 outline-none transition-colors hover:text-white focus-visible:ring-2 focus-visible:ring-cyan-400 2xl:text-base"
+                >
+                  {link.label}
+                </a>
+              ))}
+            </nav>
+          </div>
 
-            <div className="flex flex-col gap-3">
-              <p className="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-cyan-400 2xl:text-sm">Contacto</p>
-              <a
-                href={`mailto:${CONTACT_EMAIL}`}
-                className="inline-flex w-fit items-center gap-2 text-sm font-semibold text-navy-200 outline-none transition-colors hover:text-white focus-visible:ring-2 focus-visible:ring-cyan-400 2xl:text-base"
-              >
-                <EnvelopeSimpleIcon size={18} weight="regular" className="shrink-0 text-cyan-400" />
-                {CONTACT_EMAIL}
-              </a>
-            </div>
+          <div className="flex flex-col gap-3 lg:justify-self-end">
+            <p className="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-cyan-400 2xl:text-sm">Contacto</p>
+            <a
+              href={`mailto:${CONTACT_EMAIL}`}
+              className="inline-flex w-fit items-center gap-2 text-sm font-semibold text-navy-200 outline-none transition-colors hover:text-white focus-visible:ring-2 focus-visible:ring-cyan-400 2xl:text-base"
+            >
+              <EnvelopeSimpleIcon size={18} weight="regular" className="shrink-0 text-cyan-400" />
+              {CONTACT_EMAIL}
+            </a>
           </div>
         </div>
 
