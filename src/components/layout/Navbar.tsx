@@ -35,12 +35,30 @@ export function Navbar({ ready }: { ready: boolean }) {
 
     if (sections.length === 0) return
 
+    // The callback only receives entries whose intersection state just changed,
+    // not every observed section -- so we track the currently-visible set
+    // ourselves instead of deriving it from a single callback batch. Otherwise,
+    // scrolling back to the very top (nothing re-entering the band) left the
+    // last-active link stuck highlighted forever.
+    const visible = new Map<string, number>()
+
     const observer = new IntersectionObserver(
       (entries) => {
-        const visible = entries.filter((entry) => entry.isIntersecting)
-        if (visible.length === 0) return
-        const topMost = visible.reduce((a, b) => (a.boundingClientRect.top < b.boundingClientRect.top ? a : b))
-        setActiveHref(`#${topMost.target.id}`)
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            visible.set(entry.target.id, entry.boundingClientRect.top)
+          } else {
+            visible.delete(entry.target.id)
+          }
+        }
+
+        if (visible.size === 0) {
+          setActiveHref(null)
+          return
+        }
+
+        const [topId] = [...visible.entries()].sort((a, b) => a[1] - b[1])[0]
+        setActiveHref(`#${topId}`)
       },
       { rootMargin: '-45% 0px -50% 0px', threshold: 0 },
     )
