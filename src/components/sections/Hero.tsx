@@ -91,7 +91,7 @@ export function Hero({ ready }: { ready: boolean }) {
       >
         <div className="relative z-10 mx-auto w-full max-w-[1400px] px-6 lg:px-10 xl:px-16 2xl:max-w-[1700px] 2xl:px-14">
           <div className="max-w-2xl lg:max-w-3xl 2xl:max-w-4xl">
-            <h1 className="break-words text-[2.5rem] font-semibold leading-[1.1] text-white sm:text-5xl md:text-6xl lg:text-7xl 2xl:text-[5.75rem] [@media(max-height:600px)]:lg:text-5xl [@media(max-height:600px)]:xl:text-6xl">
+            <h1 className="break-words text-[2.375rem] font-semibold leading-[1.1] text-white sm:text-[2.75rem] md:text-[3.5rem] lg:text-[4.25rem] 2xl:text-[5.5rem] [@media(max-height:600px)]:lg:text-5xl [@media(max-height:600px)]:xl:text-6xl">
               {headline.map((line, i) => (
                 <motion.span
                   key={line}
