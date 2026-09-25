@@ -3,8 +3,6 @@ import logoCbs from '@/assets/images/logo-cbs.webp'
 import { navLinks } from '@/lib/nav-links'
 import { CONTACT_EMAIL } from '@/lib/contact'
 
-const footerLinks = [...navLinks, { label: 'Contacto', href: '#contacto' }]
-
 export function Footer() {
   const year = new Date().getFullYear()
 
@@ -34,7 +32,7 @@ export function Footer() {
             <div className="flex flex-col gap-3">
               <p className="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-cyan-400 2xl:text-sm">Navegación</p>
               <nav aria-label="Enlaces del sitio" className="flex flex-wrap gap-x-5 gap-y-2">
-                {footerLinks.map((link) => (
+                {navLinks.map((link) => (
                   <a
                     key={link.href}
                     href={link.href}
