@@ -1,8 +1,9 @@
+import { useEffect, useRef, useState } from 'react'
 import { motion, useReducedMotion } from 'motion/react'
 import { ArrowRightIcon } from '@phosphor-icons/react'
 import { Button } from '@/components/ui/Button'
 import { Counter } from '@/components/ui/Counter'
-import { withCommas } from '@/lib/utils'
+import { cn, withCommas } from '@/lib/utils'
 
 const heroPlanta = '/hero-planta.webp'
 
@@ -23,6 +24,24 @@ const stats: Stat[] = [
 export function Hero({ ready }: { ready: boolean }) {
   const reduceMotion = useReducedMotion()
   const play = reduceMotion || ready
+  const sectionRef = useRef<HTMLElement>(null)
+  // The backdrop is `fixed` only while the hero itself is on screen (that's what
+  // produces the "content scrolls up and over it" reveal). Once the hero has
+  // fully scrolled past, every section below it is opaque, so the backdrop is
+  // invisible either way -- but left as `fixed` it would keep compositing
+  // against the viewport for the rest of the page's smooth-scrolled content,
+  // which is what caused hairline borders elsewhere on the site to shimmer
+  // during scroll. Switching to `absolute` once it's out of view removes that
+  // permanent fixed layer without changing anything visible.
+  const [pinned, setPinned] = useState(true)
+
+  useEffect(() => {
+    const target = sectionRef.current
+    if (!target) return
+    const observer = new IntersectionObserver(([entry]) => setPinned(entry.isIntersecting), { threshold: 0 })
+    observer.observe(target)
+    return () => observer.disconnect()
+  }, [])
 
   const fadeUp = (delay: number) => ({
     initial: reduceMotion ? false : { opacity: 0, y: 18, filter: 'blur(4px)' },
@@ -34,8 +53,8 @@ export function Hero({ ready }: { ready: boolean }) {
 
   return (
     <>
-      {/* Fixed backdrop: stays pinned behind every section; content scrolls up and covers it */}
-      <div className="fixed inset-x-0 top-0 -z-10 h-lvh bg-navy-950">
+      {/* Backdrop: pinned behind the hero while it's in view; content scrolls up and covers it */}
+      <div className={cn('inset-x-0 top-0 -z-10 h-lvh bg-navy-950', pinned ? 'fixed' : 'absolute')}>
         <motion.img
           src={heroPlanta}
           alt=""
@@ -65,7 +84,11 @@ export function Hero({ ready }: { ready: boolean }) {
         <div className="absolute inset-x-0 top-0 h-36 bg-gradient-to-b from-navy-950/55 to-transparent" />
       </div>
 
-      <section id="top" className="relative flex min-h-[100svh] items-center pt-16 lg:pt-20 2xl:pt-24">
+      <section
+        id="top"
+        ref={sectionRef}
+        className="relative flex min-h-[100svh] items-center pt-16 lg:pt-20 2xl:pt-24"
+      >
         <div className="relative z-10 mx-auto w-full max-w-[1400px] px-6 lg:px-10 xl:px-16 2xl:max-w-[1700px] 2xl:px-14">
           <div className="max-w-2xl lg:max-w-3xl 2xl:max-w-4xl">
             <h1 className="break-words text-[2.5rem] font-semibold leading-[1.1] text-white sm:text-5xl md:text-6xl lg:text-7xl 2xl:text-[5.75rem] [@media(max-height:600px)]:lg:text-5xl [@media(max-height:600px)]:xl:text-6xl">
