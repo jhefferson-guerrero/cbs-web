@@ -25,6 +25,7 @@ const EMAIL_MAX = 254
 const PHONE_MAX = 20
 const MESSAGE_MAX = 1000
 const PHONE_PATTERN = /^[0-9+\-\s()]{6,20}$/
+const NAME_ALLOWED_CHARS = /[^\p{L}\s'-]/gu
 
 function validate(values: FormValues): FormErrors {
   const errors: FormErrors = {}
@@ -93,11 +94,19 @@ export function Contacto() {
   const setField =
     (field: keyof FormValues) => (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
       setValues((prev) => ({ ...prev, [field]: event.target.value }))
+      setErrors((prev) => ({ ...prev, [field]: undefined }))
     }
+
+  const setName = (event: ChangeEvent<HTMLInputElement>) => {
+    const filtered = event.target.value.replace(NAME_ALLOWED_CHARS, '')
+    setValues((prev) => ({ ...prev, name: filtered }))
+    setErrors((prev) => ({ ...prev, name: undefined }))
+  }
 
   const setPhone = (event: ChangeEvent<HTMLInputElement>) => {
     const filtered = event.target.value.replace(/[^0-9+\-\s()]/g, '')
     setValues((prev) => ({ ...prev, phone: filtered }))
+    setErrors((prev) => ({ ...prev, phone: undefined }))
   }
 
   const inputClasses = (hasError: boolean) =>
@@ -178,7 +187,7 @@ export function Contacto() {
                   autoComplete="name"
                   maxLength={NAME_MAX}
                   value={values.name}
-                  onChange={setField('name')}
+                  onChange={setName}
                   placeholder="Tu nombre completo"
                   className={inputClasses(Boolean(errors.name))}
                 />
