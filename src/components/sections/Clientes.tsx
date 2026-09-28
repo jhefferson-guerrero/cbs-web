@@ -44,18 +44,16 @@ export function Clientes() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, amount: 0.5 }}
                     transition={{ duration: 0.5, delay: i * 0.05, ease: [0.16, 1, 0.3, 1] }}
-                    className="group relative flex h-24 w-24 shrink-0 items-center justify-center overflow-hidden rounded-2xl bg-white p-4 sm:h-28 sm:w-28 sm:p-5 2xl:h-32 2xl:w-32 2xl:p-6"
+                    className="group relative flex h-24 w-24 shrink-0 items-center justify-center bg-white p-3 sm:h-28 sm:w-28 sm:p-4 2xl:h-32 2xl:w-32 2xl:p-5"
                   >
-                    <span
-                      aria-hidden="true"
-                      className="absolute -right-3 -top-3 h-7 w-7 rotate-45 bg-navy-100"
-                    />
+                    <span aria-hidden="true" className="absolute -left-px -top-px h-3 w-3 border-l-2 border-t-2 border-navy-200 sm:h-3.5 sm:w-3.5" />
+                    <span aria-hidden="true" className="absolute -bottom-px -right-px h-3 w-3 border-b-2 border-r-2 border-navy-200 sm:h-3.5 sm:w-3.5" />
                     <img
                       src={client.logo}
                       alt={client.name}
                       loading="lazy"
                       decoding="async"
-                      className="relative h-full w-full object-contain transition-transform duration-300 group-hover:scale-105"
+                      className="h-full w-full object-contain transition-transform duration-300 group-hover:scale-105"
                     />
                   </motion.div>
                 ))}
