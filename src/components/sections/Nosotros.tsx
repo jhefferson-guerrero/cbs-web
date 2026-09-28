@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { motion, useReducedMotion } from 'motion/react'
-import nosotrosPhoto from '@/assets/images/nosotros.jpg'
+import nosotrosPhoto from '@/assets/images/nosotros.webp'
 
 const timeline = [
   { year: '2009', label: 'Fundación del grupo en Brasil', current: false },
