@@ -2,16 +2,21 @@ import { useEffect, useState } from 'react'
 import { animate, motion, useMotionValue, useReducedMotion } from 'motion/react'
 import { useLocation } from 'react-router-dom'
 import logoMobileCbs from '@/assets/images/logo-mobile-cbs.webp'
+import { HERO_IMAGE_SIZES, HERO_IMAGE_SRC, HERO_IMAGE_SRCSET } from '@/lib/hero-image'
 
-const HERO_IMAGE = '/hero-planta.webp'
-const MIN_DISPLAY_MS = 900
+const MIN_DISPLAY_MS = 400
 const MAX_DISPLAY_MS = 4000
 
-function preloadImage(src: string) {
+function preloadImage(src: string, srcset?: string, sizes?: string) {
   return new Promise<void>((resolve) => {
     const img = new window.Image()
     img.onload = () => resolve()
     img.onerror = () => resolve()
+    // Setting sizes/srcset (in that order, before src) makes the browser fetch
+    // the exact same responsive candidate the real <img> will render, instead
+    // of always warming the cache with one fixed size.
+    if (sizes) img.sizes = sizes
+    if (srcset) img.srcset = srcset
     img.src = src
   })
 }
@@ -37,11 +42,13 @@ export function Preloader({ onReady }: { onReady: () => void }) {
     const maxTimer = wait(MAX_DISPLAY_MS)
     // The Hero background only renders on the home route; don't spend bandwidth
     // fetching it while the preloader gates a project detail page.
-    const heroReady = isHome ? preloadImage(HERO_IMAGE) : Promise.resolve()
+    const heroReady = isHome
+      ? preloadImage(HERO_IMAGE_SRC, HERO_IMAGE_SRCSET, HERO_IMAGE_SIZES)
+      : Promise.resolve()
     const assetsReady = Promise.all([heroReady, document.fonts?.ready ?? Promise.resolve()])
 
     if (!reduceMotion) {
-      animate(count, 92, { duration: 1.6, ease: [0.16, 1, 0.3, 1] })
+      animate(count, 92, { duration: 0.6, ease: [0.16, 1, 0.3, 1] })
     }
 
     Promise.race([Promise.all([assetsReady, minTimer]), maxTimer]).then(() => {
