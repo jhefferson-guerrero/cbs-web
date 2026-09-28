@@ -4,8 +4,7 @@ import { ArrowRightIcon } from '@phosphor-icons/react'
 import { Button } from '@/components/ui/Button'
 import { Counter } from '@/components/ui/Counter'
 import { cn, withCommas } from '@/lib/utils'
-
-const heroPlanta = '/hero-planta.webp'
+import { HERO_IMAGE_SIZES, HERO_IMAGE_SRC, HERO_IMAGE_SRCSET } from '@/lib/hero-image'
 
 const headline = ['Infraestructura,', 'agua y', 'saneamiento']
 
@@ -56,7 +55,9 @@ export function Hero({ ready }: { ready: boolean }) {
       {/* Backdrop: pinned behind the hero while it's in view; content scrolls up and covers it */}
       <div className={cn('inset-x-0 top-0 -z-10 h-lvh bg-navy-950', pinned ? 'fixed' : 'absolute')}>
         <motion.img
-          src={heroPlanta}
+          src={HERO_IMAGE_SRC}
+          srcSet={HERO_IMAGE_SRCSET}
+          sizes={HERO_IMAGE_SIZES}
           alt=""
           aria-hidden="true"
           width={2574}
