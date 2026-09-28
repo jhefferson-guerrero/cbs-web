@@ -49,7 +49,7 @@ function validate(values: FormValues): FormErrors {
   }
 
   if (!values.message.trim()) {
-    errors.message = 'Contanos en qué podemos ayudarte.'
+    errors.message = 'Cuéntanos en qué podemos ayudarte.'
   } else if (values.message.length > MESSAGE_MAX) {
     errors.message = `Máximo ${MESSAGE_MAX} caracteres.`
   }
@@ -144,7 +144,7 @@ export function Contacto() {
               Hablemos de tu próximo proyecto
             </h2>
             <p className="mt-5 max-w-md text-[15.5px] leading-relaxed text-slate-700 2xl:text-lg">
-              Escribinos y te contactamos a la brevedad, o hacelo directo por correo.
+              Escríbenos y te contactamos a la brevedad, o hazlo directo por correo.
             </p>
 
             <div className="mt-10 flex flex-col gap-1">
@@ -230,7 +230,7 @@ export function Contacto() {
                   maxLength={MESSAGE_MAX}
                   value={values.message}
                   onChange={setField('message')}
-                  placeholder="Contanos sobre tu proyecto o consulta"
+                  placeholder="Cuéntanos sobre tu proyecto o consulta"
                   className={`resize-none ${inputClasses(Boolean(errors.message))}`}
                 />
               </FormField>
