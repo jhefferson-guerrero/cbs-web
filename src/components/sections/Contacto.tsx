@@ -4,6 +4,13 @@ import { ArrowRightIcon, CheckCircleIcon, EnvelopeSimpleIcon, WarningCircleIcon 
 import { Button } from '@/components/ui/Button'
 import { CONTACT_EMAIL } from '@/lib/contact'
 
+const WEB3FORMS_ENDPOINT = 'https://api.web3forms.com/submit'
+const WEB3FORMS_ACCESS_KEY = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY
+// A real visitor reads the form and types into it; anything submitted
+// faster than this is almost certainly a script filling every field at once.
+const MIN_SUBMIT_MS = 2000
+const GENERIC_SEND_ERROR = 'No pudimos enviar tu mensaje. Intenta de nuevo o escríbenos directo por correo.'
+
 interface FormValues {
   name: string
   email: string
@@ -90,6 +97,9 @@ export function Contacto() {
   const [values, setValues] = useState<FormValues>(initialValues)
   const [errors, setErrors] = useState<FormErrors>({})
   const [sent, setSent] = useState(false)
+  const [sending, setSending] = useState(false)
+  const [submitError, setSubmitError] = useState<string>()
+  const [mountedAt] = useState(() => Date.now())
 
   const setField =
     (field: keyof FormValues) => (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -114,16 +124,49 @@ export function Contacto() {
       hasError ? 'border-navy-900' : 'border-navy-200'
     }`
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     const nextErrors = validate(values)
     setErrors(nextErrors)
     if (Object.keys(nextErrors).length > 0) return
 
-    // Destino del formulario pendiente de definir (mailto, servicio de
-    // formularios o funcion serverless). Por ahora solo valida y muestra la
-    // confirmacion; no envia datos a ningun lado todavia.
-    setSent(true)
+    // Honeypot: real visitors never see this field, so a filled-in value
+    // means a bot submitted the form. Pretend success without sending.
+    const honeypot = new FormData(event.currentTarget).get('botcheck')
+    const submittedTooFast = Date.now() - mountedAt < MIN_SUBMIT_MS
+    if (honeypot || submittedTooFast) {
+      setSent(true)
+      return
+    }
+
+    setSubmitError(undefined)
+    setSending(true)
+
+    try {
+      const response = await fetch(WEB3FORMS_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({
+          access_key: WEB3FORMS_ACCESS_KEY,
+          subject: `Nuevo mensaje de contacto -- ${values.name}`,
+          from_name: values.name,
+          name: values.name,
+          email: values.email,
+          phone: values.phone || undefined,
+          message: values.message,
+        }),
+      })
+      const result = await response.json()
+      if (result.success) {
+        setSent(true)
+      } else {
+        setSubmitError(GENERIC_SEND_ERROR)
+      }
+    } catch {
+      setSubmitError(GENERIC_SEND_ERROR)
+    } finally {
+      setSending(false)
+    }
   }
 
   return (
@@ -179,6 +222,18 @@ export function Contacto() {
             </div>
           ) : (
             <form onSubmit={handleSubmit} noValidate className="flex w-full max-w-md flex-col gap-7">
+              {/* Honeypot: hidden from real visitors (off-screen, unfocusable,
+                  hidden from assistive tech), but visible in the raw HTML a
+                  bot reads -- if it comes back filled, the submission is spam. */}
+              <input
+                type="checkbox"
+                name="botcheck"
+                tabIndex={-1}
+                autoComplete="off"
+                aria-hidden="true"
+                className="absolute left-[-9999px] h-0 w-0 opacity-0"
+              />
+
               <FormField id={`${formId}-name`} label="Nombre completo" error={errors.name}>
                 <input
                   id={`${formId}-name`}
@@ -235,9 +290,23 @@ export function Contacto() {
                 />
               </FormField>
 
-              <Button type="submit" variant="solid" icon={<ArrowRightIcon size={18} weight="regular" />} className="mt-2 self-start">
-                Enviar
-              </Button>
+              <div className="mt-2 flex flex-col gap-3">
+                <Button
+                  type="submit"
+                  variant="solid"
+                  disabled={sending}
+                  icon={<ArrowRightIcon size={18} weight="regular" />}
+                  className="self-start disabled:cursor-not-allowed disabled:opacity-60"
+                >
+                  {sending ? 'Enviando...' : 'Enviar'}
+                </Button>
+                {submitError && (
+                  <p className="flex items-center gap-1.5 text-sm text-navy-900" role="alert">
+                    <WarningCircleIcon size={16} weight="fill" className="shrink-0" />
+                    {submitError}
+                  </p>
+                )}
+              </div>
             </form>
           )}
         </motion.div>
