@@ -47,14 +47,14 @@ export function Clientes() {
                       whileInView={{ opacity: 1, y: 0 }}
                       viewport={{ once: true, amount: 0.5 }}
                       transition={{ duration: 0.5, delay: i * 0.05, ease: [0.16, 1, 0.3, 1] }}
-                      className={`group flex items-center justify-center border border-white/15 p-6 2xl:p-8 ${featured ? 'h-24' : ''}`}
+                      className={`group flex items-center justify-center bg-white p-6 2xl:p-8 ${featured ? 'h-24' : ''}`}
                     >
                       <img
                         src={client.logo}
                         alt={client.name}
                         loading="lazy"
                         decoding="async"
-                        className={`w-auto object-contain brightness-0 invert opacity-70 transition-all duration-300 group-hover:opacity-100 group-hover:invert-0 group-hover:brightness-100 ${
+                        className={`w-auto object-contain transition-transform duration-300 group-hover:scale-105 ${
                           featured ? 'h-14 2xl:h-16' : 'h-10 2xl:h-12'
                         }`}
                       />
