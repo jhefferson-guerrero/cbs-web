@@ -54,7 +54,7 @@ export function Clientes() {
                         alt={client.name}
                         loading="lazy"
                         decoding="async"
-                        className="h-9 w-auto max-w-full object-contain transition-transform duration-300 group-hover:scale-105 sm:h-11 2xl:h-14"
+                        className="h-10 w-auto max-w-full object-contain transition-transform duration-300 group-hover:scale-105 sm:h-12 2xl:h-16"
                       />
                     </motion.div>
                   ))}
