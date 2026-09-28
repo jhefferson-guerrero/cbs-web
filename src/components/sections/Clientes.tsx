@@ -30,36 +30,44 @@ export function Clientes() {
         </motion.div>
 
         <div className="mt-12 flex flex-col divide-y divide-white/15 2xl:mt-14">
-          {clientGroups.map((group) => (
-            <div key={group.country} className="pt-8 first:pt-0 2xl:pt-10">
-              <p className="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-cyan-400 2xl:text-sm">
-                {group.country}
-              </p>
+          {clientGroups.map((group) => {
+            const solo = group.clients.length === 1
 
-              <div className="mt-6 flex flex-wrap gap-3">
-                {group.clients.map((client, i) => (
-                  <motion.div
-                    key={client.name}
-                    initial={reduceMotion ? false : { opacity: 0, y: 10 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, amount: 0.5 }}
-                    transition={{ duration: 0.5, delay: i * 0.05, ease: [0.16, 1, 0.3, 1] }}
-                    className="group relative flex h-28 w-28 shrink-0 items-center justify-center bg-white p-2.5 sm:h-32 sm:w-32 sm:p-3 2xl:h-40 2xl:w-40 2xl:p-4"
-                  >
-                    <span aria-hidden="true" className="absolute -left-px -top-px h-4 w-4 border-l-2 border-t-2 border-navy-200" />
-                    <span aria-hidden="true" className="absolute -bottom-px -right-px h-4 w-4 border-b-2 border-r-2 border-navy-200" />
-                    <img
-                      src={client.logo}
-                      alt={client.name}
-                      loading="lazy"
-                      decoding="async"
-                      className="h-full w-full object-contain transition-transform duration-300 group-hover:scale-105"
-                    />
-                  </motion.div>
-                ))}
+            return (
+              <div key={group.country} className="pt-8 first:pt-0 2xl:pt-10">
+                <p className="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-cyan-400 2xl:text-sm">
+                  {group.country}
+                </p>
+
+                <div className={`mt-6 flex flex-wrap gap-3 ${solo ? '' : 'justify-center sm:justify-start'}`}>
+                  {group.clients.map((client, i) => (
+                    <motion.div
+                      key={client.name}
+                      initial={reduceMotion ? false : { opacity: 0, y: 10 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true, amount: 0.5 }}
+                      transition={{ duration: 0.5, delay: i * 0.05, ease: [0.16, 1, 0.3, 1] }}
+                      className={`group relative flex shrink-0 items-center justify-center bg-white ${
+                        solo
+                          ? 'h-28 w-56 p-4 sm:h-32 sm:w-72 sm:p-5 2xl:h-40 2xl:w-96 2xl:p-6'
+                          : 'h-28 w-28 p-2.5 sm:h-32 sm:w-32 sm:p-3 2xl:h-40 2xl:w-40 2xl:p-4'
+                      }`}
+                    >
+                      <span aria-hidden="true" className="absolute -left-px -top-px h-4 w-4 border-l-2 border-t-2 border-navy-200" />
+                      <span aria-hidden="true" className="absolute -bottom-px -right-px h-4 w-4 border-b-2 border-r-2 border-navy-200" />
+                      <img
+                        src={client.logo}
+                        alt={client.name}
+                        loading="lazy"
+                        decoding="async"
+                        className="h-full w-full object-contain transition-transform duration-300 group-hover:scale-105"
+                      />
+                    </motion.div>
+                  ))}
+                </div>
               </div>
-            </div>
-          ))}
+            )
+          })}
         </div>
       </div>
     </section>
