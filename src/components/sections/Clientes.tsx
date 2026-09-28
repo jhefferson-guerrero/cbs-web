@@ -49,8 +49,8 @@ export function Clientes() {
                       transition={{ duration: 0.5, delay: i * 0.05, ease: [0.16, 1, 0.3, 1] }}
                       className={`group relative flex items-center justify-center bg-white ${
                         solo
-                          ? 'h-28 w-56 shrink-0 p-2.5 sm:h-32 sm:w-72 sm:p-3 2xl:h-40 2xl:w-96 2xl:p-4'
-                          : 'h-28 min-w-28 max-w-40 flex-1 p-2 sm:h-32 sm:min-w-32 sm:max-w-48 sm:p-2.5 2xl:h-40 2xl:min-w-40 2xl:max-w-56 2xl:p-3'
+                          ? 'h-28 w-56 shrink-0 p-3 sm:h-32 sm:w-72 sm:p-4 2xl:h-40 2xl:w-96 2xl:p-5'
+                          : 'h-28 min-w-28 max-w-40 flex-1 p-2.5 sm:h-32 sm:min-w-32 sm:max-w-48 sm:p-3 2xl:h-40 2xl:min-w-40 2xl:max-w-56 2xl:p-4'
                       }`}
                     >
                       <span aria-hidden="true" className="absolute -left-px -top-px h-4 w-4 border-l-2 border-t-2 border-navy-200" />
