@@ -75,13 +75,10 @@ export function Actuacion() {
                   </p>
 
                   <div className="mt-6 grid grid-cols-2 gap-x-4 gap-y-6 sm:grid-cols-3">
-                    {group.locations.map((location, i) => {
+                    {group.locations.map((location) => {
                       const inner = (
                         <>
-                          <span className="font-mono text-xs font-semibold tracking-[0.15em] text-cyan-500">
-                            {String(i + 1).padStart(2, '0')}
-                          </span>
-                          <span className="mt-2 flex items-center gap-1.5 text-sm font-semibold text-white sm:text-base">
+                          <span className="flex items-center gap-1.5 text-sm font-semibold text-white sm:text-base">
                             <MapPinIcon size={15} weight="regular" className="shrink-0 text-cyan-400" />
                             {location.name}
                             {location.projectSlug && (

@@ -292,7 +292,6 @@ export function Navbar({ ready }: { ready: boolean }) {
                         isActive ? 'text-cyan-700' : 'text-navy-800',
                       )}
                     >
-                      <span className="font-mono text-xs text-cyan-500">{String(i + 1).padStart(2, '0')}</span>
                       <span className="flex-1 transition-colors group-active:text-navy-950">{link.label}</span>
                       <ArrowUpRightIcon
                         size={16}

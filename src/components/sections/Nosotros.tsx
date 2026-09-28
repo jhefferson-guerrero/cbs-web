@@ -170,9 +170,6 @@ export function Nosotros() {
                   transition={{ duration: 0.6, delay: i * 0.08, ease: [0.16, 1, 0.3, 1] }}
                   className="flex flex-col gap-2 sm:px-6 sm:first:pl-0 sm:last:pr-0 2xl:px-8"
                 >
-                  <span className="font-mono text-xs font-semibold tracking-[0.2em] text-cyan-600 2xl:text-sm">
-                    {String(i + 1).padStart(2, '0')}
-                  </span>
                   <dt className="font-mono text-xl font-bold text-navy-900 md:text-2xl 2xl:text-3xl">{code}</dt>
                   <dd className="text-sm leading-snug text-slate-700 2xl:text-base">{label}</dd>
                 </motion.div>

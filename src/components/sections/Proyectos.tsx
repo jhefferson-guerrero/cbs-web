@@ -64,10 +64,7 @@ export function Proyectos() {
               </div>
 
               <div className="p-6 sm:p-8">
-                <span className="font-mono text-xs font-semibold tracking-[0.2em] text-cyan-400 2xl:text-sm">
-                  {String(i + 1).padStart(2, '0')}
-                </span>
-                <h3 className="mt-3 text-xl font-bold leading-snug text-white 2xl:text-2xl">
+                <h3 className="text-xl font-bold leading-snug text-white 2xl:text-2xl">
                   {project.title}
                 </h3>
                 <p className="mt-3 flex items-center gap-1.5 text-sm text-navy-300 2xl:text-base">
