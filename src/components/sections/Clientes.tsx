@@ -30,38 +30,38 @@ export function Clientes() {
         </motion.div>
 
         <div className="mt-12 flex flex-col divide-y divide-white/15 2xl:mt-14">
-          {clientGroups.map((group) => {
-            const featured = group.clients.length === 1
+          {clientGroups.map((group) => (
+            <div key={group.country} className="pt-8 first:pt-0 2xl:pt-10">
+              <p className="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-cyan-400 2xl:text-sm">
+                {group.country}
+              </p>
 
-            return (
-              <div key={group.country} className="pt-8 first:pt-0 2xl:pt-10">
-                <p className="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-cyan-400 2xl:text-sm">
-                  {group.country}
-                </p>
-
-                <div className={`mt-6 grid gap-3 ${featured ? 'grid-cols-1 sm:max-w-xs' : 'grid-cols-2 sm:grid-cols-4'}`}>
-                  {group.clients.map((client, i) => (
-                    <motion.div
-                      key={client.name}
-                      initial={reduceMotion ? false : { opacity: 0, y: 10 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true, amount: 0.5 }}
-                      transition={{ duration: 0.5, delay: i * 0.05, ease: [0.16, 1, 0.3, 1] }}
-                      className="group flex h-20 items-center justify-center bg-white p-3 sm:h-24 sm:p-4 2xl:h-28 2xl:p-5"
-                    >
-                      <img
-                        src={client.logo}
-                        alt={client.name}
-                        loading="lazy"
-                        decoding="async"
-                        className="h-10 w-auto max-w-full object-contain transition-transform duration-300 group-hover:scale-105 sm:h-12 2xl:h-16"
-                      />
-                    </motion.div>
-                  ))}
-                </div>
+              <div className="mt-6 flex flex-wrap gap-3">
+                {group.clients.map((client, i) => (
+                  <motion.div
+                    key={client.name}
+                    initial={reduceMotion ? false : { opacity: 0, y: 10 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, amount: 0.5 }}
+                    transition={{ duration: 0.5, delay: i * 0.05, ease: [0.16, 1, 0.3, 1] }}
+                    className="group relative flex h-24 w-24 shrink-0 items-center justify-center overflow-hidden rounded-2xl bg-white p-4 sm:h-28 sm:w-28 sm:p-5 2xl:h-32 2xl:w-32 2xl:p-6"
+                  >
+                    <span
+                      aria-hidden="true"
+                      className="absolute -right-3 -top-3 h-7 w-7 rotate-45 bg-navy-100"
+                    />
+                    <img
+                      src={client.logo}
+                      alt={client.name}
+                      loading="lazy"
+                      decoding="async"
+                      className="relative h-full w-full object-contain transition-transform duration-300 group-hover:scale-105"
+                    />
+                  </motion.div>
+                ))}
               </div>
-            )
-          })}
+            </div>
+          ))}
         </div>
       </div>
     </section>
