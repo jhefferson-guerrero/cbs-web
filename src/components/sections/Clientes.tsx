@@ -47,7 +47,7 @@ export function Clientes() {
                       whileInView={{ opacity: 1, y: 0 }}
                       viewport={{ once: true, amount: 0.5 }}
                       transition={{ duration: 0.5, delay: i * 0.05, ease: [0.16, 1, 0.3, 1] }}
-                      className="group flex h-24 items-center justify-center bg-white p-4 sm:h-28 sm:p-5 2xl:h-32 2xl:p-6"
+                      className="group flex h-20 items-center justify-center bg-white p-3 sm:h-24 sm:p-4 2xl:h-28 2xl:p-5"
                     >
                       <img
                         src={client.logo}
