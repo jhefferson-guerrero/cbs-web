@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { motion, useReducedMotion } from 'motion/react'
-import experienciaPresa from '@/assets/images/experiencia-presa.jpg'
+import experienciaPresa from '@/assets/images/experiencia-presa.webp'
 import { Counter } from '@/components/ui/Counter'
 import { withCommas } from '@/lib/utils'
 
