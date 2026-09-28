@@ -4,13 +4,13 @@ import experienciaPresa from '@/assets/images/experiencia-presa.webp'
 import { Counter } from '@/components/ui/Counter'
 import { withCommas } from '@/lib/utils'
 
-type Stat = { index: string; label: string; to: number; format: (n: number) => string }
+type Stat = { label: string; to: number; format: (n: number) => string }
 
 const stats: Stat[] = [
-  { index: '01', label: 'Redes de alcantarillado', to: 2000, format: (n) => `${withCommas(n)} km` },
-  { index: '02', label: 'Presas de concreto', to: 3, format: (n) => `${n}` },
-  { index: '03', label: 'Interceptores y líneas de impulsión', to: 40, format: (n) => `${n} km` },
-  { index: '04', label: 'Conexiones domiciliarias', to: 150000, format: (n) => withCommas(n) },
+  { label: 'Redes de alcantarillado', to: 2000, format: (n) => `${withCommas(n)} km` },
+  { label: 'Presas de concreto', to: 3, format: (n) => `${n}` },
+  { label: 'Interceptores y líneas de impulsión', to: 40, format: (n) => `${n} km` },
+  { label: 'Conexiones domiciliarias', to: 150000, format: (n) => withCommas(n) },
 ]
 
 export function Experiencia() {
@@ -84,9 +84,6 @@ export function Experiencia() {
               transition={{ duration: 0.6, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
               className="flex flex-col gap-2 sm:px-6 sm:first:pl-0 sm:last:pr-0"
             >
-              <span className="font-mono text-xs font-semibold tracking-[0.2em] text-cyan-400 2xl:text-sm">
-                {stat.index}
-              </span>
               <p className="font-mono text-2xl font-bold tabular-nums text-white sm:text-3xl xl:text-4xl 2xl:text-5xl">
                 <Counter to={stat.to} format={stat.format} />
               </p>

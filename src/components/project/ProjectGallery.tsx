@@ -158,9 +158,6 @@ export function ProjectGallery({ images }: { images: GalleryImage[] }) {
                       transition={reduceMotion ? { duration: 0 } : { type: 'spring', stiffness: 420, damping: 34 }}
                     />
                   )}
-                  <span className="shrink-0 font-mono text-xs font-semibold text-cyan-500">
-                    {String(i + 1).padStart(2, '0')}
-                  </span>
                   <span className="h-16 w-24 shrink-0 overflow-hidden">
                     <img src={img.src} alt="" loading="lazy" decoding="async" className="h-full w-full object-cover" />
                   </span>

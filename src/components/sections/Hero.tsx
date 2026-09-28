@@ -9,15 +9,15 @@ import { HERO_IMAGE_SIZES, HERO_IMAGE_SRC, HERO_IMAGE_SRCSET } from '@/lib/hero-
 const headline = ['Infraestructura,', 'agua y', 'saneamiento']
 
 type Stat =
-  | { index: string; label: string; kind: 'count'; to: number; format: (n: number) => string }
-  | { index: string; label: string; kind: 'static'; value: string }
+  | { label: string; kind: 'count'; to: number; format: (n: number) => string }
+  | { label: string; kind: 'static'; value: string }
 
 const yearsSince2009 = new Date().getFullYear() - 2009
 
 const stats: Stat[] = [
-  { index: '01', label: 'Proyectos ejecutados', kind: 'count', to: 80, format: (n) => `+${n}` },
-  { index: '02', label: 'Portafolio ejecutado', kind: 'count', to: 1300, format: (n) => `S/ ${withCommas(n)} M+` },
-  { index: '03', label: 'Experiencia en el sector', kind: 'count', to: yearsSince2009, format: (n) => `+${n} años` },
+  { label: 'Proyectos ejecutados', kind: 'count', to: 80, format: (n) => `+${n}` },
+  { label: 'Portafolio ejecutado', kind: 'count', to: 1300, format: (n) => `S/ ${withCommas(n)} M+` },
+  { label: 'Experiencia en el sector', kind: 'count', to: yearsSince2009, format: (n) => `+${n} años` },
 ]
 
 export function Hero({ ready }: { ready: boolean }) {
@@ -158,9 +158,6 @@ export function Hero({ ready }: { ready: boolean }) {
                   transition={{ duration: 0.7, delay: 0.15 + i * 0.12, ease: [0.16, 1, 0.3, 1] }}
                   className="flex flex-col gap-2 lg:px-8 lg:first:pl-0 lg:last:pr-0"
                 >
-                  <span className="font-mono text-xs font-semibold tracking-[0.2em] text-cyan-400 2xl:text-sm">
-                    {stat.index}
-                  </span>
                   <p className="whitespace-nowrap font-mono text-4xl font-bold tabular-nums text-white xl:text-5xl 2xl:text-6xl">
                     {stat.kind === 'count' ? <Counter to={stat.to} format={stat.format} /> : stat.value}
                   </p>
