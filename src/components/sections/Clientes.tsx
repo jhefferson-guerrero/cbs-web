@@ -39,7 +39,7 @@ export function Clientes() {
                   {group.country}
                 </p>
 
-                <div className={`mt-6 flex flex-wrap gap-3 ${solo ? '' : 'justify-center sm:justify-start'}`}>
+                <div className={`mt-6 flex flex-wrap gap-3 ${solo ? '' : 'justify-center'}`}>
                   {group.clients.map((client, i) => (
                     <motion.div
                       key={client.name}
@@ -49,7 +49,7 @@ export function Clientes() {
                       transition={{ duration: 0.5, delay: i * 0.05, ease: [0.16, 1, 0.3, 1] }}
                       className={`group relative flex shrink-0 items-center justify-center bg-white ${
                         solo
-                          ? 'h-28 w-56 p-4 sm:h-32 sm:w-72 sm:p-5 2xl:h-40 2xl:w-96 2xl:p-6'
+                          ? 'h-28 w-56 p-3 sm:h-32 sm:w-72 sm:p-4 2xl:h-40 2xl:w-96 2xl:p-5'
                           : 'h-28 w-28 p-2.5 sm:h-32 sm:w-32 sm:p-3 2xl:h-40 2xl:w-40 2xl:p-4'
                       }`}
                     >
