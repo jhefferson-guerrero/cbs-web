@@ -150,6 +150,7 @@ export function Contacto() {
           access_key: WEB3FORMS_ACCESS_KEY,
           subject: `Nuevo mensaje de contacto -- ${values.name}`,
           from_name: values.name,
+          replyto: values.email,
           name: values.name,
           email: values.email,
           phone: values.phone || undefined,
