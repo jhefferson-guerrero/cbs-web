@@ -30,39 +30,28 @@ export function Actuacion() {
         </motion.div>
 
         <div className="mt-12 2xl:mt-14">
-          <motion.div
-            initial={reduceMotion ? false : { opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-            className="relative isolate w-full overflow-hidden"
-            style={{ aspectRatio: '3200 / 1520' }}
-          >
+          <div className="relative isolate w-full overflow-hidden bg-navy-900" style={{ aspectRatio: '3200 / 1520' }}>
             {/* La proporción del contenedor (arriba) es exactamente la de la imagen fuente
-                -- así se ve completa, sin recortar nada y sin dejar espacio vacío alrededor. */}
+                -- así se ve completa, sin recortar nada y sin dejar espacio vacío alrededor.
+                El fondo navy de respaldo evita que se vea un hueco blanco mientras la
+                imagen (pesada, ~970kb) todavía está cargando. */}
             <motion.img
               src={mapaCobertura}
               alt="Mapa de cobertura de CBS en Perú y Brasil, con las regiones donde opera en cada país"
               loading="lazy"
               decoding="async"
-              initial={reduceMotion ? false : { scale: 1.08 }}
-              whileInView={{ scale: 1 }}
+              initial={reduceMotion ? false : { opacity: 0, scale: 1.06 }}
+              whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true, amount: 0.3 }}
-              transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+              transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
               className="h-full w-full object-cover"
             />
 
             <span aria-hidden="true" className="absolute right-6 top-6 h-6 w-6 border-r-2 border-t-2 border-white/70 lg:right-9 lg:top-9 lg:h-7 lg:w-7" />
             <span aria-hidden="true" className="absolute bottom-6 left-6 h-6 w-6 border-b-2 border-l-2 border-white/70 lg:bottom-9 lg:left-9 lg:h-7 lg:w-7" />
-          </motion.div>
+          </div>
 
-          <motion.div
-            initial={reduceMotion ? false : { opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-            className="mt-4 bg-navy-950 p-10 sm:p-12 2xl:p-14"
-          >
+          <div className="mt-4 bg-navy-950 p-10 sm:p-12 2xl:p-14">
             <div className="flex flex-col gap-10">
               {locationGroups.map((group) => (
                 <div key={group.country}>
@@ -116,7 +105,7 @@ export function Actuacion() {
                 </div>
               ))}
             </div>
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>
