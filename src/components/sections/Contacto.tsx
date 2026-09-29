@@ -313,7 +313,7 @@ export function Contacto() {
                 <textarea
                   id={`${formId}-message`}
                   name="message"
-                  rows={4}
+                  rows={3}
                   maxLength={MESSAGE_MAX}
                   value={values.message}
                   onChange={setField('message')}

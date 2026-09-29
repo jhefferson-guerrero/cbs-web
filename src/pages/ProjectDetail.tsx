@@ -40,7 +40,7 @@ export function ProjectDetail() {
     <main key={project.slug}>
       <ProjectHero project={project} />
       <ProjectFacts project={project} />
-      <PartnerLogosSection />
+      {project.showPartnerLogos && <PartnerLogosSection />}
       <ProjectGallery images={project.gallery} />
 
       {nextProject && (

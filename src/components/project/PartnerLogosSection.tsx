@@ -20,14 +20,14 @@ export function PartnerLogosSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.5 }}
               transition={{ duration: 0.5, delay: i * 0.05, ease: [0.16, 1, 0.3, 1] }}
-              className="flex items-center justify-center border border-navy-100 p-6 2xl:p-8"
+              className="flex items-center justify-center border border-navy-100 p-5 2xl:p-7"
             >
               <img
                 src={partner.logo}
                 alt={partner.name}
                 loading="lazy"
                 className={cn(
-                  'w-auto object-contain grayscale opacity-60 transition-all duration-300 hover:opacity-100 hover:grayscale-0',
+                  'w-auto object-contain',
                   partner.large ? 'h-14 2xl:h-16' : 'h-12 2xl:h-14',
                 )}
               />
