@@ -40,11 +40,15 @@ export function Actuacion() {
           >
             {/* La proporción del contenedor (arriba) es exactamente la de la imagen fuente
                 -- así se ve completa, sin recortar nada y sin dejar espacio vacío alrededor. */}
-            <img
+            <motion.img
               src={mapaCobertura}
               alt="Mapa de cobertura de CBS en Perú y Brasil, con las regiones donde opera en cada país"
               loading="lazy"
               decoding="async"
+              initial={reduceMotion ? false : { scale: 1.08 }}
+              whileInView={{ scale: 1 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
               className="h-full w-full object-cover"
             />
 
@@ -67,7 +71,7 @@ export function Actuacion() {
                   </p>
 
                   <div className="mt-6 grid grid-cols-2 gap-x-6 gap-y-5 sm:grid-cols-3">
-                    {group.locations.map((location) => {
+                    {group.locations.map((location, i) => {
                       const inner = (
                         <span className="flex items-center gap-1.5 text-sm font-semibold text-white sm:text-base">
                           <MapPinIcon size={15} weight="regular" className="shrink-0 text-cyan-400" />
@@ -82,22 +86,30 @@ export function Actuacion() {
                         </span>
                       )
 
+                      const itemMotion = {
+                        initial: reduceMotion ? false : { opacity: 0, y: 12 },
+                        whileInView: { opacity: 1, y: 0 },
+                        viewport: { once: true, amount: 0.6 },
+                        transition: { duration: 0.5, delay: i * 0.06, ease: [0.16, 1, 0.3, 1] as const },
+                      }
+
                       if (location.projectSlug) {
                         return (
-                          <Link
-                            key={location.name}
-                            to={`/proyectos/${location.projectSlug}`}
-                            className="group flex flex-col outline-none focus-visible:ring-2 focus-visible:ring-cyan-400"
-                          >
-                            {inner}
-                          </Link>
+                          <motion.div key={location.name} {...itemMotion}>
+                            <Link
+                              to={`/proyectos/${location.projectSlug}`}
+                              className="group flex flex-col outline-none focus-visible:ring-2 focus-visible:ring-cyan-400"
+                            >
+                              {inner}
+                            </Link>
+                          </motion.div>
                         )
                       }
 
                       return (
-                        <div key={location.name} className="flex flex-col">
+                        <motion.div key={location.name} {...itemMotion} className="flex flex-col">
                           {inner}
-                        </div>
+                        </motion.div>
                       )
                     })}
                   </div>

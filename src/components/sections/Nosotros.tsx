@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { motion, useReducedMotion } from 'motion/react'
 import nosotrosPhoto from '@/assets/images/nosotros.webp'
 
@@ -18,10 +17,6 @@ const certifications = [
 
 export function Nosotros() {
   const reduceMotion = useReducedMotion()
-  const [textInView, setTextInView] = useState(false)
-  const [photoInView, setPhotoInView] = useState(false)
-  const showText = reduceMotion || textInView
-  const showPhoto = reduceMotion || photoInView
 
   const reveal = (delay = 0) => ({
     initial: reduceMotion ? false : { opacity: 0, y: 28 },
@@ -33,17 +28,50 @@ export function Nosotros() {
   return (
     <section id="nosotros" className="bg-white">
       <div className="grid lg:grid-cols-2">
-        <motion.div viewport={{ once: true, amount: 0.3 }} onViewportEnter={() => setTextInView(true)}>
+        {/* El fondo navy (clip-path wipe) vive separado del contenido de texto -- un
+            elemento con clip-path activo hace que el navegador calcule mal la
+            visibilidad de sus hijos para IntersectionObserver mientras se está
+            revelando, así que el timeline (más abajo del todo) podía terminar de
+            "animarse" sin haber estado nunca realmente en pantalla. Cada elemento de
+            texto ahora observa su propia entrada, sin quedar anidado dentro del
+            clip-path. */}
+        <div className="relative h-full overflow-hidden">
           <motion.div
-            initial={reduceMotion ? false : { clipPath: 'inset(0% 100% 0% 0%)', opacity: 0.6 }}
-            animate={showText ? { clipPath: 'inset(0% 0% 0% 0%)', opacity: 1 } : undefined}
+            aria-hidden="true"
+            initial={reduceMotion ? false : { clipPath: 'inset(0% 100% 0% 0%)' }}
+            whileInView={{ clipPath: 'inset(0% 0% 0% 0%)' }}
+            viewport={{ once: true, amount: 0.15 }}
             transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-            className="h-full bg-navy-950 px-6 py-20 sm:px-10 sm:py-24 lg:px-16 lg:py-24 2xl:px-24 2xl:py-32"
-          >
-            <p className="font-mono text-sm font-semibold uppercase tracking-[0.2em] text-cyan-400 2xl:text-base">Sobre CBS</p>
-            <h2 className="mt-4 text-3xl font-bold leading-tight text-white md:text-4xl 2xl:text-5xl">Nosotros</h2>
+            className="absolute inset-0 bg-navy-950"
+          />
 
-            <div className="mt-8 flex max-w-xl flex-col gap-5 2xl:max-w-2xl">
+          <div className="relative px-6 py-20 sm:px-10 sm:py-24 lg:px-16 lg:py-24 2xl:px-24 2xl:py-32">
+            <motion.p
+              initial={reduceMotion ? false : { opacity: 0, y: 14 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.8 }}
+              transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+              className="font-mono text-sm font-semibold uppercase tracking-[0.2em] text-cyan-400 2xl:text-base"
+            >
+              Sobre CBS
+            </motion.p>
+            <motion.h2
+              initial={reduceMotion ? false : { opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.8 }}
+              transition={{ duration: 0.65, delay: 0.06, ease: [0.16, 1, 0.3, 1] }}
+              className="mt-4 text-3xl font-bold leading-tight text-white md:text-4xl 2xl:text-5xl"
+            >
+              Nosotros
+            </motion.h2>
+
+            <motion.div
+              initial={reduceMotion ? false : { opacity: 0, y: 18 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.4 }}
+              transition={{ duration: 0.65, delay: 0.12, ease: [0.16, 1, 0.3, 1] }}
+              className="mt-8 flex max-w-xl flex-col gap-5 2xl:max-w-2xl"
+            >
               <p className="text-[15.5px] leading-relaxed text-navy-200 2xl:text-lg">
                 Somos una organización con sólida trayectoria en la ejecución de obras de saneamiento,
                 agua potable, drenaje urbano e infraestructura hidráulica. Desde nuestra fundación en
@@ -55,15 +83,16 @@ export function Nosotros() {
                 no solo materializamos los proyectos de nuestros clientes, sino también confianza y
                 bienestar para las comunidades donde operamos.
               </p>
-            </div>
+            </motion.div>
 
             <div className="mt-10 max-w-xl 2xl:max-w-2xl">
               {timeline.map((item, i) => (
                 <motion.div
                   key={item.year}
                   initial={reduceMotion ? false : { opacity: 0, y: 10 }}
-                  animate={showText ? { opacity: 1, y: 0 } : undefined}
-                  transition={{ duration: 0.5, delay: 0.5 + i * 0.15, ease: [0.16, 1, 0.3, 1] }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.5 }}
+                  transition={{ duration: 0.5, delay: i * 0.12, ease: [0.16, 1, 0.3, 1] }}
                   className="flex gap-4"
                 >
                   <div className="flex flex-col items-center">
@@ -93,15 +122,17 @@ export function Nosotros() {
                 </motion.div>
               ))}
             </div>
-          </motion.div>
-        </motion.div>
+          </div>
+        </div>
 
-        <motion.div viewport={{ once: true, amount: 0.3 }} onViewportEnter={() => setPhotoInView(true)}>
+        <div className="relative h-full min-h-[360px] overflow-hidden lg:min-h-0">
           <motion.div
-            initial={reduceMotion ? false : { clipPath: 'inset(0% 0% 0% 100%)', opacity: 0.6 }}
-            animate={showPhoto ? { clipPath: 'inset(0% 0% 0% 0%)', opacity: 1 } : undefined}
+            aria-hidden="true"
+            initial={reduceMotion ? false : { clipPath: 'inset(0% 0% 0% 100%)' }}
+            whileInView={{ clipPath: 'inset(0% 0% 0% 0%)' }}
+            viewport={{ once: true, amount: 0.15 }}
             transition={{ duration: 0.9, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
-            className="relative h-full min-h-[360px] overflow-hidden lg:min-h-0"
+            className="absolute inset-0"
           >
             <motion.img
               src={nosotrosPhoto}
@@ -111,39 +142,43 @@ export function Nosotros() {
               loading="lazy"
               decoding="async"
               initial={reduceMotion ? false : { scale: 1.15 }}
-              animate={showPhoto ? { scale: 1 } : undefined}
+              whileInView={{ scale: 1 }}
+              viewport={{ once: true, amount: 0.15 }}
               transition={{ duration: 1.1, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
               className="absolute inset-0 h-full w-full object-cover object-[65%_65%]"
             />
             <div className="absolute inset-0 bg-gradient-to-br from-cyan-700/70 via-navy-900/30 to-navy-950/70" />
-
-            <motion.span
-              aria-hidden="true"
-              initial={reduceMotion ? false : { opacity: 0, scale: 1.6 }}
-              animate={showPhoto ? { opacity: 1, scale: 1 } : undefined}
-              transition={{ duration: 0.4, delay: 0.75, ease: 'easeOut' }}
-              className="absolute right-9 top-9 h-7 w-7 border-r-2 border-t-2 border-white/70"
-            />
-            <motion.span
-              aria-hidden="true"
-              initial={reduceMotion ? false : { opacity: 0, scale: 1.6 }}
-              animate={showPhoto ? { opacity: 1, scale: 1 } : undefined}
-              transition={{ duration: 0.4, delay: 0.85, ease: 'easeOut' }}
-              className="absolute bottom-9 left-9 h-7 w-7 border-b-2 border-l-2 border-white/70"
-            />
-
-            <motion.div
-              initial={reduceMotion ? false : { opacity: 0, y: 8 }}
-              animate={showPhoto ? { opacity: 1, y: 0 } : undefined}
-              transition={{ duration: 0.5, delay: 0.9, ease: 'easeOut' }}
-              className="absolute bottom-10 right-9 flex flex-col items-end gap-0.5 text-right"
-            >
-              <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-white">
-                Fig. 01 — Proyecto CBS, Perú
-              </span>
-            </motion.div>
           </motion.div>
-        </motion.div>
+
+          <motion.span
+            aria-hidden="true"
+            initial={reduceMotion ? false : { opacity: 0, scale: 1.6 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true, amount: 0.8 }}
+            transition={{ duration: 0.4, delay: 0.5, ease: 'easeOut' }}
+            className="absolute right-9 top-9 h-7 w-7 border-r-2 border-t-2 border-white/70"
+          />
+          <motion.span
+            aria-hidden="true"
+            initial={reduceMotion ? false : { opacity: 0, scale: 1.6 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true, amount: 0.8 }}
+            transition={{ duration: 0.4, delay: 0.6, ease: 'easeOut' }}
+            className="absolute bottom-9 left-9 h-7 w-7 border-b-2 border-l-2 border-white/70"
+          />
+
+          <motion.div
+            initial={reduceMotion ? false : { opacity: 0, y: 8 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.8 }}
+            transition={{ duration: 0.5, delay: 0.65, ease: 'easeOut' }}
+            className="absolute bottom-10 right-9 flex flex-col items-end gap-0.5 text-right"
+          >
+            <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-white">
+              Fig. 01 — Proyecto CBS, Perú
+            </span>
+          </motion.div>
+        </div>
       </div>
 
       <div className="border-t border-navy-100">
