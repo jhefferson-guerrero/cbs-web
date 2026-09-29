@@ -309,6 +309,10 @@ export function Contacto() {
                 >
                   {sending ? 'Enviando...' : 'Enviar'}
                 </Button>
+                <p className="max-w-sm text-xs leading-relaxed text-slate-500">
+                  Al enviar este formulario, aceptas que usemos tus datos únicamente para responder tu
+                  consulta, conforme a la Ley de Protección de Datos Personales (Ley N.º 29733).
+                </p>
                 {submitError && (
                   <p className="flex items-center gap-1.5 text-sm text-navy-900" role="alert">
                     <WarningCircleIcon size={16} weight="fill" className="shrink-0" />
