@@ -105,18 +105,21 @@ export function Contacto() {
     (field: keyof FormValues) => (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
       setValues((prev) => ({ ...prev, [field]: event.target.value }))
       setErrors((prev) => ({ ...prev, [field]: undefined }))
+      setSubmitError(undefined)
     }
 
   const setName = (event: ChangeEvent<HTMLInputElement>) => {
     const filtered = event.target.value.replace(NAME_ALLOWED_CHARS, '')
     setValues((prev) => ({ ...prev, name: filtered }))
     setErrors((prev) => ({ ...prev, name: undefined }))
+    setSubmitError(undefined)
   }
 
   const setPhone = (event: ChangeEvent<HTMLInputElement>) => {
     const filtered = event.target.value.replace(/[^0-9+\-\s()]/g, '')
     setValues((prev) => ({ ...prev, phone: filtered }))
     setErrors((prev) => ({ ...prev, phone: undefined }))
+    setSubmitError(undefined)
   }
 
   const inputClasses = (hasError: boolean) =>
@@ -126,6 +129,7 @@ export function Contacto() {
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
+    if (sending) return
     const nextErrors = validate(values)
     setErrors(nextErrors)
     if (Object.keys(nextErrors).length > 0) return
@@ -142,19 +146,23 @@ export function Contacto() {
     setSubmitError(undefined)
     setSending(true)
 
+    const name = values.name.trim()
+    const email = values.email.trim()
+    const phone = values.phone.trim()
+
     try {
       const response = await fetch(WEB3FORMS_ENDPOINT, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
         body: JSON.stringify({
           access_key: WEB3FORMS_ACCESS_KEY,
-          subject: `Nuevo mensaje de contacto -- ${values.name}`,
-          from_name: values.name,
-          replyto: values.email,
-          name: values.name,
-          email: values.email,
-          phone: values.phone || undefined,
-          message: values.message,
+          subject: `Nuevo mensaje de contacto -- ${name}`,
+          from_name: name,
+          replyto: email,
+          name,
+          email,
+          phone: phone || undefined,
+          message: values.message.trim(),
         }),
       })
       const result = await response.json()
@@ -214,7 +222,7 @@ export function Contacto() {
           className="flex px-6 py-16 sm:px-10 sm:py-20 lg:px-16 lg:py-24 2xl:px-24 2xl:py-32"
         >
           {sent ? (
-            <div className="max-w-md">
+            <div role="status" className="max-w-md">
               <CheckCircleIcon size={40} weight="regular" className="text-cyan-600" />
               <h3 className="mt-5 text-xl font-bold text-navy-900 2xl:text-2xl">Mensaje recibido</h3>
               <p className="mt-3 text-[15.5px] leading-relaxed text-slate-700 2xl:text-lg">
