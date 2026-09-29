@@ -43,10 +43,10 @@ export function Clientes() {
                   {group.clients.map((client, i) => (
                     <motion.div
                       key={client.name}
-                      initial={reduceMotion ? false : { opacity: 0, y: 10 }}
+                      initial={reduceMotion ? false : { opacity: 0, y: 18 }}
                       whileInView={{ opacity: 1, y: 0 }}
                       viewport={{ once: true, amount: 0.5 }}
-                      transition={{ duration: 0.5, delay: i * 0.05, ease: [0.16, 1, 0.3, 1] }}
+                      transition={{ duration: 0.6, delay: i * 0.08, ease: [0.16, 1, 0.3, 1] }}
                       className={`group relative flex items-center justify-center bg-white ${
                         solo
                           ? 'h-20 w-56 shrink-0 p-3 sm:h-24 sm:w-72 sm:p-4 2xl:h-28 2xl:w-96 2xl:p-5'
