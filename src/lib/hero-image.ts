@@ -1,6 +1,6 @@
-// Single source of truth for the hero background's responsive variants.
-// Kept in sync manually with the inline preload hint in index.html, which
-// can't import this module.
+// Fuente única de verdad para las variantes responsive del fondo del hero.
+// Se mantiene sincronizado a mano con el aviso de precarga en
+// public/hero-preload.js, que no puede importar este módulo.
 export const HERO_IMAGE_SRC = '/hero-planta.webp'
 export const HERO_IMAGE_SIZES = '100vw'
 export const HERO_IMAGE_SRCSET =

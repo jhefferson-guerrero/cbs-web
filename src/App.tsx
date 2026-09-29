@@ -6,8 +6,9 @@ import { Preloader } from '@/components/layout/Preloader'
 import { SmoothScroll } from '@/components/layout/SmoothScroll'
 import { Footer } from '@/components/layout/Footer'
 
-// Code-split by route: each page's JS only downloads when it's actually
-// visited, instead of home and every project page shipping in one bundle.
+// División de código por ruta: el JS de cada página se descarga solo cuando
+// se visita, en vez de que el Home y cada página de proyecto vayan en un
+// solo bundle.
 const Home = lazy(() => import('@/pages/Home').then((m) => ({ default: m.Home })))
 const ProjectDetail = lazy(() => import('@/pages/ProjectDetail').then((m) => ({ default: m.ProjectDetail })))
 

@@ -12,8 +12,9 @@ import App from './App.tsx'
 if ('scrollRestoration' in history) history.scrollRestoration = 'manual'
 window.scrollTo(0, 0)
 
-// Hero image preload hint now lives in index.html as an inline script, so it
-// runs before this bundle downloads/parses instead of after.
+// El aviso de precarga de la imagen del hero ahora vive en
+// public/hero-preload.js, referenciado desde index.html, así corre antes de
+// que este bundle se descargue/parsee, no después.
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

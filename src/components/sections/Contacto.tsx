@@ -6,8 +6,9 @@ import { CONTACT_EMAIL } from '@/lib/contact'
 
 const WEB3FORMS_ENDPOINT = 'https://api.web3forms.com/submit'
 const WEB3FORMS_ACCESS_KEY = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY
-// A real visitor reads the form and types into it; anything submitted
-// faster than this is almost certainly a script filling every field at once.
+// Una persona real lee el formulario y escribe en él; cualquier envío más
+// rápido que esto es casi seguro un script llenando todos los campos de una
+// sola vez.
 const MIN_SUBMIT_MS = 2000
 const GENERIC_SEND_ERROR = 'No pudimos enviar tu mensaje. Intenta de nuevo o escríbenos directo por correo.'
 
@@ -135,8 +136,9 @@ export function Contacto() {
     setErrors(nextErrors)
     if (Object.keys(nextErrors).length > 0) return
 
-    // Honeypot: real visitors never see this field, so a filled-in value
-    // means a bot submitted the form. Pretend success without sending.
+    // Honeypot: los visitantes reales nunca ven este campo, así que si llega
+    // con un valor es porque lo llenó un bot. Simulamos que se envió sin
+    // mandar nada en realidad.
     const honeypot = new FormData(event.currentTarget).get('botcheck')
     const submittedTooFast = Date.now() - mountedAt < MIN_SUBMIT_MS
     if (honeypot || submittedTooFast) {
@@ -251,9 +253,10 @@ export function Contacto() {
                 transition={{ duration: reduceMotion ? 0 : 0.3 }}
                 className="flex w-full max-w-md flex-col gap-5"
               >
-                {/* Honeypot: hidden from real visitors (off-screen, unfocusable,
-                  hidden from assistive tech), but visible in the raw HTML a
-                  bot reads -- if it comes back filled, the submission is spam. */}
+                {/* Honeypot: oculto para visitantes reales (fuera de pantalla,
+                  no enfocable, oculto para tecnología de asistencia), pero
+                  visible en el HTML crudo que lee un bot -- si vuelve lleno,
+                  el envío es spam. */}
               <input
                 type="checkbox"
                 name="botcheck"

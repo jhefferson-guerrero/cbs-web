@@ -12,9 +12,9 @@ function preloadImage(src: string, srcset?: string, sizes?: string) {
     const img = new window.Image()
     img.onload = () => resolve()
     img.onerror = () => resolve()
-    // Setting sizes/srcset (in that order, before src) makes the browser fetch
-    // the exact same responsive candidate the real <img> will render, instead
-    // of always warming the cache with one fixed size.
+    // Poner sizes/srcset (en ese orden, antes que src) hace que el navegador
+    // descargue exactamente la misma variante responsive que va a mostrar el
+    // <img> real, en vez de precargar siempre un tamaño fijo.
     if (sizes) img.sizes = sizes
     if (srcset) img.srcset = srcset
     img.src = src
@@ -40,8 +40,9 @@ export function Preloader({ onReady }: { onReady: () => void }) {
 
     const minTimer = wait(MIN_DISPLAY_MS)
     const maxTimer = wait(MAX_DISPLAY_MS)
-    // The Hero background only renders on the home route; don't spend bandwidth
-    // fetching it while the preloader gates a project detail page.
+    // El fondo del Hero solo se muestra en la ruta de inicio; no gastar datos
+    // descargándolo mientras el preloader bloquea una página de detalle de
+    // proyecto.
     const heroReady = isHome
       ? preloadImage(HERO_IMAGE_SRC, HERO_IMAGE_SRCSET, HERO_IMAGE_SIZES)
       : Promise.resolve()

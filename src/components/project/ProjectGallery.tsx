@@ -18,9 +18,10 @@ export function ProjectGallery({ images }: { images: GalleryImage[] }) {
   const markLoaded = (i: number) => setLoaded((prev) => (prev[i] ? prev : { ...prev, [i]: true }))
   const isLoaded = (i: number) => reduceMotion || loaded[i]
 
-  // Alternative to pinch-zoom (disabled above via touch-none): double-tap the
-  // fullscreen photo to zoom in, drag to pan while zoomed, double-tap again
-  // (or switch photos / close) to reset.
+  // Alternativa al pellizco para hacer zoom (desactivado arriba con
+  // touch-none): doble toque en la foto a pantalla completa para acercar,
+  // arrastrar para moverse mientras está ampliada, y doble toque de nuevo
+  // (o cambiar de foto / cerrar) para restablecer.
   const ZOOM_SCALE = 2.4
   const lightboxFrameRef = useRef<HTMLDivElement>(null)
   const lastTapRef = useRef(0)
@@ -28,10 +29,11 @@ export function ProjectGallery({ images }: { images: GalleryImage[] }) {
   const zoomScale = useMotionValue(1)
   const zoomX = useMotionValue(0)
   const zoomY = useMotionValue(0)
-  // Computed explicitly from the frame's real size instead of letting Motion
-  // auto-measure the already-scaled element: that measurement was landing
-  // short, so dragging felt like it hit a wall well before reaching the
-  // actual corners of the zoomed photo.
+  // Calculado explícitamente a partir del tamaño real del marco, en vez de
+  // dejar que Motion mida automáticamente el elemento ya escalado: esa
+  // medición quedaba corta, entonces al arrastrar se sentía como chocar
+  // contra una pared mucho antes de llegar a las esquinas reales de la foto
+  // ampliada.
   const [dragBounds, setDragBounds] = useState({ top: 0, left: 0, right: 0, bottom: 0 })
 
   const resetZoom = useCallback(() => {
@@ -62,9 +64,10 @@ export function ProjectGallery({ images }: { images: GalleryImage[] }) {
     }
   }, [zoomed, zoomScale, resetZoom, reduceMotion])
 
-  // Reset zoom whenever the photo or open state changes, computed during
-  // render (React's recommended way to reset state on a prop change) instead
-  // of a useEffect, so switching photos doesn't cost an extra render pass.
+  // Restablece el zoom cada vez que cambia la foto o el estado de apertura,
+  // calculado durante el render (la forma recomendada por React para
+  // resetear estado ante un cambio de prop) en vez de un useEffect, así
+  // cambiar de foto no cuesta un render extra.
   const zoomResetKey = `${lightboxOpen}-${active}`
   const [lastZoomResetKey, setLastZoomResetKey] = useState(zoomResetKey)
   if (zoomResetKey !== lastZoomResetKey) {
@@ -75,10 +78,11 @@ export function ProjectGallery({ images }: { images: GalleryImage[] }) {
     zoomY.set(0)
   }
 
-  // Kept separate from the keydown effect below: this one must NOT depend on
-  // `active`, otherwise switching photos re-runs it and toggles the scroll
-  // lock + Lenis stop/start on every navigation, which is what was causing
-  // the stutter on mobile when browsing images.
+  // Se mantiene separado del efecto de keydown de abajo: este NO debe
+  // depender de `active`, porque si no, al cambiar de foto se vuelve a
+  // ejecutar y activa/desactiva el bloqueo de scroll + Lenis stop/start en
+  // cada navegación, que era justo lo que causaba el tironeo en mobile al
+  // recorrer las imágenes.
   useEffect(() => {
     if (!lightboxOpen) return
 

@@ -24,14 +24,15 @@ export function Hero({ ready }: { ready: boolean }) {
   const reduceMotion = useReducedMotion()
   const play = reduceMotion || ready
   const sectionRef = useRef<HTMLElement>(null)
-  // The backdrop is `fixed` only while the hero itself is on screen (that's what
-  // produces the "content scrolls up and over it" reveal). Once the hero has
-  // fully scrolled past, every section below it is opaque, so the backdrop is
-  // invisible either way -- but left as `fixed` it would keep compositing
-  // against the viewport for the rest of the page's smooth-scrolled content,
-  // which is what caused hairline borders elsewhere on the site to shimmer
-  // during scroll. Switching to `absolute` once it's out of view removes that
-  // permanent fixed layer without changing anything visible.
+  // El fondo es `fixed` solo mientras el hero está en pantalla (eso es lo que
+  // genera el efecto de "el contenido sube y lo tapa"). Una vez que el hero
+  // ya se scrolleó del todo, cada sección de abajo es opaca, así que el
+  // fondo queda invisible de cualquier forma -- pero si se dejara como
+  // `fixed`, seguiría componiéndose contra la ventana durante el resto del
+  // scroll suave de la página, que era justo lo que hacía titilar los bordes
+  // finos en otras partes del sitio durante el scroll. Cambiarlo a
+  // `absolute` una vez que sale de vista elimina esa capa fija permanente
+  // sin cambiar nada visible.
   const [pinned, setPinned] = useState(true)
 
   useEffect(() => {
@@ -52,7 +53,7 @@ export function Hero({ ready }: { ready: boolean }) {
 
   return (
     <>
-      {/* Backdrop: pinned behind the hero while it's in view; content scrolls up and covers it */}
+      {/* Fondo: fijo detrás del hero mientras está en vista; el contenido sube y lo tapa */}
       <div className={cn('inset-x-0 top-0 -z-10 h-lvh bg-navy-950', pinned ? 'fixed' : 'absolute')}>
         <motion.img
           src={HERO_IMAGE_SRC}

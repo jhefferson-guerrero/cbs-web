@@ -1,8 +1,9 @@
-// Runs immediately during HTML parsing, before the app's JS bundle
-// downloads/executes, so the browser can start fetching the hero image
-// as early as possible. Keep this srcset in sync with
-// src/lib/hero-image.ts (it can't be imported here). Home route only:
-// the hero background isn't used on project detail pages.
+// Corre de inmediato durante el parseo del HTML, antes de que se
+// descargue/ejecute el bundle de JS de la app, así el navegador puede
+// empezar a descargar la imagen del hero lo antes posible. Mantené este
+// srcset sincronizado con src/lib/hero-image.ts (no se puede importar acá).
+// Solo para la ruta de inicio: el fondo del hero no se usa en las páginas
+// de detalle de proyecto.
 if (location.pathname === '/') {
   var heroPreload = document.createElement('link')
   heroPreload.rel = 'preload'
