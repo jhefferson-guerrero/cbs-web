@@ -3,8 +3,9 @@ import { Link } from 'react-router-dom'
 import { ArrowUpRightIcon, MapPinIcon } from '@phosphor-icons/react'
 import { locationGroups } from '@/lib/actuacion'
 
-// Temporary stand-in for the coverage map (see plan: a flat custom SVG of
-// Perú + Brasil replaces this once the simplified country outlines are traced).
+// Reemplazo temporal del mapa de cobertura (según el plan: un SVG plano
+// personalizado de Perú + Brasil lo va a reemplazar una vez que se tracen
+// los contornos simplificados de los países).
 const MAP_PLACEHOLDER = '/hero-planta.webp'
 
 export function Actuacion() {

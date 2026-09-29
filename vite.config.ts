@@ -14,9 +14,10 @@ export default defineConfig({
   build: {
     rollupOptions: {
       output: {
-        // Split rarely-changing vendor code into its own chunks so a future
-        // deploy that only touches app code doesn't force returning visitors
-        // to re-download React/motion/lenis too -- those chunks stay cached.
+        // Separa el código de las librerías que rara vez cambian en sus
+        // propios chunks, así un futuro deploy que solo toque código de la
+        // app no obliga a los visitantes que vuelven a descargar
+        // React/motion/lenis de nuevo -- esos chunks se quedan en caché.
         manualChunks(id) {
           if (!id.includes('node_modules')) return
           if (id.includes('motion')) return 'vendor-motion'

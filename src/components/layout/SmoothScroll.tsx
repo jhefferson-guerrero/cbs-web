@@ -5,9 +5,10 @@ import { useLocation, useNavigate } from 'react-router-dom'
 const scrollToHash = (lenis: ReturnType<typeof useLenis>, hash: string, immediate = false) => {
   const target = document.getElementById(hash.slice(1))
   if (!target || !lenis) return
-  // After a route change the document height changes drastically; Lenis's cached
-  // scroll limit can still reflect the previous page until it re-measures, which
-  // clamps scrollTo short of the real target. Force a synchronous recalculation first.
+  // Después de un cambio de ruta, la altura del documento cambia drásticamente;
+  // el límite de scroll que Lenis tiene en caché puede seguir reflejando la
+  // página anterior hasta que vuelva a medir, lo que hace que scrollTo se
+  // quede corto del destino real. Forzamos un recálculo sincrónico primero.
   lenis.resize()
   const navHeight = document.getElementById('site-navbar')?.offsetHeight ?? 0
   if (immediate) {
@@ -56,11 +57,12 @@ function AnchorScrollBridge() {
     return () => document.removeEventListener('click', onClick)
   }, [lenis, navigate, location.pathname])
 
-  // Handles both cross-page anchor navigation (Link to="/#nosotros" from a
-  // detail page) and scrolling back to top on a plain route change. This only
-  // fires for navigations made through react-router (Link/navigate), i.e.
-  // arriving fresh on a page -- so the jump is instant, not animated: there's
-  // no "current" scroll position for a smooth scroll to give continuity from.
+  // Maneja tanto la navegación a anclas entre páginas (Link to="/#nosotros"
+  // desde una página de detalle) como volver arriba del todo en un cambio de
+  // ruta simple. Esto solo se dispara en navegaciones hechas a través de
+  // react-router (Link/navigate), o sea, al llegar recién a una página -- por
+  // eso el salto es instantáneo, no animado: no hay una posición de scroll
+  // "actual" desde la cual un scroll suave pueda dar continuidad.
   useEffect(() => {
     if (!lenis) return
 

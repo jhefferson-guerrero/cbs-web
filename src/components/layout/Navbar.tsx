@@ -25,14 +25,15 @@ export function Navbar({ ready }: { ready: boolean }) {
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
-  // Scrollspy: highlight the nav link for whichever section currently sits in a
-  // thin band near the vertical center of the viewport.
+  // Scrollspy: resalta el link del menú de la sección que está actualmente en
+  // una franja angosta cerca del centro vertical de la pantalla.
   useEffect(() => {
     if (pathname !== '/') return
 
-    // Home's sections are behind a lazy-loaded route chunk + Suspense, so they
-    // may not exist in the DOM yet on the frame this effect first runs. Poll
-    // each frame until they show up instead of giving up permanently.
+    // Las secciones del Home están detrás de un chunk de ruta con carga
+    // diferida (lazy) + Suspense, así que pueden no existir todavía en el DOM
+    // cuando este efecto corre por primera vez. Se revisa en cada frame hasta
+    // que aparezcan, en vez de rendirse para siempre.
     let cancelled = false
     let rafId: number
     let observer: IntersectionObserver | undefined
@@ -49,11 +50,12 @@ export function Navbar({ ready }: { ready: boolean }) {
         return
       }
 
-      // The callback only receives entries whose intersection state just
-      // changed, not every observed section -- so we track the
-      // currently-visible set ourselves instead of deriving it from a single
-      // callback batch. Otherwise, scrolling back to the very top (nothing
-      // re-entering the band) left the last-active link stuck highlighted.
+      // El callback solo recibe las secciones cuyo estado de intersección
+      // acaba de cambiar, no todas las secciones observadas -- por eso acá se
+      // lleva el registro de cuáles están visibles en vez de derivarlo de un
+      // solo lote de callback. Si no, al volver a scrollear hasta arriba del
+      // todo (sin que nada vuelva a entrar en la franja), el último link
+      // activo se quedaba marcado para siempre.
       const visible = new Map<string, number>()
 
       observer = new IntersectionObserver(
