@@ -1,7 +1,7 @@
 import { motion, useReducedMotion } from 'motion/react'
 import { Link } from 'react-router-dom'
 import { ArrowUpRightIcon, MapPinIcon } from '@phosphor-icons/react'
-import { CoverageMap } from '@/components/sections/CoverageMap'
+import mapaCobertura from '@/assets/images/actuacion-mapa.webp'
 import { locationGroups } from '@/lib/actuacion'
 
 export function Actuacion() {
@@ -35,9 +35,15 @@ export function Actuacion() {
             whileInView={{ opacity: 1 }}
             viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-            className="relative isolate flex items-center overflow-hidden bg-navy-900 p-6 sm:p-8 lg:p-10"
+            className="relative isolate flex min-h-[320px] items-center justify-center overflow-hidden bg-navy-900 p-4 sm:p-6 lg:min-h-[480px]"
           >
-            <CoverageMap />
+            <img
+              src={mapaCobertura}
+              alt="Mapa de cobertura de CBS en Perú y Brasil, con las regiones donde opera en cada país"
+              loading="lazy"
+              decoding="async"
+              className="h-full w-full object-contain"
+            />
 
             <span aria-hidden="true" className="absolute right-6 top-6 h-6 w-6 border-r-2 border-t-2 border-white/70 lg:right-9 lg:top-9 lg:h-7 lg:w-7" />
             <span aria-hidden="true" className="absolute bottom-6 left-6 h-6 w-6 border-b-2 border-l-2 border-white/70 lg:bottom-9 lg:left-9 lg:h-7 lg:w-7" />
