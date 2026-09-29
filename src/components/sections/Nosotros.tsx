@@ -28,98 +28,88 @@ export function Nosotros() {
   return (
     <section id="nosotros" className="bg-white">
       <div className="grid lg:grid-cols-2">
-        <motion.div
-          initial={reduceMotion ? false : { opacity: 0, x: -24 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true, amount: 0.15 }}
-          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="h-full bg-navy-950 px-6 py-20 sm:px-10 sm:py-24 lg:px-16 lg:py-24 2xl:px-24 2xl:py-32"
-        >
-          <motion.p
-            initial={reduceMotion ? false : { opacity: 0, y: 14 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.8 }}
-            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-            className="font-mono text-sm font-semibold uppercase tracking-[0.2em] text-cyan-400 2xl:text-base"
-          >
-            Sobre CBS
-          </motion.p>
-          <motion.h2
-            initial={reduceMotion ? false : { opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.8 }}
-            transition={{ duration: 0.65, delay: 0.06, ease: [0.16, 1, 0.3, 1] }}
-            className="mt-4 text-3xl font-bold leading-tight text-white md:text-4xl 2xl:text-5xl"
-          >
-            Nosotros
-          </motion.h2>
+        <div className="relative h-full overflow-hidden">
+          <div className="h-full bg-navy-950 px-6 py-20 sm:px-10 sm:py-24 lg:px-16 lg:py-24 2xl:px-24 2xl:py-32">
+            <motion.p
+              initial={reduceMotion ? false : { opacity: 0, y: 14 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.8 }}
+              transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+              className="font-mono text-sm font-semibold uppercase tracking-[0.2em] text-cyan-400 2xl:text-base"
+            >
+              Sobre CBS
+            </motion.p>
+            <motion.h2
+              initial={reduceMotion ? false : { opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.8 }}
+              transition={{ duration: 0.65, delay: 0.06, ease: [0.16, 1, 0.3, 1] }}
+              className="mt-4 text-3xl font-bold leading-tight text-white md:text-4xl 2xl:text-5xl"
+            >
+              Nosotros
+            </motion.h2>
 
-          <motion.div
-            initial={reduceMotion ? false : { opacity: 0, y: 18 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.4 }}
-            transition={{ duration: 0.65, delay: 0.12, ease: [0.16, 1, 0.3, 1] }}
-            className="mt-8 flex max-w-xl flex-col gap-5 2xl:max-w-2xl"
-          >
-            <p className="text-[15.5px] leading-relaxed text-navy-200 2xl:text-lg">
-              Somos una organización con sólida trayectoria en la ejecución de obras de saneamiento,
-              agua potable, drenaje urbano e infraestructura hidráulica. Desde nuestra fundación en
-              2009, hemos asumido el compromiso de transformar vidas a través de soluciones integrales
-              que garanticen acceso sostenible a agua potable y sistemas de desagüe eficientes.
-            </p>
-            <p className="text-[15.5px] leading-relaxed text-navy-200 2xl:text-lg">
-              Guiados por valores como integridad, responsabilidad social y cuidado ambiental, en CBS
-              no solo materializamos los proyectos de nuestros clientes, sino también confianza y
-              bienestar para las comunidades donde operamos.
-            </p>
-          </motion.div>
+            <motion.div
+              initial={reduceMotion ? false : { opacity: 0, y: 18 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.4 }}
+              transition={{ duration: 0.65, delay: 0.12, ease: [0.16, 1, 0.3, 1] }}
+              className="mt-8 flex max-w-xl flex-col gap-5 2xl:max-w-2xl"
+            >
+              <p className="text-[15.5px] leading-relaxed text-navy-200 2xl:text-lg">
+                Somos una organización con sólida trayectoria en la ejecución de obras de saneamiento,
+                agua potable, drenaje urbano e infraestructura hidráulica. Desde nuestra fundación en
+                2009, hemos asumido el compromiso de transformar vidas a través de soluciones integrales
+                que garanticen acceso sostenible a agua potable y sistemas de desagüe eficientes.
+              </p>
+              <p className="text-[15.5px] leading-relaxed text-navy-200 2xl:text-lg">
+                Guiados por valores como integridad, responsabilidad social y cuidado ambiental, en CBS
+                no solo materializamos los proyectos de nuestros clientes, sino también confianza y
+                bienestar para las comunidades donde operamos.
+              </p>
+            </motion.div>
 
-          <div className="mt-10 max-w-xl 2xl:max-w-2xl">
-            {timeline.map((item, i) => (
-              <motion.div
-                key={item.year}
-                initial={reduceMotion ? false : { opacity: 0, y: 10 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.5 }}
-                transition={{ duration: 0.5, delay: i * 0.12, ease: [0.16, 1, 0.3, 1] }}
-                className="flex gap-4"
-              >
-                <div className="flex flex-col items-center">
-                  <span
-                    className={
-                      item.current
-                        ? 'h-3 w-3 shrink-0 rounded-full bg-cyan-500 ring-4 ring-cyan-500/25'
-                        : 'h-2.5 w-2.5 shrink-0 rounded-full bg-navy-500'
-                    }
-                  />
-                  {i < timeline.length - 1 && <span className="mt-1 w-px flex-1 bg-navy-700" />}
-                </div>
-                <div className={i < timeline.length - 1 ? 'pb-6' : ''}>
-                  <p className="font-mono text-sm font-semibold tracking-[0.1em] text-cyan-400 sm:text-xs 2xl:text-sm">
-                    {item.year}
-                  </p>
-                  <p
-                    className={
-                      item.current
-                        ? 'mt-0.5 text-base font-semibold text-white sm:text-sm 2xl:text-base'
-                        : 'mt-0.5 text-base text-navy-200 sm:text-sm 2xl:text-base'
-                    }
-                  >
-                    {item.label}
-                  </p>
-                </div>
-              </motion.div>
-            ))}
+            <div className="mt-10 max-w-xl 2xl:max-w-2xl">
+              {timeline.map((item, i) => (
+                <motion.div
+                  key={item.year}
+                  initial={reduceMotion ? false : { opacity: 0, y: 10 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.5 }}
+                  transition={{ duration: 0.5, delay: i * 0.12, ease: [0.16, 1, 0.3, 1] }}
+                  className="flex gap-4"
+                >
+                  <div className="flex flex-col items-center">
+                    <span
+                      className={
+                        item.current
+                          ? 'h-3 w-3 shrink-0 rounded-full bg-cyan-500 ring-4 ring-cyan-500/25'
+                          : 'h-2.5 w-2.5 shrink-0 rounded-full bg-navy-500'
+                      }
+                    />
+                    {i < timeline.length - 1 && <span className="mt-1 w-px flex-1 bg-navy-700" />}
+                  </div>
+                  <div className={i < timeline.length - 1 ? 'pb-6' : ''}>
+                    <p className="font-mono text-sm font-semibold tracking-[0.1em] text-cyan-400 sm:text-xs 2xl:text-sm">
+                      {item.year}
+                    </p>
+                    <p
+                      className={
+                        item.current
+                          ? 'mt-0.5 text-base font-semibold text-white sm:text-sm 2xl:text-base'
+                          : 'mt-0.5 text-base text-navy-200 sm:text-sm 2xl:text-base'
+                      }
+                    >
+                      {item.label}
+                    </p>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
           </div>
-        </motion.div>
+        </div>
 
-        <motion.div
-          initial={reduceMotion ? false : { opacity: 0, x: 24 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true, amount: 0.15 }}
-          transition={{ duration: 0.8, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
-          className="relative h-full min-h-[360px] overflow-hidden lg:min-h-0"
-        >
+        <div className="relative h-full min-h-[360px] overflow-hidden lg:min-h-0">
           <motion.img
             src={nosotrosPhoto}
             alt="Obra de infraestructura ejecutada por CBS"
@@ -163,7 +153,20 @@ export function Nosotros() {
               Fig. 01 — Proyecto CBS, Perú
             </span>
           </motion.div>
-        </motion.div>
+
+          {/* Cortina navy que tapa la foto y se achica hacia la izquierda, revelándola
+              de derecha a izquierda -- el mismo efecto que antes daba el clip-path,
+              pero con scaleX (transform), que es confiable en este entorno. */}
+          <motion.div
+            aria-hidden="true"
+            initial={reduceMotion ? false : { scaleX: 1 }}
+            whileInView={{ scaleX: 0 }}
+            viewport={{ once: true, amount: 0.15 }}
+            transition={{ duration: 0.8, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
+            style={{ transformOrigin: 'left' }}
+            className="absolute inset-0 bg-navy-950"
+          />
+        </div>
       </div>
 
       <div className="border-t border-navy-100">
