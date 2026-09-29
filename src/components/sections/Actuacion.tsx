@@ -29,20 +29,23 @@ export function Actuacion() {
           </p>
         </motion.div>
 
-        <div className="mt-12 grid gap-4 lg:grid-cols-2 2xl:mt-14">
+        <div className="mt-12 2xl:mt-14">
           <motion.div
             initial={reduceMotion ? false : { opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-            className="relative isolate flex min-h-[320px] items-center justify-center overflow-hidden bg-navy-900 p-4 sm:p-6 lg:min-h-[480px]"
+            className="relative isolate w-full overflow-hidden"
+            style={{ aspectRatio: '3200 / 1520' }}
           >
+            {/* La proporción del contenedor (arriba) es exactamente la de la imagen fuente
+                -- así se ve completa, sin recortar nada y sin dejar espacio vacío alrededor. */}
             <img
               src={mapaCobertura}
               alt="Mapa de cobertura de CBS en Perú y Brasil, con las regiones donde opera en cada país"
               loading="lazy"
               decoding="async"
-              className="h-full w-full object-contain"
+              className="h-full w-full object-cover"
             />
 
             <span aria-hidden="true" className="absolute right-6 top-6 h-6 w-6 border-r-2 border-t-2 border-white/70 lg:right-9 lg:top-9 lg:h-7 lg:w-7" />
@@ -54,31 +57,29 @@ export function Actuacion() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-            className="bg-navy-950 p-8 sm:p-10 2xl:p-12"
+            className="mt-4 bg-navy-950 p-10 sm:p-12 2xl:p-14"
           >
-            <div className="flex flex-col divide-y divide-white/15">
+            <div className="flex flex-col gap-10">
               {locationGroups.map((group) => (
-                <div key={group.country} className="pt-8 first:pt-0">
+                <div key={group.country}>
                   <p className="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-cyan-400 2xl:text-sm">
                     {group.country}
                   </p>
 
-                  <div className="mt-6 grid grid-cols-2 gap-x-4 gap-y-6 sm:grid-cols-3">
+                  <div className="mt-6 grid grid-cols-2 gap-x-6 gap-y-5 sm:grid-cols-3">
                     {group.locations.map((location) => {
                       const inner = (
-                        <>
-                          <span className="flex items-center gap-1.5 text-sm font-semibold text-white sm:text-base">
-                            <MapPinIcon size={15} weight="regular" className="shrink-0 text-cyan-400" />
-                            {location.name}
-                            {location.projectSlug && (
-                              <ArrowUpRightIcon
-                                size={13}
-                                weight="regular"
-                                className="shrink-0 text-navy-300 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-cyan-300"
-                              />
-                            )}
-                          </span>
-                        </>
+                        <span className="flex items-center gap-1.5 text-sm font-semibold text-white sm:text-base">
+                          <MapPinIcon size={15} weight="regular" className="shrink-0 text-cyan-400" />
+                          {location.name}
+                          {location.projectSlug && (
+                            <ArrowUpRightIcon
+                              size={13}
+                              weight="regular"
+                              className="shrink-0 text-navy-300 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-cyan-300"
+                            />
+                          )}
+                        </span>
                       )
 
                       if (location.projectSlug) {
