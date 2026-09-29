@@ -78,12 +78,12 @@ function FormField({
 }) {
   return (
     <div className="flex flex-col gap-2">
-      <label htmlFor={id} className="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-cyan-700">
+      <label htmlFor={id} className="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-cyan-700 2xl:text-sm">
         {label}
       </label>
       {children}
       <p
-        className={`flex min-h-[1.25rem] items-center gap-1.5 text-sm text-navy-900 ${error ? '' : 'invisible'}`}
+        className={`flex min-h-[1.25rem] items-center gap-1.5 text-sm text-navy-900 2xl:text-base ${error ? '' : 'invisible'}`}
         role={error ? 'alert' : undefined}
       >
         <WarningCircleIcon size={16} weight="fill" className="shrink-0" />
@@ -125,7 +125,7 @@ export function Contacto() {
   }
 
   const inputClasses = (hasError: boolean) =>
-    `border-b bg-transparent py-2 text-base text-navy-900 outline-none transition-colors placeholder:text-slate-400 focus:border-cyan-600 ${
+    `border-b bg-transparent py-2 text-base text-navy-900 outline-none transition-colors placeholder:text-slate-400 focus:border-cyan-600 2xl:text-lg ${
       hasError ? 'border-navy-900' : 'border-navy-200'
     }`
 
@@ -251,7 +251,7 @@ export function Contacto() {
                 animate={{ opacity: 1 }}
                 exit={reduceMotion ? undefined : { opacity: 0 }}
                 transition={{ duration: reduceMotion ? 0 : 0.3 }}
-                className="flex w-full max-w-md flex-col gap-5"
+                className="flex w-full max-w-md flex-col gap-5 2xl:max-w-lg 2xl:gap-6"
               >
                 {/* Honeypot: oculto para visitantes reales (fuera de pantalla,
                   no enfocable, oculto para tecnología de asistencia), pero
@@ -332,11 +332,11 @@ export function Contacto() {
                 >
                   {sending ? 'Enviando...' : 'Enviar'}
                 </Button>
-                <p className="max-w-sm text-xs leading-relaxed text-slate-500">
+                <p className="max-w-sm text-xs leading-relaxed text-slate-500 2xl:max-w-sm 2xl:text-sm">
                   Al enviar este formulario, aceptas que usemos tus datos solo para responder tu consulta.
                 </p>
                 {submitError && (
-                  <p className="flex items-center gap-1.5 text-sm text-navy-900" role="alert">
+                  <p className="flex items-center gap-1.5 text-sm text-navy-900 2xl:text-base" role="alert">
                     <WarningCircleIcon size={16} weight="fill" className="shrink-0" />
                     {submitError}
                   </p>
