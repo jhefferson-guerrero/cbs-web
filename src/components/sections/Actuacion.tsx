@@ -40,15 +40,29 @@ export function Actuacion() {
               alt="Mapa de cobertura de CBS en Perú y Brasil, con las regiones donde opera en cada país"
               loading="lazy"
               decoding="async"
-              initial={reduceMotion ? false : { opacity: 0, scale: 1.06 }}
-              whileInView={{ opacity: 1, scale: 1 }}
+              initial={reduceMotion ? false : { scale: 1.06 }}
+              whileInView={{ scale: 1 }}
               viewport={{ once: true, amount: 0.3 }}
-              transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+              transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1] }}
               className="h-full w-full object-cover"
             />
 
             <span aria-hidden="true" className="absolute right-6 top-6 h-6 w-6 border-r-2 border-t-2 border-white/70 lg:right-9 lg:top-9 lg:h-7 lg:w-7" />
             <span aria-hidden="true" className="absolute bottom-6 left-6 h-6 w-6 border-b-2 border-l-2 border-white/70 lg:bottom-9 lg:left-9 lg:h-7 lg:w-7" />
+
+            {/* Cortina navy que se achica hacia la derecha, revelando el mapa de
+                izquierda a derecha -- el mismo efecto (y la misma técnica, scaleX en
+                vez de clip-path) que ya funciona bien en la foto de Nosotros. Sin esto,
+                el mapa solo tenía un fundido+zoom plano que se sentía más brusco. */}
+            <motion.div
+              aria-hidden="true"
+              initial={reduceMotion ? false : { scaleX: 1 }}
+              whileInView={{ scaleX: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+              style={{ transformOrigin: 'right' }}
+              className="absolute inset-0 bg-navy-900"
+            />
           </div>
 
           <div className="mt-4 bg-navy-950 p-10 sm:p-12 2xl:p-14">
