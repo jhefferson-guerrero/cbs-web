@@ -1,5 +1,5 @@
 import { useId, useState, type ChangeEvent, type FormEvent, type ReactNode } from 'react'
-import { motion, useReducedMotion } from 'motion/react'
+import { AnimatePresence, motion, useReducedMotion } from 'motion/react'
 import { ArrowRightIcon, CheckCircleIcon, EnvelopeSimpleIcon, WarningCircleIcon } from '@phosphor-icons/react'
 import { Button } from '@/components/ui/Button'
 import { CONTACT_EMAIL } from '@/lib/contact'
@@ -81,12 +81,13 @@ function FormField({
         {label}
       </label>
       {children}
-      {error && (
-        <p className="flex items-center gap-1.5 text-sm text-navy-900" role="alert">
-          <WarningCircleIcon size={16} weight="fill" className="shrink-0" />
-          {error}
-        </p>
-      )}
+      <p
+        className={`flex min-h-[1.25rem] items-center gap-1.5 text-sm text-navy-900 ${error ? '' : 'invisible'}`}
+        role={error ? 'alert' : undefined}
+      >
+        <WarningCircleIcon size={16} weight="fill" className="shrink-0" />
+        {error}
+      </p>
     </div>
   )
 }
@@ -215,23 +216,42 @@ export function Contacto() {
         </motion.div>
 
         <motion.div
+          layout={!reduceMotion}
           initial={reduceMotion ? false : { opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
           className="flex px-6 py-16 sm:px-10 sm:py-20 lg:px-16 lg:py-24 2xl:px-24 2xl:py-32"
         >
-          {sent ? (
-            <div role="status" className="max-w-md">
-              <CheckCircleIcon size={40} weight="regular" className="text-cyan-600" />
-              <h3 className="mt-5 text-xl font-bold text-navy-900 2xl:text-2xl">Mensaje recibido</h3>
-              <p className="mt-3 text-[15.5px] leading-relaxed text-slate-700 2xl:text-lg">
-                Gracias por escribirnos. Te responderemos a la brevedad a tu correo.
-              </p>
-            </div>
-          ) : (
-            <form onSubmit={handleSubmit} noValidate className="flex w-full max-w-md flex-col gap-7">
-              {/* Honeypot: hidden from real visitors (off-screen, unfocusable,
+          <AnimatePresence mode="wait">
+            {sent ? (
+              <motion.div
+                key="sent"
+                role="status"
+                initial={reduceMotion ? false : { opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={reduceMotion ? undefined : { opacity: 0 }}
+                transition={{ duration: reduceMotion ? 0 : 0.3 }}
+                className="max-w-md"
+              >
+                <CheckCircleIcon size={40} weight="regular" className="text-cyan-600" />
+                <h3 className="mt-5 text-xl font-bold text-navy-900 2xl:text-2xl">Mensaje recibido</h3>
+                <p className="mt-3 text-[15.5px] leading-relaxed text-slate-700 2xl:text-lg">
+                  Gracias por escribirnos. Te responderemos a la brevedad a tu correo.
+                </p>
+              </motion.div>
+            ) : (
+              <motion.form
+                key="form"
+                onSubmit={handleSubmit}
+                noValidate
+                initial={reduceMotion ? false : { opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={reduceMotion ? undefined : { opacity: 0 }}
+                transition={{ duration: reduceMotion ? 0 : 0.3 }}
+                className="flex w-full max-w-md flex-col gap-7"
+              >
+                {/* Honeypot: hidden from real visitors (off-screen, unfocusable,
                   hidden from assistive tech), but visible in the raw HTML a
                   bot reads -- if it comes back filled, the submission is spam. */}
               <input
@@ -319,8 +339,9 @@ export function Contacto() {
                   </p>
                 )}
               </div>
-            </form>
-          )}
+              </motion.form>
+            )}
+          </AnimatePresence>
         </motion.div>
       </div>
     </section>
