@@ -48,6 +48,8 @@ export interface Project {
   amount: string
   funding: Party
   gallery: GalleryImage[]
+  /** Los logos de aliados y financiamiento son específicos de este proyecto (entidades de agua de Cusco). */
+  showPartnerLogos?: boolean
 }
 
 export const projects: Project[] = [
@@ -61,6 +63,7 @@ export const projects: Project[] = [
     contractor: { name: 'Consorcio Río Huatanay', logo: logoContratistaRioHuatanay, note: '50% de participación' },
     amount: 'S/ 62,826,654',
     funding: { name: 'Banco Mundial', logo: logoFinanciamientoBancoMundial },
+    showPartnerLogos: true,
     gallery: [
       { src: galeriaRioHuatanay01, alt: 'Vista aérea del reservorio de agua potable junto a la ciudad de Cusco' },
       { src: galeriaRioHuatanay02, alt: 'Vista aérea del reservorio en etapa avanzada de construcción' },
