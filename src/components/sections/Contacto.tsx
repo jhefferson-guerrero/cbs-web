@@ -249,7 +249,7 @@ export function Contacto() {
                 animate={{ opacity: 1 }}
                 exit={reduceMotion ? undefined : { opacity: 0 }}
                 transition={{ duration: reduceMotion ? 0 : 0.3 }}
-                className="flex w-full max-w-md flex-col gap-7"
+                className="flex w-full max-w-md flex-col gap-5"
               >
                 {/* Honeypot: hidden from real visitors (off-screen, unfocusable,
                   hidden from assistive tech), but visible in the raw HTML a
