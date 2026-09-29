@@ -1,12 +1,8 @@
 import { motion, useReducedMotion } from 'motion/react'
 import { Link } from 'react-router-dom'
 import { ArrowUpRightIcon, MapPinIcon } from '@phosphor-icons/react'
+import mapaCobertura from '@/assets/images/actuacion-mapa.webp'
 import { locationGroups } from '@/lib/actuacion'
-
-// Reemplazo temporal del mapa de cobertura (según el plan: un SVG plano
-// personalizado de Perú + Brasil lo va a reemplazar una vez que se tracen
-// los contornos simplificados de los países).
-const MAP_PLACEHOLDER = '/hero-planta.webp'
 
 export function Actuacion() {
   const reduceMotion = useReducedMotion()
@@ -39,26 +35,18 @@ export function Actuacion() {
             whileInView={{ opacity: 1 }}
             viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-            className="relative isolate min-h-[320px] overflow-hidden lg:min-h-[480px]"
+            className="relative isolate flex min-h-[320px] items-center justify-center overflow-hidden bg-navy-900 p-4 sm:p-6 lg:min-h-[480px]"
           >
             <img
-              src={MAP_PLACEHOLDER}
-              alt=""
-              aria-hidden="true"
+              src={mapaCobertura}
+              alt="Mapa de cobertura de CBS en Perú y Brasil, con las regiones donde opera en cada país"
               loading="lazy"
               decoding="async"
-              className="absolute inset-0 h-full w-full object-cover object-[70%_50%] saturate-[1.02] contrast-[1.02] brightness-[0.85]"
+              className="h-full w-full object-contain"
             />
-            <div className="absolute inset-0 bg-gradient-to-br from-cyan-700/40 via-navy-900/25 to-navy-950/70" />
 
             <span aria-hidden="true" className="absolute right-6 top-6 h-6 w-6 border-r-2 border-t-2 border-white/70 lg:right-9 lg:top-9 lg:h-7 lg:w-7" />
             <span aria-hidden="true" className="absolute bottom-6 left-6 h-6 w-6 border-b-2 border-l-2 border-white/70 lg:bottom-9 lg:left-9 lg:h-7 lg:w-7" />
-
-            <div className="absolute bottom-9 left-9 right-9">
-              <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-white/75">
-                Imagen provisional — mapa de cobertura en preparación
-              </span>
-            </div>
           </motion.div>
 
           <motion.div
