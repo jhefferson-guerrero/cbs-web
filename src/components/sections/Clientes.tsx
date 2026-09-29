@@ -34,7 +34,7 @@ export function Clientes() {
             const solo = group.clients.length === 1
 
             return (
-              <div key={group.country} className="pt-8 first:pt-0 2xl:pt-10">
+              <div key={group.country} className="py-4 first:pt-0 last:pb-0 2xl:py-5">
                 <p className="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-cyan-400 2xl:text-sm">
                   {group.country}
                 </p>
