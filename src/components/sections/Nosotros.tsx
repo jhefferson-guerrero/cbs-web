@@ -81,7 +81,7 @@ export function Nosotros() {
                     {i < timeline.length - 1 && <span className="mt-1 w-px flex-1 bg-navy-700" />}
                   </div>
                   <div className={i < timeline.length - 1 ? 'pb-6 lg:pb-[clamp(0.875rem,2.5vh,1.5rem)]' : ''}>
-                    <p className="font-mono text-sm font-semibold tracking-[0.1em] text-cyan-400 sm:text-xs 2xl:text-sm">
+                    <p className="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-cyan-400 2xl:text-sm">
                       {item.year}
                     </p>
                     <p
