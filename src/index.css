@@ -38,6 +38,25 @@
   --shadow-card: 0 24px 48px -20px rgba(10, 21, 48, 0.28);
 }
 
+/* Altura de la navbar (h-14 / lg:h-16 / 2xl:h-20 en Navbar.tsx). Las secciones
+   que ocupan una pantalla completa la restan de 100svh para no quedar
+   tapadas por ella. */
+:root {
+  --nav-h: 3.5rem;
+}
+
+@media (min-width: 64rem) {
+  :root {
+    --nav-h: 4rem;
+  }
+}
+
+@media (min-width: 96rem) {
+  :root {
+    --nav-h: 5rem;
+  }
+}
+
 @layer base {
   body {
     @apply bg-navy-950 text-navy-900 antialiased;
