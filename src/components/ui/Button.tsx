@@ -1,7 +1,8 @@
 import type { AnchorHTMLAttributes, ButtonHTMLAttributes, ReactNode } from 'react'
+import { Link } from 'react-router-dom'
 import { cn } from '@/lib/utils'
 
-type ButtonVariant = 'solid' | 'outline-light' | 'outline-dark'
+type ButtonVariant = 'solid' | 'moss' | 'outline-light' | 'outline-dark'
 
 interface ButtonOwnProps {
   variant?: ButtonVariant
@@ -15,12 +16,14 @@ type ButtonProps =
 const variantClasses: Record<ButtonVariant, string> = {
   solid:
     'bg-cyan-600 text-white shadow-sm shadow-navy-950/10 hover:-translate-y-0.5 hover:bg-cyan-700 hover:shadow-lg hover:shadow-cyan-900/25',
+  moss: 'bg-moss-400 text-navy-950 shadow-sm shadow-navy-950/10 hover:-translate-y-0.5 hover:bg-moss-300 hover:shadow-lg hover:shadow-navy-950/25',
   'outline-light': 'border border-white/35 text-white hover:-translate-y-0.5 hover:border-white/60',
   'outline-dark': 'border border-navy-200 text-navy-800 hover:-translate-y-0.5 hover:border-navy-300',
 }
 
 const fillClasses: Record<ButtonVariant, string | null> = {
   solid: null,
+  moss: null,
   'outline-light': 'bg-white/10',
   'outline-dark': 'bg-navy-50',
 }
@@ -58,8 +61,19 @@ export function Button({ variant = 'solid', icon, className, children, ...props 
   )
 
   if (props.href) {
+    const { href, ...anchorProps } = props as AnchorHTMLAttributes<HTMLAnchorElement> & { href: string }
+
+    // Una ruta interna (/algo) navega dentro de la SPA; un ancla (#algo) o una URL externa es un <a> normal.
+    if (href.startsWith('/')) {
+      return (
+        <Link to={href} className={classes} {...anchorProps}>
+          {content}
+        </Link>
+      )
+    }
+
     return (
-      <a className={classes} {...(props as AnchorHTMLAttributes<HTMLAnchorElement>)}>
+      <a href={href} className={classes} {...anchorProps}>
         {content}
       </a>
     )
