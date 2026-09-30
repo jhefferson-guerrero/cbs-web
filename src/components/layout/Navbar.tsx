@@ -1,36 +1,64 @@
-import { useEffect, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react'
 import { useLenis } from 'lenis/react'
-import { useLocation } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { ArrowUpRightIcon } from '@phosphor-icons/react'
 import logoCbs from '@/assets/images/logo-cbs.webp'
 import logoMobileCbs from '@/assets/images/logo-mobile-cbs.webp'
-import logoHydrosistem from '@/assets/images/grupo/hydrosistem.webp'
-import logoLimpCity from '@/assets/images/grupo/limp-city.webp'
 import { navLinks } from '@/lib/nav-links'
+import { partners, type Partner } from '@/lib/partners'
 import { cn } from '@/lib/utils'
 
-// Logo de una empresa aliada: en color sobre la navbar blanca y como silueta blanca
-// sobre el hero (mismo tratamiento que el logo de CBS), con fundido entre ambos.
-function PartnerLogo({ src, alt, isSolid, className }: { src: string; alt: string; isSolid: boolean; className: string }) {
-  return (
-    <span className="grid shrink-0">
+// Logo de una empresa aliada, con enlace: en color sobre la navbar blanca y como
+// silueta blanca sobre el hero (mismo tratamiento que el logo de CBS), con fundido
+// entre ambos. Un sitio externo se abre en pestaña nueva; uno interno, en este sitio.
+function PartnerLogo({
+  partner,
+  isSolid,
+  className,
+  onNavigate,
+}: {
+  partner: Partner
+  isSolid: boolean
+  className: string
+  onNavigate?: () => void
+}) {
+  const linkClasses =
+    'relative grid shrink-0 rounded-md outline-none transition-transform duration-300 hover:scale-105 focus-visible:ring-2 focus-visible:ring-cyan-400'
+
+  const logo = (
+    <>
       <img
-        src={src}
-        alt={alt}
+        src={partner.logo}
+        alt={partner.name}
         width={256}
         height={256}
         className={cn('[grid-area:1/1] w-auto transition-opacity duration-300', className, isSolid ? 'opacity-100' : 'opacity-0')}
       />
       <img
-        src={src}
+        src={partner.logo}
         alt=""
         aria-hidden="true"
         width={256}
         height={256}
         className={cn('[grid-area:1/1] w-auto brightness-0 invert transition-opacity duration-300', className, isSolid ? 'opacity-0' : 'opacity-100')}
       />
-    </span>
+    </>
+  )
+
+  if (partner.external) {
+    return (
+      <a href={partner.href} target="_blank" rel="noopener noreferrer" className={linkClasses}>
+        {logo}
+        <span className="sr-only">(se abre en una pestaña nueva)</span>
+      </a>
+    )
+  }
+
+  return (
+    <Link to={partner.href} onClick={onNavigate} className={linkClasses}>
+      {logo}
+    </Link>
   )
 }
 
@@ -233,12 +261,17 @@ export function Navbar({ ready }: { ready: boolean }) {
         </div>
 
         <div className="hidden shrink-0 items-center gap-4 lg:flex xl:gap-5">
-          <PartnerLogo src={logoLimpCity} alt="Limp City" isSolid={isSolid} className="h-9 xl:h-10 2xl:h-12" />
-          <span
-            aria-hidden="true"
-            className={cn('h-6 w-px transition-colors duration-300 2xl:h-8', isSolid ? 'bg-navy-200' : 'bg-white/30')}
-          />
-          <PartnerLogo src={logoHydrosistem} alt="Hydrosistem" isSolid={isSolid} className="h-9 xl:h-10 2xl:h-12" />
+          {partners.map((partner, i) => (
+            <Fragment key={partner.name}>
+              {i > 0 && (
+                <span
+                  aria-hidden="true"
+                  className={cn('h-6 w-px transition-colors duration-300 2xl:h-8', isSolid ? 'bg-navy-200' : 'bg-white/30')}
+                />
+              )}
+              <PartnerLogo partner={partner} isSolid={isSolid} className="h-9 xl:h-10 2xl:h-12" />
+            </Fragment>
+          ))}
         </div>
 
         <button
@@ -324,9 +357,12 @@ export function Navbar({ ready }: { ready: boolean }) {
                 transition={{ duration: 0.4, delay: 0.1 + navLinks.length * 0.06, ease: [0.16, 1, 0.3, 1] }}
               >
                 <div className="mt-8 flex items-center gap-5 border-t border-navy-100 pt-6">
-                  <PartnerLogo src={logoLimpCity} alt="Limp City" isSolid className="h-12" />
-                  <span aria-hidden="true" className="h-8 w-px bg-navy-200" />
-                  <PartnerLogo src={logoHydrosistem} alt="Hydrosistem" isSolid className="h-12" />
+                  {partners.map((partner, i) => (
+                    <Fragment key={partner.name}>
+                      {i > 0 && <span aria-hidden="true" className="h-8 w-px bg-navy-200" />}
+                      <PartnerLogo partner={partner} isSolid className="h-12" onNavigate={() => setIsMenuOpen(false)} />
+                    </Fragment>
+                  ))}
                 </div>
               </motion.div>
             </div>

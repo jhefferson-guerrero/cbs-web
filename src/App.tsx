@@ -10,6 +10,7 @@ import { Footer } from '@/components/layout/Footer'
 // se visita, en vez de que el Home y cada página de proyecto vayan en un
 // solo bundle.
 const Home = lazy(() => import('@/pages/Home').then((m) => ({ default: m.Home })))
+const LimpCity = lazy(() => import('@/pages/LimpCity').then((m) => ({ default: m.LimpCity })))
 const ProjectDetail = lazy(() => import('@/pages/ProjectDetail').then((m) => ({ default: m.ProjectDetail })))
 
 function App() {
@@ -31,6 +32,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home ready={!isLoading} />} />
             <Route path="/proyectos/:slug" element={<ProjectDetail />} />
+            <Route path="/limp-city" element={<LimpCity />} />
           </Routes>
         </Suspense>
         <Footer />
