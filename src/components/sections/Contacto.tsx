@@ -191,13 +191,13 @@ export function Contacto() {
 
   return (
     <section id="contacto" className="bg-white">
-      <div className="grid lg:grid-cols-2 lg:divide-x lg:divide-navy-100">
+      <div className="grid lg:min-h-[calc(100svh-var(--nav-h))] lg:grid-cols-2 lg:divide-x lg:divide-navy-100">
         <motion.div
           initial={reduceMotion ? false : { opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-          className="flex flex-col px-6 py-16 sm:px-10 sm:py-20 lg:px-16 lg:py-24 2xl:px-24 2xl:py-32"
+          className="flex flex-col px-6 py-16 sm:px-10 sm:py-20 lg:justify-center lg:px-16 lg:py-[clamp(1.5rem,5vh,6rem)] 2xl:px-24"
         >
           <div>
             <p className="font-mono text-sm font-semibold uppercase tracking-[0.2em] text-cyan-700 2xl:text-base">
@@ -231,7 +231,7 @@ export function Contacto() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-          className="flex px-6 py-16 sm:px-10 sm:py-20 lg:px-16 lg:py-24 2xl:px-24 2xl:py-32"
+          className="flex px-6 py-16 sm:px-10 sm:py-20 lg:items-center lg:px-16 lg:py-[clamp(1.5rem,5vh,6rem)] 2xl:px-24"
         >
           <AnimatePresence mode="wait">
             {sent ? (
