@@ -7,8 +7,13 @@ export function Proyectos() {
   const reduceMotion = useReducedMotion()
 
   return (
-    <section id="proyectos" className="bg-white lg:h-[calc(100svh-var(--nav-h))] lg:min-h-[540px]">
-      <div className="mx-auto w-full max-w-[1400px] px-6 py-16 lg:flex lg:h-full lg:flex-col lg:px-10 lg:py-[clamp(1rem,3.5vh,3rem)] xl:px-16 2xl:max-w-[1700px] 2xl:px-14">
+    <section className="bg-white">
+      {/* Espacio blanco de respiro sobre la sección. Queda fuera del ancla (#proyectos
+          está en el bloque de abajo), así al pulsar "Proyectos" el scroll se detiene
+          donde empieza el contenido y este espacio solo se ve al bajar desde arriba. */}
+      <div aria-hidden="true" className="hidden lg:block lg:h-[clamp(2rem,8vh,6rem)]" />
+      <div id="proyectos" className="lg:h-[calc(100svh-var(--nav-h))] lg:min-h-[540px]">
+        <div className="mx-auto w-full max-w-[1400px] px-6 py-16 lg:flex lg:h-full lg:flex-col lg:px-10 lg:py-[clamp(1rem,3.5vh,3rem)] xl:px-16 2xl:max-w-[1700px] 2xl:px-14">
         <motion.div
           initial={reduceMotion ? false : { opacity: 0, y: 28 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -95,6 +100,7 @@ export function Proyectos() {
               </div>
             </motion.div>
           ))}
+        </div>
         </div>
       </div>
     </section>
