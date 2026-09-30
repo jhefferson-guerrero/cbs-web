@@ -27,24 +27,15 @@ export function Nosotros() {
 
   return (
     <section id="nosotros" className="bg-white">
-      <div className="grid lg:grid-cols-2">
+      <div className="grid lg:min-h-[calc(100svh-var(--nav-h))] lg:grid-cols-2">
         <div className="relative h-full overflow-hidden">
-          <div className="h-full bg-navy-950 px-6 py-20 sm:px-10 sm:py-24 lg:px-16 lg:py-24 2xl:px-24 2xl:py-32">
-            <motion.p
-              initial={reduceMotion ? false : { opacity: 0, y: 14 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.8 }}
-              transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-              className="font-mono text-sm font-semibold uppercase tracking-[0.2em] text-cyan-400 2xl:text-base"
-            >
-              Sobre CBS
-            </motion.p>
+          <div className="flex h-full flex-col justify-center bg-navy-950 px-6 py-20 sm:px-10 sm:py-24 lg:px-16 lg:py-[clamp(2rem,7vh,6rem)] 2xl:px-24">
             <motion.h2
               initial={reduceMotion ? false : { opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.8 }}
               transition={{ duration: 0.65, delay: 0.06, ease: [0.16, 1, 0.3, 1] }}
-              className="mt-4 text-3xl font-bold leading-tight text-white md:text-4xl 2xl:text-5xl"
+              className="text-3xl font-bold leading-tight text-white md:text-4xl 2xl:text-5xl"
             >
               Nosotros
             </motion.h2>
@@ -54,7 +45,7 @@ export function Nosotros() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.4 }}
               transition={{ duration: 0.65, delay: 0.12, ease: [0.16, 1, 0.3, 1] }}
-              className="mt-8 flex max-w-xl flex-col gap-5 2xl:max-w-2xl"
+              className="mt-8 flex max-w-xl flex-col gap-5 lg:mt-[clamp(1rem,3vh,2rem)] lg:gap-[clamp(0.75rem,2vh,1.25rem)] 2xl:max-w-2xl"
             >
               <p className="text-[15.5px] leading-relaxed text-navy-200 2xl:text-lg">
                 Somos una organización con sólida trayectoria en la ejecución de obras de saneamiento,
@@ -69,7 +60,7 @@ export function Nosotros() {
               </p>
             </motion.div>
 
-            <div className="mt-10 max-w-xl 2xl:max-w-2xl">
+            <div className="mt-10 max-w-xl lg:mt-[clamp(1.25rem,4vh,2.5rem)] 2xl:max-w-2xl">
               {timeline.map((item, i) => (
                 <motion.div
                   key={item.year}
@@ -89,7 +80,7 @@ export function Nosotros() {
                     />
                     {i < timeline.length - 1 && <span className="mt-1 w-px flex-1 bg-navy-700" />}
                   </div>
-                  <div className={i < timeline.length - 1 ? 'pb-6' : ''}>
+                  <div className={i < timeline.length - 1 ? 'pb-6 lg:pb-[clamp(0.875rem,2.5vh,1.5rem)]' : ''}>
                     <p className="font-mono text-sm font-semibold tracking-[0.1em] text-cyan-400 sm:text-xs 2xl:text-sm">
                       {item.year}
                     </p>
