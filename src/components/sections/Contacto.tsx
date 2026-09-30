@@ -53,7 +53,7 @@ function validate(values: FormValues): FormErrors {
   }
 
   if (values.phone.trim() && !PHONE_PATTERN.test(values.phone.trim())) {
-    errors.phone = 'Ingresa un teléfono válido (solo números, espacios, +, - y paréntesis).'
+    errors.phone = 'Ingresa un teléfono válido.'
   }
 
   if (!values.message.trim()) {
@@ -78,17 +78,21 @@ function FormField({
 }) {
   return (
     <div className="flex flex-col gap-2">
-      <label htmlFor={id} className="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-cyan-700 2xl:text-sm">
-        {label}
-      </label>
+      {/* El error va en la misma fila que la etiqueta, a la derecha: esa fila ya
+          existe, así que no hace falta reservar una línea vacía debajo del campo
+          y el formulario tampoco salta cuando aparece un error. */}
+      <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+        <label htmlFor={id} className="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-cyan-700 2xl:text-sm">
+          {label}
+        </label>
+        {error && (
+          <p id={`${id}-error`} role="alert" className="flex items-center gap-1.5 text-sm text-navy-900 2xl:text-base">
+            <WarningCircleIcon size={15} weight="fill" className="shrink-0" />
+            {error}
+          </p>
+        )}
+      </div>
       {children}
-      <p
-        className={`flex min-h-[1.25rem] items-center gap-1.5 text-sm text-navy-900 2xl:text-base ${error ? '' : 'invisible'}`}
-        role={error ? 'alert' : undefined}
-      >
-        <WarningCircleIcon size={16} weight="fill" className="shrink-0" />
-        {error}
-      </p>
     </div>
   )
 }
@@ -276,6 +280,8 @@ export function Contacto() {
                   value={values.name}
                   onChange={setName}
                   placeholder="Tu nombre completo"
+                  aria-invalid={Boolean(errors.name)}
+                  aria-describedby={errors.name ? `${formId}-name-error` : undefined}
                   className={inputClasses(Boolean(errors.name))}
                 />
               </FormField>
@@ -290,6 +296,8 @@ export function Contacto() {
                   value={values.email}
                   onChange={setField('email')}
                   placeholder="tu@correo.com"
+                  aria-invalid={Boolean(errors.email)}
+                  aria-describedby={errors.email ? `${formId}-email-error` : undefined}
                   className={inputClasses(Boolean(errors.email))}
                 />
               </FormField>
@@ -305,6 +313,8 @@ export function Contacto() {
                   value={values.phone}
                   onChange={setPhone}
                   placeholder="+51 999 999 999"
+                  aria-invalid={Boolean(errors.phone)}
+                  aria-describedby={errors.phone ? `${formId}-phone-error` : undefined}
                   className={inputClasses(Boolean(errors.phone))}
                 />
               </FormField>
@@ -318,6 +328,8 @@ export function Contacto() {
                   value={values.message}
                   onChange={setField('message')}
                   placeholder="Cuéntanos sobre tu proyecto o consulta"
+                  aria-invalid={Boolean(errors.message)}
+                  aria-describedby={errors.message ? `${formId}-message-error` : undefined}
                   className={`resize-none ${inputClasses(Boolean(errors.message))}`}
                 />
               </FormField>
