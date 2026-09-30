@@ -39,27 +39,27 @@ function validate(values: FormValues): FormErrors {
   const errors: FormErrors = {}
 
   if (!values.name.trim()) {
-    errors.name = 'Ingresa tu nombre.'
+    errors.name = 'Requerido'
   } else if (values.name.length > NAME_MAX) {
-    errors.name = `Máximo ${NAME_MAX} caracteres.`
+    errors.name = `Máx. ${NAME_MAX} caracteres`
   }
 
   if (!values.email.trim()) {
-    errors.email = 'Ingresa tu correo.'
+    errors.email = 'Requerido'
   } else if (values.email.length > EMAIL_MAX) {
-    errors.email = `Máximo ${EMAIL_MAX} caracteres.`
+    errors.email = `Máx. ${EMAIL_MAX} caracteres`
   } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(values.email)) {
-    errors.email = 'Ingresa un correo válido.'
+    errors.email = 'Correo no válido'
   }
 
   if (values.phone.trim() && !PHONE_PATTERN.test(values.phone.trim())) {
-    errors.phone = 'Ingresa un teléfono válido.'
+    errors.phone = 'Teléfono no válido'
   }
 
   if (!values.message.trim()) {
-    errors.message = 'Cuéntanos en qué podemos ayudarte.'
+    errors.message = 'Requerido'
   } else if (values.message.length > MESSAGE_MAX) {
-    errors.message = `Máximo ${MESSAGE_MAX} caracteres.`
+    errors.message = `Máx. ${MESSAGE_MAX} caracteres`
   }
 
   return errors
@@ -81,12 +81,12 @@ function FormField({
       {/* El error va en la misma fila que la etiqueta, a la derecha: esa fila ya
           existe, así que no hace falta reservar una línea vacía debajo del campo
           y el formulario tampoco salta cuando aparece un error. */}
-      <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+      <div className="flex min-h-5 items-center justify-between gap-x-4">
         <label htmlFor={id} className="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-cyan-700 2xl:text-sm">
           {label}
         </label>
         {error && (
-          <p id={`${id}-error`} role="alert" className="flex items-center gap-1.5 text-sm text-navy-900 2xl:text-base">
+          <p id={`${id}-error`} role="alert" className="flex items-center gap-1.5 whitespace-nowrap text-sm font-semibold leading-5 text-navy-900 2xl:text-base">
             <WarningCircleIcon size={15} weight="fill" className="shrink-0" />
             {error}
           </p>
@@ -130,7 +130,9 @@ export function Contacto() {
 
   const inputClasses = (hasError: boolean) =>
     `border-b bg-transparent py-2 text-base text-navy-900 outline-none transition-colors placeholder:text-slate-400 focus:border-cyan-600 2xl:text-lg ${
-      hasError ? 'border-navy-900' : 'border-navy-200'
+      hasError
+        ? 'border-navy-900 shadow-[0_1px_0_0_var(--color-navy-900)] focus:shadow-[0_1px_0_0_var(--color-cyan-600)]'
+        : 'border-navy-200'
     }`
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
@@ -138,7 +140,11 @@ export function Contacto() {
     if (sending) return
     const nextErrors = validate(values)
     setErrors(nextErrors)
-    if (Object.keys(nextErrors).length > 0) return
+    if (Object.keys(nextErrors).length > 0) {
+      const firstInvalid = (['name', 'email', 'phone', 'message'] as const).find((field) => nextErrors[field])
+      if (firstInvalid) document.getElementById(`${formId}-${firstInvalid}`)?.focus()
+      return
+    }
 
     // Honeypot: los visitantes reales nunca ven este campo, así que si llega
     // con un valor es porque lo llenó un bot. Simulamos que se envió sin
