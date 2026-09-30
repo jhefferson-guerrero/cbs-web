@@ -31,6 +31,19 @@
   --color-cyan-800: #0b5e85;
   --color-cyan-900: #0d4d6c;
 
+  /* Moss, sampled from the Limp City logo. The single accent of the /limp-city page
+     (the rest of the site keeps navy + cyan). */
+  --color-moss-50: #f5f8ea;
+  --color-moss-100: #e8efcf;
+  --color-moss-200: #d3e0a0;
+  --color-moss-300: #c2d26c;
+  --color-moss-400: #acbf47;
+  --color-moss-500: #8b9d33;
+  --color-moss-600: #6f7f29;
+  --color-moss-700: #566322;
+  --color-moss-800: #424c1e;
+  --color-moss-900: #2f3717;
+
   /* Brand red — sampled from the logo's vertical bar. Reserved for the logo mark only, never a UI accent. */
   --color-brand-red: #e2081f;
 
