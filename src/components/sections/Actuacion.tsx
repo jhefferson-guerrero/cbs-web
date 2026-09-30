@@ -1,59 +1,56 @@
 import { motion, useReducedMotion } from 'motion/react'
-import { Link } from 'react-router-dom'
-import { ArrowUpRightIcon, MapPinIcon } from '@phosphor-icons/react'
-import mapaCobertura from '@/assets/images/actuacion-mapa.webp'
-import { locationGroups } from '@/lib/actuacion'
+import mapaCobertura from '@/assets/images/actuacion-mapa.png'
+
+// Proporción de la imagen fuente; el mapa se muestra completo (sin recortar)
+// y el resto del espacio lo cubre un fondo con la misma imagen desenfocada.
+const MAP_RATIO = '1483 / 704'
 
 export function Actuacion() {
   const reduceMotion = useReducedMotion()
 
   return (
-    <section id="actuacion" className="border-t border-navy-100 bg-white">
-      <div className="mx-auto w-full max-w-[1400px] px-6 py-16 lg:px-10 lg:py-20 xl:px-16 2xl:max-w-[1700px] 2xl:px-14 2xl:py-24">
-        <motion.div
-          initial={reduceMotion ? false : { opacity: 0, y: 28 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-          className="max-w-2xl"
-        >
-          <p className="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-cyan-700 2xl:text-sm">
-            Área de actuación
-          </p>
-          <h2 className="mt-4 text-3xl font-bold leading-tight text-navy-900 md:text-4xl 2xl:text-5xl">
-            Presencia en dos países
-          </h2>
-          <p className="mt-5 text-[15.5px] leading-relaxed text-slate-700 2xl:text-lg">
-            Desde nuestro origen en Brasil hasta la operación actual en Perú, ejecutamos obras
-            en distintas regiones de ambos países.
-          </p>
-        </motion.div>
+    <section
+      id="actuacion"
+      aria-labelledby="actuacion-title"
+      className="relative isolate overflow-hidden bg-navy-950 lg:h-[calc(100svh-var(--nav-h))] lg:min-h-[420px]"
+    >
+      <h2 id="actuacion-title" className="sr-only">
+        Área de actuación: presencia en Perú y Brasil
+      </h2>
 
-        <div className="mt-12 2xl:mt-14">
-          <div className="relative isolate w-full overflow-hidden bg-navy-900" style={{ aspectRatio: '3200 / 1520' }}>
-            {/* La proporción del contenedor (arriba) es exactamente la de la imagen fuente
-                -- así se ve completa, sin recortar nada y sin dejar espacio vacío alrededor.
-                El fondo navy de respaldo evita que se vea un hueco blanco mientras la
-                imagen (pesada, ~970kb) todavía está cargando. */}
+      {/* Fondo ambiental: la misma imagen, desenfocada y oscurecida, llena los
+          costados cuando la pantalla es más ancha que el mapa, sin costuras
+          de color ni huecos. */}
+      <img
+        src={mapaCobertura}
+        alt=""
+        aria-hidden="true"
+        decoding="async"
+        className="absolute inset-0 -z-10 h-full w-full scale-110 object-cover opacity-60 blur-2xl"
+      />
+
+      <div className="overflow-x-auto lg:h-full lg:overflow-visible">
+        <div className="flex min-w-[760px] justify-center lg:h-full lg:min-w-0">
+          <div
+            className="relative w-full max-w-full lg:h-full lg:w-auto"
+            style={{ aspectRatio: MAP_RATIO }}
+          >
             <motion.img
               src={mapaCobertura}
               alt="Mapa de cobertura de CBS en Perú y Brasil, con las regiones donde opera en cada país"
+              width={1483}
+              height={704}
               loading="lazy"
               decoding="async"
               initial={reduceMotion ? false : { scale: 1.06 }}
               whileInView={{ scale: 1 }}
               viewport={{ once: true, amount: 0.3 }}
               transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1] }}
-              className="h-full w-full object-cover"
+              className="h-full w-full object-contain"
             />
 
-            <span aria-hidden="true" className="absolute right-6 top-6 h-6 w-6 border-r-2 border-t-2 border-white/70 lg:right-9 lg:top-9 lg:h-7 lg:w-7" />
-            <span aria-hidden="true" className="absolute bottom-6 left-6 h-6 w-6 border-b-2 border-l-2 border-white/70 lg:bottom-9 lg:left-9 lg:h-7 lg:w-7" />
-
             {/* Cortina navy que se achica hacia la derecha, revelando el mapa de
-                izquierda a derecha -- el mismo efecto (y la misma técnica, scaleX en
-                vez de clip-path) que ya funciona bien en la foto de Nosotros. Sin esto,
-                el mapa solo tenía un fundido+zoom plano que se sentía más brusco. */}
+                izquierda a derecha (scaleX, igual que en la foto de Nosotros). */}
             <motion.div
               aria-hidden="true"
               initial={reduceMotion ? false : { scaleX: 1 }}
@@ -61,67 +58,17 @@ export function Actuacion() {
               viewport={{ once: true, amount: 0.3 }}
               transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
               style={{ transformOrigin: 'right' }}
-              className="absolute inset-0 bg-navy-900"
+              className="absolute inset-0 bg-navy-950"
             />
-          </div>
-
-          <div className="mt-4 bg-navy-950 p-10 sm:p-12 2xl:p-14">
-            <div className="flex flex-col gap-10">
-              {locationGroups.map((group) => (
-                <div key={group.country}>
-                  <p className="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-cyan-400 2xl:text-sm">
-                    {group.country}
-                  </p>
-
-                  <div className="mt-6 grid grid-cols-2 gap-x-6 gap-y-5 sm:grid-cols-3">
-                    {group.locations.map((location, i) => {
-                      const inner = (
-                        <span className="flex items-center gap-1.5 text-sm font-semibold text-white sm:text-base">
-                          <MapPinIcon size={15} weight="regular" className="shrink-0 text-cyan-400" />
-                          {location.name}
-                          {location.projectSlug && (
-                            <ArrowUpRightIcon
-                              size={13}
-                              weight="regular"
-                              className="shrink-0 text-navy-300 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-cyan-300"
-                            />
-                          )}
-                        </span>
-                      )
-
-                      const itemMotion = {
-                        initial: reduceMotion ? false : { opacity: 0, y: 12 },
-                        whileInView: { opacity: 1, y: 0 },
-                        viewport: { once: true, amount: 0.6 },
-                        transition: { duration: 0.5, delay: i * 0.06, ease: [0.16, 1, 0.3, 1] as const },
-                      }
-
-                      if (location.projectSlug) {
-                        return (
-                          <motion.div key={location.name} {...itemMotion}>
-                            <Link
-                              to={`/proyectos/${location.projectSlug}`}
-                              className="group flex flex-col outline-none focus-visible:ring-2 focus-visible:ring-cyan-400"
-                            >
-                              {inner}
-                            </Link>
-                          </motion.div>
-                        )
-                      }
-
-                      return (
-                        <motion.div key={location.name} {...itemMotion} className="flex flex-col">
-                          {inner}
-                        </motion.div>
-                      )
-                    })}
-                  </div>
-                </div>
-              ))}
-            </div>
           </div>
         </div>
       </div>
+
+      <span aria-hidden="true" className="absolute right-6 top-6 h-6 w-6 border-r-2 border-t-2 border-white/70 lg:right-9 lg:top-9 lg:h-7 lg:w-7" />
+      <span aria-hidden="true" className="absolute bottom-6 left-6 h-6 w-6 border-b-2 border-l-2 border-white/70 lg:bottom-9 lg:left-9 lg:h-7 lg:w-7" />
+      <span className="absolute bottom-7 right-6 font-mono text-[11px] uppercase tracking-[0.18em] text-white lg:bottom-10 lg:right-9">
+        Fig. 02 — Área de actuación
+      </span>
     </section>
   )
 }

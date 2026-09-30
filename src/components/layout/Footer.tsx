@@ -13,19 +13,16 @@ export function Footer() {
 
       <div className="mx-auto w-full max-w-[1400px] px-10 py-16 lg:px-16 lg:py-20 xl:px-24 2xl:max-w-none 2xl:py-24">
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-[1fr_auto_1fr] lg:items-start lg:gap-12">
-          <div className="flex flex-col gap-3 sm:col-span-2 lg:col-span-1 lg:max-w-xs">
+          <div className="sm:col-span-2 lg:col-span-1">
             <a href="#top" aria-label="CBS - Inicio" className="inline-block w-fit">
               <img
                 src={logoCbs}
                 alt="CBS - Construtora Baiana de Saneamento"
                 width={1080}
                 height={211}
-                className="h-8 w-auto brightness-0 invert 2xl:h-9"
+                className="h-11 w-auto brightness-0 invert 2xl:h-14"
               />
             </a>
-            <p className="text-sm leading-relaxed text-navy-300 2xl:text-base">
-              Infraestructura, agua y saneamiento en Perú y Brasil.
-            </p>
           </div>
 
           <div className="flex flex-col gap-3">
