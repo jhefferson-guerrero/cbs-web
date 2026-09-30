@@ -327,7 +327,7 @@ export function Contacto() {
                 <textarea
                   id={`${formId}-message`}
                   name="message"
-                  rows={3}
+                  rows={2}
                   maxLength={MESSAGE_MAX}
                   value={values.message}
                   onChange={setField('message')}
