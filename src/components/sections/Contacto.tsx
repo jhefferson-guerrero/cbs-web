@@ -69,17 +69,15 @@ function FormField({
   id,
   label,
   error,
-  className,
   children,
 }: {
   id: string
   label: string
   error?: string
-  className?: string
   children: ReactNode
 }) {
   return (
-    <div className={`flex flex-col gap-2 ${className ?? ''}`}>
+    <div className="flex flex-col gap-2">
       {/* El error va en la misma fila que la etiqueta, a la derecha: esa fila ya
           existe, así que no hace falta reservar una línea vacía debajo del campo
           y el formulario tampoco salta cuando aparece un error. */}
@@ -189,32 +187,32 @@ export function Contacto() {
 
   return (
     <section id="contacto" className="bg-white">
-      <div className="grid lg:min-h-[calc(100svh-var(--nav-h))] lg:grid-cols-2 lg:divide-x lg:divide-navy-100">
+      <div className="grid lg:grid-cols-2 lg:divide-x lg:divide-navy-100">
         <motion.div
           initial={reduceMotion ? false : { opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-          className="flex flex-col px-6 py-16 sm:px-10 sm:py-20 lg:justify-center lg:px-16 lg:py-[clamp(1.5rem,6vh,6rem)] 2xl:px-24"
+          className="flex flex-col px-6 py-16 sm:px-10 sm:py-20 lg:px-16 lg:py-24 2xl:px-24 2xl:py-32"
         >
           <div>
             <p className="font-mono text-sm font-semibold uppercase tracking-[0.2em] text-cyan-700 2xl:text-base">
               Contacto
             </p>
-            <h2 className="mt-4 text-3xl font-bold leading-tight text-navy-900 md:text-4xl lg:mt-[clamp(0.5rem,1.6vh,1rem)] lg:text-[clamp(2.25rem,5.2vh,3.5rem)]">
+            <h2 className="mt-4 text-3xl font-bold leading-tight text-navy-900 md:text-4xl 2xl:text-5xl">
               Hablemos de tu próximo proyecto
             </h2>
-            <p className="mt-5 max-w-md text-[15.5px] leading-relaxed text-slate-700 lg:mt-[clamp(0.5rem,2vh,1.25rem)] lg:max-w-[min(100%,clamp(28rem,60vh,36rem))] lg:text-[clamp(15.5px,2vh,21px)]">
+            <p className="mt-5 max-w-md text-[15.5px] leading-relaxed text-slate-700 2xl:text-lg">
               Escríbenos y te contactamos a la brevedad, o hazlo directo por correo.
             </p>
 
-            <div className="mt-10 flex flex-col gap-1 lg:mt-[clamp(1.25rem,4.5vh,3rem)]">
+            <div className="mt-10 flex flex-col gap-1">
               <span className="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-cyan-700 2xl:text-sm">
                 Correo
               </span>
               <a
                 href={`mailto:${CONTACT_EMAIL}`}
-                className="inline-flex items-center gap-2 text-lg font-semibold text-navy-900 transition-colors hover:text-cyan-700 lg:text-[clamp(1.125rem,2.1vh,1.4rem)]"
+                className="inline-flex items-center gap-2 text-lg font-semibold text-navy-900 transition-colors hover:text-cyan-700 2xl:text-xl"
               >
                 <EnvelopeSimpleIcon size={20} weight="regular" className="shrink-0 text-cyan-600" />
                 {CONTACT_EMAIL}
@@ -229,7 +227,7 @@ export function Contacto() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-          className="flex px-6 py-16 sm:px-10 sm:py-20 lg:items-center lg:px-16 lg:py-[clamp(1.5rem,6vh,6rem)] 2xl:px-24"
+          className="flex px-6 py-16 sm:px-10 sm:py-20 lg:px-16 lg:py-24 2xl:px-24 2xl:py-32"
         >
           <AnimatePresence mode="wait">
             {sent ? (
@@ -257,7 +255,7 @@ export function Contacto() {
                 animate={{ opacity: 1 }}
                 exit={reduceMotion ? undefined : { opacity: 0 }}
                 transition={{ duration: reduceMotion ? 0 : 0.3 }}
-                className="grid w-full max-w-md gap-5 lg:max-w-xl lg:grid-cols-2 lg:gap-x-6 lg:gap-y-[clamp(0.75rem,2.8vh,1.5rem)] 2xl:max-w-2xl"
+                className="flex w-full max-w-md flex-col gap-5 2xl:max-w-lg 2xl:gap-6"
               >
                 {/* Honeypot: oculto para visitantes reales (fuera de pantalla,
                   no enfocable, oculto para tecnología de asistencia), pero
@@ -272,7 +270,7 @@ export function Contacto() {
                 className="absolute left-[-9999px] h-0 w-0 opacity-0"
               />
 
-              <FormField id={`${formId}-name`} label="Nombre" error={errors.name}>
+              <FormField id={`${formId}-name`} label="Nombre completo" error={errors.name}>
                 <input
                   id={`${formId}-name`}
                   name="name"
@@ -304,7 +302,7 @@ export function Contacto() {
                 />
               </FormField>
 
-              <FormField id={`${formId}-phone`} label="Teléfono (opcional)" error={errors.phone} className="lg:col-span-2">
+              <FormField id={`${formId}-phone`} label="Teléfono (opcional)" error={errors.phone}>
                 <input
                   id={`${formId}-phone`}
                   name="phone"
@@ -321,7 +319,7 @@ export function Contacto() {
                 />
               </FormField>
 
-              <FormField id={`${formId}-message`} label="Mensaje" error={errors.message} className="lg:col-span-2">
+              <FormField id={`${formId}-message`} label="Mensaje" error={errors.message}>
                 <textarea
                   id={`${formId}-message`}
                   name="message"
@@ -336,7 +334,7 @@ export function Contacto() {
                 />
               </FormField>
 
-              <div className="mt-2 flex flex-col gap-3 lg:col-span-2 lg:mt-0 lg:flex-row lg:flex-wrap lg:items-center lg:gap-x-6">
+              <div className="mt-2 flex flex-col gap-3">
                 <Button
                   type="submit"
                   variant="solid"
