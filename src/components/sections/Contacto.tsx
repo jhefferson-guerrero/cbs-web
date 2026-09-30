@@ -129,7 +129,7 @@ export function Contacto() {
   }
 
   const inputClasses = (hasError: boolean) =>
-    `border-b bg-transparent py-2 text-base text-navy-900 outline-none transition-colors placeholder:text-slate-400 focus:border-cyan-600 2xl:text-lg ${
+    `border-b bg-transparent pb-1 pt-2 text-base text-navy-900 outline-none transition-colors placeholder:text-slate-400 focus:border-cyan-600 2xl:text-lg ${
       hasError ? 'border-navy-900' : 'border-navy-200'
     }`
 
