@@ -11,14 +11,14 @@ export function Actuacion() {
   return (
     <section
       id="actuacion"
-      className="flex flex-col border-t border-navy-100 bg-white px-6 py-16 sm:px-10 lg:h-[calc(100svh-var(--nav-h))] lg:min-h-[540px] lg:py-[clamp(1.25rem,4.5vh,4rem)] xl:px-16 2xl:px-24"
+      className="flex flex-col border-t border-navy-100 bg-white px-6 py-16 sm:px-10 lg:h-[calc(100svh-var(--nav-h))] lg:min-h-[540px] lg:py-[clamp(1rem,3.5vh,3rem)] xl:px-16 2xl:px-24"
     >
       <motion.div
         initial={reduceMotion ? false : { opacity: 0, y: 24 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.3 }}
         transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-        className="mx-auto max-w-3xl text-center"
+        className="mx-auto max-w-4xl text-center"
       >
         <p className="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-cyan-700 2xl:text-sm">
           Área de actuación
@@ -26,13 +26,12 @@ export function Actuacion() {
         <h2 className="mt-3 text-3xl font-bold leading-tight text-navy-900 md:text-4xl lg:mt-[clamp(0.5rem,1.5vh,0.75rem)] 2xl:text-5xl">
           Presencia en dos países
         </h2>
-        <p className="mt-3 text-[15.5px] leading-relaxed text-slate-700 lg:mt-[clamp(0.5rem,1.5vh,1rem)] 2xl:text-lg">
-          Desde nuestro origen en Brasil hasta la operación actual en Perú, ejecutamos obras en
-          distintas regiones de ambos países.
+        <p className="mt-3 text-[15.5px] leading-relaxed text-slate-700 lg:mt-[clamp(0.25rem,1vh,0.75rem)] lg:text-[clamp(15.5px,1.9vh,19px)]">
+          Desde Brasil hasta Perú, ejecutamos obras en distintas regiones de ambos países.
         </p>
       </motion.div>
 
-      <div className="mt-8 overflow-x-auto lg:mt-[clamp(1rem,3.5vh,2.5rem)] lg:flex lg:min-h-0 lg:flex-1 lg:justify-center lg:overflow-visible">
+      <div className="mt-8 overflow-x-auto lg:mt-[clamp(0.75rem,2.5vh,2rem)] lg:flex lg:min-h-0 lg:flex-1 lg:justify-center lg:overflow-visible">
         <div
           className="relative isolate min-w-[760px] overflow-hidden bg-navy-950 shadow-card lg:h-full lg:min-w-0"
           style={{ aspectRatio: MAP_RATIO }}
