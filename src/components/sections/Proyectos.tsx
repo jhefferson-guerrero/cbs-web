@@ -103,6 +103,7 @@ export function Proyectos() {
         </div>
         </div>
       </div>
+      <div aria-hidden="true" className="hidden lg:block lg:h-[clamp(2rem,8vh,6rem)]" />
     </section>
   )
 }
