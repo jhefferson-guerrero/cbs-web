@@ -9,10 +9,15 @@ export function Actuacion() {
   const reduceMotion = useReducedMotion()
 
   return (
-    <section
-      id="actuacion"
-      className="flex flex-col border-t border-navy-100 bg-white px-6 py-16 sm:px-10 lg:h-[calc(100svh-var(--nav-h))] lg:min-h-[540px] lg:py-[clamp(1rem,3.5vh,3rem)] xl:px-16 2xl:px-24"
-    >
+    <section className="border-t border-navy-100 bg-white">
+      {/* Espacio blanco de respiro arriba y abajo, fuera del ancla (#actuacion está en
+          el bloque del medio): al pulsar "Actuación" en el menú no se ve, solo al
+          recorrer la página con scroll. */}
+      <div aria-hidden="true" className="hidden lg:block lg:h-[clamp(2rem,8vh,6rem)]" />
+      <div
+        id="actuacion"
+        className="flex flex-col px-6 py-16 sm:px-10 lg:h-[calc(100svh-var(--nav-h))] lg:min-h-[540px] lg:py-[clamp(1rem,3.5vh,3rem)] xl:px-16 2xl:px-24"
+      >
       <motion.div
         initial={reduceMotion ? false : { opacity: 0, y: 24 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -66,6 +71,8 @@ export function Actuacion() {
           />
         </div>
       </div>
+      </div>
+      <div aria-hidden="true" className="hidden lg:block lg:h-[clamp(2rem,8vh,6rem)]" />
     </section>
   )
 }
