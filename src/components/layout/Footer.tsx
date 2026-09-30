@@ -32,7 +32,7 @@ export function Footer() {
                 <a
                   key={link.href}
                   href={link.href}
-                  className="text-sm font-semibold text-navy-200 outline-none transition-colors hover:text-white focus-visible:ring-2 focus-visible:ring-cyan-400 2xl:text-base"
+                  className="text-sm font-semibold text-navy-100 outline-none transition-colors hover:text-white hover:underline hover:underline-offset-4 focus-visible:ring-2 focus-visible:ring-cyan-400 2xl:text-base"
                 >
                   {link.label}
                 </a>
@@ -44,7 +44,7 @@ export function Footer() {
             <p className="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-cyan-400 2xl:text-sm">Contacto</p>
             <a
               href={`mailto:${CONTACT_EMAIL}`}
-              className="inline-flex w-fit items-center gap-2 text-sm font-semibold text-navy-200 outline-none transition-colors hover:text-white focus-visible:ring-2 focus-visible:ring-cyan-400 2xl:text-base"
+              className="inline-flex w-fit items-center gap-2 text-sm font-semibold text-navy-100 outline-none transition-colors hover:text-white hover:underline hover:underline-offset-4 focus-visible:ring-2 focus-visible:ring-cyan-400 2xl:text-base"
             >
               <EnvelopeSimpleIcon size={18} weight="regular" className="shrink-0 text-cyan-400" />
               {CONTACT_EMAIL}
