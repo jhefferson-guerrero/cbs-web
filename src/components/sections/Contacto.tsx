@@ -190,8 +190,11 @@ export function Contacto() {
   }
 
   return (
-    <section id="contacto" className="bg-white">
-      <div className="grid lg:min-h-[calc(100svh-var(--nav-h))] lg:grid-cols-2 lg:divide-x lg:divide-navy-100">
+    <section className="bg-white">
+      {/* Espacio blanco de respiro arriba y abajo, fuera del ancla (#contacto está en
+          el bloque del medio): al pulsar "Contáctanos" no se ve, solo al hacer scroll. */}
+      <div aria-hidden="true" className="hidden lg:block lg:h-[clamp(2rem,8vh,6rem)]" />
+      <div id="contacto" className="grid lg:min-h-[calc(100svh-var(--nav-h))] lg:grid-cols-2 lg:divide-x lg:divide-navy-100">
         <motion.div
           initial={reduceMotion ? false : { opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -364,6 +367,7 @@ export function Contacto() {
           </AnimatePresence>
         </motion.div>
       </div>
+      <div aria-hidden="true" className="hidden lg:block lg:h-[clamp(2rem,8vh,6rem)]" />
     </section>
   )
 }
