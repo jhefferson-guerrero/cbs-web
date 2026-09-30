@@ -5,9 +5,34 @@ import { useLocation } from 'react-router-dom'
 import { ArrowUpRightIcon } from '@phosphor-icons/react'
 import logoCbs from '@/assets/images/logo-cbs.webp'
 import logoMobileCbs from '@/assets/images/logo-mobile-cbs.webp'
+import logoHydrosistem from '@/assets/images/grupo/hydrosistem.webp'
+import logoLimpCity from '@/assets/images/grupo/limp-city.webp'
 import { navLinks } from '@/lib/nav-links'
-import { Button } from '@/components/ui/Button'
 import { cn } from '@/lib/utils'
+
+// Logo de una empresa aliada: en color sobre la navbar blanca y como silueta blanca
+// sobre el hero (mismo tratamiento que el logo de CBS), con fundido entre ambos.
+function PartnerLogo({ src, alt, isSolid, className }: { src: string; alt: string; isSolid: boolean; className: string }) {
+  return (
+    <span className="grid shrink-0">
+      <img
+        src={src}
+        alt={alt}
+        width={256}
+        height={256}
+        className={cn('[grid-area:1/1] w-auto transition-opacity duration-300', className, isSolid ? 'opacity-100' : 'opacity-0')}
+      />
+      <img
+        src={src}
+        alt=""
+        aria-hidden="true"
+        width={256}
+        height={256}
+        className={cn('[grid-area:1/1] w-auto brightness-0 invert transition-opacity duration-300', className, isSolid ? 'opacity-0' : 'opacity-100')}
+      />
+    </span>
+  )
+}
 
 export function Navbar({ ready }: { ready: boolean }) {
   const [isScrolled, setIsScrolled] = useState(false)
@@ -47,10 +72,6 @@ export function Navbar({ ready }: { ready: boolean }) {
       for (const section of sections) {
         if (section.getBoundingClientRect().top <= probe) current = `#${section.id}`
       }
-
-      // Al llegar a Contacto (que no está en el menú) ya no hay link activo.
-      const contacto = document.getElementById('contacto')
-      if (contacto && contacto.getBoundingClientRect().top <= probe) current = null
 
       setActiveHref(current)
     }
@@ -169,7 +190,7 @@ export function Navbar({ ready }: { ready: boolean }) {
                 onBlur={() => setHoveredHref(null)}
                 aria-current={isActive ? 'true' : undefined}
                 className={cn(
-                  'relative rounded-lg px-4 py-2 text-base font-semibold outline-none transition-colors focus-visible:ring-2 focus-visible:ring-cyan-400 2xl:px-5 2xl:text-lg',
+                  'relative rounded-lg px-3 py-2 text-base font-semibold outline-none transition-colors focus-visible:ring-2 focus-visible:ring-cyan-400 xl:px-4 2xl:px-5 2xl:text-lg',
                   isActive
                     ? isSolid
                       ? 'text-cyan-700'
@@ -198,7 +219,7 @@ export function Navbar({ ready }: { ready: boolean }) {
                   <motion.span
                     aria-hidden="true"
                     layoutId="nav-active-indicator"
-                    className="absolute inset-x-4 bottom-1 h-0.5 rounded-full bg-cyan-500 2xl:inset-x-5"
+                    className="absolute inset-x-3 bottom-1 h-0.5 rounded-full bg-cyan-500 xl:inset-x-4 2xl:inset-x-5"
                     transition={
                       reduceMotion
                         ? { duration: 0 }
@@ -211,10 +232,13 @@ export function Navbar({ ready }: { ready: boolean }) {
           })}
         </div>
 
-        <div className="hidden lg:block">
-          <Button href="#contacto" variant="solid" icon={<ArrowUpRightIcon size={18} weight="regular" />}>
-            Contáctanos
-          </Button>
+        <div className="hidden shrink-0 items-center gap-4 lg:flex xl:gap-5">
+          <PartnerLogo src={logoLimpCity} alt="Limp City" isSolid={isSolid} className="h-9 xl:h-10 2xl:h-12" />
+          <span
+            aria-hidden="true"
+            className={cn('h-6 w-px transition-colors duration-300 2xl:h-8', isSolid ? 'bg-navy-200' : 'bg-white/30')}
+          />
+          <PartnerLogo src={logoHydrosistem} alt="Hydrosistem" isSolid={isSolid} className="h-9 xl:h-10 2xl:h-12" />
         </div>
 
         <button
@@ -299,14 +323,11 @@ export function Navbar({ ready }: { ready: boolean }) {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: 0.1 + navLinks.length * 0.06, ease: [0.16, 1, 0.3, 1] }}
               >
-                <Button
-                  href="#contacto"
-                  variant="solid"
-                  className="mt-6 w-full justify-center"
-                  icon={<ArrowUpRightIcon size={18} weight="regular" />}
-                >
-                  Contáctanos
-                </Button>
+                <div className="mt-8 flex items-center gap-5 border-t border-navy-100 pt-6">
+                  <PartnerLogo src={logoLimpCity} alt="Limp City" isSolid className="h-12" />
+                  <span aria-hidden="true" className="h-8 w-px bg-navy-200" />
+                  <PartnerLogo src={logoHydrosistem} alt="Hydrosistem" isSolid className="h-12" />
+                </div>
               </motion.div>
             </div>
           </motion.div>
