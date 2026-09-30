@@ -82,7 +82,7 @@ function FormField({
           existe, así que no hace falta reservar una línea vacía debajo del campo
           y el formulario tampoco salta cuando aparece un error. */}
       <div className="flex min-h-5 items-center justify-between gap-x-4">
-        <label htmlFor={id} className="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-cyan-700 lg:text-[clamp(12px,1.4vh,15px)]">
+        <label htmlFor={id} className="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-cyan-700 lg:text-[clamp(12px,1.5vh,16px)]">
           {label}
         </label>
         {error && (
@@ -129,7 +129,7 @@ export function Contacto() {
   }
 
   const inputClasses = (hasError: boolean) =>
-    `border-b bg-transparent pb-1 pt-2 text-base text-navy-900 outline-none transition-colors placeholder:text-slate-400 focus:border-cyan-600 lg:text-[clamp(16px,2vh,21px)] ${
+    `border-b bg-transparent pb-1 pt-2 text-base text-navy-900 outline-none transition-colors placeholder:text-slate-400 focus:border-cyan-600 lg:pb-[clamp(0.25rem,0.7vh,0.625rem)] lg:pt-[clamp(0.5rem,1.3vh,1.125rem)] lg:text-[clamp(16px,2.25vh,23px)] ${
       hasError ? 'border-navy-900' : 'border-navy-200'
     }`
 
@@ -206,20 +206,20 @@ export function Contacto() {
             <p className="font-mono text-sm font-semibold uppercase tracking-[0.2em] text-cyan-700 lg:text-[clamp(14px,1.5vh,17px)]">
               Contacto
             </p>
-            <h2 className="mt-4 text-3xl font-bold leading-tight text-navy-900 md:text-4xl lg:mt-[clamp(1rem,1.8vh,1.5rem)] lg:text-[clamp(2.25rem,5.4vh,4rem)]">
+            <h2 className="mt-4 text-3xl font-bold leading-tight text-navy-900 md:text-4xl lg:mt-[clamp(1rem,2.2vh,2rem)] lg:text-[clamp(2.25rem,6vh,4.5rem)]">
               Hablemos de tu próximo proyecto
             </h2>
-            <p className="mt-5 max-w-md text-[15.5px] leading-relaxed text-slate-700 lg:mt-[clamp(1.25rem,2.2vh,2rem)] lg:max-w-[min(100%,clamp(28rem,62vh,38rem))] lg:text-[clamp(15.5px,2vh,22px)]">
+            <p className="mt-5 max-w-md text-[15.5px] leading-relaxed text-slate-700 lg:mt-[clamp(1.25rem,2.8vh,2.5rem)] lg:max-w-[min(100%,clamp(28rem,66vh,40rem))] lg:text-[clamp(15.5px,2.25vh,24px)]">
               Escríbenos y te contactamos a la brevedad, o hazlo directo por correo.
             </p>
 
-            <div className="mt-10 flex flex-col gap-1 lg:mt-[clamp(2.5rem,5vh,4.5rem)]">
+            <div className="mt-10 flex flex-col gap-1 lg:mt-[clamp(2.5rem,6vh,5.5rem)]">
               <span className="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-cyan-700 lg:text-[clamp(12px,1.4vh,15px)]">
                 Correo
               </span>
               <a
                 href={`mailto:${CONTACT_EMAIL}`}
-                className="inline-flex items-center gap-2 text-lg font-semibold text-navy-900 transition-colors hover:text-cyan-700 lg:text-[clamp(1.125rem,2.1vh,1.5rem)]"
+                className="inline-flex items-center gap-2 text-lg font-semibold text-navy-900 transition-colors hover:text-cyan-700 lg:text-[clamp(1.125rem,2.4vh,1.75rem)]"
               >
                 <EnvelopeSimpleIcon size={20} weight="regular" className="shrink-0 text-cyan-600" />
                 {CONTACT_EMAIL}
@@ -262,7 +262,7 @@ export function Contacto() {
                 animate={{ opacity: 1 }}
                 exit={reduceMotion ? undefined : { opacity: 0 }}
                 transition={{ duration: reduceMotion ? 0 : 0.3 }}
-                className="flex w-full max-w-md flex-col gap-5 lg:max-w-[min(100%,clamp(28rem,66vh,40rem))] lg:gap-[clamp(1.25rem,2.8vh,2.25rem)]"
+                className="flex w-full max-w-md flex-col gap-5 lg:max-w-[min(100%,clamp(28rem,74vh,46rem))] lg:gap-[clamp(1.25rem,3.4vh,3rem)]"
               >
                 {/* Honeypot: oculto para visitantes reales (fuera de pantalla,
                   no enfocable, oculto para tecnología de asistencia), pero
@@ -352,7 +352,7 @@ export function Contacto() {
                 >
                   {sending ? 'Enviando...' : 'Enviar'}
                 </Button>
-                <p className="max-w-sm text-xs leading-relaxed text-slate-500 lg:max-w-[clamp(24rem,55vh,32rem)] lg:text-[clamp(12px,1.35vh,14px)]">
+                <p className="max-w-sm text-xs leading-relaxed text-slate-500 lg:max-w-[clamp(24rem,62vh,36rem)] lg:text-[clamp(12px,1.5vh,15px)]">
                   Al enviar este formulario, aceptas que usemos tus datos solo para responder tu consulta.
                 </p>
                 {submitError && (
