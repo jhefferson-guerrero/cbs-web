@@ -25,69 +25,55 @@ export function Navbar({ ready }: { ready: boolean }) {
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
-  // Scrollspy: resalta el link del menú de la sección que está actualmente en
-  // una franja angosta cerca del centro vertical de la pantalla.
+  // Scrollspy: la sección activa es la última cuyo inicio ya pasó una línea de
+  // lectura ubicada al 40% de la altura de la pantalla. Se calcula con la
+  // posición de cada sección en cada scroll, así que no hay "huecos" sin
+  // sección activa (por ejemplo, en los espacios blancos de respiro que hay
+  // entre secciones) ni depende de una franja delgada que se pueda saltar.
   useEffect(() => {
     if (pathname !== '/') return
 
-    // Las secciones del Home están detrás de un chunk de ruta con carga
-    // diferida (lazy) + Suspense, así que pueden no existir todavía en el DOM
-    // cuando este efecto corre por primera vez. Se revisa en cada frame hasta
-    // que aparezcan, en vez de rendirse para siempre.
-    let cancelled = false
-    let rafId: number
-    let observer: IntersectionObserver | undefined
+    let rafId = 0
 
-    const trySetup = () => {
-      if (cancelled) return
-
+    const update = () => {
+      rafId = 0
       const sections = navLinks
         .map((link) => document.getElementById(link.href.slice(1)))
         .filter((el): el is HTMLElement => el !== null)
+      if (sections.length === 0) return
 
-      if (sections.length === 0) {
-        rafId = requestAnimationFrame(trySetup)
-        return
+      const probe = window.innerHeight * 0.4
+      let current: string | null = null
+      for (const section of sections) {
+        if (section.getBoundingClientRect().top <= probe) current = `#${section.id}`
       }
 
-      // El callback solo recibe las secciones cuyo estado de intersección
-      // acaba de cambiar, no todas las secciones observadas -- por eso acá se
-      // lleva el registro de cuáles están visibles en vez de derivarlo de un
-      // solo lote de callback. Si no, al volver a scrollear hasta arriba del
-      // todo (sin que nada vuelva a entrar en la franja), el último link
-      // activo se quedaba marcado para siempre.
-      const visible = new Map<string, number>()
+      // Al llegar a Contacto (que no está en el menú) ya no hay link activo.
+      const contacto = document.getElementById('contacto')
+      if (contacto && contacto.getBoundingClientRect().top <= probe) current = null
 
-      observer = new IntersectionObserver(
-        (entries) => {
-          for (const entry of entries) {
-            if (entry.isIntersecting) {
-              visible.set(entry.target.id, entry.boundingClientRect.top)
-            } else {
-              visible.delete(entry.target.id)
-            }
-          }
-
-          if (visible.size === 0) {
-            setActiveHref(null)
-            return
-          }
-
-          const [topId] = [...visible.entries()].sort((a, b) => a[1] - b[1])[0]
-          setActiveHref(`#${topId}`)
-        },
-        { rootMargin: '-45% 0px -50% 0px', threshold: 0 },
-      )
-
-      sections.forEach((section) => observer?.observe(section))
+      setActiveHref(current)
     }
 
-    trySetup()
+    const schedule = () => {
+      if (!rafId) rafId = requestAnimationFrame(update)
+    }
+
+    // Las secciones del Home están detrás de un chunk de ruta con carga
+    // diferida (lazy) + Suspense; se recalcula en cada scroll/resize y una vez
+    // al montar, y si todavía no existen simplemente no hace nada.
+    schedule()
+    window.addEventListener('scroll', schedule, { passive: true })
+    window.addEventListener('resize', schedule)
+    const retry = window.setInterval(schedule, 500)
+    const stopRetry = window.setTimeout(() => window.clearInterval(retry), 4000)
 
     return () => {
-      cancelled = true
       cancelAnimationFrame(rafId)
-      observer?.disconnect()
+      window.removeEventListener('scroll', schedule)
+      window.removeEventListener('resize', schedule)
+      window.clearInterval(retry)
+      window.clearTimeout(stopRetry)
     }
   }, [pathname])
 
