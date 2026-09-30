@@ -67,7 +67,7 @@ export function Proyectos() {
                 <h3 className="text-xl font-bold leading-snug text-white lg:text-[clamp(1.05rem,2.4vh,1.6rem)]">
                   {project.title}
                 </h3>
-                <div className="mt-3 flex items-center justify-between gap-4 lg:mt-[clamp(0.25rem,1vh,0.75rem)]">
+                <div className="mt-3 flex items-center justify-between gap-4 lg:mt-[clamp(0.25rem,1vh,0.75rem)] 2xl:mt-[clamp(0.75rem,1.8vh,1.5rem)]">
                   <p className="flex items-center gap-1.5 text-sm text-navy-300 lg:text-[clamp(0.875rem,1.7vh,1.05rem)]">
                     <MapPinIcon size={16} weight="regular" className="shrink-0 text-cyan-400" />
                     {project.location}
