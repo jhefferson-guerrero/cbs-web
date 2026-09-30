@@ -35,6 +35,13 @@ const MESSAGE_MAX = 1000
 const PHONE_PATTERN = /^[0-9+\-\s()]{6,20}$/
 const NAME_ALLOWED_CHARS = /[^\p{L}\s'-]/gu
 
+// El campo de mensaje arranca de una sola línea (pegada a su raya, sin aire vacío
+// debajo del texto) y crece con lo que se escribe, hasta el tope de max-h.
+function autosize(el: HTMLTextAreaElement) {
+  el.style.height = 'auto'
+  el.style.height = `${el.scrollHeight + (el.offsetHeight - el.clientHeight)}px`
+}
+
 function validate(values: FormValues): FormErrors {
   const errors: FormErrors = {}
 
@@ -327,14 +334,17 @@ export function Contacto() {
                 <textarea
                   id={`${formId}-message`}
                   name="message"
-                  rows={2}
+                  rows={1}
                   maxLength={MESSAGE_MAX}
                   value={values.message}
-                  onChange={setField('message')}
+                  onChange={(event) => {
+                    setField('message')(event)
+                    autosize(event.currentTarget)
+                  }}
                   placeholder="Cuéntanos sobre tu proyecto o consulta"
                   aria-invalid={Boolean(errors.message)}
                   aria-describedby={errors.message ? `${formId}-message-error` : undefined}
-                  className={`resize-none ${inputClasses(Boolean(errors.message))}`}
+                  className={`max-h-40 resize-none overflow-y-auto ${inputClasses(Boolean(errors.message))}`}
                 />
               </FormField>
 
