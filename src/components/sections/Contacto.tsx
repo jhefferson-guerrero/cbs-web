@@ -334,7 +334,8 @@ export function Contacto() {
                   placeholder="Cuéntanos sobre tu proyecto o consulta"
                   aria-invalid={Boolean(errors.message)}
                   aria-describedby={errors.message ? `${formId}-message-error` : undefined}
-                  className={`resize-none ${inputClasses(Boolean(errors.message))}`}
+                  data-lenis-prevent
+                  className={`scrollbar-thin resize-none overflow-y-auto ${inputClasses(Boolean(errors.message))}`}
                 />
               </FormField>
 
