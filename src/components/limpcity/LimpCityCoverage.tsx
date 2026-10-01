@@ -32,36 +32,27 @@ export function LimpCityCoverage() {
       </motion.div>
 
       <div className="mt-8 overflow-x-auto lg:mt-[clamp(0.75rem,3vh,2.5rem)] lg:flex lg:min-h-0 lg:flex-1 lg:justify-center lg:overflow-visible">
-        <div
+        <motion.div
+          initial={reduceMotion ? false : { opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
           className="relative isolate min-w-[640px] overflow-hidden bg-moss-100 shadow-card ring-1 ring-moss-700/15 lg:h-full lg:min-w-0"
           style={{ aspectRatio: MAP_RATIO }}
         >
-          <motion.img
+          <img
             src={coverageMap}
             alt={`Mapa de Bahía con las ciudades donde opera Limp City: ${limpCityCities.join(', ')}`}
             width={1365}
             height={661}
             loading="lazy"
             decoding="async"
-            initial={reduceMotion ? false : { scale: 1.05 }}
-            whileInView={{ scale: 1 }}
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1] }}
             style={{ width: MAP_IMAGE_WIDTH }}
             className="absolute left-0 top-0 h-auto max-w-none"
           />
           <span aria-hidden="true" className="absolute right-4 top-4 h-5 w-5 border-r-2 border-t-2 border-navy-900/50 lg:right-6 lg:top-6 lg:h-6 lg:w-6" />
           <span aria-hidden="true" className="absolute bottom-4 left-4 h-5 w-5 border-b-2 border-l-2 border-navy-900/50 lg:bottom-6 lg:left-6 lg:h-6 lg:w-6" />
-          <motion.div
-            aria-hidden="true"
-            initial={reduceMotion ? false : { scaleX: 1 }}
-            whileInView={{ scaleX: 0 }}
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-            style={{ transformOrigin: 'right' }}
-            className="absolute inset-0 bg-moss-50"
-          />
-        </div>
+        </motion.div>
       </div>
       </div>
       <div aria-hidden="true" className="hidden lg:block lg:h-[clamp(2rem,8vh,6rem)]" />

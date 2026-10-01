@@ -41,36 +41,25 @@ export function LimpCityAbout() {
           </motion.p>
         </div>
 
-        <div className="relative isolate mx-auto w-full max-w-sm lg:mx-0 lg:ml-auto lg:aspect-[626/720] lg:h-[min(74vh,46rem)] lg:w-auto lg:max-w-none">
+        <motion.div
+          {...reveal(0.15)}
+          className="relative isolate mx-auto w-full max-w-sm lg:mx-0 lg:ml-auto lg:aspect-[626/720] lg:h-[min(74vh,46rem)] lg:w-auto lg:max-w-none"
+        >
           <span aria-hidden="true" className="absolute -bottom-4 -right-4 -z-10 h-full w-full border-[1.5px] border-moss-500 lg:-bottom-5 lg:-right-5" />
           <div className="relative aspect-[626/720] w-full overflow-hidden bg-navy-950 lg:aspect-auto lg:h-full">
-            <motion.img
+            <img
               src={aboutImage}
               alt="Tres operarios de Limp City con chaleco y uniforme verde barriendo junto a un sumidero, con una carretilla naranja"
               width={1264}
               height={842}
               loading="lazy"
               decoding="async"
-              initial={reduceMotion ? false : { scale: 1.12 }}
-              whileInView={{ scale: 1 }}
-              viewport={{ once: true, amount: 0.3 }}
-              transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
               className="absolute inset-0 h-full w-full object-cover object-[48%_50%]"
             />
             <span aria-hidden="true" className="absolute left-4 top-4 h-6 w-6 border-l-2 border-t-2 border-white/80" />
             <span aria-hidden="true" className="absolute bottom-4 right-4 h-6 w-6 border-b-2 border-r-2 border-white/80" />
-            {/* Cortina navy que se achica y revela la foto, igual que en Nosotros. */}
-            <motion.div
-              aria-hidden="true"
-              initial={reduceMotion ? false : { scaleY: 1 }}
-              whileInView={{ scaleY: 0 }}
-              viewport={{ once: true, amount: 0.3 }}
-              transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-              style={{ transformOrigin: 'top' }}
-              className="absolute inset-0 bg-navy-950"
-            />
           </div>
-        </div>
+        </motion.div>
       </div>
       <div aria-hidden="true" className="hidden lg:block lg:h-[clamp(2rem,8vh,6rem)]" />
     </section>
