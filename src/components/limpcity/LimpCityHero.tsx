@@ -37,7 +37,8 @@ export function LimpCityHero() {
 
       <div className="mx-auto flex w-full max-w-[1400px] flex-1 flex-col justify-between gap-10 px-6 pb-8 pt-28 lg:gap-6 lg:px-10 lg:pb-10 lg:pt-[calc(var(--nav-h)+1.5rem)] xl:px-16 2xl:max-w-[1700px] 2xl:px-14">
         <div className="flex flex-1 items-center">
-          <div className="max-w-4xl">
+          {/* El ancho del texto sigue al de la pantalla: así el titular baja a dos líneas y no llega a la zona donde está el operario de la foto. */}
+          <div className="max-w-4xl lg:max-w-[min(100%,clamp(28rem,46vw,54rem))]">
             {/* La animación va en el contenedor: si se anima el filtro de la propia imagen se pisa el brightness-0 invert que la vuelve blanca. */}
             <motion.div {...rise(0.1)}>
               <img
@@ -50,7 +51,7 @@ export function LimpCityHero() {
             </motion.div>
             <motion.h1
               {...rise(0.22)}
-              className="mt-[clamp(1rem,2.6vh,2rem)] text-[clamp(2.25rem,6.2vh,4.75rem)] font-semibold leading-[1.08] tracking-tight text-white"
+              className="mt-[clamp(1rem,2.6vh,2rem)] text-[clamp(2.25rem,6.2vh,4.75rem)] font-semibold leading-[1.08] tracking-tight text-balance text-white"
             >
               Limpieza urbana y manejo de residuos sólidos
             </motion.h1>
