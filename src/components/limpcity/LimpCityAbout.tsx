@@ -13,6 +13,8 @@ export function LimpCityAbout() {
 
   return (
     <section className="bg-white">
+      {/* Espacio de respiro arriba y abajo, fuera del bloque de una vista. */}
+      <div aria-hidden="true" className="hidden lg:block lg:h-[clamp(2rem,8vh,6rem)]" />
       <div className="mx-auto grid w-full max-w-[1400px] items-center gap-12 px-6 py-16 lg:min-h-[calc(100svh-var(--nav-h))] lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)] lg:gap-[clamp(3rem,6vw,7rem)] lg:px-10 lg:py-[clamp(1.5rem,6vh,5rem)] xl:px-16 2xl:max-w-[1700px] 2xl:px-14">
         <div>
           <motion.p
@@ -70,6 +72,7 @@ export function LimpCityAbout() {
           </div>
         </div>
       </div>
+      <div aria-hidden="true" className="hidden lg:block lg:h-[clamp(2rem,8vh,6rem)]" />
     </section>
   )
 }

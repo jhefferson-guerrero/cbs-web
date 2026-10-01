@@ -12,7 +12,10 @@ export function LimpCityCoverage() {
   const reduceMotion = useReducedMotion()
 
   return (
-    <section className="flex flex-col bg-moss-50 px-6 py-16 sm:px-10 lg:h-[calc(100svh-var(--nav-h))] lg:min-h-[440px] lg:py-[clamp(1.25rem,4.5vh,4rem)] xl:px-16 2xl:px-24">
+    <section className="bg-moss-50">
+      {/* Espacio de respiro arriba y abajo, fuera del bloque de una vista. */}
+      <div aria-hidden="true" className="hidden lg:block lg:h-[clamp(2rem,8vh,6rem)]" />
+      <div className="flex flex-col px-6 py-16 sm:px-10 lg:h-[calc(100svh-var(--nav-h))] lg:min-h-[440px] lg:py-[clamp(1.25rem,4.5vh,4rem)] xl:px-16 2xl:px-24">
       <motion.div
         initial={reduceMotion ? false : { opacity: 0, y: 24 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -60,6 +63,8 @@ export function LimpCityCoverage() {
           />
         </div>
       </div>
+      </div>
+      <div aria-hidden="true" className="hidden lg:block lg:h-[clamp(2rem,8vh,6rem)]" />
     </section>
   )
 }
