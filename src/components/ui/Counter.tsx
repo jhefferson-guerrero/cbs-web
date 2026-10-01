@@ -4,7 +4,7 @@ import { animate, motion, useInView, useMotionValue, useReducedMotion, useTransf
 export function Counter({ to, format }: { to: number; format: (n: number) => string }) {
   const reduceMotion = useReducedMotion()
   const ref = useRef<HTMLSpanElement>(null)
-  const isInView = useInView(ref, { once: true, margin: '-80px' })
+  const isInView = useInView(ref, { once: true })
   const count = useMotionValue(0)
   const display = useTransform(count, (v) => format(Math.round(v)))
 
