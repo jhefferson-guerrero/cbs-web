@@ -14,7 +14,7 @@ export function LimpCityServices() {
 
   return (
     <section className="bg-navy-950">
-      <div className="mx-auto flex w-full max-w-[1400px] flex-col px-6 py-16 lg:h-[calc(100svh-var(--nav-h))] lg:min-h-[540px] lg:px-10 lg:py-[clamp(1.25rem,4vh,3.5rem)] xl:px-16 2xl:max-w-[1700px] 2xl:px-14">
+      <div className="mx-auto flex w-full max-w-[1400px] flex-col px-6 py-16 lg:h-[calc(100svh-var(--nav-h))] lg:min-h-[440px] lg:px-10 lg:py-[clamp(1.25rem,4vh,3.5rem)] xl:px-16 2xl:max-w-[1700px] 2xl:px-14">
         <motion.h2
           initial={reduceMotion ? false : { opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
