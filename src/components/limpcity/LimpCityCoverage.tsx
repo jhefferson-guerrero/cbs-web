@@ -1,3 +1,4 @@
+import type { CSSProperties } from 'react'
 import { motion, useReducedMotion } from 'motion/react'
 import { coverageMap, limpCityCities } from '@/lib/limp-city'
 
@@ -7,6 +8,14 @@ import { coverageMap, limpCityCities } from '@/lib/limp-city'
 // siguen completas.
 const MAP_RATIO = '1170 / 560'
 const MAP_IMAGE_WIDTH = `${(1365 / 1170) * 100}%`
+
+// En móvil (menos de lg) no cabe el mapa completo con etiquetas legibles: se muestra solo la
+// franja de la derecha, desde el este de Bahía hasta el final de las etiquetas (px 300 a 1170
+// de la imagen), sin scroll horizontal.
+const MOBILE_CROP_X = 300
+const MOBILE_CROP_W = 870
+const MOBILE_IMAGE_WIDTH = `${(1365 / MOBILE_CROP_W) * 100}%`
+const MOBILE_IMAGE_LEFT = `-${(MOBILE_CROP_X / MOBILE_CROP_W) * 100}%`
 
 export function LimpCityCoverage() {
   const reduceMotion = useReducedMotion()
@@ -31,10 +40,17 @@ export function LimpCityCoverage() {
         </p>
       </motion.div>
 
-      <div className="mt-8 overflow-x-auto lg:mt-[clamp(0.75rem,3vh,2.5rem)] lg:flex lg:min-h-0 lg:flex-1 lg:justify-center lg:overflow-visible">
+      <div className="mt-8 lg:mt-[clamp(0.75rem,3vh,2.5rem)] lg:flex lg:min-h-0 lg:flex-1 lg:justify-center">
         <div
-          className="relative isolate min-w-[640px] overflow-hidden bg-moss-100 shadow-card ring-1 ring-moss-700/15 lg:h-full lg:min-w-0"
-          style={{ aspectRatio: MAP_RATIO }}
+          className="relative isolate aspect-[870/560] w-full overflow-hidden bg-moss-100 shadow-card ring-1 ring-moss-700/15 lg:aspect-[1170/560] lg:h-full lg:w-auto"
+          style={
+            {
+              '--map-ratio': MAP_RATIO,
+              '--map-w': MAP_IMAGE_WIDTH,
+              '--m-w': MOBILE_IMAGE_WIDTH,
+              '--m-left': MOBILE_IMAGE_LEFT,
+            } as CSSProperties
+          }
         >
           <motion.img
             src={coverageMap}
@@ -47,8 +63,7 @@ export function LimpCityCoverage() {
             whileInView={{ scale: 1 }}
             viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1] }}
-            style={{ width: MAP_IMAGE_WIDTH }}
-            className="absolute left-0 top-0 h-auto max-w-none"
+            className="absolute top-0 h-auto max-w-none [left:var(--m-left)] [width:var(--m-w)] lg:left-0 lg:[width:var(--map-w)]"
           />
           <span aria-hidden="true" className="absolute right-4 top-4 h-5 w-5 border-r-2 border-t-2 border-navy-900/50 lg:right-6 lg:top-6 lg:h-6 lg:w-6" />
           <span aria-hidden="true" className="absolute bottom-4 left-4 h-5 w-5 border-b-2 border-l-2 border-navy-900/50 lg:bottom-6 lg:left-6 lg:h-6 lg:w-6" />

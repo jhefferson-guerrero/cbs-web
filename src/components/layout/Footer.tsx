@@ -8,11 +8,11 @@ export function Footer() {
 
   return (
     <footer className="relative bg-navy-950">
-      <span aria-hidden="true" className="absolute right-6 top-6 h-6 w-6 border-r-2 border-t-2 border-white/70 lg:right-9 lg:top-9 lg:h-7 lg:w-7" />
-      <span aria-hidden="true" className="absolute bottom-6 left-6 h-6 w-6 border-b-2 border-l-2 border-white/70 lg:bottom-9 lg:left-9 lg:h-7 lg:w-7" />
+      <span aria-hidden="true" className="absolute right-6 top-6 hidden h-6 w-6 sm:block border-r-2 border-t-2 border-white/70 lg:right-9 lg:top-9 lg:h-7 lg:w-7" />
+      <span aria-hidden="true" className="absolute bottom-6 left-6 hidden h-6 w-6 sm:block border-b-2 border-l-2 border-white/70 lg:bottom-9 lg:left-9 lg:h-7 lg:w-7" />
 
-      <div className="mx-auto w-full max-w-[1400px] px-10 py-16 lg:px-16 lg:py-20 xl:px-24 2xl:max-w-none 2xl:py-24">
-        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-[1fr_auto_1fr] lg:items-start lg:gap-12">
+      <div className="mx-auto w-full max-w-[1400px] px-6 py-12 sm:px-10 sm:py-16 lg:px-16 lg:py-20 xl:px-24 2xl:max-w-none 2xl:py-24">
+        <div className="grid gap-10 sm:gap-8 sm:grid-cols-2 lg:grid-cols-[1fr_auto_1fr] lg:items-start lg:gap-12">
           <div className="sm:col-span-2 lg:col-span-1">
             <a href="#top" aria-label="CBS - Inicio" className="inline-block w-fit">
               <img
@@ -27,7 +27,7 @@ export function Footer() {
 
           <div className="flex flex-col gap-3">
             <p className="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-cyan-400 2xl:text-sm">Navegación</p>
-            <nav aria-label="Enlaces del sitio" className="flex flex-wrap gap-x-5 gap-y-2">
+            <nav aria-label="Enlaces del sitio" className="grid grid-cols-2 gap-x-6 gap-y-3 sm:flex sm:flex-wrap sm:gap-x-5 sm:gap-y-2">
               {navLinks.map((link) => (
                 <a
                   key={link.href}
@@ -52,7 +52,7 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-12 flex flex-col gap-4 border-t border-white/10 pt-5 sm:flex-row sm:items-center sm:justify-between">
+        <div className="mt-10 flex flex-col gap-4 border-t border-white/10 pt-6 sm:mt-12 sm:flex-row sm:items-center sm:justify-between">
           <p className="text-sm text-navy-300">
             © {year} CBS — Construtora Baiana de Saneamento. Todos los derechos reservados.
           </p>

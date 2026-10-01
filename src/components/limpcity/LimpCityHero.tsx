@@ -27,8 +27,9 @@ export function LimpCityHero() {
         initial={reduceMotion ? false : { scale: 1.08 }}
         animate={{ scale: 1 }}
         transition={{ duration: 1.6, ease: [0.16, 1, 0.3, 1] }}
-        className="absolute inset-0 -z-10 h-full w-full object-cover object-[50%_52%] saturate-[1.02]"
+        className="absolute inset-0 -z-10 h-full w-full object-cover object-[74%_50%] saturate-[1.02] lg:object-[50%_52%]"
       />
+      <div className="absolute inset-0 -z-10 bg-navy-950/35 lg:hidden" />
       <div className="absolute inset-0 -z-10 bg-gradient-to-r from-navy-950/85 via-navy-950/50 via-35% to-transparent to-62%" />
       <div className="absolute inset-0 -z-10 bg-gradient-to-t from-navy-950/95 via-navy-950/35 via-20% to-transparent to-42%" />
       <div className="absolute inset-x-0 top-0 -z-10 h-28 bg-gradient-to-b from-navy-950/45 to-transparent" />
