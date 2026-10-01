@@ -36,8 +36,8 @@ export function LimpCityHero() {
 
       <span aria-hidden="true" className="absolute right-6 top-24 h-6 w-6 border-r-2 border-t-2 border-white/70 lg:right-9 lg:top-28 lg:h-7 lg:w-7" />
 
-      <div className="mx-auto flex w-full max-w-[1400px] flex-1 flex-col justify-between gap-6 px-6 pb-6 pt-24 sm:gap-10 sm:pb-8 sm:pt-28 lg:gap-6 lg:px-10 lg:pb-10 lg:pt-[calc(var(--nav-h)+1.5rem)] xl:px-16 2xl:max-w-[1700px] 2xl:px-14">
-        <div className="flex flex-1 items-center">
+      <div className="mx-auto flex w-full max-w-[1400px] flex-1 flex-col justify-center gap-8 px-6 pb-6 pt-24 sm:justify-between sm:gap-10 sm:pb-8 sm:pt-28 lg:gap-6 lg:px-10 lg:pb-10 lg:pt-[calc(var(--nav-h)+1.5rem)] xl:px-16 2xl:max-w-[1700px] 2xl:px-14">
+        <div className="flex items-center sm:flex-1">
           {/* El ancho del texto sigue al de la pantalla: así el titular baja a dos líneas y no llega a la zona donde está el operario de la foto. */}
           <div className="max-w-4xl lg:max-w-[min(100%,clamp(28rem,46vw,54rem))]">
             {/* La animación va en el contenedor: si se anima el filtro de la propia imagen se pisa el brightness-0 invert que la vuelve blanca. */}
