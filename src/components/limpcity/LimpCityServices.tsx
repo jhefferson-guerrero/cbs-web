@@ -14,6 +14,8 @@ export function LimpCityServices() {
 
   return (
     <section className="bg-navy-950">
+      {/* Espacio de respiro arriba y abajo, fuera del bloque de una vista. */}
+      <div aria-hidden="true" className="hidden lg:block lg:h-[clamp(2rem,8vh,6rem)]" />
       <div className="mx-auto flex w-full max-w-[1400px] flex-col px-6 py-16 lg:h-[calc(100svh-var(--nav-h))] lg:min-h-[440px] lg:px-10 lg:py-[clamp(1.25rem,4vh,3.5rem)] xl:px-16 2xl:max-w-[1700px] 2xl:px-14">
         <motion.h2
           initial={reduceMotion ? false : { opacity: 0, y: 24 }}
@@ -105,6 +107,7 @@ export function LimpCityServices() {
           })}
         </ul>
       </div>
+      <div aria-hidden="true" className="hidden lg:block lg:h-[clamp(2rem,8vh,6rem)]" />
     </section>
   )
 }
