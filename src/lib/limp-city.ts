@@ -25,6 +25,8 @@ export const limpCityStats: LimpCityStat[] = [
 
 export interface LimpCityService {
   name: string
+  /** Una línea breve. Provisional: pendiente de validar con el cliente. */
+  description: string
   image: string
   /** 'contain': fotos de producto con fondo blanco, se funden con el fondo del panel en vez de recortarse. */
   fit: 'cover' | 'contain'
@@ -33,11 +35,11 @@ export interface LimpCityService {
 }
 
 export const limpCityServices: LimpCityService[] = [
-  { name: 'Limpieza de playa', image: servicePlaya, fit: 'cover', position: '50% 60%' },
-  { name: 'Recolección domiciliaria', image: serviceRecoleccion, fit: 'contain' },
-  { name: 'Limpieza de canales', image: serviceCanales, fit: 'cover', position: '45% 55%' },
-  { name: 'Barrido mecanizado', image: serviceBarrido, fit: 'contain' },
-  { name: 'Equipos especiales', image: serviceEquipos, fit: 'cover', position: '60% 50%' },
+  { name: 'Limpieza de playa', description: 'Retiro de residuos y algas de las playas con equipos especializados.', image: servicePlaya, fit: 'cover', position: '50% 60%' },
+  { name: 'Recolección domiciliaria', description: 'Recolección de residuos en viviendas con camiones y cuadrillas propias.', image: serviceRecoleccion, fit: 'contain' },
+  { name: 'Limpieza de canales', description: 'Limpieza y desobstrucción de canales con maquinaria pesada.', image: serviceCanales, fit: 'cover', position: '45% 55%' },
+  { name: 'Barrido mecanizado', description: 'Barrido de calles y avenidas con equipos mecanizados.', image: serviceBarrido, fit: 'contain' },
+  { name: 'Equipos especiales', description: 'Equipos especializados para la limpieza y el mantenimiento urbano.', image: serviceEquipos, fit: 'cover', position: '60% 50%' },
 ]
 
 export const limpCityCities = [

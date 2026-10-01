@@ -1,5 +1,6 @@
 import { useState, type CSSProperties } from 'react'
 import { motion, useReducedMotion } from 'motion/react'
+import { PlusIcon } from '@phosphor-icons/react'
 import { limpCityServices } from '@/lib/limp-city'
 import { cn } from '@/lib/utils'
 
@@ -61,7 +62,7 @@ export function LimpCityServices() {
                       className={cn(
                         'h-full w-full transition-[filter,transform] duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]',
                         service.fit === 'contain' ? 'object-contain p-4 mix-blend-multiply sm:p-6' : 'object-cover',
-                        isActive ? 'scale-100' : 'lg:scale-110 lg:grayscale-[70%]',
+                        isActive ? 'scale-100' : 'lg:scale-110 lg:grayscale-[25%]',
                       )}
                     />
                   </div>
@@ -74,28 +75,44 @@ export function LimpCityServices() {
                   />
                   <div
                     className={cn(
-                      'absolute inset-0 bg-navy-950/35 transition-opacity duration-700',
+                      'absolute inset-0 bg-navy-950/15 transition-opacity duration-700',
                       isActive ? 'lg:opacity-0' : 'lg:opacity-100',
                     )}
                   />
 
                   <span aria-hidden="true" className={cn('absolute left-0 top-0 h-full w-0.5 bg-moss-300 transition-opacity duration-500', isActive ? 'opacity-100' : 'lg:opacity-0')} />
 
-                  {/* Nombre: horizontal cuando la franja está abierta (y siempre en móvil). */}
+                  {/* Nombre y descripción: horizontales cuando la franja está abierta (y siempre en móvil). */}
                   <span
                     className={cn(
-                      'absolute bottom-0 left-0 right-0 p-5 text-xl font-semibold leading-tight text-white transition-opacity duration-500 sm:p-6 lg:p-[clamp(1.25rem,2.4vh,2rem)] lg:text-[clamp(1.25rem,3vh,2rem)]',
+                      'absolute bottom-0 left-0 right-0 flex flex-col gap-1.5 p-5 transition-opacity duration-500 sm:p-6 lg:p-[clamp(1.25rem,2.4vh,2rem)]',
                       isActive ? 'opacity-100' : 'lg:opacity-0',
                     )}
                   >
-                    {service.name}
+                    <span className="text-xl font-semibold leading-tight text-white lg:text-[clamp(1.25rem,3vh,2rem)]">
+                      {service.name}
+                    </span>
+                    <span className="max-w-[44ch] text-sm leading-snug text-white/85 lg:text-[clamp(0.875rem,1.8vh,1.125rem)]">
+                      {service.description}
+                    </span>
+                  </span>
+
+                  {/* Indicador de que la franja se puede abrir (solo pantallas grandes, solo cerrada). */}
+                  <span
+                    aria-hidden="true"
+                    className={cn(
+                      'absolute left-1/2 top-5 hidden h-8 w-8 -translate-x-1/2 items-center justify-center border border-white/60 text-white transition-opacity duration-500 lg:flex',
+                      isActive ? 'opacity-0' : 'opacity-100',
+                    )}
+                  >
+                    <PlusIcon size={16} weight="regular" />
                   </span>
 
                   {/* Nombre vertical cuando la franja está cerrada (solo pantallas grandes). */}
                   <span
                     aria-hidden="true"
                     className={cn(
-                      'absolute bottom-5 left-1/2 hidden -translate-x-1/2 rotate-180 whitespace-nowrap text-base font-semibold text-white transition-opacity duration-500 [writing-mode:vertical-rl] lg:block',
+                      'absolute bottom-5 left-1/2 hidden -translate-x-1/2 rotate-180 whitespace-nowrap text-base font-semibold text-white transition-opacity duration-500 [writing-mode:vertical-rl] lg:block lg:text-[clamp(1rem,2.2vh,1.375rem)]',
                       isActive ? 'opacity-0' : 'opacity-100',
                     )}
                   >
