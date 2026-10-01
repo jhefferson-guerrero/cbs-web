@@ -85,10 +85,10 @@ export function LimpCityServices() {
                   {/* Nombre y descripción: horizontales cuando la franja está abierta (y siempre en móvil). */}
                   <span
                     className={cn(
-                      'absolute bottom-0 left-0 right-0 flex flex-col gap-1.5 p-5 transition-opacity sm:p-6 lg:right-auto lg:w-[min(30rem,100%)] lg:p-[clamp(1.25rem,2.4vh,2rem)]',
+                      'absolute bottom-0 left-0 right-0 flex flex-col gap-1.5 p-5 transition-opacity sm:p-6 lg:right-auto lg:w-[26rem] lg:p-[clamp(1.25rem,2.4vh,2rem)]',
                       // Ancho fijo (no sigue al de la franja) para que el texto no se reacomode mientras
                       // la franja cambia de tamano. Sale rapido y entra cuando la franja ya casi termino de abrirse.
-                      isActive ? 'opacity-100 duration-500 lg:delay-[350ms]' : 'duration-150 lg:opacity-0',
+                      isActive ? 'opacity-100 duration-500 lg:delay-[350ms]' : 'duration-75 lg:opacity-0',
                     )}
                   >
                     <span className="text-xl font-semibold leading-tight text-white lg:text-[clamp(1.25rem,3vh,2rem)]">
@@ -104,7 +104,7 @@ export function LimpCityServices() {
                     aria-hidden="true"
                     className={cn(
                       'absolute left-1/2 top-5 hidden h-8 w-8 -translate-x-1/2 items-center justify-center border border-white/60 text-white transition-opacity lg:flex',
-                      isActive ? 'opacity-0 duration-150' : 'opacity-100 duration-500 delay-[350ms]',
+                      isActive ? 'opacity-0 duration-75' : 'opacity-100 duration-500 delay-[350ms]',
                     )}
                   >
                     <PlusIcon size={16} weight="regular" />
@@ -115,7 +115,7 @@ export function LimpCityServices() {
                     aria-hidden="true"
                     className={cn(
                       'absolute bottom-5 left-1/2 hidden -translate-x-1/2 rotate-180 whitespace-nowrap text-base font-semibold text-white transition-opacity [writing-mode:vertical-rl] lg:block lg:text-[clamp(1rem,2.2vh,1.375rem)]',
-                      isActive ? 'opacity-0 duration-150' : 'opacity-100 duration-500 delay-[350ms]',
+                      isActive ? 'opacity-0 duration-75' : 'opacity-100 duration-500 delay-[350ms]',
                     )}
                   >
                     {service.name}
