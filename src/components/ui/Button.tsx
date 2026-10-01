@@ -2,7 +2,7 @@ import type { AnchorHTMLAttributes, ButtonHTMLAttributes, ReactNode } from 'reac
 import { Link } from 'react-router-dom'
 import { cn } from '@/lib/utils'
 
-type ButtonVariant = 'solid' | 'moss' | 'navy' | 'outline-light' | 'outline-dark'
+type ButtonVariant = 'solid' | 'moss' | 'outline-light' | 'outline-dark'
 
 interface ButtonOwnProps {
   variant?: ButtonVariant
@@ -17,7 +17,6 @@ const variantClasses: Record<ButtonVariant, string> = {
   solid:
     'bg-cyan-600 text-white shadow-sm shadow-navy-950/10 hover:-translate-y-0.5 hover:bg-cyan-700 hover:shadow-lg hover:shadow-cyan-900/25',
   moss: 'bg-moss-400 text-navy-950 shadow-sm shadow-navy-950/10 hover:-translate-y-0.5 hover:bg-moss-300 hover:shadow-lg hover:shadow-navy-950/25',
-  navy: 'bg-navy-950 text-white shadow-sm shadow-navy-950/20 hover:-translate-y-0.5 hover:bg-navy-800 hover:shadow-lg hover:shadow-navy-950/30',
   'outline-light': 'border border-white/35 text-white hover:-translate-y-0.5 hover:border-white/60',
   'outline-dark': 'border border-navy-200 text-navy-800 hover:-translate-y-0.5 hover:border-navy-300',
 }
@@ -25,7 +24,6 @@ const variantClasses: Record<ButtonVariant, string> = {
 const fillClasses: Record<ButtonVariant, string | null> = {
   solid: null,
   moss: null,
-  navy: null,
   'outline-light': 'bg-white/10',
   'outline-dark': 'bg-navy-50',
 }
