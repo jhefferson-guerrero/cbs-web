@@ -29,9 +29,9 @@ export function LimpCityHero() {
         transition={{ duration: 1.6, ease: [0.16, 1, 0.3, 1] }}
         className="absolute inset-0 -z-10 h-full w-full object-cover object-[50%_52%] saturate-[1.02]"
       />
-      <div className="absolute inset-0 -z-10 bg-gradient-to-r from-navy-950/85 via-navy-950/40 to-navy-950/0" />
-      <div className="absolute inset-0 -z-10 bg-gradient-to-t from-navy-950 via-navy-950/20 to-navy-950/0" />
-      <div className="absolute inset-x-0 top-0 -z-10 h-36 bg-gradient-to-b from-navy-950/55 to-transparent" />
+      <div className="absolute inset-0 -z-10 bg-gradient-to-r from-navy-950/85 via-navy-950/50 via-35% to-transparent to-62%" />
+      <div className="absolute inset-0 -z-10 bg-gradient-to-t from-navy-950/95 via-navy-950/35 via-20% to-transparent to-42%" />
+      <div className="absolute inset-x-0 top-0 -z-10 h-28 bg-gradient-to-b from-navy-950/45 to-transparent" />
 
       <span aria-hidden="true" className="absolute right-6 top-24 h-6 w-6 border-r-2 border-t-2 border-white/70 lg:right-9 lg:top-28 lg:h-7 lg:w-7" />
 
