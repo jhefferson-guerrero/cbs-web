@@ -20,18 +20,17 @@ export function LimpCityHero() {
         src={heroImage}
         alt=""
         aria-hidden="true"
-        width={1280}
-        height={720}
+        width={1303}
+        height={800}
         fetchPriority="high"
         decoding="async"
         initial={reduceMotion ? false : { scale: 1.08 }}
         animate={{ scale: 1 }}
         transition={{ duration: 1.6, ease: [0.16, 1, 0.3, 1] }}
-        className="absolute inset-0 -z-10 h-full w-full object-cover object-[78%_50%] saturate-[1.05] brightness-[0.95]"
+        className="absolute inset-0 -z-10 h-full w-full object-cover object-[50%_52%] saturate-[1.02]"
       />
-      <div className="absolute inset-0 -z-10 bg-navy-950/10" />
-      <div className="absolute inset-0 -z-10 bg-gradient-to-r from-navy-950/90 via-navy-950/45 to-navy-950/0" />
-      <div className="absolute inset-0 -z-10 bg-gradient-to-t from-navy-950 via-navy-950/25 to-navy-950/0" />
+      <div className="absolute inset-0 -z-10 bg-gradient-to-r from-navy-950/85 via-navy-950/40 to-navy-950/0" />
+      <div className="absolute inset-0 -z-10 bg-gradient-to-t from-navy-950 via-navy-950/20 to-navy-950/0" />
       <div className="absolute inset-x-0 top-0 -z-10 h-36 bg-gradient-to-b from-navy-950/55 to-transparent" />
 
       <span aria-hidden="true" className="absolute right-6 top-24 h-6 w-6 border-r-2 border-t-2 border-white/70 lg:right-9 lg:top-28 lg:h-7 lg:w-7" />
