@@ -44,16 +44,16 @@ export function LimpCityAbout() {
           <div className="relative aspect-[626/720] w-full overflow-hidden bg-navy-950 lg:aspect-auto lg:h-full">
             <motion.img
               src={aboutImage}
-              alt="Equipo de Limp City sosteniendo entre las manos un bulbo de vidrio con tierra y una planta"
-              width={626}
-              height={720}
+              alt="Tres operarios de Limp City con chaleco y uniforme verde barriendo junto a un sumidero, con una carretilla naranja"
+              width={1264}
+              height={842}
               loading="lazy"
               decoding="async"
               initial={reduceMotion ? false : { scale: 1.12 }}
               whileInView={{ scale: 1 }}
               viewport={{ once: true, amount: 0.3 }}
               transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-              className="absolute inset-0 h-full w-full object-cover"
+              className="absolute inset-0 h-full w-full object-cover object-[48%_50%]"
             />
             <span aria-hidden="true" className="absolute left-4 top-4 h-6 w-6 border-l-2 border-t-2 border-white/80" />
             <span aria-hidden="true" className="absolute bottom-4 right-4 h-6 w-6 border-b-2 border-r-2 border-white/80" />
