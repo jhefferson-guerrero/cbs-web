@@ -1,4 +1,5 @@
 import { motion, useReducedMotion } from 'motion/react'
+import { SealCheckIcon } from '@phosphor-icons/react'
 import { certifications } from '@/lib/certifications'
 import { cn } from '@/lib/utils'
 
@@ -55,12 +56,20 @@ export function Certificaciones() {
 
                 <div>
                   <p className="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-cyan-400 2xl:text-sm">ISO</p>
-                  <p className="mt-2 font-mono text-5xl font-bold tabular-nums leading-none text-white lg:text-[clamp(1.75rem,3.2vw,3.25rem)]">
+                  <p className="mt-2 font-mono text-5xl font-bold tabular-nums leading-none text-white lg:text-[clamp(1.75rem,3.2vw,4.25rem)]">
                     {cert.number}
                   </p>
                   <h3 className="mt-4 text-lg font-semibold leading-snug text-white lg:mt-[clamp(0.75rem,2vh,1.5rem)] lg:text-[clamp(1rem,2.2vh,1.375rem)]">
                     {cert.name}
                   </h3>
+                </div>
+
+                {/* Marca de agua decorativa que ocupa el hueco central en pantallas grandes (en móvil y tablet las
+                    tarjetas son bajas y no hay hueco). Reemplazable por el sello oficial de cada norma. */}
+                <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-1/2 hidden -translate-y-1/2 justify-center lg:flex">
+                  <span className="block h-[clamp(4rem,11vh,8rem)] w-[clamp(4rem,11vh,8rem)] text-cyan-400/30">
+                    <SealCheckIcon size="100%" weight="thin" />
+                  </span>
                 </div>
 
                 <p className="text-sm leading-relaxed text-navy-200 lg:text-[clamp(0.8125rem,1.7vh,1rem)]">{cert.description}</p>
