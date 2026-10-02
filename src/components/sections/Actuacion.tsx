@@ -2,7 +2,7 @@ import { useRef, useState } from 'react'
 import { motion, useReducedMotion } from 'motion/react'
 import { ArrowLeftIcon, ArrowRightIcon } from '@phosphor-icons/react'
 import { cn } from '@/lib/utils'
-import mapaCobertura from '@/assets/images/actuacion-mapa.png'
+import mapaCobertura from '@/assets/images/actuacion-mapa.webp'
 
 // Proporción de la imagen fuente: la tarjeta tiene exactamente esta forma,
 // así el mapa se ve completo y sin franjas de otro tono alrededor.
@@ -97,7 +97,7 @@ export function Actuacion() {
           onClick={toggleCountry}
           aria-label={atEnd ? 'Ver el mapa de Perú' : 'Ver el mapa de Brasil'}
           className={cn(
-            'absolute top-[30%] flex h-10 w-10 items-center justify-center rounded-full border border-white/40 bg-navy-950/70 text-white backdrop-blur-sm outline-none transition-colors hover:bg-navy-950/85 focus-visible:ring-2 focus-visible:ring-cyan-400 active:scale-95 lg:hidden',
+            'absolute top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-white/40 bg-navy-950/70 text-white backdrop-blur-sm outline-none transition-colors hover:bg-navy-950/85 focus-visible:ring-2 focus-visible:ring-cyan-400 active:scale-95 lg:hidden',
             atEnd ? 'left-2' : 'right-2',
           )}
         >
