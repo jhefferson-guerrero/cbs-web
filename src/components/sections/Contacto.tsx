@@ -1,4 +1,4 @@
-import { useId, useState, type ChangeEvent, type FormEvent, type ReactNode } from 'react'
+import { useId, useRef, useState, type ChangeEvent, type CSSProperties, type FormEvent, type ReactNode } from 'react'
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react'
 import { ArrowRightIcon, CheckCircleIcon, EnvelopeSimpleIcon, WarningCircleIcon } from '@phosphor-icons/react'
 import { Button } from '@/components/ui/Button'
@@ -106,6 +106,17 @@ export function Contacto() {
   const [sending, setSending] = useState(false)
   const [submitError, setSubmitError] = useState<string>()
   const [mountedAt] = useState(() => Date.now())
+  const panelRef = useRef<HTMLDivElement>(null)
+  // Altura que ocupaba el formulario justo antes de enviarse. En móvil, el mensaje de
+  // confirmación es mucho más bajo que el formulario: sin reservar este espacio, la zona
+  // se encoge de golpe y el pie de página sube de un salto. En escritorio no hace falta
+  // (la sección ya ocupa una pantalla completa).
+  const [lockedHeight, setLockedHeight] = useState<number>()
+
+  const markSent = () => {
+    setLockedHeight(panelRef.current?.offsetHeight)
+    setSent(true)
+  }
 
   const setField =
     (field: keyof FormValues) => (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -150,7 +161,7 @@ export function Contacto() {
     const honeypot = new FormData(event.currentTarget).get('botcheck')
     const submittedTooFast = Date.now() - mountedAt < MIN_SUBMIT_MS
     if (honeypot || submittedTooFast) {
-      setSent(true)
+      markSent()
       return
     }
 
@@ -178,7 +189,7 @@ export function Contacto() {
       })
       const result = await response.json()
       if (result.success) {
-        setSent(true)
+        markSent()
       } else {
         setSubmitError(GENERIC_SEND_ERROR)
       }
@@ -229,12 +240,14 @@ export function Contacto() {
         </motion.div>
 
         <motion.div
+          ref={panelRef}
+          style={lockedHeight ? ({ '--locked-h': `${lockedHeight}px` } as CSSProperties) : undefined}
           layout={!reduceMotion}
           initial={reduceMotion ? false : { opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-          className="flex px-6 py-16 sm:px-10 sm:py-20 lg:items-center lg:px-16 lg:py-[clamp(1.5rem,5vh,6rem)] 2xl:px-24"
+          className="flex items-center px-6 py-16 max-lg:min-h-[var(--locked-h)] sm:px-10 sm:py-20 lg:px-16 lg:py-[clamp(1.5rem,5vh,6rem)] 2xl:px-24"
         >
           <AnimatePresence mode="wait">
             {sent ? (
