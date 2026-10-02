@@ -1,4 +1,7 @@
+import { useRef, useState } from 'react'
 import { motion, useReducedMotion } from 'motion/react'
+import { ArrowLeftIcon, ArrowRightIcon } from '@phosphor-icons/react'
+import { cn } from '@/lib/utils'
 import mapaCobertura from '@/assets/images/actuacion-mapa.png'
 
 // Proporción de la imagen fuente: la tarjeta tiene exactamente esta forma,
@@ -7,6 +10,20 @@ const MAP_RATIO = '1483 / 704'
 
 export function Actuacion() {
   const reduceMotion = useReducedMotion()
+  const scrollerRef = useRef<HTMLDivElement>(null)
+  // En móvil el mapa es más ancho que la pantalla y se desliza: el botón de flecha avisa de ello
+  // y lleva de un país al otro. Cuando se llega al final, cambia de lado y de sentido.
+  const [atEnd, setAtEnd] = useState(false)
+
+  const handleScroll = () => {
+    const el = scrollerRef.current
+    if (el) setAtEnd(el.scrollLeft + el.clientWidth >= el.scrollWidth - 8)
+  }
+
+  const toggleCountry = () => {
+    const el = scrollerRef.current
+    if (el) el.scrollTo({ left: atEnd ? 0 : el.scrollWidth, behavior: reduceMotion ? 'auto' : 'smooth' })
+  }
 
   return (
     <section className="border-t border-navy-100 bg-white">
@@ -36,7 +53,11 @@ export function Actuacion() {
         </p>
       </motion.div>
 
-      <div className="mt-8 overflow-x-auto lg:mt-[clamp(0.75rem,2.5vh,2rem)] lg:flex lg:min-h-0 lg:flex-1 lg:justify-center lg:overflow-visible">
+      <div className="relative mt-8 lg:contents">
+      <div
+        ref={scrollerRef}
+        onScroll={handleScroll}
+        className="overflow-x-auto lg:mt-[clamp(0.75rem,2.5vh,2rem)] lg:flex lg:min-h-0 lg:flex-1 lg:justify-center lg:overflow-visible">
         <div
           className="relative isolate min-w-[760px] overflow-hidden bg-navy-950 shadow-card lg:h-full lg:min-w-0"
           style={{ aspectRatio: MAP_RATIO }}
@@ -70,6 +91,18 @@ export function Actuacion() {
             className="absolute inset-0 bg-navy-950"
           />
         </div>
+      </div>
+        <button
+          type="button"
+          onClick={toggleCountry}
+          aria-label={atEnd ? 'Ver el mapa de Perú' : 'Ver el mapa de Brasil'}
+          className={cn(
+            'absolute top-[30%] flex h-10 w-10 items-center justify-center rounded-full border border-white/40 bg-navy-950/70 text-white backdrop-blur-sm outline-none transition-colors hover:bg-navy-950/85 focus-visible:ring-2 focus-visible:ring-cyan-400 active:scale-95 lg:hidden',
+            atEnd ? 'left-2' : 'right-2',
+          )}
+        >
+          {atEnd ? <ArrowLeftIcon size={20} weight="regular" /> : <ArrowRightIcon size={20} weight="regular" />}
+        </button>
       </div>
       </div>
       <div aria-hidden="true" className="hidden lg:block lg:h-[clamp(2rem,8vh,6rem)]" />
