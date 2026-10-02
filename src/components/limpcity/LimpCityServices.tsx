@@ -1,7 +1,14 @@
-import { useState, type CSSProperties } from 'react'
-import { motion, useReducedMotion } from 'motion/react'
+import { useEffect, useRef, useState, type CSSProperties } from 'react'
+import { motion, useInView, useReducedMotion } from 'motion/react'
 import { limpCityServices } from '@/lib/limp-city'
 import { cn } from '@/lib/utils'
+
+// Demostración única: al entrar en la sección las franjas se abren una tras
+// otra y vuelve a quedar abierta la primera, para que se entienda que se
+// pueden abrir sin necesidad de un icono.
+const DEMO_START_MS = 900
+const DEMO_STEP_MS = 600
+const DEMO_HOLD_MS = 800
 
 // En pantallas grandes los servicios son franjas verticales: la activa se abre y las
 // demás quedan angostas. Se activa con el cursor, el foco de teclado o un toque.
@@ -9,6 +16,31 @@ import { cn } from '@/lib/utils'
 export function LimpCityServices() {
   const reduceMotion = useReducedMotion()
   const [active, setActive] = useState(0)
+  const listRef = useRef<HTMLUListElement>(null)
+  const inView = useInView(listRef, { once: true, amount: 0.6 })
+  // En cuanto el visitante abre una franja por su cuenta, la demostración se detiene.
+  const userInteracted = useRef(false)
+
+  const activate = (index: number) => {
+    userInteracted.current = true
+    setActive(index)
+  }
+
+  useEffect(() => {
+    if (!inView || reduceMotion) return
+    // En móvil y tablet todas las filas están abiertas: no hay nada que mostrar.
+    if (!window.matchMedia('(min-width: 1024px)').matches) return
+
+    const run = (delay: number, index: number) =>
+      window.setTimeout(() => {
+        if (!userInteracted.current) setActive(index)
+      }, delay)
+
+    const timers = limpCityServices.map((_, i) => run(DEMO_START_MS + (i - 1) * DEMO_STEP_MS, i)).slice(1)
+    timers.push(run(DEMO_START_MS + (limpCityServices.length - 1) * DEMO_STEP_MS + DEMO_HOLD_MS, 0))
+
+    return () => timers.forEach((id) => window.clearTimeout(id))
+  }, [inView, reduceMotion])
 
   const columns = limpCityServices.map((_, i) => (i === active ? '5fr' : '1fr')).join(' ')
 
@@ -28,6 +60,7 @@ export function LimpCityServices() {
         </motion.h2>
 
         <ul
+          ref={listRef}
           style={{ '--cols': columns } as CSSProperties}
           className="mt-8 flex flex-col gap-3 lg:mt-[clamp(1rem,3vh,2.5rem)] lg:grid lg:min-h-0 lg:flex-1 lg:grid-rows-[minmax(0,1fr)] lg:[grid-template-columns:var(--cols)] lg:transition-[grid-template-columns] lg:duration-700 lg:ease-[cubic-bezier(0.16,1,0.3,1)]"
         >
@@ -46,9 +79,9 @@ export function LimpCityServices() {
                 <button
                   type="button"
                   aria-expanded={isActive}
-                  onMouseEnter={() => setActive(i)}
-                  onFocus={() => setActive(i)}
-                  onClick={() => setActive(i)}
+                  onMouseEnter={() => activate(i)}
+                  onFocus={() => activate(i)}
+                  onClick={() => activate(i)}
                   className="group relative block h-56 w-full overflow-hidden bg-navy-900 text-left outline-none focus-visible:ring-2 focus-visible:ring-moss-300 sm:h-64 lg:h-full"
                 >
                   <div className={cn('absolute inset-0', service.fit === 'contain' && 'bg-[#e6e9df]')}>
