@@ -1,4 +1,4 @@
-import { limpCityHeroImage } from '@/lib/limp-city-hero'
+import { LIMP_CITY_HERO_SIZES, LIMP_CITY_HERO_SRC, LIMP_CITY_HERO_SRCSET } from '@/lib/limp-city-hero'
 
 type NetworkInformation = { saveData?: boolean; effectiveType?: string }
 
@@ -29,7 +29,11 @@ export function prefetchLimpCity(loadPage: () => Promise<unknown>) {
     const hero = new window.Image()
     hero.fetchPriority = 'low'
     hero.decoding = 'async'
-    hero.src = limpCityHeroImage
+    // sizes y srcset antes que src: el navegador descarga la misma variante
+    // responsive que va a mostrar el <img> real del hero.
+    hero.sizes = LIMP_CITY_HERO_SIZES
+    hero.srcset = LIMP_CITY_HERO_SRCSET
+    hero.src = LIMP_CITY_HERO_SRC
 
     loadPage().catch(() => {})
   }

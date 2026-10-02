@@ -3,6 +3,7 @@ import { animate, motion, useMotionValue, useReducedMotion } from 'motion/react'
 import { useLocation } from 'react-router-dom'
 import logoMobileCbs from '@/assets/images/logo-mobile-cbs.webp'
 import { HERO_IMAGE_SIZES, HERO_IMAGE_SRC, HERO_IMAGE_SRCSET } from '@/lib/hero-image'
+import { LIMP_CITY_HERO_SIZES, LIMP_CITY_HERO_SRC, LIMP_CITY_HERO_SRCSET } from '@/lib/limp-city-hero'
 
 const MIN_DISPLAY_MS = 400
 const MAX_DISPLAY_MS = 4000
@@ -29,7 +30,9 @@ export function Preloader({ onReady }: { onReady: () => void }) {
   const [displayCount, setDisplayCount] = useState(0)
   const reduceMotion = useReducedMotion()
   const count = useMotionValue(0)
-  const isHome = useLocation().pathname === '/'
+  const { pathname } = useLocation()
+  const isHome = pathname === '/'
+  const isLimpCity = pathname === '/limp-city' || pathname === '/limp-city/'
 
   useEffect(() => {
     return count.on('change', (v) => setDisplayCount(Math.round(v)))
@@ -40,12 +43,14 @@ export function Preloader({ onReady }: { onReady: () => void }) {
 
     const minTimer = wait(MIN_DISPLAY_MS)
     const maxTimer = wait(MAX_DISPLAY_MS)
-    // El fondo del Hero solo se muestra en la ruta de inicio; no gastar datos
-    // descargándolo mientras el preloader bloquea una página de detalle de
-    // proyecto.
+    // Cada fondo de hero solo se muestra en su ruta (el de CBS en el inicio, el
+    // de Limp City en /limp-city); no gastar datos descargándolos mientras el
+    // preloader bloquea otra página, como un detalle de proyecto.
     const heroReady = isHome
       ? preloadImage(HERO_IMAGE_SRC, HERO_IMAGE_SRCSET, HERO_IMAGE_SIZES)
-      : Promise.resolve()
+      : isLimpCity
+        ? preloadImage(LIMP_CITY_HERO_SRC, LIMP_CITY_HERO_SRCSET, LIMP_CITY_HERO_SIZES)
+        : Promise.resolve()
     const assetsReady = Promise.all([heroReady, document.fonts?.ready ?? Promise.resolve()])
 
     if (!reduceMotion) {
@@ -66,7 +71,7 @@ export function Preloader({ onReady }: { onReady: () => void }) {
     return () => {
       cancelled = true
     }
-  }, [count, onReady, reduceMotion])
+  }, [count, onReady, reduceMotion, isHome, isLimpCity])
 
   return (
     <motion.div
