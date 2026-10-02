@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react'
 import { motion, useReducedMotion } from 'motion/react'
 import { ArrowLeftIcon, ArrowRightIcon } from '@phosphor-icons/react'
+import { Lightbox } from '@/components/ui/Lightbox'
 import { cn } from '@/lib/utils'
 import mapaCobertura from '@/assets/images/actuacion-mapa.webp'
 
@@ -11,6 +12,9 @@ const MAP_RATIO = '1483 / 704'
 export function Actuacion() {
   const reduceMotion = useReducedMotion()
   const scrollerRef = useRef<HTMLDivElement>(null)
+  const openerRef = useRef<HTMLButtonElement>(null)
+  // En escritorio el mapa se puede ampliar con un clic; en móvil ya se desliza, así que no hace falta.
+  const [zoomed, setZoomed] = useState(false)
   // En móvil el mapa es más ancho que la pantalla y se desliza: el botón de flecha avisa de ello
   // y lleva de un país al otro. Cuando se llega al final, cambia de lado y de sentido.
   const [atEnd, setAtEnd] = useState(false)
@@ -90,6 +94,14 @@ export function Actuacion() {
             style={{ transformOrigin: 'right' }}
             className="absolute inset-0 bg-navy-950"
           />
+
+          <button
+            ref={openerRef}
+            type="button"
+            onClick={() => setZoomed(true)}
+            aria-label="Ampliar el mapa de cobertura"
+            className="absolute inset-0 z-10 hidden cursor-zoom-in outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-cyan-400 lg:block"
+          />
         </div>
       </div>
         <button
@@ -106,6 +118,17 @@ export function Actuacion() {
       </div>
       </div>
       <div aria-hidden="true" className="hidden lg:block lg:h-[clamp(2rem,8vh,6rem)]" />
+
+      <Lightbox
+        open={zoomed}
+        onClose={() => {
+          setZoomed(false)
+          openerRef.current?.focus()
+        }}
+        src={mapaCobertura}
+        alt="Mapa de cobertura de CBS en Perú y Brasil, con las regiones donde opera en cada país"
+        width={1483}
+      />
     </section>
   )
 }
