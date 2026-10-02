@@ -1,5 +1,4 @@
 import { withCommas } from '@/lib/utils'
-import { limpCityHeroImage as heroImage } from '@/lib/limp-city-hero'
 import aboutImage from '@/assets/images/limpcity/sobre-limp-city.webp'
 import coverageMap from '@/assets/images/limpcity/mapa-bahia.webp'
 import servicePlaya from '@/assets/images/limpcity/servicio-playa.webp'
@@ -8,7 +7,7 @@ import serviceCanales from '@/assets/images/limpcity/servicio-canales.webp'
 import serviceBarrido from '@/assets/images/limpcity/servicio-barrido.webp'
 import serviceEquipos from '@/assets/images/limpcity/servicio-equipos.webp'
 
-export { heroImage, aboutImage, coverageMap }
+export { aboutImage, coverageMap }
 
 export interface LimpCityStat {
   label: string

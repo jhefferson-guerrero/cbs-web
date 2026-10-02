@@ -2,7 +2,8 @@ import { motion, useReducedMotion } from 'motion/react'
 import { ArrowRightIcon } from '@phosphor-icons/react'
 import { Button } from '@/components/ui/Button'
 import { Counter } from '@/components/ui/Counter'
-import { heroImage, limpCityStats } from '@/lib/limp-city'
+import { limpCityStats } from '@/lib/limp-city'
+import { LIMP_CITY_HERO_SIZES, LIMP_CITY_HERO_SRC, LIMP_CITY_HERO_SRCSET } from '@/lib/limp-city-hero'
 import logoLimpCity from '@/assets/images/grupo/limp-city.webp'
 
 export function LimpCityHero() {
@@ -17,7 +18,9 @@ export function LimpCityHero() {
   return (
     <section className="relative isolate flex min-h-[100svh] flex-col overflow-hidden bg-navy-950">
       <motion.img
-        src={heroImage}
+        src={LIMP_CITY_HERO_SRC}
+        srcSet={LIMP_CITY_HERO_SRCSET}
+        sizes={LIMP_CITY_HERO_SIZES}
         alt=""
         aria-hidden="true"
         width={2752}

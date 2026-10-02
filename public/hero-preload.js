@@ -1,17 +1,34 @@
 // Corre de inmediato durante el parseo del HTML, antes de que se
 // descargue/ejecute el bundle de JS de la app, así el navegador puede
-// empezar a descargar la imagen del hero lo antes posible. Mantené este
-// srcset sincronizado con src/lib/hero-image.ts (no se puede importar acá).
-// Solo para la ruta de inicio: el fondo del hero no se usa en las páginas
-// de detalle de proyecto.
-if (location.pathname === '/') {
-  var heroPreload = document.createElement('link')
-  heroPreload.rel = 'preload'
-  heroPreload.as = 'image'
-  heroPreload.href = '/hero-planta.webp'
-  heroPreload.imageSrcset =
-    '/hero-planta-640.webp 640w, /hero-planta-960.webp 960w, /hero-planta-1280.webp 1280w, /hero-planta.webp 1920w, /hero-planta-2560.webp 2560w'
-  heroPreload.imageSizes = '100vw'
-  heroPreload.fetchPriority = 'high'
-  document.head.appendChild(heroPreload)
-}
+// empezar a descargar la imagen del hero lo antes posible. Mantené estos
+// srcset sincronizados con src/lib/hero-image.ts y src/lib/limp-city-hero.ts
+// (no se pueden importar acá).
+// Cada hero solo se precarga en su propia ruta: el de CBS en el inicio y el de
+// Limp City en /limp-city. En el resto de páginas no se usan.
+(function () {
+  var heroes = {
+    '/': {
+      href: '/hero-planta.webp',
+      srcset:
+        '/hero-planta-640.webp 640w, /hero-planta-960.webp 960w, /hero-planta-1280.webp 1280w, /hero-planta.webp 1920w, /hero-planta-2560.webp 2560w',
+    },
+    '/limp-city': {
+      href: '/hero-limpcity.webp',
+      srcset:
+        '/hero-limpcity-768.webp 768w, /hero-limpcity-1280.webp 1280w, /hero-limpcity-1920.webp 1920w, /hero-limpcity.webp 2752w',
+    },
+  }
+
+  var hero = heroes[location.pathname.replace(/(.)\/$/, '$1')]
+
+  if (hero) {
+    var heroPreload = document.createElement('link')
+    heroPreload.rel = 'preload'
+    heroPreload.as = 'image'
+    heroPreload.href = hero.href
+    heroPreload.imageSrcset = hero.srcset
+    heroPreload.imageSizes = '100vw'
+    heroPreload.fetchPriority = 'high'
+    document.head.appendChild(heroPreload)
+  }
+})()
