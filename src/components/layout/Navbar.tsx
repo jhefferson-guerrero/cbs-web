@@ -185,7 +185,7 @@ export function Navbar({ ready }: { ready: boolean }) {
               width={1080}
               height={211}
               className={cn(
-                '[grid-area:1/1] h-10 w-auto transition-opacity duration-300 2xl:h-12',
+                '[grid-area:1/1] h-9 w-auto transition-opacity duration-300 xl:h-10 2xl:h-12',
                 isSolid ? 'opacity-100' : 'opacity-0',
               )}
             />
@@ -195,7 +195,7 @@ export function Navbar({ ready }: { ready: boolean }) {
               width={1080}
               height={211}
               className={cn(
-                '[grid-area:1/1] h-10 w-auto brightness-0 invert transition-opacity duration-300 2xl:h-12',
+                '[grid-area:1/1] h-9 w-auto brightness-0 invert transition-opacity duration-300 xl:h-10 2xl:h-12',
                 isSolid ? 'opacity-0' : 'opacity-100',
               )}
             />
@@ -218,7 +218,7 @@ export function Navbar({ ready }: { ready: boolean }) {
                 onBlur={() => setHoveredHref(null)}
                 aria-current={isActive ? 'true' : undefined}
                 className={cn(
-                  'relative rounded-lg px-3 py-2 text-base font-semibold outline-none transition-colors focus-visible:ring-2 focus-visible:ring-cyan-400 xl:px-4 2xl:px-5 2xl:text-lg',
+                  'relative rounded-lg px-2 py-2 text-[15px] font-semibold outline-none transition-colors focus-visible:ring-2 focus-visible:ring-cyan-400 xl:px-4 xl:text-base 2xl:px-5 2xl:text-lg',
                   isActive
                     ? isSolid
                       ? 'text-cyan-700'
@@ -247,7 +247,7 @@ export function Navbar({ ready }: { ready: boolean }) {
                   <motion.span
                     aria-hidden="true"
                     layoutId="nav-active-indicator"
-                    className="absolute inset-x-3 bottom-1 h-0.5 rounded-full bg-cyan-500 xl:inset-x-4 2xl:inset-x-5"
+                    className="absolute inset-x-2 bottom-1 h-0.5 rounded-full bg-cyan-500 xl:inset-x-4 2xl:inset-x-5"
                     transition={
                       reduceMotion
                         ? { duration: 0 }
@@ -269,7 +269,7 @@ export function Navbar({ ready }: { ready: boolean }) {
                   className={cn('h-6 w-px transition-colors duration-300 2xl:h-8', isSolid ? 'bg-navy-200' : 'bg-white/30')}
                 />
               )}
-              <PartnerLogo partner={partner} isSolid={isSolid} className="h-9 xl:h-10 2xl:h-12" />
+              <PartnerLogo partner={partner} isSolid={isSolid} className="h-8 xl:h-10 2xl:h-12" />
             </Fragment>
           ))}
         </div>

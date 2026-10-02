@@ -7,23 +7,8 @@ const timeline = [
   { year: 'Hoy', label: '3 proyectos en desarrollo en Perú', current: true },
 ]
 
-const certifications = [
-  { code: 'ISO 9001', label: 'Gestión de calidad' },
-  { code: 'ISO 14001', label: 'Gestión ambiental' },
-  { code: 'ISO 45001', label: 'Seguridad y salud en el trabajo' },
-  { code: 'ISO 37001', label: 'Gestión antisoborno' },
-  { code: 'ISO 8000', label: 'Gestión de datos de calidad' },
-]
-
 export function Nosotros() {
   const reduceMotion = useReducedMotion()
-
-  const reveal = (delay = 0) => ({
-    initial: reduceMotion ? false : { opacity: 0, y: 28 },
-    whileInView: { opacity: 1, y: 0 },
-    viewport: { once: true, amount: 0.3 },
-    transition: { duration: 0.7, delay, ease: [0.16, 1, 0.3, 1] as const },
-  })
 
   return (
     <section id="nosotros" className="bg-white">
@@ -157,39 +142,6 @@ export function Nosotros() {
             style={{ transformOrigin: 'left' }}
             className="absolute inset-0 bg-navy-950"
           />
-        </div>
-      </div>
-
-      <div className="border-t border-navy-100">
-        <div className="mx-auto w-full max-w-[1400px] px-6 py-16 lg:px-10 lg:py-20 xl:px-16 2xl:max-w-[1700px] 2xl:px-14 2xl:py-24">
-          <motion.div {...reveal(0.2)}>
-            <p className="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-cyan-700 2xl:text-sm">
-              Calidad certificada
-            </p>
-            <h3 className="mt-3 text-2xl font-bold leading-tight text-navy-900 md:text-3xl 2xl:text-4xl">
-              Certificaciones internacionales
-            </h3>
-            <p className="mt-4 max-w-2xl text-[15.5px] leading-relaxed text-slate-700 2xl:text-lg">
-              Cumplimos con los estándares internacionales de gestión, calidad y seguridad que exige la
-              industria, respaldando cada proyecto que ejecutamos.
-            </p>
-
-            <dl className="mt-10 grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-3 sm:divide-x sm:divide-navy-100 lg:grid-cols-5 2xl:mt-14 2xl:gap-y-14">
-              {certifications.map(({ code, label }, i) => (
-                <motion.div
-                  key={code}
-                  initial={reduceMotion ? false : { opacity: 0, y: 16 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, amount: 0.6 }}
-                  transition={{ duration: 0.6, delay: i * 0.08, ease: [0.16, 1, 0.3, 1] }}
-                  className="flex flex-col gap-2 sm:px-6 sm:first:pl-0 sm:last:pr-0 2xl:px-8"
-                >
-                  <dt className="font-mono text-xl font-bold text-navy-900 md:text-2xl 2xl:text-3xl">{code}</dt>
-                  <dd className="text-sm leading-snug text-slate-700 2xl:text-base">{label}</dd>
-                </motion.div>
-              ))}
-            </dl>
-          </motion.div>
         </div>
       </div>
     </section>

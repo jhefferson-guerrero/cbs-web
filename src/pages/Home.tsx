@@ -1,5 +1,6 @@
 import { Hero } from '@/components/sections/Hero'
 import { Nosotros } from '@/components/sections/Nosotros'
+import { Certificaciones } from '@/components/sections/Certificaciones'
 import { Actuacion } from '@/components/sections/Actuacion'
 import { Experiencia } from '@/components/sections/Experiencia'
 import { Proyectos } from '@/components/sections/Proyectos'
@@ -11,6 +12,7 @@ export function Home({ ready }: { ready: boolean }) {
     <main>
       <Hero ready={ready} />
       <Nosotros />
+      <Certificaciones />
       <Actuacion />
       <Experiencia />
       <Proyectos />
