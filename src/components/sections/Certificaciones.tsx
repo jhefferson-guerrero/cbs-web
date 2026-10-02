@@ -7,7 +7,7 @@ export function Certificaciones() {
 
   return (
     <section className="bg-white">
-      <div id="certificaciones">
+      <div id="certificaciones" className="lg:flex lg:min-h-[calc(100svh-var(--nav-h))] lg:items-center">
         <div className="mx-auto w-full max-w-[1400px] px-6 py-16 lg:px-10 lg:py-[clamp(1.75rem,5vh,4rem)] xl:px-16 2xl:max-w-[1700px] 2xl:px-14">
           <motion.div
             initial={reduceMotion ? false : { opacity: 0, y: 28 }}
