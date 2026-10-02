@@ -1,3 +1,5 @@
+import { useState } from 'react'
+import { motion, useReducedMotion } from 'motion/react'
 import { ArrowUpIcon, EnvelopeSimpleIcon } from '@phosphor-icons/react'
 import logoCbs from '@/assets/images/logo-cbs.webp'
 import { navLinks } from '@/lib/nav-links'
@@ -5,6 +7,8 @@ import { CONTACT_EMAIL } from '@/lib/contact'
 
 export function Footer() {
   const year = new Date().getFullYear()
+  const reduceMotion = useReducedMotion()
+  const [hoveredHref, setHoveredHref] = useState<string | null>(null)
 
   return (
     <footer className="relative bg-navy-950">
@@ -27,13 +31,33 @@ export function Footer() {
 
           <div className="flex flex-col gap-3">
             <p className="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-cyan-400 2xl:text-sm">Navegación</p>
-            <nav aria-label="Enlaces del sitio" className="grid grid-cols-2 gap-x-6 gap-y-3 sm:flex sm:flex-wrap sm:gap-x-5 sm:gap-y-2">
+            {/* Mismo hover que la navbar: un fondo suave que se desliza de un enlace al otro.
+                El margen negativo a la izquierda compensa el relleno del primer enlace para que
+                su texto siga alineado con la etiqueta "Navegación". */}
+            <nav
+              aria-label="Enlaces del sitio"
+              onMouseLeave={() => setHoveredHref(null)}
+              className="-ml-3 grid grid-cols-2 gap-1 sm:flex sm:flex-wrap"
+            >
               {navLinks.map((link) => (
                 <a
                   key={link.href}
                   href={link.href}
-                  className="text-sm font-semibold text-navy-100 outline-none transition-colors hover:text-white hover:underline hover:underline-offset-4 focus-visible:ring-2 focus-visible:ring-cyan-400 2xl:text-base"
+                  onMouseEnter={() => setHoveredHref(link.href)}
+                  onFocus={() => setHoveredHref(link.href)}
+                  onBlur={() => setHoveredHref(null)}
+                  className="relative isolate rounded-lg px-3 py-2 text-sm font-semibold text-navy-100 outline-none transition-colors hover:text-white focus-visible:ring-2 focus-visible:ring-cyan-400 2xl:text-base"
                 >
+                  {hoveredHref === link.href && (
+                    <motion.span
+                      layoutId="footer-hover-pill"
+                      aria-hidden="true"
+                      className="absolute inset-0 -z-10 rounded-lg bg-white/10"
+                      transition={
+                        reduceMotion ? { duration: 0 } : { type: 'spring', stiffness: 420, damping: 34 }
+                      }
+                    />
+                  )}
                   {link.label}
                 </a>
               ))}
