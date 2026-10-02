@@ -1,6 +1,5 @@
 import { useState, type CSSProperties } from 'react'
 import { motion, useReducedMotion } from 'motion/react'
-import { PlusIcon } from '@phosphor-icons/react'
 import { limpCityServices } from '@/lib/limp-city'
 import { cn } from '@/lib/utils'
 
@@ -97,17 +96,6 @@ export function LimpCityServices() {
                     <span className="max-w-[44ch] text-sm leading-snug text-white/85 lg:text-[clamp(0.875rem,1.8vh,1.125rem)]">
                       {service.description}
                     </span>
-                  </span>
-
-                  {/* Indicador de que la franja se puede abrir (solo pantallas grandes, solo cerrada). */}
-                  <span
-                    aria-hidden="true"
-                    className={cn(
-                      'absolute left-1/2 top-5 hidden h-8 w-8 -translate-x-1/2 items-center justify-center border border-white/60 text-white transition-opacity lg:flex',
-                      isActive ? 'opacity-0 duration-75' : 'opacity-100 duration-500 delay-[350ms]',
-                    )}
-                  >
-                    <PlusIcon size={16} weight="regular" />
                   </span>
 
                   {/* Nombre vertical cuando la franja está cerrada (solo pantallas grandes). */}
