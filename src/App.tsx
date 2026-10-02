@@ -5,12 +5,14 @@ import { Navbar } from '@/components/layout/Navbar'
 import { Preloader } from '@/components/layout/Preloader'
 import { SmoothScroll } from '@/components/layout/SmoothScroll'
 import { Footer } from '@/components/layout/Footer'
+import { prefetchLimpCity } from '@/lib/prefetch-limp-city'
 
 // División de código por ruta: el JS de cada página se descarga solo cuando
 // se visita, en vez de que el Home y cada página de proyecto vayan en un
 // solo bundle.
 const Home = lazy(() => import('@/pages/Home').then((m) => ({ default: m.Home })))
-const LimpCity = lazy(() => import('@/pages/LimpCity').then((m) => ({ default: m.LimpCity })))
+const loadLimpCity = () => import('@/pages/LimpCity').then((m) => ({ default: m.LimpCity }))
+const LimpCity = lazy(loadLimpCity)
 const ProjectDetail = lazy(() => import('@/pages/ProjectDetail').then((m) => ({ default: m.ProjectDetail })))
 
 function App() {
@@ -21,6 +23,14 @@ function App() {
     return () => {
       document.documentElement.style.overflow = ''
     }
+  }, [isLoading])
+
+  // Una vez que el preloader terminó (el hero de CBS ya se descargó y se ve),
+  // se calienta Limp City en segundo plano para que abrirla desde el menú sea
+  // inmediato. Ver lib/prefetch-limp-city.ts.
+  useEffect(() => {
+    if (isLoading) return
+    return prefetchLimpCity(loadLimpCity)
   }, [isLoading])
 
   return (

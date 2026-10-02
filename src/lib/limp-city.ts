@@ -1,5 +1,5 @@
 import { withCommas } from '@/lib/utils'
-import heroImage from '@/assets/images/limpcity/hero-limpieza.webp'
+import { limpCityHeroImage as heroImage } from '@/lib/limp-city-hero'
 import aboutImage from '@/assets/images/limpcity/sobre-limp-city.webp'
 import coverageMap from '@/assets/images/limpcity/mapa-bahia.webp'
 import servicePlaya from '@/assets/images/limpcity/servicio-playa.webp'

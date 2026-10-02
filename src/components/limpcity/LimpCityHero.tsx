@@ -20,8 +20,8 @@ export function LimpCityHero() {
         src={heroImage}
         alt=""
         aria-hidden="true"
-        width={1376}
-        height={768}
+        width={2752}
+        height={1536}
         fetchPriority="high"
         decoding="async"
         initial={reduceMotion ? false : { scale: 1.08 }}
