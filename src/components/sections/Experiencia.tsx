@@ -44,7 +44,7 @@ export function Experiencia() {
       <motion.div
         viewport={{ once: true, amount: 0.3 }}
         onViewportEnter={() => setInView(true)}
-        className="relative z-10 mx-auto flex w-full max-w-[1400px] flex-col gap-12 px-6 py-14 lg:min-h-[calc(100svh-4rem)] lg:translate-y-[min(5rem,max(0px,calc(14vh_-_4.5rem)))] lg:justify-center lg:gap-[clamp(3rem,10vh,7rem)] lg:px-10 lg:py-16 xl:px-16 2xl:max-w-[1700px] 2xl:min-h-[calc(100svh-5rem)] 2xl:px-14 2xl:py-20"
+        className="relative z-10 mx-auto flex w-full max-w-[1400px] flex-col gap-14 px-6 py-20 sm:gap-12 sm:py-14 lg:min-h-[calc(100svh-4rem)] lg:translate-y-[min(5rem,max(0px,calc(14vh_-_4.5rem)))] lg:justify-center lg:gap-[clamp(3rem,10vh,7rem)] lg:px-10 lg:py-16 xl:px-16 2xl:max-w-[1700px] 2xl:min-h-[calc(100svh-5rem)] 2xl:px-14 2xl:py-20"
       >
         <div>
           <motion.p
@@ -59,7 +59,7 @@ export function Experiencia() {
             initial={reduceMotion ? false : { opacity: 0, y: 20 }}
             animate={show ? { opacity: 1, y: 0 } : undefined}
             transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-            className="mt-4 max-w-2xl text-3xl font-bold leading-tight text-white md:text-4xl 2xl:text-5xl"
+            className="mt-5 max-w-2xl text-3xl font-bold leading-tight text-white sm:mt-4 md:text-4xl 2xl:text-5xl"
           >
             Resultados que respaldan cada proyecto
           </motion.h2>
@@ -67,14 +67,14 @@ export function Experiencia() {
             initial={reduceMotion ? false : { opacity: 0, y: 20 }}
             animate={show ? { opacity: 1, y: 0 } : undefined}
             transition={{ duration: 0.7, delay: 0.18, ease: [0.16, 1, 0.3, 1] }}
-            className="mt-5 max-w-lg text-[15.5px] leading-relaxed text-navy-200 2xl:max-w-xl 2xl:text-lg"
+            className="mt-6 max-w-lg text-[15.5px] leading-relaxed text-navy-200 sm:mt-5 2xl:max-w-xl 2xl:text-lg"
           >
             Infraestructura hidráulica ejecutada a gran escala en Perú, con un historial que se mide en
             kilómetros de redes, presas construidas y conexiones entregadas.
           </motion.p>
         </div>
 
-        <div className="grid grid-cols-2 gap-x-6 gap-y-10 border-t border-white/15 pt-10 sm:grid-cols-4 sm:divide-x sm:divide-white/15">
+        <div className="grid grid-cols-2 gap-x-6 gap-y-12 border-t border-white/15 pt-12 sm:grid-cols-4 sm:gap-y-10 sm:pt-10 sm:divide-x sm:divide-white/15">
           {stats.map((stat, i) => (
             <motion.div
               key={stat.label}
