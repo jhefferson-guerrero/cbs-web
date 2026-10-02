@@ -7,12 +7,8 @@ export function Certificaciones() {
 
   return (
     <section className="bg-white">
-      {/* Espacio blanco de respiro arriba y abajo, fuera del ancla (#certificaciones está en
-          el bloque del medio): al pulsar "Certificaciones" en el menú no se ve, solo al
-          recorrer la página con scroll. */}
-      <div aria-hidden="true" className="hidden lg:block lg:h-[clamp(2rem,8vh,6rem)]" />
-      <div id="certificaciones" className="lg:h-[calc(100svh-var(--nav-h))] lg:min-h-[540px]">
-        <div className="mx-auto w-full max-w-[1400px] px-6 py-16 lg:flex lg:h-full lg:flex-col lg:justify-center lg:px-10 lg:py-[clamp(1rem,3.5vh,3rem)] xl:px-16 2xl:max-w-[1700px] 2xl:px-14">
+      <div id="certificaciones">
+        <div className="mx-auto w-full max-w-[1400px] px-6 py-16 lg:px-10 lg:py-[clamp(2.5rem,8vh,6rem)] xl:px-16 2xl:max-w-[1700px] 2xl:px-14">
           <motion.div
             initial={reduceMotion ? false : { opacity: 0, y: 28 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -45,7 +41,7 @@ export function Certificaciones() {
                 className={cn(
                   'relative flex flex-col justify-between gap-10 bg-navy-950 p-6 lg:gap-4 lg:p-[clamp(1.25rem,2.4vh,2rem)]',
                   i < 3 ? 'md:col-span-2' : 'md:col-span-3',
-                  'lg:col-span-1 lg:min-h-[calc((100cqw-4*var(--cert-gap))/5*1.25)]',
+                  'lg:col-span-1 lg:min-h-[calc((100cqw-4*var(--cert-gap))/5*1.35)]',
                 )}
               >
                 <span aria-hidden="true" className="absolute -left-px -top-px h-5 w-5 border-l-2 border-t-2 border-cyan-500" />
@@ -69,7 +65,6 @@ export function Certificaciones() {
           </ul>
         </div>
       </div>
-      <div aria-hidden="true" className="hidden lg:block lg:h-[clamp(2rem,8vh,6rem)]" />
     </section>
   )
 }
