@@ -194,7 +194,7 @@ export function Contacto() {
       {/* Espacio blanco de respiro arriba y abajo, fuera del ancla (#contacto está en
           el bloque del medio): al pulsar "Contáctanos" no se ve, solo al hacer scroll. */}
       <div aria-hidden="true" className="hidden lg:block lg:h-[clamp(2rem,8vh,6rem)]" />
-      <div id="contacto" className="grid lg:min-h-[calc(100svh-var(--nav-h))] lg:grid-cols-2 lg:divide-x lg:divide-navy-100">
+      <div id="contacto" className="grid divide-y divide-navy-100 lg:min-h-[calc(100svh-var(--nav-h))] lg:grid-cols-2 lg:divide-x lg:divide-y-0">
         <motion.div
           initial={reduceMotion ? false : { opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
