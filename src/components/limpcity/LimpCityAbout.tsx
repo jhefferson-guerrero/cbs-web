@@ -20,20 +20,20 @@ export function LimpCityAbout() {
           <motion.p
             {...reveal()}
             aria-hidden="true"
-            className="font-mono text-[3.75rem] sm:text-[5rem] lg:text-[clamp(5rem,18vh,13rem)] font-bold leading-[0.85] tracking-tighter text-transparent [-webkit-text-stroke:2px_var(--color-moss-500)] lg:[-webkit-text-stroke:2.5px_var(--color-moss-500)]"
+            className="font-mono text-[4.5rem] sm:text-[5rem] lg:text-[clamp(5rem,18vh,13rem)] font-bold leading-[0.85] tracking-tighter text-transparent [-webkit-text-stroke:2px_var(--color-moss-500)] lg:[-webkit-text-stroke:2.5px_var(--color-moss-500)]"
           >
             2012
           </motion.p>
           <motion.h2
             {...reveal(0.1)}
-            className="mt-[clamp(1rem,3vh,2.5rem)] max-w-[22ch] text-[1.5rem] sm:text-[1.875rem] lg:text-[clamp(1.75rem,5.4vh,4rem)] font-semibold leading-[1.1] tracking-tight text-navy-900 sm:max-w-[30ch]"
+            className="mt-6 lg:mt-[clamp(1rem,3vh,2.5rem)] max-w-[22ch] text-[1.5rem] sm:text-[1.875rem] lg:text-[clamp(1.75rem,5.4vh,4rem)] font-semibold leading-[1.2] sm:leading-[1.1] tracking-tight text-navy-900 sm:max-w-[30ch]"
           >
             Cuando muchos lo consideran el final de la cadena productiva, para Limp City es{' '}
             <span className="text-moss-700">apenas el comienzo.</span>
           </motion.h2>
           <motion.p
             {...reveal(0.2)}
-            className="mt-[clamp(1rem,2.6vh,2rem)] max-w-[64ch] text-[15.5px] leading-relaxed text-slate-700 lg:text-[clamp(15.5px,2.1vh,22px)]"
+            className="mt-6 lg:mt-[clamp(1rem,2.6vh,2rem)] max-w-[64ch] text-[15.5px] leading-relaxed text-slate-700 lg:text-[clamp(15.5px,2.1vh,22px)]"
           >
             Fundada en 2012, Limp City presta servicios de limpieza urbana y manejo adecuado de
             residuos sólidos, con soluciones sostenibles y ambientalmente adecuadas, y tiene como
