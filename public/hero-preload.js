@@ -8,11 +8,13 @@
 (function () {
   var heroes = {
     '/': {
+      sizes: '100vw',
       href: '/hero-planta.webp',
       srcset:
         '/hero-planta-640.webp 640w, /hero-planta-960.webp 960w, /hero-planta-1280.webp 1280w, /hero-planta.webp 1920w, /hero-planta-2560.webp 2560w',
     },
     '/limp-city': {
+      sizes: 'max(100vw, 170vh)',
       href: '/hero-limpcity.webp',
       srcset:
         '/hero-limpcity-768.webp 768w, /hero-limpcity-1280.webp 1280w, /hero-limpcity-1920.webp 1920w, /hero-limpcity.webp 2752w',
@@ -27,7 +29,7 @@
     heroPreload.as = 'image'
     heroPreload.href = hero.href
     heroPreload.imageSrcset = hero.srcset
-    heroPreload.imageSizes = '100vw'
+    heroPreload.imageSizes = hero.sizes
     heroPreload.fetchPriority = 'high'
     document.head.appendChild(heroPreload)
   }
