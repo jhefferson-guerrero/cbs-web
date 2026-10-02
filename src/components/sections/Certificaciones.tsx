@@ -8,7 +8,7 @@ export function Certificaciones() {
   return (
     <section className="bg-white">
       <div id="certificaciones">
-        <div className="mx-auto w-full max-w-[1400px] px-6 py-16 lg:px-10 lg:py-[clamp(2.5rem,8vh,6rem)] xl:px-16 2xl:max-w-[1700px] 2xl:px-14">
+        <div className="mx-auto w-full max-w-[1400px] px-6 py-16 lg:px-10 lg:py-[clamp(1.75rem,5vh,4rem)] xl:px-16 2xl:max-w-[1700px] 2xl:px-14">
           <motion.div
             initial={reduceMotion ? false : { opacity: 0, y: 28 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -19,10 +19,10 @@ export function Certificaciones() {
             <p className="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-cyan-700 2xl:text-sm">
               Calidad certificada
             </p>
-            <h2 className="mt-4 text-3xl font-bold leading-tight text-navy-900 md:text-4xl lg:mt-[clamp(0.25rem,1vh,0.75rem)] lg:text-[clamp(2.25rem,5vh,3.25rem)]">
+            <h2 className="mt-4 text-3xl font-bold leading-tight text-navy-900 md:text-4xl lg:mt-[clamp(0.25rem,1vh,0.75rem)] lg:text-[clamp(2.25rem,6vh,3.75rem)]">
               Certificaciones internacionales
             </h2>
-            <p className="mt-5 text-[15.5px] leading-relaxed text-slate-700 lg:mt-[clamp(0.25rem,1vh,0.75rem)] lg:text-[clamp(15.5px,1.9vh,19px)]">
+            <p className="mt-5 text-[15.5px] leading-relaxed text-slate-700 lg:mt-[clamp(0.25rem,1vh,0.75rem)] lg:text-[clamp(15.5px,2.1vh,21px)]">
               Cumplimos con los estándares internacionales de gestión, calidad y seguridad que exige la
               industria, respaldando cada proyecto que ejecutamos.
             </p>
@@ -30,7 +30,7 @@ export function Certificaciones() {
 
           {/* Cinco normas: en tablet 3 + 2 (sin celdas vacías) y en pantallas grandes una fila de cinco con
               proporción fija, centrada en la sección. */}
-          <ul className="mt-12 grid grid-cols-1 gap-4 md:grid-cols-6 lg:mt-[clamp(1.5rem,5vh,3.5rem)] lg:grid-cols-5 lg:gap-[var(--cert-gap)] lg:[container-type:inline-size] [--cert-gap:clamp(0.75rem,1.4vw,1.5rem)]">
+          <ul className="mt-12 grid grid-cols-1 gap-4 md:grid-cols-6 lg:mt-[clamp(1.5rem,5.5vh,4rem)] lg:grid-cols-5 lg:gap-[var(--cert-gap)] lg:[container-type:inline-size] [--cert-gap:clamp(0.75rem,1.4vw,1.5rem)]">
             {certifications.map((cert, i) => (
               <motion.li
                 key={cert.number}
@@ -41,7 +41,7 @@ export function Certificaciones() {
                 className={cn(
                   'relative flex flex-col justify-between gap-10 bg-navy-950 p-6 lg:gap-4 lg:p-[clamp(1.25rem,2.4vh,2rem)]',
                   i < 3 ? 'md:col-span-2' : 'md:col-span-3',
-                  'lg:col-span-1 lg:min-h-[calc((100cqw-4*var(--cert-gap))/5*1.35)]',
+                  'lg:col-span-1 lg:min-h-[calc((100cqw-4*var(--cert-gap))/5*1.5)]',
                 )}
               >
                 <span aria-hidden="true" className="absolute -left-px -top-px h-5 w-5 border-l-2 border-t-2 border-cyan-500" />
