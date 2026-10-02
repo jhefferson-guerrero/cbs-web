@@ -44,8 +44,11 @@ function App() {
             <Route path="/proyectos/:slug" element={<ProjectDetail />} />
             <Route path="/limp-city" element={<LimpCity />} />
           </Routes>
+          {/* Dentro del mismo Suspense que las rutas: así el pie de página aparece junto con la
+              página y no antes. Si estuviera fuera, se dibujaría arriba mientras llega el
+              archivo de la ruta y saltaría miles de píxeles hacia abajo (CLS). */}
+          <Footer />
         </Suspense>
-        <Footer />
       </SmoothScroll>
     </BrowserRouter>
   )
