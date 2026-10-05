@@ -1,4 +1,4 @@
-import { LIMP_CITY_HERO_SIZES, LIMP_CITY_HERO_SRC, LIMP_CITY_HERO_SRCSET } from '@/lib/limp-city-hero'
+import { getLimpCityHeroVariant } from '@/lib/limp-city-hero'
 
 type NetworkInformation = { saveData?: boolean; effectiveType?: string }
 
@@ -31,9 +31,10 @@ export function prefetchLimpCity(loadPage: () => Promise<unknown>) {
     hero.decoding = 'async'
     // sizes y srcset antes que src: el navegador descarga la misma variante
     // responsive que va a mostrar el <img> real del hero.
-    hero.sizes = LIMP_CITY_HERO_SIZES
-    hero.srcset = LIMP_CITY_HERO_SRCSET
-    hero.src = LIMP_CITY_HERO_SRC
+    const { src, srcset, sizes } = getLimpCityHeroVariant()
+    hero.sizes = sizes
+    hero.srcset = srcset
+    hero.src = src
 
     loadPage().catch(() => {})
   }

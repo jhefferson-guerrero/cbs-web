@@ -10,6 +10,12 @@ const DEMO_START_MS = 900
 const DEMO_STEP_MS = 600
 const DEMO_HOLD_MS = 800
 
+// Ancho que ocupa la foto de la franja abierta, para que el navegador pida la versión de 800 px
+// en móvil y la grande solo cuando hace falta. En móvil y tablet la franja ocupa todo el ancho
+// menos el relleno; desde lg es la parte abierta (5 de 9 partes) del contenedor centrado.
+const SERVICE_IMAGE_SIZES =
+  '(min-width: 1536px) 860px, (min-width: 1280px) calc((100vw - 11rem) * 0.56), (min-width: 1024px) calc((100vw - 8rem) * 0.56), calc(100vw - 3rem)'
+
 // En pantallas grandes los servicios son franjas verticales: la activa se abre y las
 // demás quedan angostas. Se activa con el cursor, el foco de teclado o un toque.
 // En móvil y tablet son filas apiladas, todas abiertas.
@@ -87,6 +93,8 @@ export function LimpCityServices() {
                   <div className={cn('absolute inset-0', service.fit === 'contain' && 'bg-[#e6e9df]')}>
                     <img
                       src={service.image}
+                      srcSet={service.srcSet}
+                      sizes={SERVICE_IMAGE_SIZES}
                       alt=""
                       loading="lazy"
                       decoding="async"

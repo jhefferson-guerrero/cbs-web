@@ -3,7 +3,14 @@ import { ArrowRightIcon } from '@phosphor-icons/react'
 import { Button } from '@/components/ui/Button'
 import { Counter } from '@/components/ui/Counter'
 import { limpCityStats } from '@/lib/limp-city'
-import { LIMP_CITY_HERO_SIZES, LIMP_CITY_HERO_SRC, LIMP_CITY_HERO_SRCSET } from '@/lib/limp-city-hero'
+import {
+  LIMP_CITY_HERO_MOBILE_QUERY,
+  LIMP_CITY_HERO_MOBILE_SIZES,
+  LIMP_CITY_HERO_MOBILE_SRCSET,
+  LIMP_CITY_HERO_SIZES,
+  LIMP_CITY_HERO_SRC,
+  LIMP_CITY_HERO_SRCSET,
+} from '@/lib/limp-city-hero'
 import logoLimpCity from '@/assets/images/grupo/limp-city.webp'
 
 export function LimpCityHero() {
@@ -17,21 +24,26 @@ export function LimpCityHero() {
 
   return (
     <section className="relative isolate flex min-h-[100svh] flex-col overflow-hidden bg-navy-950">
-      <motion.img
-        src={LIMP_CITY_HERO_SRC}
-        srcSet={LIMP_CITY_HERO_SRCSET}
-        sizes={LIMP_CITY_HERO_SIZES}
-        alt=""
-        aria-hidden="true"
-        width={2752}
-        height={1536}
-        fetchPriority="high"
-        decoding="async"
-        initial={reduceMotion ? false : { scale: 1.08 }}
-        animate={{ scale: 1 }}
-        transition={{ duration: 1.6, ease: [0.16, 1, 0.3, 1] }}
-        className="absolute inset-0 -z-10 h-full w-full object-cover object-[74%_50%] saturate-[1.02] lg:object-[50%_52%]"
-      />
+      {/* En móvil vertical se descarga un recorte de la foto (la mitad de peso) con la misma zona visible;
+          object-[73.3%] en ese recorte equivale al 74% de la foto completa. */}
+      <picture>
+        <source media={LIMP_CITY_HERO_MOBILE_QUERY} srcSet={LIMP_CITY_HERO_MOBILE_SRCSET} sizes={LIMP_CITY_HERO_MOBILE_SIZES} />
+        <motion.img
+          src={LIMP_CITY_HERO_SRC}
+          srcSet={LIMP_CITY_HERO_SRCSET}
+          sizes={LIMP_CITY_HERO_SIZES}
+          alt=""
+          aria-hidden="true"
+          width={2752}
+          height={1536}
+          fetchPriority="high"
+          decoding="async"
+          initial={reduceMotion ? false : { scale: 1.08 }}
+          animate={{ scale: 1 }}
+          transition={{ duration: 1.6, ease: [0.16, 1, 0.3, 1] }}
+          className="absolute inset-0 -z-10 h-full w-full object-cover object-[74%_50%] saturate-[1.02] portrait:max-lg:object-[73.3%_50%] lg:object-[50%_52%]"
+        />
+      </picture>
       <div className="absolute inset-0 -z-10 bg-navy-950/35 lg:hidden" />
       <div className="absolute inset-0 -z-10 bg-gradient-to-r from-navy-950/85 via-navy-950/50 via-35% to-transparent to-62%" />
       <div className="absolute inset-0 -z-10 bg-gradient-to-t from-navy-950/95 via-navy-950/35 via-20% to-transparent to-42%" />

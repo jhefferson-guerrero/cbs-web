@@ -3,7 +3,7 @@ import { animate, motion, useMotionValue, useReducedMotion } from 'motion/react'
 import { useLocation } from 'react-router-dom'
 import logoMobileCbs from '@/assets/images/logo-mobile-cbs.webp'
 import { HERO_IMAGE_SIZES, HERO_IMAGE_SRC, HERO_IMAGE_SRCSET } from '@/lib/hero-image'
-import { LIMP_CITY_HERO_SIZES, LIMP_CITY_HERO_SRC, LIMP_CITY_HERO_SRCSET } from '@/lib/limp-city-hero'
+import { getLimpCityHeroVariant } from '@/lib/limp-city-hero'
 
 const MIN_DISPLAY_MS = 400
 const MAX_DISPLAY_MS = 4000
@@ -46,10 +46,12 @@ export function Preloader({ onReady }: { onReady: () => void }) {
     // Cada fondo de hero solo se muestra en su ruta (el de CBS en el inicio, el
     // de Limp City en /limp-city); no gastar datos descargándolos mientras el
     // preloader bloquea otra página, como un detalle de proyecto.
+    // En Limp City, un móvil vertical descarga el recorte de la foto y no la foto completa.
+    const limpCityHero = getLimpCityHeroVariant()
     const heroReady = isHome
       ? preloadImage(HERO_IMAGE_SRC, HERO_IMAGE_SRCSET, HERO_IMAGE_SIZES)
       : isLimpCity
-        ? preloadImage(LIMP_CITY_HERO_SRC, LIMP_CITY_HERO_SRCSET, LIMP_CITY_HERO_SIZES)
+        ? preloadImage(limpCityHero.src, limpCityHero.srcset, limpCityHero.sizes)
         : Promise.resolve()
     const assetsReady = Promise.all([heroReady, document.fonts?.ready ?? Promise.resolve()])
 
