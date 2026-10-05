@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
-import { Link, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
+import { PageLink } from '@/components/ui/PageLink'
 import { ArrowLeftIcon, ArrowUpRightIcon } from '@phosphor-icons/react'
 import { getProjectBySlug, projects } from '@/lib/projects'
 import { ProjectHero } from '@/components/project/ProjectHero'
@@ -21,13 +22,13 @@ export function ProjectDetail() {
         <section className="flex min-h-[60vh] flex-col items-center justify-center gap-6 bg-white px-6 text-center">
           <p className="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-cyan-700">404</p>
           <h1 className="text-2xl font-bold text-navy-900">No encontramos ese proyecto</h1>
-          <Link
+          <PageLink
             to="/#proyectos"
             className="inline-flex items-center gap-2 text-sm font-semibold text-cyan-700 transition-colors hover:text-cyan-800"
           >
             <ArrowLeftIcon size={16} weight="regular" />
             Volver a proyectos
-          </Link>
+          </PageLink>
         </section>
       </main>
     )
@@ -46,7 +47,7 @@ export function ProjectDetail() {
       {nextProject && (
         <section className="border-b border-white/10 bg-navy-950">
           <div className="mx-auto w-full max-w-[1400px] px-6 py-14 lg:px-10 xl:px-16 2xl:max-w-[1700px] 2xl:px-14">
-            <Link
+            <PageLink
               to={`/proyectos/${nextProject.slug}`}
               className="group inline-flex items-center gap-3 text-lg font-bold text-white transition-colors hover:text-cyan-300"
             >
@@ -56,7 +57,7 @@ export function ProjectDetail() {
                 weight="regular"
                 className="shrink-0 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
               />
-            </Link>
+            </PageLink>
           </div>
         </section>
       )}

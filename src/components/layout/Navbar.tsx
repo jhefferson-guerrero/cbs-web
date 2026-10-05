@@ -1,10 +1,11 @@
 import { Fragment, useEffect, useState } from 'react'
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react'
 import { useLenis } from 'lenis/react'
-import { Link, useLocation } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 import { ArrowUpRightIcon } from '@phosphor-icons/react'
 import logoCbs from '@/assets/images/logo-cbs.webp'
 import logoMobileCbs from '@/assets/images/logo-mobile-cbs.webp'
+import { PageLink } from '@/components/ui/PageLink'
 import { navLinks } from '@/lib/nav-links'
 import { partners, type Partner } from '@/lib/partners'
 import { cn } from '@/lib/utils'
@@ -58,9 +59,9 @@ function PartnerLogo({
   }
 
   return (
-    <Link to={partner.href} onClick={onNavigate} className={linkClasses}>
+    <PageLink to={partner.href} onClick={onNavigate} className={linkClasses}>
       {logo}
-    </Link>
+    </PageLink>
   )
 }
 

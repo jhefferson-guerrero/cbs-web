@@ -92,6 +92,34 @@
   }
 }
 
+/* Transición entre páginas (los enlaces PageLink la piden, ver lib/page-transition.ts): el navegador toma una
+   "foto" de la página que se va y la funde con la nueva. La anterior se queda debajo, intacta, y la nueva
+   aparece encima poco a poco; así nunca hay un instante vacío ni un corte seco, incluso al pasar de una
+   sección blanca a un hero oscuro. Navegadores sin soporte cambian de página como siempre. */
+::view-transition-old(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+::view-transition-new(root) {
+  animation: page-in 480ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  mix-blend-mode: normal;
+}
+
+@keyframes page-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+}
+
 /* Opt back in to a visible scrollbar for specific inner scroll areas
    (e.g. the gallery rail) where hiding it would hide the fact that
    there's more content below. */

@@ -1,6 +1,7 @@
 import { useEffect, useRef, type ReactNode } from 'react'
 import { ReactLenis, useLenis } from 'lenis/react'
 import { useLocation, useNavigate } from 'react-router-dom'
+import { navigateWithTransition } from '@/lib/page-transition'
 
 const scrollToHash = (lenis: ReturnType<typeof useLenis>, hash: string, immediate = false) => {
   const target = document.getElementById(hash.slice(1))
@@ -43,7 +44,7 @@ function AnchorScrollBridge() {
       if (!target) {
         if (location.pathname !== '/') {
           event.preventDefault()
-          navigate(`/${href}`)
+          void navigateWithTransition(navigate, `/${href}`)
         }
         return
       }

@@ -34,7 +34,9 @@ function App() {
   }, [isLoading])
 
   return (
-    <BrowserRouter>
+    // useTransitions={false}: la actualización de la ruta es inmediata, necesario para la transición de página
+    // (ver lib/page-transition.ts).
+    <BrowserRouter useTransitions={false}>
       <AnimatePresence>{isLoading && <Preloader onReady={() => setIsLoading(false)} />}</AnimatePresence>
       <SmoothScroll>
         <Navbar ready={!isLoading} />

@@ -1,5 +1,5 @@
 import { motion, useReducedMotion } from 'motion/react'
-import { Link } from 'react-router-dom'
+import { PageLink } from '@/components/ui/PageLink'
 import { ArrowLeftIcon, MapPinIcon } from '@phosphor-icons/react'
 import type { Project } from '@/lib/projects'
 
@@ -31,13 +31,13 @@ export function ProjectHero({ project }: { project: Project }) {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
         >
-          <Link
+          <PageLink
             to="/#proyectos"
             className="inline-flex items-center gap-2 font-mono text-xs font-semibold uppercase tracking-[0.15em] text-cyan-300 transition-colors hover:text-cyan-200"
           >
             <ArrowLeftIcon size={14} weight="bold" />
             Volver a proyectos
-          </Link>
+          </PageLink>
         </motion.div>
 
         <motion.div

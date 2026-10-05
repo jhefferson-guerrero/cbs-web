@@ -1,5 +1,5 @@
 import type { AnchorHTMLAttributes, ButtonHTMLAttributes, ReactNode } from 'react'
-import { Link } from 'react-router-dom'
+import { PageLink } from '@/components/ui/PageLink'
 import { cn } from '@/lib/utils'
 
 type ButtonVariant = 'solid' | 'moss' | 'outline-light' | 'outline-dark'
@@ -66,9 +66,9 @@ export function Button({ variant = 'solid', icon, className, children, ...props 
     // Una ruta interna (/algo) navega dentro de la SPA; un ancla (#algo) o una URL externa es un <a> normal.
     if (href.startsWith('/')) {
       return (
-        <Link to={href} className={classes} {...anchorProps}>
+        <PageLink to={href} className={classes} {...anchorProps}>
           {content}
-        </Link>
+        </PageLink>
       )
     }
 
