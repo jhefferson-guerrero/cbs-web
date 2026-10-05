@@ -37,7 +37,7 @@ export function LimpCityHero() {
           width={2752}
           height={1536}
           fetchPriority="high"
-          decoding="async"
+          decoding="sync"
           initial={reduceMotion ? false : { scale: 1.08 }}
           animate={{ scale: 1 }}
           transition={{ duration: 1.6, ease: [0.16, 1, 0.3, 1] }}

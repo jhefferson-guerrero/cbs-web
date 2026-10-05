@@ -1,6 +1,10 @@
 import { isConnectionConstrained } from '@/lib/connection'
 import { getLimpCityHeroVariant } from '@/lib/limp-city-hero'
 
+// Imágenes ya calentadas: mientras el objeto exista, el navegador conserva su versión decodificada en
+// memoria y el hero de Limp City la reutiliza al entrar.
+const warmedImages: HTMLImageElement[] = []
+
 // Calienta en segundo plano la página de Limp City (su JS y la imagen del hero)
 // para que, si el visitante entra desde el menú, aparezca sin esperar. No
 // compite con el hero de CBS: quien la llama espera a que el preloader haya
@@ -27,6 +31,12 @@ export function prefetchLimpCity(loadPage: () => Promise<unknown>) {
     hero.sizes = sizes
     hero.srcset = srcset
     hero.src = src
+    warmedImages.push(hero)
+
+    // Descargar no basta: la primera vez que se muestra, el navegador además tiene que decodificar la
+    // imagen (2752 px), y ese tiempo se veía como un instante de fondo azul al entrar a la página.
+    // decode() lo hace por adelantado, en segundo plano.
+    hero.decode().catch(() => {})
 
     loadPage().catch(() => {})
   }
