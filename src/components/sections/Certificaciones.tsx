@@ -53,7 +53,7 @@ export function Certificaciones() {
 
                 <div>
                   <p className="font-mono text-base font-semibold uppercase tracking-[0.2em] text-cyan-400 lg:text-lg 2xl:text-xl">ISO</p>
-                  <p className="mt-2 font-mono text-5xl font-bold tabular-nums leading-none text-white transition-colors duration-500 group-hover:text-cyan-300 lg:text-[clamp(1.75rem,3.2vw,4.25rem)]">
+                  <p className="mt-2 font-mono text-5xl font-bold tabular-nums leading-none text-white lg:text-[clamp(1.75rem,3.2vw,4.25rem)]">
                     {cert.number}
                   </p>
                   <h3 className="mt-4 text-lg font-semibold leading-snug text-white lg:mt-[clamp(0.75rem,2vh,1.5rem)] lg:text-[clamp(1rem,2.2vh,1.375rem)]">
