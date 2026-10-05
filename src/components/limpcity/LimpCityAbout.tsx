@@ -41,12 +41,15 @@ export function LimpCityAbout() {
           </motion.p>
         </div>
 
+        {/* El ancho es el menor entre el de la columna y el que daría el alto de la ventana (74vh, con la
+            proporción de la foto): antes solo dependía del alto y en ventanas altas la foto se salía de su
+            columna por la derecha. */}
         <motion.div
           {...reveal(0.15)}
-          className="relative isolate mx-auto w-full max-w-sm lg:mx-0 lg:ml-auto lg:aspect-[626/720] lg:h-[min(74vh,46rem)] lg:w-auto lg:max-w-none"
+          className="relative isolate mx-auto w-full max-w-sm lg:mx-0 lg:ml-auto lg:aspect-[626/720] lg:w-[min(100%,calc(min(74vh,46rem)*626/720))] lg:max-w-none"
         >
           <span aria-hidden="true" className="absolute -bottom-4 -right-4 -z-10 h-full w-full border-[2.5px] border-moss-500 lg:-bottom-5 lg:-right-5" />
-          <div className="relative aspect-[626/720] w-full overflow-hidden bg-navy-950 lg:aspect-auto lg:h-full">
+          <div className="relative aspect-[626/720] w-full overflow-hidden bg-navy-950">
             <img
               src={aboutImage}
               alt="Tres operarios de Limp City con chaleco y uniforme verde barriendo junto a un sumidero, con una carretilla naranja"
