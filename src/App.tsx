@@ -5,6 +5,7 @@ import { Navbar } from '@/components/layout/Navbar'
 import { Preloader } from '@/components/layout/Preloader'
 import { SmoothScroll } from '@/components/layout/SmoothScroll'
 import { Footer } from '@/components/layout/Footer'
+import { BackToTop } from '@/components/layout/BackToTop'
 import { prefetchLimpCity } from '@/lib/prefetch-limp-city'
 
 // División de código por ruta: el JS de cada página se descarga solo cuando
@@ -51,6 +52,7 @@ function App() {
               archivo de la ruta y saltaría miles de píxeles hacia abajo (CLS). */}
           <Footer />
         </Suspense>
+        <BackToTop />
       </SmoothScroll>
     </BrowserRouter>
   )

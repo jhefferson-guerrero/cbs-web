@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { motion, useReducedMotion } from 'motion/react'
-import { ArrowUpIcon, EnvelopeSimpleIcon } from '@phosphor-icons/react'
+import { EnvelopeSimpleIcon } from '@phosphor-icons/react'
 import logoCbs from '@/assets/images/logo-cbs.webp'
 import { navLinks } from '@/lib/nav-links'
 import { CONTACT_EMAIL } from '@/lib/contact'
@@ -77,17 +77,10 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-10 flex flex-col gap-4 border-t border-white/10 pt-6 sm:mt-12 sm:flex-row sm:items-center sm:justify-between">
+        <div className="mt-10 border-t border-white/10 pt-6 sm:mt-12">
           <p className="text-sm text-navy-300">
             © {year} CBS — Construtora Baiana de Saneamento. Todos los derechos reservados.
           </p>
-          <a
-            href="#top"
-            className="inline-flex w-fit items-center gap-1.5 text-sm font-semibold text-navy-300 outline-none transition-colors hover:text-white focus-visible:ring-2 focus-visible:ring-cyan-400"
-          >
-            Volver arriba
-            <ArrowUpIcon size={14} weight="regular" className="shrink-0" />
-          </a>
         </div>
       </div>
     </footer>
