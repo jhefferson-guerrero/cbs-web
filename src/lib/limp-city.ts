@@ -35,7 +35,7 @@ export interface LimpCityService {
 
 export const limpCityServices: LimpCityService[] = [
   { name: 'Limpieza de playa', description: 'Retiro de residuos y algas de las playas con equipos especializados.', image: servicePlaya, fit: 'cover', position: '50% 60%' },
-  { name: 'Recolección domiciliaria', description: 'Recolección de residuos en viviendas con camiones y cuadrillas propias.', image: serviceRecoleccion, fit: 'contain' },
+  { name: 'Recolección domiciliaria', description: 'Recolección de residuos en viviendas con camiones y cuadrillas propias.', image: serviceRecoleccion, fit: 'cover', position: '38% 55%' },
   { name: 'Limpieza de canales', description: 'Limpieza y desobstrucción de canales con maquinaria pesada.', image: serviceCanales, fit: 'cover', position: '45% 55%' },
   { name: 'Barrido mecanizado', description: 'Barrido de calles y avenidas con equipos mecanizados.', image: serviceBarrido, fit: 'cover', position: '40% 60%' },
   { name: 'Equipos especiales', description: 'Equipos especializados para la limpieza y el mantenimiento urbano.', image: serviceEquipos, fit: 'cover', position: '60% 50%' },
