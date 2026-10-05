@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { motion, useReducedMotion } from 'motion/react'
 import experienciaPresa from '@/assets/images/experiencia-presa.webp'
 import { Counter } from '@/components/ui/Counter'
+import { Parallax } from '@/components/ui/Parallax'
 import { withCommas } from '@/lib/utils'
 
 type Stat = { label: string; to: number; format: (n: number) => string }
@@ -20,6 +21,7 @@ export function Experiencia() {
 
   return (
     <section id="experiencia" className="relative isolate overflow-hidden bg-navy-950">
+      <Parallax>
       <motion.img
         src={experienciaPresa}
         alt=""
@@ -32,8 +34,9 @@ export function Experiencia() {
         whileInView={{ scale: 1 }}
         viewport={{ once: true, amount: 0.3 }}
         transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1] }}
-        className="absolute inset-0 h-full w-full object-cover object-center saturate-[1.05] contrast-[1.02] brightness-[0.85]"
+        className="h-full w-full object-cover object-center saturate-[1.05] contrast-[1.02] brightness-[0.85]"
       />
+      </Parallax>
       <div className="absolute inset-0 bg-navy-950/35" />
       <div className="absolute inset-0 bg-gradient-to-t from-navy-950 via-navy-950/55 to-navy-950/10" />
       <div className="absolute inset-0 bg-gradient-to-r from-navy-950/70 via-transparent to-navy-950/40" />

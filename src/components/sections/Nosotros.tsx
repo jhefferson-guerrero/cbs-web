@@ -1,4 +1,5 @@
 import { motion, useReducedMotion } from 'motion/react'
+import { Parallax } from '@/components/ui/Parallax'
 import nosotrosPhoto from '@/assets/images/nosotros.webp'
 import nosotrosPhoto800 from '@/assets/images/nosotros-800.webp'
 
@@ -87,6 +88,7 @@ export function Nosotros() {
         </div>
 
         <div className="relative h-full min-h-[360px] overflow-hidden lg:min-h-0">
+          <Parallax>
           <motion.img
             src={nosotrosPhoto}
             srcSet={`${nosotrosPhoto800} 800w, ${nosotrosPhoto} 1372w`}
@@ -100,8 +102,9 @@ export function Nosotros() {
             whileInView={{ scale: 1 }}
             viewport={{ once: true, amount: 0.15 }}
             transition={{ duration: 1.1, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
-            className="absolute inset-0 h-full w-full object-cover object-[65%_65%]"
+            className="h-full w-full object-cover object-[65%_65%]"
           />
+          </Parallax>
           <div className="absolute inset-0 bg-gradient-to-br from-cyan-700/70 via-navy-900/30 to-navy-950/70" />
 
           <motion.span
