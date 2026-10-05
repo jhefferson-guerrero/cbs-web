@@ -4,11 +4,11 @@ import { clientGroups } from '@/lib/clients'
 // Los logos entran en cascada continua (Perú y luego Brasil), con retardo inicial para que no arranque
 // mientras el scroll suave todavía se está asentando.
 const logoListVariants = {
-  show: { transition: { staggerChildren: 0.12, delayChildren: 0.45 } },
+  show: { transition: { staggerChildren: 0.1, delayChildren: 0.4 } },
 }
 const logoVariants = {
   hidden: { opacity: 0, y: 40, scale: 0.94 },
-  show: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.95, ease: [0.16, 1, 0.3, 1] as const } },
+  show: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.85, ease: [0.16, 1, 0.3, 1] as const } },
 }
 
 export function Clientes() {
@@ -28,7 +28,7 @@ export function Clientes() {
           initial={reduceMotion ? false : { opacity: 0, y: 36 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 1, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+          transition={{ duration: 0.9, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
           className="max-w-2xl lg:max-w-4xl"
         >
           <p className="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-cyan-400 2xl:text-sm">
