@@ -10,11 +10,12 @@ const DEMO_START_MS = 900
 const DEMO_STEP_MS = 600
 const DEMO_HOLD_MS = 800
 
-// Ancho que ocupa la foto de la franja abierta, para que el navegador pida la versión de 800 px
-// en móvil y la grande solo cuando hace falta. En móvil y tablet la franja ocupa todo el ancho
-// menos el relleno; desde lg es la parte abierta (5 de 9 partes) del contenedor centrado.
-const SERVICE_IMAGE_SIZES =
-  '(min-width: 1536px) 860px, (min-width: 1280px) calc((100vw - 11rem) * 0.56), (min-width: 1024px) calc((100vw - 8rem) * 0.56), calc(100vw - 3rem)'
+// Ancho real que ocupa la foto, para que el navegador pida la versión de 800 px en móvil y la grande
+// cuando hace falta. En móvil y tablet la franja ocupa todo el ancho menos el relleno. Desde lg la
+// franja mide ~75% del alto de la ventana y la foto (object-cover) se ajusta por ese alto, así que su
+// ancho real es ~110vh, mayor que el de la franja: con el ancho de la franja se elegía la de 800 px
+// y se veía ampliada y suave.
+const SERVICE_IMAGE_SIZES = '(min-width: 1024px) 110vh, calc(100vw - 3rem)'
 
 // En pantallas grandes los servicios son franjas verticales: la activa se abre y las
 // demás quedan angostas. Se activa con el cursor, el foco de teclado o un toque.
