@@ -88,8 +88,8 @@ export const projects: Project[] = [
     gallery: [
       { src: galeriaTambopata01, alt: 'Vista aérea de Puerto Maldonado en la confluencia de los ríos Madre de Dios y Tambopata' },
       { src: galeriaTambopata02, alt: 'Vista aérea de la plaza principal de Puerto Maldonado' },
-      { src: galeriaTambopata04, alt: 'Estudio de diseño: mapa de soluciones conceptuales del sistema de drenaje pluvial' },
       { src: galeriaTambopata03, alt: 'Objetivos físicos del sistema de drenaje pluvial urbano' },
+      { src: galeriaTambopata04, alt: 'Estudio de diseño: mapa de soluciones conceptuales del sistema de drenaje pluvial' },
       { src: galeriaTambopata05, alt: 'Esquema conceptual de la cárcava Costanera Norte: canal escalonado, pozo de disipación, contención de taludes y control de desembocadura' },
     ],
   },
