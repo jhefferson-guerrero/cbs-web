@@ -1,5 +1,7 @@
-import { motion, useReducedMotion } from 'motion/react'
+import { useRef } from 'react'
+import { motion, useMotionValue, useReducedMotion, useScroll, useTransform, type MotionValue } from 'motion/react'
 import { Parallax } from '@/components/ui/Parallax'
+import { cn } from '@/lib/utils'
 import nosotrosPhoto from '@/assets/images/nosotros.webp'
 import nosotrosPhoto800 from '@/assets/images/nosotros-800.webp'
 
@@ -9,8 +11,82 @@ const timeline = [
   { year: 'Hoy', label: '3 proyectos en desarrollo en Perú', current: true },
 ]
 
+// Valor que sube de 0 a 1 entre dos puntos del avance del scroll. El rango siempre cubre de 0 a 1: el
+// navegador corre esto como animación nativa y, si el último punto fuera antes del 1, volvería al
+// valor base al final del recorrido.
+function useRamp(progress: MotionValue<number>, from: number, to: number) {
+  return useTransform(progress, [0, from, to, 1], [0, 0, 1, 1])
+}
+
+// Momento del avance (0 a 1) en que se enciende el punto de cada hito.
+const milestoneAt = (index: number, total: number) => 0.08 + (index / (total - 1)) * 0.8
+
+// Un hito de la línea de tiempo: su punto se enciende en cian y la línea hacia el siguiente se dibuja
+// a medida que se hace scroll; al subir, se deshace.
+function TimelineItem({
+  item,
+  index,
+  progress,
+  reduceMotion,
+}: {
+  item: (typeof timeline)[number]
+  index: number
+  progress: MotionValue<number>
+  reduceMotion: boolean | null
+}) {
+  const total = timeline.length
+  const here = milestoneAt(index, total)
+  const next = index < total - 1 ? milestoneAt(index + 1, total) : here + 0.1
+  const dotOpacity = useRamp(progress, here - 0.07, here)
+  const lineScale = useRamp(progress, here, next)
+
+  return (
+    <motion.div
+      initial={reduceMotion ? false : { opacity: 0, y: 10 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.5 }}
+      transition={{ duration: 0.5, delay: index * 0.12, ease: [0.16, 1, 0.3, 1] }}
+      className="flex gap-4"
+    >
+      <div className="flex flex-col items-center">
+        <span className={cn('relative shrink-0', item.current ? 'h-3 w-3' : 'h-2.5 w-2.5')}>
+          <span className="absolute inset-0 rounded-full bg-navy-500" />
+          <motion.span
+            style={{ opacity: dotOpacity }}
+            className={cn('absolute inset-0 rounded-full bg-cyan-500', item.current && 'ring-4 ring-cyan-500/25')}
+          />
+        </span>
+        {index < total - 1 && (
+          <span className="relative mt-1 w-px flex-1 bg-navy-700">
+            <motion.span style={{ scaleY: lineScale }} className="absolute inset-0 origin-top bg-cyan-500" />
+          </span>
+        )}
+      </div>
+      <div className={index < total - 1 ? 'pb-6 lg:pb-[clamp(0.875rem,2.8vh,2.25rem)]' : ''}>
+        <p className="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-cyan-400 lg:text-[clamp(12px,1.45vh,15px)]">
+          {item.year}
+        </p>
+        <p
+          className={
+            item.current
+              ? 'mt-0.5 text-base font-semibold text-white sm:text-sm lg:text-[clamp(14px,1.9vh,19px)]'
+              : 'mt-0.5 text-base text-navy-200 sm:text-sm lg:text-[clamp(14px,1.9vh,19px)]'
+          }
+        >
+          {item.label}
+        </p>
+      </div>
+    </motion.div>
+  )
+}
+
 export function Nosotros() {
   const reduceMotion = useReducedMotion()
+  const timelineRef = useRef<HTMLDivElement>(null)
+  const { scrollYProgress } = useScroll({ target: timelineRef, offset: ['start 95%', 'end 55%'] })
+  const fullProgress = useMotionValue(1)
+  // Con "reducir movimiento" la línea se muestra ya completa.
+  const progress = reduceMotion ? fullProgress : scrollYProgress
 
   return (
     <section id="nosotros" className="bg-white">
@@ -47,41 +123,12 @@ export function Nosotros() {
               </p>
             </motion.div>
 
-            <div className="mt-10 max-w-xl lg:mt-[clamp(1.25rem,4.4vh,4rem)] lg:max-w-[min(100%,clamp(36rem,74vh,50rem))]">
+            <div
+              ref={timelineRef}
+              className="mt-10 max-w-xl lg:mt-[clamp(1.25rem,4.4vh,4rem)] lg:max-w-[min(100%,clamp(36rem,74vh,50rem))]"
+            >
               {timeline.map((item, i) => (
-                <motion.div
-                  key={item.year}
-                  initial={reduceMotion ? false : { opacity: 0, y: 10 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, amount: 0.5 }}
-                  transition={{ duration: 0.5, delay: i * 0.12, ease: [0.16, 1, 0.3, 1] }}
-                  className="flex gap-4"
-                >
-                  <div className="flex flex-col items-center">
-                    <span
-                      className={
-                        item.current
-                          ? 'h-3 w-3 shrink-0 rounded-full bg-cyan-500 ring-4 ring-cyan-500/25'
-                          : 'h-2.5 w-2.5 shrink-0 rounded-full bg-navy-500'
-                      }
-                    />
-                    {i < timeline.length - 1 && <span className="mt-1 w-px flex-1 bg-navy-700" />}
-                  </div>
-                  <div className={i < timeline.length - 1 ? 'pb-6 lg:pb-[clamp(0.875rem,2.8vh,2.25rem)]' : ''}>
-                    <p className="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-cyan-400 lg:text-[clamp(12px,1.45vh,15px)]">
-                      {item.year}
-                    </p>
-                    <p
-                      className={
-                        item.current
-                          ? 'mt-0.5 text-base font-semibold text-white sm:text-sm lg:text-[clamp(14px,1.9vh,19px)]'
-                          : 'mt-0.5 text-base text-navy-200 sm:text-sm lg:text-[clamp(14px,1.9vh,19px)]'
-                      }
-                    >
-                      {item.label}
-                    </p>
-                  </div>
-                </motion.div>
+                <TimelineItem key={item.year} item={item} index={i} progress={progress} reduceMotion={reduceMotion} />
               ))}
             </div>
           </div>
