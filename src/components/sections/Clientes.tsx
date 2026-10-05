@@ -8,7 +8,7 @@ const logoListVariants = {
 }
 const logoVariants = {
   hidden: { opacity: 0, y: 40, scale: 0.94 },
-  show: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.85, ease: [0.16, 1, 0.3, 1] as const } },
+  show: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.75, ease: [0.16, 1, 0.3, 1] as const } },
 }
 
 export function Clientes() {
