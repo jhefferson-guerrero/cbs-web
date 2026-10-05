@@ -165,18 +165,6 @@ export function Nosotros() {
             className="absolute bottom-9 left-9 h-7 w-7 border-b-2 border-l-2 border-white/70"
           />
 
-          <motion.div
-            initial={reduceMotion ? false : { opacity: 0, y: 8 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.8 }}
-            transition={{ duration: 0.5, delay: 0.65, ease: 'easeOut' }}
-            className="absolute bottom-10 right-9 flex flex-col items-end gap-0.5 text-right"
-          >
-            <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-white">
-              Fig. 01 — Proyecto CBS, Perú
-            </span>
-          </motion.div>
-
           {/* Cortina navy que tapa la foto y se achica hacia la izquierda, revelándola
               de derecha a izquierda -- el mismo efecto que antes daba el clip-path,
               pero con scaleX (transform), que es confiable en este entorno. */}
