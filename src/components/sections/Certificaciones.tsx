@@ -41,7 +41,7 @@ export function Certificaciones() {
                 className={cn(
                   'relative flex flex-col justify-between gap-10 bg-navy-950 p-6 lg:gap-4 lg:p-[clamp(1.25rem,2.4vh,2rem)]',
                   i < 3 ? 'md:col-span-2' : 'md:col-span-3',
-                  'lg:col-span-1 lg:min-h-[calc((100cqw-4*var(--cert-gap))/5*1.5)]',
+                  'lg:col-span-1 lg:min-h-[calc((100cqw-4*var(--cert-gap))/5*1.3)]',
                 )}
               >
                 <span aria-hidden="true" className="absolute -left-px -top-px h-5 w-5 border-l-2 border-t-2 border-cyan-500" />
@@ -50,7 +50,7 @@ export function Certificaciones() {
                 <span aria-hidden="true" className="absolute -bottom-px -right-px h-5 w-5 border-b-2 border-r-2 border-cyan-500" />
 
                 <div>
-                  <p className="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-cyan-400 2xl:text-sm">ISO</p>
+                  <p className="font-mono text-base font-semibold uppercase tracking-[0.2em] text-cyan-400 lg:text-lg 2xl:text-xl">ISO</p>
                   <p className="mt-2 font-mono text-5xl font-bold tabular-nums leading-none text-white lg:text-[clamp(1.75rem,3.2vw,4.25rem)]">
                     {cert.number}
                   </p>
