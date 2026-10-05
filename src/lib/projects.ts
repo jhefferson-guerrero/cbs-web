@@ -9,6 +9,7 @@ import galeriaTambopata01 from '@/assets/images/proyectos/drenaje-tambopata/gale
 import galeriaTambopata02 from '@/assets/images/proyectos/drenaje-tambopata/galeria-02.webp'
 import galeriaTambopata03 from '@/assets/images/proyectos/drenaje-tambopata/galeria-03.webp'
 import galeriaTambopata04 from '@/assets/images/proyectos/drenaje-tambopata/galeria-04.webp'
+import galeriaTambopata05 from '@/assets/images/proyectos/drenaje-tambopata/galeria-05.webp'
 
 import logoClientePnsu from '@/assets/images/proyectos/logos/cliente-pnsu.webp'
 import logoContratistaRioHuatanay from '@/assets/images/proyectos/logos/contratista-rio-huatanay.webp'
@@ -86,9 +87,10 @@ export const projects: Project[] = [
     funding: { name: 'Banco Interamericano de Desarrollo', logo: logoFinanciamientoBid },
     gallery: [
       { src: galeriaTambopata01, alt: 'Vista aérea de Puerto Maldonado en la confluencia de los ríos Madre de Dios y Tambopata' },
-      { src: galeriaTambopata04, alt: 'Vista aérea de la plaza principal de Puerto Maldonado' },
-      { src: galeriaTambopata02, alt: 'Estudio de diseño: mapa de soluciones conceptuales del sistema de drenaje pluvial' },
+      { src: galeriaTambopata02, alt: 'Vista aérea de la plaza principal de Puerto Maldonado' },
+      { src: galeriaTambopata04, alt: 'Estudio de diseño: mapa de soluciones conceptuales del sistema de drenaje pluvial' },
       { src: galeriaTambopata03, alt: 'Objetivos físicos del sistema de drenaje pluvial urbano' },
+      { src: galeriaTambopata05, alt: 'Esquema conceptual de la cárcava Costanera Norte: canal escalonado, pozo de disipación, contención de taludes y control de desembocadura' },
     ],
   },
 ]
