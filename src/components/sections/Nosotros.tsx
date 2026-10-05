@@ -1,5 +1,5 @@
 import { useRef } from 'react'
-import { motion, useMotionValue, useReducedMotion, useScroll, useTransform, type MotionValue } from 'motion/react'
+import { motion, useInView, useReducedMotion } from 'motion/react'
 import { Parallax } from '@/components/ui/Parallax'
 import { cn } from '@/lib/utils'
 import nosotrosPhoto from '@/assets/images/nosotros.webp'
@@ -11,34 +11,24 @@ const timeline = [
   { year: 'Hoy', label: '3 proyectos en desarrollo en Perú', current: true },
 ]
 
-// Valor que sube de 0 a 1 entre dos puntos del avance del scroll. El rango siempre cubre de 0 a 1: el
-// navegador corre esto como animación nativa y, si el último punto fuera antes del 1, volvería al
-// valor base al final del recorrido.
-function useRamp(progress: MotionValue<number>, from: number, to: number) {
-  return useTransform(progress, [0, from, to, 1], [0, 0, 1, 1])
-}
+// Segundos que tarda cada hito en encenderse después del anterior.
+const MILESTONE_STEP = 0.6
 
-// Momento del avance (0 a 1) en que se enciende el punto de cada hito.
-const milestoneAt = (index: number, total: number) => 0.08 + (index / (total - 1)) * 0.8
-
-// Un hito de la línea de tiempo: su punto se enciende en cian y la línea hacia el siguiente se dibuja
-// a medida que se hace scroll; al subir, se deshace.
+// Un hito de la línea de tiempo. Cuando la lista entra en pantalla (una sola vez), su punto se enciende en
+// cian y la línea hacia el siguiente se rellena, uno tras otro de arriba hacia abajo.
 function TimelineItem({
   item,
   index,
-  progress,
+  lit,
   reduceMotion,
 }: {
   item: (typeof timeline)[number]
   index: number
-  progress: MotionValue<number>
+  lit: boolean
   reduceMotion: boolean | null
 }) {
   const total = timeline.length
-  const here = milestoneAt(index, total)
-  const next = index < total - 1 ? milestoneAt(index + 1, total) : here + 0.1
-  const dotOpacity = useRamp(progress, here - 0.07, here)
-  const lineScale = useRamp(progress, here, next)
+  const dotDelay = 0.35 + index * MILESTONE_STEP
 
   return (
     <motion.div
@@ -52,13 +42,20 @@ function TimelineItem({
         <span className={cn('relative shrink-0', item.current ? 'h-3 w-3' : 'h-2.5 w-2.5')}>
           <span className="absolute inset-0 rounded-full bg-navy-500" />
           <motion.span
-            style={{ opacity: dotOpacity }}
+            initial={reduceMotion ? false : { opacity: 0, scale: 0.4 }}
+            animate={lit ? { opacity: 1, scale: 1 } : undefined}
+            transition={{ duration: 0.4, delay: dotDelay, ease: [0.16, 1, 0.3, 1] }}
             className={cn('absolute inset-0 rounded-full bg-cyan-500', item.current && 'ring-4 ring-cyan-500/25')}
           />
         </span>
         {index < total - 1 && (
           <span className="relative mt-1 w-px flex-1 bg-navy-700">
-            <motion.span style={{ scaleY: lineScale }} className="absolute inset-0 origin-top bg-cyan-500" />
+            <motion.span
+              initial={reduceMotion ? false : { scaleY: 0 }}
+              animate={lit ? { scaleY: 1 } : undefined}
+              transition={{ duration: MILESTONE_STEP - 0.1, delay: dotDelay + 0.15, ease: [0.16, 1, 0.3, 1] }}
+              className="absolute inset-0 origin-top bg-cyan-500"
+            />
           </span>
         )}
       </div>
@@ -83,10 +80,7 @@ function TimelineItem({
 export function Nosotros() {
   const reduceMotion = useReducedMotion()
   const timelineRef = useRef<HTMLDivElement>(null)
-  const { scrollYProgress } = useScroll({ target: timelineRef, offset: ['start 95%', 'end 55%'] })
-  const fullProgress = useMotionValue(1)
-  // Con "reducir movimiento" la línea se muestra ya completa.
-  const progress = reduceMotion ? fullProgress : scrollYProgress
+  const timelineInView = useInView(timelineRef, { once: true, amount: 0.6 })
 
   return (
     <section id="nosotros" className="bg-white">
@@ -128,7 +122,7 @@ export function Nosotros() {
               className="mt-10 max-w-xl lg:mt-[clamp(1.25rem,4.4vh,4rem)] lg:max-w-[min(100%,clamp(36rem,74vh,50rem))]"
             >
               {timeline.map((item, i) => (
-                <TimelineItem key={item.year} item={item} index={i} progress={progress} reduceMotion={reduceMotion} />
+                <TimelineItem key={item.year} item={item} index={i} lit={timelineInView} reduceMotion={reduceMotion} />
               ))}
             </div>
           </div>
