@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { motion, useReducedMotion } from 'motion/react'
+import { motion, useReducedMotion, useScroll, useTransform } from 'motion/react'
 import { ArrowRightIcon } from '@phosphor-icons/react'
 import { Button } from '@/components/ui/Button'
 import { Counter } from '@/components/ui/Counter'
@@ -35,6 +35,16 @@ export function Hero({ ready }: { ready: boolean }) {
   // sin cambiar nada visible.
   const [pinned, setPinned] = useState(true)
 
+  // Efecto de scroll: mientras el hero sale de pantalla, el texto se desvanece y se queda un poco
+  // atrás, y la foto de fondo se acerca. Todo va ligado a la posición del scroll, así que al subir
+  // se deshace solo.
+  const { scrollYProgress } = useScroll({ target: sectionRef, offset: ['start start', 'end start'] })
+  // El rango llega hasta 1 a propósito: si terminara en 0.55, el navegador (que corre esto como una animación
+  // nativa) volvería al valor base y el texto reaparecería al final del recorrido.
+  const contentOpacity = useTransform(scrollYProgress, [0, 0.55, 1], [1, 0, 0])
+  const contentY = useTransform(scrollYProgress, [0, 1], [0, 90])
+  const backdropScale = useTransform(scrollYProgress, [0, 1], [1, 1.12])
+
   useEffect(() => {
     const target = sectionRef.current
     if (!target) return
@@ -56,7 +66,8 @@ export function Hero({ ready }: { ready: boolean }) {
   return (
     <>
       {/* Fondo: fijo detrás del hero mientras está en vista; el contenido sube y lo tapa */}
-      <div className={cn('inset-x-0 top-0 -z-10 h-lvh bg-navy-950', pinned ? 'fixed' : 'absolute')}>
+      <div className={cn('inset-x-0 top-0 -z-10 h-lvh overflow-hidden bg-navy-950', pinned ? 'fixed' : 'absolute')}>
+        <motion.div style={reduceMotion ? undefined : { scale: backdropScale }} className="absolute inset-0">
         <motion.img
           src={HERO_IMAGE_SRC}
           srcSet={HERO_IMAGE_SRCSET}
@@ -86,6 +97,7 @@ export function Hero({ ready }: { ready: boolean }) {
           className="absolute inset-0 bg-gradient-to-t from-navy-950/40 via-transparent to-navy-950/0"
         />
         <div className="absolute inset-x-0 top-0 h-36 bg-gradient-to-b from-navy-950/55 to-transparent" />
+        </motion.div>
       </div>
 
       <section
@@ -94,7 +106,10 @@ export function Hero({ ready }: { ready: boolean }) {
         className="relative flex min-h-[100svh] items-center pt-16 lg:pt-20 2xl:pt-24"
       >
         <div className="relative z-10 mx-auto w-full max-w-[1400px] px-6 lg:px-10 xl:px-16 2xl:max-w-[1700px] 2xl:px-14">
-          <div className="max-w-2xl lg:max-w-3xl 2xl:max-w-4xl">
+          <motion.div
+            style={reduceMotion ? undefined : { opacity: contentOpacity, y: contentY }}
+            className="max-w-2xl lg:max-w-3xl 2xl:max-w-4xl"
+          >
             <h1 className="break-words text-[2.5rem] font-semibold leading-[1.1] text-white sm:text-[2.75rem] md:text-[3.5rem] lg:text-[4.25rem] 2xl:text-[5.5rem] [@media(max-height:600px)]:lg:text-5xl [@media(max-height:600px)]:xl:text-6xl">
               {headline.map((line, i) => (
                 <motion.span
@@ -133,7 +148,7 @@ export function Hero({ ready }: { ready: boolean }) {
                 Conocer más
               </Button>
             </motion.div>
-          </div>
+          </motion.div>
         </div>
       </section>
 
