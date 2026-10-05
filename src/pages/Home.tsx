@@ -1,3 +1,5 @@
+import { useEffect } from 'react'
+import { prefetchProjectsWhenNear } from '@/lib/prefetch-projects'
 import { Hero } from '@/components/sections/Hero'
 import { Nosotros } from '@/components/sections/Nosotros'
 import { Certificaciones } from '@/components/sections/Certificaciones'
@@ -8,6 +10,9 @@ import { Clientes } from '@/components/sections/Clientes'
 import { Contacto } from '@/components/sections/Contacto'
 
 export function Home({ ready }: { ready: boolean }) {
+  // Al llegar a Experiencia (o a Proyectos) se precargan las páginas de proyecto y sus portadas.
+  useEffect(() => prefetchProjectsWhenNear(['experiencia', 'proyectos']), [])
+
   return (
     <main>
       <Hero ready={ready} />

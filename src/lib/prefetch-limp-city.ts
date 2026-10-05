@@ -1,13 +1,5 @@
+import { isConnectionConstrained } from '@/lib/connection'
 import { getLimpCityHeroVariant } from '@/lib/limp-city-hero'
-
-type NetworkInformation = { saveData?: boolean; effectiveType?: string }
-
-// Con ahorro de datos o una conexión 2G no vale la pena gastar bytes en una
-// página que quizá el visitante nunca abra.
-function isConnectionConstrained() {
-  const connection = (navigator as Navigator & { connection?: NetworkInformation }).connection
-  return Boolean(connection?.saveData) || connection?.effectiveType === 'slow-2g' || connection?.effectiveType === '2g'
-}
 
 // Calienta en segundo plano la página de Limp City (su JS y la imagen del hero)
 // para que, si el visitante entra desde el menú, aparezca sin esperar. No
