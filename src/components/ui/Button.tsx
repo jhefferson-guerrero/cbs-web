@@ -15,7 +15,7 @@ type ButtonProps =
 
 const variantClasses: Record<ButtonVariant, string> = {
   solid:
-    'bg-cyan-600 text-white shadow-sm shadow-navy-950/10 hover:-translate-y-0.5 hover:bg-cyan-700 hover:shadow-lg hover:shadow-cyan-900/25',
+    'bg-cyan-700 text-white shadow-sm shadow-navy-950/10 hover:-translate-y-0.5 hover:bg-cyan-800 hover:shadow-lg hover:shadow-cyan-900/25',
   moss: 'bg-moss-400 text-navy-950 shadow-sm shadow-navy-950/10 hover:-translate-y-0.5 hover:bg-moss-300 hover:shadow-lg hover:shadow-navy-950/25',
   'outline-light': 'border border-white/35 text-white hover:-translate-y-0.5 hover:border-white/60',
   'outline-dark': 'border border-navy-200 text-navy-800 hover:-translate-y-0.5 hover:border-navy-300',

@@ -5,6 +5,10 @@ import logoMobileCbs from '@/assets/images/logo-mobile-cbs.webp'
 import { HERO_IMAGE_SIZES, HERO_IMAGE_SRC, HERO_IMAGE_SRCSET } from '@/lib/hero-image'
 import { getLimpCityHeroVariant } from '@/lib/limp-city-hero'
 
+// El hero usa solo estas dos: el resto de pesos (negrita, mono) pertenece a secciones de más abajo y
+// puede llegar después sin que se note, así que el preloader no las espera.
+const CRITICAL_FONTS = ['400 1em "IBM Plex Sans"', '600 1em "IBM Plex Sans"']
+
 const MIN_DISPLAY_MS = 400
 const MAX_DISPLAY_MS = 4000
 
@@ -53,7 +57,10 @@ export function Preloader({ onReady }: { onReady: () => void }) {
       : isLimpCity
         ? preloadImage(limpCityHero.src, limpCityHero.srcset, limpCityHero.sizes)
         : Promise.resolve()
-    const assetsReady = Promise.all([heroReady, document.fonts?.ready ?? Promise.resolve()])
+    const fontsReady = document.fonts
+      ? Promise.all(CRITICAL_FONTS.map((font) => document.fonts.load(font))).catch(() => undefined)
+      : Promise.resolve()
+    const assetsReady = Promise.all([heroReady, fontsReady])
 
     if (!reduceMotion) {
       animate(count, 92, { duration: 0.6, ease: [0.16, 1, 0.3, 1] })
@@ -66,7 +73,7 @@ export function Preloader({ onReady }: { onReady: () => void }) {
         count.set(100)
         onReady()
       } else {
-        animate(count, 100, { duration: 0.35, ease: 'easeOut', onComplete: onReady })
+        animate(count, 100, { duration: 0.25, ease: 'easeOut', onComplete: onReady })
       }
     })
 

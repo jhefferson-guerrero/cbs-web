@@ -24,6 +24,7 @@ export function Footer() {
                 alt="CBS - Construtora Baiana de Saneamento"
                 width={1080}
                 height={211}
+                loading="lazy"
                 className="h-11 w-auto brightness-0 invert 2xl:h-14"
               />
             </a>

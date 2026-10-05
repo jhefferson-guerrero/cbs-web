@@ -33,6 +33,7 @@ function PartnerLogo({
         alt={partner.name}
         width={256}
         height={256}
+        loading="lazy"
         className={cn('[grid-area:1/1] w-auto transition-opacity duration-300', className, isSolid ? 'opacity-100' : 'opacity-0')}
       />
       <img
@@ -41,6 +42,7 @@ function PartnerLogo({
         aria-hidden="true"
         width={256}
         height={256}
+        loading="lazy"
         className={cn('[grid-area:1/1] w-auto brightness-0 invert transition-opacity duration-300', className, isSolid ? 'opacity-0' : 'opacity-100')}
       />
     </>
@@ -184,6 +186,7 @@ export function Navbar({ ready }: { ready: boolean }) {
               alt="CBS - Construtora Baiana de Saneamento"
               width={1080}
               height={211}
+              loading="lazy"
               className={cn(
                 '[grid-area:1/1] h-9 w-auto transition-opacity duration-300 xl:h-10 2xl:h-12',
                 isSolid ? 'opacity-100' : 'opacity-0',
@@ -194,6 +197,7 @@ export function Navbar({ ready }: { ready: boolean }) {
               aria-hidden="true"
               width={1080}
               height={211}
+              loading="lazy"
               className={cn(
                 '[grid-area:1/1] h-9 w-auto brightness-0 invert transition-opacity duration-300 xl:h-10 2xl:h-12',
                 isSolid ? 'opacity-0' : 'opacity-100',

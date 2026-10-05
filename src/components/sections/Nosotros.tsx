@@ -1,5 +1,6 @@
 import { motion, useReducedMotion } from 'motion/react'
 import nosotrosPhoto from '@/assets/images/nosotros.webp'
+import nosotrosPhoto800 from '@/assets/images/nosotros-800.webp'
 
 const timeline = [
   { year: '2009', label: 'Fundación del grupo en Brasil', current: false },
@@ -88,6 +89,8 @@ export function Nosotros() {
         <div className="relative h-full min-h-[360px] overflow-hidden lg:min-h-0">
           <motion.img
             src={nosotrosPhoto}
+            srcSet={`${nosotrosPhoto800} 800w, ${nosotrosPhoto} 1372w`}
+            sizes="(min-width: 1024px) 50vw, 100vw"
             alt="Obra de infraestructura ejecutada por CBS"
             width={1372}
             height={768}

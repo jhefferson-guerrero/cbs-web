@@ -43,12 +43,14 @@ export function Hero({ ready }: { ready: boolean }) {
     return () => observer.disconnect()
   }, [])
 
+  // El párrafo del hero es el elemento más grande de la primera pantalla (el LCP que mide Lighthouse):
+  // mientras se desvanece, la métrica sigue contando, por eso estos tiempos son cortos.
   const fadeUp = (delay: number) => ({
     initial: reduceMotion ? false : { opacity: 0, y: 18, filter: 'blur(4px)' },
     animate: play
       ? { opacity: 1, y: 0, filter: 'blur(0px)' }
       : { opacity: 0, y: 18, filter: 'blur(4px)' },
-    transition: { duration: 0.9, delay, ease: [0.16, 1, 0.3, 1] as const },
+    transition: { duration: 0.7, delay, ease: [0.16, 1, 0.3, 1] as const },
   })
 
   return (
@@ -103,7 +105,7 @@ export function Hero({ ready }: { ready: boolean }) {
                       ? { opacity: 1, y: 0, filter: 'blur(0px)' }
                       : { opacity: 0, y: 22, filter: 'blur(6px)' }
                   }
-                  transition={{ duration: 0.8, delay: 0.25 + i * 0.14, ease: [0.16, 1, 0.3, 1] }}
+                  transition={{ duration: 0.7, delay: 0.15 + i * 0.1, ease: [0.16, 1, 0.3, 1] }}
                   className="block"
                 >
                   {line}
@@ -112,7 +114,7 @@ export function Hero({ ready }: { ready: boolean }) {
             </h1>
 
             <motion.p
-              {...fadeUp(0.72)}
+              {...fadeUp(0.4)}
               className="mt-8 max-w-[54ch] text-base leading-relaxed text-white/85 sm:mt-6 md:text-lg 2xl:max-w-[46ch] 2xl:text-xl [@media(max-height:600px)]:mt-4"
             >
               Ejecutamos proyectos de infraestructura de mediana y gran escala: abastecimiento
@@ -121,7 +123,7 @@ export function Hero({ ready }: { ready: boolean }) {
             </motion.p>
 
             <motion.div
-              {...fadeUp(0.92)}
+              {...fadeUp(0.55)}
               className="mt-10 flex flex-wrap items-center gap-4 sm:mt-9 [@media(max-height:600px)]:mt-6"
             >
               <Button href="#proyectos" variant="solid" icon={<ArrowRightIcon size={18} weight="regular" />}>
