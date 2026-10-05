@@ -1,23 +1,29 @@
 import { isConnectionConstrained } from '@/lib/connection'
 import { projects } from '@/lib/projects'
+import { projectDetailRoute } from '@/lib/routes'
 
 let warmed = false
 
-// Calienta en segundo plano las páginas de proyecto: su código y la imagen de portada de cada una (la misma
-// que se ve de fondo en el hero del proyecto y en la tarjeta de la Home, así que se descarga una sola vez).
-// Las imágenes se piden con prioridad baja para no estorbar a lo que el visitante esté viendo.
+// Calienta en segundo plano las páginas de proyecto: su código, la imagen de portada de cada una (la misma
+// que se ve de fondo en el hero del proyecto y en la tarjeta de la Home, así que se descarga una sola vez) y
+// los logos de su ficha (cliente, contratista y financiamiento). Las imágenes se piden con prioridad baja para
+// no estorbar a lo que el visitante esté viendo.
 function warmProjects() {
   if (warmed || isConnectionConstrained()) return
   warmed = true
 
-  // Mismo módulo que carga la ruta con React.lazy: el navegador lo reutiliza al navegar.
-  import('@/pages/ProjectDetail').catch(() => {})
+  // Código de la página de proyecto: se deja listo para que la ruta lo encuentre al navegar.
+  projectDetailRoute.preload().catch(() => {})
 
   for (const project of projects) {
-    const cover = new window.Image()
-    cover.fetchPriority = 'low'
-    cover.decoding = 'async'
-    cover.src = project.cover
+    const files = [project.cover, project.client.logo, project.contractor.logo, project.funding.logo]
+    for (const src of files) {
+      if (!src) continue
+      const image = new window.Image()
+      image.fetchPriority = 'low'
+      image.decoding = 'async'
+      image.src = src
+    }
   }
 }
 

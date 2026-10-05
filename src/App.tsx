@@ -7,14 +7,16 @@ import { SmoothScroll } from '@/components/layout/SmoothScroll'
 import { Footer } from '@/components/layout/Footer'
 import { BackToTop } from '@/components/layout/BackToTop'
 import { prefetchLimpCity } from '@/lib/prefetch-limp-city'
+import { limpCityRoute, projectDetailRoute } from '@/lib/routes'
 
 // División de código por ruta: el JS de cada página se descarga solo cuando
 // se visita, en vez de que el Home y cada página de proyecto vayan en un
 // solo bundle.
 const Home = lazy(() => import('@/pages/Home').then((m) => ({ default: m.Home })))
-const loadLimpCity = () => import('@/pages/LimpCity').then((m) => ({ default: m.LimpCity }))
-const LimpCity = lazy(loadLimpCity)
-const ProjectDetail = lazy(() => import('@/pages/ProjectDetail').then((m) => ({ default: m.ProjectDetail })))
+// Limp City y los proyectos se precargan en segundo plano (lib/routes.ts): al abrirlos, React los encuentra
+// listos y no hace la pausa de Suspense.
+const LimpCity = limpCityRoute.Component
+const ProjectDetail = projectDetailRoute.Component
 
 function App() {
   const [isLoading, setIsLoading] = useState(true)
@@ -31,7 +33,7 @@ function App() {
   // inmediato. Ver lib/prefetch-limp-city.ts.
   useEffect(() => {
     if (isLoading) return
-    return prefetchLimpCity(loadLimpCity)
+    return prefetchLimpCity(limpCityRoute.preload)
   }, [isLoading])
 
   return (

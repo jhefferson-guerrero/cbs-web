@@ -39,6 +39,10 @@ export function ProjectFacts({ project }: { project: Project }) {
                 <img
                   src={fact.logo}
                   alt={`Logo de ${fact.value}`}
+                  // lazy: React 19 espera a que carguen las imágenes sin loading="lazy" antes de mostrar una
+                  // página nueva; estos logos no deben retrasar la entrada al proyecto.
+                  loading="lazy"
+                  decoding="async"
                   className="h-10 w-auto shrink-0 object-contain sm:h-16 2xl:h-20"
                 />
               )}

@@ -1,10 +1,11 @@
 import { flushSync } from 'react-dom'
+import { limpCityRoute, projectDetailRoute } from '@/lib/routes'
 
 // Página de cada ruta con carga diferida: antes de empezar la transición se espera a que su código esté
 // descargado, para que el navegador fotografíe la página nueva ya lista y no una pantalla vacía.
 const routeChunks: [RegExp, () => Promise<unknown>][] = [
-  [/^\/limp-city/, () => import('@/pages/LimpCity')],
-  [/^\/proyectos\//, () => import('@/pages/ProjectDetail')],
+  [/^\/limp-city/, limpCityRoute.preload],
+  [/^\/proyectos\//, projectDetailRoute.preload],
 ]
 
 const prefersReducedMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches
