@@ -1,6 +1,16 @@
 import { motion, useReducedMotion } from 'motion/react'
 import { clientGroups } from '@/lib/clients'
 
+// Los logos entran en cascada continua (Perú y luego Brasil), con retardo inicial para que no arranque
+// mientras el scroll suave todavía se está asentando.
+const logoListVariants = {
+  show: { transition: { staggerChildren: 0.12, delayChildren: 0.45 } },
+}
+const logoVariants = {
+  hidden: { opacity: 0, y: 40, scale: 0.94 },
+  show: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.95, ease: [0.16, 1, 0.3, 1] as const } },
+}
+
 export function Clientes() {
   const reduceMotion = useReducedMotion()
 
@@ -15,10 +25,10 @@ export function Clientes() {
 
       <div className="mx-auto w-full max-w-[1400px] px-6 py-16 lg:flex lg:h-full lg:flex-col lg:justify-center lg:px-10 lg:py-[clamp(1rem,3.5vh,3rem)] xl:px-16 2xl:max-w-[1700px] 2xl:px-14">
         <motion.div
-          initial={reduceMotion ? false : { opacity: 0, y: 28 }}
+          initial={reduceMotion ? false : { opacity: 0, y: 36 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+          transition={{ duration: 1, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
           className="max-w-2xl lg:max-w-4xl"
         >
           <p className="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-cyan-400 2xl:text-sm">
@@ -33,7 +43,13 @@ export function Clientes() {
           </p>
         </motion.div>
 
-        <div className="mt-12 flex flex-col divide-y divide-white/15 lg:mt-[clamp(1rem,5vh,4rem)]">
+        <motion.div
+          variants={logoListVariants}
+          initial={reduceMotion ? false : 'hidden'}
+          whileInView="show"
+          viewport={{ once: true, amount: 0.2 }}
+          className="mt-12 flex flex-col divide-y divide-white/15 lg:mt-[clamp(1rem,5vh,4rem)]"
+        >
           {clientGroups.map((group) => {
             const solo = group.clients.length === 1
 
@@ -44,13 +60,10 @@ export function Clientes() {
                 </p>
 
                 <div className="mt-6 flex flex-wrap gap-3 lg:mt-[clamp(0.75rem,2.6vh,2rem)]">
-                  {group.clients.map((client, i) => (
+                  {group.clients.map((client) => (
                     <motion.div
                       key={client.name}
-                      initial={reduceMotion ? false : { opacity: 0, y: 18 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true, amount: 0.5 }}
-                      transition={{ duration: 0.6, delay: i * 0.08, ease: [0.16, 1, 0.3, 1] }}
+                      variants={logoVariants}
                       className={`group relative flex items-center justify-center bg-white ${
                         solo
                           ? 'h-20 w-56 shrink-0 p-3 sm:h-24 sm:w-72 sm:p-4 lg:h-[clamp(4.75rem,14vh,8.5rem)] lg:w-[clamp(14rem,42vh,25.5rem)] 2xl:p-5'
@@ -72,7 +85,7 @@ export function Clientes() {
               </div>
             )
           })}
-        </div>
+        </motion.div>
       </div>
       </div>
       <div aria-hidden="true" className="hidden lg:block lg:h-[clamp(2rem,8vh,6rem)]" />
