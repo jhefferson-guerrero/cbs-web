@@ -39,19 +39,21 @@ export function Certificaciones() {
                 viewport={{ once: true, amount: 0.3 }}
                 transition={{ type: 'spring', stiffness: 70, damping: 18, delay: i * 0.08 }}
                 className={cn(
-                  'relative flex flex-col justify-between gap-10 bg-navy-950 p-6 lg:gap-4 lg:p-[clamp(1.25rem,2.4vh,2rem)]',
+                  'group relative flex flex-col justify-between gap-10 bg-navy-950 p-6 transition-[translate,background-color,box-shadow] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1.5 hover:bg-navy-900 hover:shadow-card lg:gap-4 lg:p-[clamp(1.25rem,2.4vh,2rem)]',
                   i < 3 ? 'md:col-span-2' : 'md:col-span-3',
                   'lg:col-span-1 lg:min-h-[calc((100cqw-4*var(--cert-gap))/5*1.3)]',
                 )}
               >
-                <span aria-hidden="true" className="absolute -left-px -top-px h-5 w-5 border-l-2 border-t-2 border-cyan-500" />
-                <span aria-hidden="true" className="absolute -right-px -top-px h-5 w-5 border-r-2 border-t-2 border-cyan-500" />
-                <span aria-hidden="true" className="absolute -bottom-px -left-px h-5 w-5 border-b-2 border-l-2 border-cyan-500" />
-                <span aria-hidden="true" className="absolute -bottom-px -right-px h-5 w-5 border-b-2 border-r-2 border-cyan-500" />
+                <span aria-hidden="true" className="absolute -left-px -top-px h-5 w-5 border-l-2 border-t-2 border-cyan-500 transition-[width,height] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:h-8 group-hover:w-8" />
+                <span aria-hidden="true" className="absolute -right-px -top-px h-5 w-5 border-r-2 border-t-2 border-cyan-500 transition-[width,height] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:h-8 group-hover:w-8" />
+                <span aria-hidden="true" className="absolute -bottom-px -left-px h-5 w-5 border-b-2 border-l-2 border-cyan-500 transition-[width,height] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:h-8 group-hover:w-8" />
+                <span aria-hidden="true" className="absolute -bottom-px -right-px h-5 w-5 border-b-2 border-r-2 border-cyan-500 transition-[width,height] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:h-8 group-hover:w-8" />
+
+                <span aria-hidden="true" className="absolute inset-x-0 bottom-0 h-0.5 origin-left scale-x-0 bg-cyan-500 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-x-100" />
 
                 <div>
                   <p className="font-mono text-base font-semibold uppercase tracking-[0.2em] text-cyan-400 lg:text-lg 2xl:text-xl">ISO</p>
-                  <p className="mt-2 font-mono text-5xl font-bold tabular-nums leading-none text-white lg:text-[clamp(1.75rem,3.2vw,4.25rem)]">
+                  <p className="mt-2 font-mono text-5xl font-bold tabular-nums leading-none text-white transition-colors duration-500 group-hover:text-cyan-300 lg:text-[clamp(1.75rem,3.2vw,4.25rem)]">
                     {cert.number}
                   </p>
                   <h3 className="mt-4 text-lg font-semibold leading-snug text-white lg:mt-[clamp(0.75rem,2vh,1.5rem)] lg:text-[clamp(1rem,2.2vh,1.375rem)]">
