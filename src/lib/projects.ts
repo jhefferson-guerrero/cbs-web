@@ -3,7 +3,6 @@ import galeriaRioHuatanay02 from '@/assets/images/proyectos/rio-huatanay/galeria
 import galeriaRioHuatanay03 from '@/assets/images/proyectos/rio-huatanay/galeria-03.webp'
 import galeriaRioHuatanay04 from '@/assets/images/proyectos/rio-huatanay/galeria-04.webp'
 import galeriaRioHuatanay05 from '@/assets/images/proyectos/rio-huatanay/galeria-05.webp'
-import galeriaRioHuatanay06 from '@/assets/images/proyectos/rio-huatanay/galeria-06.webp'
 import galeriaTambopata01 from '@/assets/images/proyectos/drenaje-tambopata/galeria-01.webp'
 import galeriaTambopata02 from '@/assets/images/proyectos/drenaje-tambopata/galeria-02.webp'
 import galeriaTambopata03 from '@/assets/images/proyectos/drenaje-tambopata/galeria-03.webp'
@@ -58,7 +57,7 @@ export const projects: Project[] = [
     category: 'Agua potable',
     title: 'Ampliación del servicio de agua potable — Margen derecha del Huatanay',
     location: 'Distrito Santiago, Cusco',
-    cover: galeriaRioHuatanay05,
+    cover: galeriaRioHuatanay04,
     client: { name: 'Programa Nacional de Saneamiento Urbano', logo: logoClientePnsu },
     contractor: { name: 'Consorcio Río Huatanay', logo: logoContratistaRioHuatanay, note: '50% de participación' },
     amount: 'S/ 62,826,654',
@@ -67,10 +66,9 @@ export const projects: Project[] = [
     gallery: [
       { src: galeriaRioHuatanay01, alt: 'Maquinaria pesada del Consorcio Río Huatanay en obra' },
       { src: galeriaRioHuatanay02, alt: 'Armado de acero de la losa circular del reservorio con equipo de trabajo' },
-      { src: galeriaRioHuatanay03, alt: 'Encofrado perimetral del reservorio con trabajador en obra' },
-      { src: galeriaRioHuatanay04, alt: 'Vista aérea del reservorio en etapa avanzada de construcción' },
-      { src: galeriaRioHuatanay05, alt: 'Vista aérea del reservorio de agua potable junto a la ciudad de Cusco' },
-      { src: galeriaRioHuatanay06, alt: 'Vista aérea del trazo de la línea de conducción sobre el cerro' },
+      { src: galeriaRioHuatanay03, alt: 'Vista aérea del reservorio en etapa avanzada de construcción' },
+      { src: galeriaRioHuatanay04, alt: 'Vista aérea del reservorio de agua potable junto a la ciudad de Cusco' },
+      { src: galeriaRioHuatanay05, alt: 'Vista aérea del trazo de la línea de conducción sobre el cerro' },
     ],
   },
   {
