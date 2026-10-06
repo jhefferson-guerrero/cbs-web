@@ -4,7 +4,14 @@ import { ArrowRightIcon } from '@phosphor-icons/react'
 import { Button } from '@/components/ui/Button'
 import { Counter } from '@/components/ui/Counter'
 import { cn, withCommas } from '@/lib/utils'
-import { HERO_IMAGE_SIZES, HERO_IMAGE_SRC, HERO_IMAGE_SRCSET } from '@/lib/hero-image'
+import {
+  HERO_IMAGE_MOBILE_QUERY,
+  HERO_IMAGE_MOBILE_SIZES,
+  HERO_IMAGE_MOBILE_SRCSET,
+  HERO_IMAGE_SIZES,
+  HERO_IMAGE_SRC,
+  HERO_IMAGE_SRCSET,
+} from '@/lib/hero-image'
 
 const headline = ['Infraestructura,', 'agua y', 'saneamiento']
 
@@ -68,21 +75,26 @@ export function Hero({ ready }: { ready: boolean }) {
       {/* Fondo: fijo detrás del hero mientras está en vista; el contenido sube y lo tapa */}
       <div className={cn('inset-x-0 top-0 -z-10 h-lvh overflow-hidden bg-navy-950', pinned ? 'fixed' : 'absolute')}>
         <motion.div style={reduceMotion ? undefined : { scale: backdropScale }} className="absolute inset-0">
-        <motion.img
-          src={HERO_IMAGE_SRC}
-          srcSet={HERO_IMAGE_SRCSET}
-          sizes={HERO_IMAGE_SIZES}
-          alt=""
-          aria-hidden="true"
-          width={2574}
-          height={1664}
-          fetchPriority="high"
-          decoding="async"
-          initial={reduceMotion ? false : { scale: 1.06 }}
-          animate={{ scale: play ? 1 : 1.06 }}
-          transition={{ duration: 1.6, ease: [0.16, 1, 0.3, 1] }}
-          className="absolute inset-0 h-full w-full object-cover object-[90%_50%] saturate-[1.02] contrast-[1.02] brightness-[0.92] sm:object-[72%_50%]"
-        />
+        {/* En celular vertical se descarga un recorte de la foto (la zona que se ve, a resolución original);
+            object-[86%] en ese recorte equivale al 90% de la foto completa. */}
+        <picture>
+          <source media={HERO_IMAGE_MOBILE_QUERY} srcSet={HERO_IMAGE_MOBILE_SRCSET} sizes={HERO_IMAGE_MOBILE_SIZES} />
+          <motion.img
+            src={HERO_IMAGE_SRC}
+            srcSet={HERO_IMAGE_SRCSET}
+            sizes={HERO_IMAGE_SIZES}
+            alt=""
+            aria-hidden="true"
+            width={2574}
+            height={1664}
+            fetchPriority="high"
+            decoding="async"
+            initial={reduceMotion ? false : { scale: 1.06 }}
+            animate={{ scale: play ? 1 : 1.06 }}
+            transition={{ duration: 1.6, ease: [0.16, 1, 0.3, 1] }}
+            className="absolute inset-0 h-full w-full object-cover object-[90%_50%] saturate-[1.02] contrast-[1.02] brightness-[0.92] sm:object-[72%_50%] portrait:max-sm:object-[86%_50%]"
+          />
+        </picture>
         <div className="absolute inset-0 bg-navy-950/20" />
         <motion.div
           initial={reduceMotion ? false : { opacity: 0 }}

@@ -12,7 +12,15 @@
   var heroes = {
     '/': [
       {
-        sizes: '100vw',
+        // Debe coincidir con HERO_IMAGE_MOBILE_* de src/lib/hero-image.ts.
+        media: '(max-width: 639.98px) and (orientation: portrait)',
+        sizes: 'max(100vw, 80vh)',
+        href: '/hero-planta-movil.webp',
+        srcset: '/hero-planta-movil-900.webp 900w, /hero-planta-movil.webp 1338w',
+      },
+      {
+        media: 'not all and (max-width: 639.98px) and (orientation: portrait)',
+        sizes: 'max(100vw, 155vh)',
         href: '/hero-planta.webp',
         srcset:
           '/hero-planta-640.webp 640w, /hero-planta-960.webp 960w, /hero-planta-1280.webp 1280w, /hero-planta.webp 1920w, /hero-planta-2560.webp 2560w',

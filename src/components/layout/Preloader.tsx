@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { animate, motion, useMotionValue, useReducedMotion } from 'motion/react'
 import { useLocation } from 'react-router-dom'
 import logoMobileCbs from '@/assets/images/logo-mobile-cbs.webp'
-import { HERO_IMAGE_SIZES, HERO_IMAGE_SRC, HERO_IMAGE_SRCSET } from '@/lib/hero-image'
+import { getHeroImageVariant } from '@/lib/hero-image'
 import { getLimpCityHeroVariant } from '@/lib/limp-city-hero'
 
 // El hero usa solo estas dos: el resto de pesos (negrita, mono) pertenece a secciones de más abajo y
@@ -52,8 +52,9 @@ export function Preloader({ onReady }: { onReady: () => void }) {
     // preloader bloquea otra página, como un detalle de proyecto.
     // En Limp City, un móvil vertical descarga el recorte de la foto y no la foto completa.
     const limpCityHero = getLimpCityHeroVariant()
+    const cbsHero = getHeroImageVariant()
     const heroReady = isHome
-      ? preloadImage(HERO_IMAGE_SRC, HERO_IMAGE_SRCSET, HERO_IMAGE_SIZES)
+      ? preloadImage(cbsHero.src, cbsHero.srcset, cbsHero.sizes)
       : isLimpCity
         ? preloadImage(limpCityHero.src, limpCityHero.srcset, limpCityHero.sizes)
         : Promise.resolve()
