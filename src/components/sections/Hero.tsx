@@ -94,7 +94,7 @@ export function Hero({ ready }: { ready: boolean }) {
           initial={reduceMotion ? false : { opacity: 0 }}
           animate={{ opacity: play ? 1 : 0 }}
           transition={{ duration: 0.7, ease: 'easeOut' }}
-          className="absolute inset-0 bg-gradient-to-t from-navy-950/40 via-transparent to-navy-950/0"
+          className="absolute inset-0 bg-gradient-to-t from-navy-950/75 via-transparent sm:from-navy-950/40 to-navy-950/0"
         />
         <div className="absolute inset-x-0 top-0 h-36 bg-gradient-to-b from-navy-950/55 to-transparent" />
         </motion.div>
@@ -103,7 +103,7 @@ export function Hero({ ready }: { ready: boolean }) {
       <section
         id="top"
         ref={sectionRef}
-        className="relative flex min-h-[100svh] items-center pt-16 lg:pt-20 2xl:pt-24"
+        className="relative flex min-h-[100svh] items-end pb-[max(2.5rem,env(safe-area-inset-bottom))] pt-16 sm:items-center sm:pb-0 lg:pt-20 2xl:pt-24"
       >
         <div className="relative z-10 mx-auto w-full max-w-[1400px] px-6 lg:px-10 xl:px-16 2xl:max-w-[1700px] 2xl:px-14">
           <motion.div
@@ -139,7 +139,7 @@ export function Hero({ ready }: { ready: boolean }) {
 
             <motion.div
               {...fadeUp(0.55)}
-              className="mt-10 flex flex-wrap items-center gap-4 sm:mt-9 [@media(max-height:600px)]:mt-6"
+              className="mt-10 flex flex-wrap items-center gap-3 sm:mt-9 sm:gap-4 [@media(max-height:600px)]:mt-6"
             >
               <Button href="#proyectos" variant="solid" icon={<ArrowRightIcon size={18} weight="regular" />}>
                 Ver proyectos

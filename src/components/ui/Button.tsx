@@ -32,7 +32,7 @@ export function Button({ variant = 'solid', icon, className, children, ...props 
   const fill = fillClasses[variant]
 
   const classes = cn(
-    'group relative inline-flex items-center justify-center gap-2.5 whitespace-nowrap rounded-lg px-6 py-[11px] text-base font-semibold transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] active:translate-y-0 active:scale-[0.98] 2xl:px-7 2xl:py-3.5 2xl:text-lg',
+    'group relative inline-flex items-center justify-center gap-2.5 whitespace-nowrap rounded-lg px-5 py-[11px] text-base max-[380px]:px-4 max-[380px]:text-[0.9375rem] sm:px-6 font-semibold transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] active:translate-y-0 active:scale-[0.98] 2xl:px-7 2xl:py-3.5 2xl:text-lg',
     variantClasses[variant],
     className,
   )
