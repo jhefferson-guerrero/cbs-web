@@ -12,41 +12,29 @@ const logoVariants = {
   show: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.75, ease: [0.16, 1, 0.3, 1] as const } },
 }
 
-const clamp01 = (n: number) => Math.min(1, Math.max(0, n))
-
-// Cuánto se desplaza la fila de Brasil (px) cuando el efecto llega a su máximo.
-const SLIDE_PX = 150
-
 export function Clientes() {
   const reduceMotion = useReducedMotion()
-  const blockRef = useRef<HTMLDivElement>(null)
+  const sectionRef = useRef<HTMLElement>(null)
 
-  // Efecto de scroll: la fila de Brasil se desliza en horizontal y se desvanece al entrar y al salir de la
-  // pantalla. Al bajar se va hacia la derecha y al subir vuelve hacia la izquierda; si se sube desde abajo,
-  // entra desde la izquierda. Con la sección centrada (la zona muerta) no se mueve nada, así los logos
-  // quedan firmes mientras se leen. Todo va ligado a la posición del scroll, así que se deshace solo.
-  //   progressIn : 0 cuando la sección asoma por abajo -> 1 cuando su borde superior llega arriba.
-  //   progressOut: 0 con la sección arriba del todo -> 1 cuando ya salió por arriba.
-  const { scrollYProgress: progressIn } = useScroll({ target: blockRef, offset: ['start end', 'start start'] })
-  const { scrollYProgress: progressOut } = useScroll({ target: blockRef, offset: ['start start', 'end start'] })
-  const slide = useTransform([progressIn, progressOut], ([entering, leaving]: number[]) => {
-    const fromBelow = clamp01((0.88 - entering) / 0.88) // 1 recien asoma, 0 ya casi centrada
-    const toAbove = clamp01((leaving - 0.1) / 0.9) // 0 centrada, 1 saliendo
-    return { amount: toAbove - fromBelow, strength: Math.max(fromBelow, toAbove) }
-  })
-  const brasilX = useTransform(slide, (v) => v.amount * SLIDE_PX)
-  const brasilOpacity = useTransform(slide, (v) => 1 - clamp01(v.strength / 0.75))
+  // Efecto de scroll por capas: mientras la sección pasa por la pantalla, el título se queda un poco atrás y los
+  // logos de cada país suben a distinta velocidad (Brasil más que Perú), así los planos se separan y hay
+  // profundidad. Va ligado a la posición del scroll: al subir, se deshace. El movimiento es 0 cuando la
+  // sección está centrada, que es cuando más se ve. Las líneas que separan los países no se mueven.
+  const { scrollYProgress } = useScroll({ target: sectionRef, offset: ['start end', 'end start'] })
+  const headerY = useTransform(scrollYProgress, [0, 1], [-46, 46])
+  const groupY = [useTransform(scrollYProgress, [0, 1], [22, -22]), useTransform(scrollYProgress, [0, 1], [60, -60])]
 
   return (
-    <section className="overflow-x-clip bg-navy-950">
+    <section ref={sectionRef} className="bg-navy-950">
       {/* Espacio de respiro arriba y abajo, fuera del ancla (#clientes está en el bloque
           del medio): al pulsar "Clientes" en el menú no se ve, solo al hacer scroll. */}
       <div aria-hidden="true" className="hidden lg:block lg:h-[clamp(2rem,8vh,6rem)]" />
-      <div id="clientes" ref={blockRef} className="relative lg:h-[calc(100svh-var(--nav-h))] lg:min-h-[540px]">
+      <div id="clientes" className="relative lg:h-[calc(100svh-var(--nav-h))] lg:min-h-[540px]">
       <span aria-hidden="true" className="absolute right-6 top-6 h-6 w-6 border-r-2 border-t-2 border-white/70 lg:right-9 lg:top-9 lg:h-7 lg:w-7" />
       <span aria-hidden="true" className="absolute bottom-6 left-6 h-6 w-6 border-b-2 border-l-2 border-white/70 lg:bottom-9 lg:left-9 lg:h-7 lg:w-7" />
 
       <div className="mx-auto w-full max-w-[1400px] px-6 py-16 lg:flex lg:h-full lg:flex-col lg:justify-center lg:px-10 lg:py-[clamp(1rem,3.5vh,3rem)] xl:px-16 2xl:max-w-[1700px] 2xl:px-14">
+        <motion.div style={reduceMotion ? undefined : { y: headerY }}>
         <motion.div
           initial={reduceMotion ? false : { opacity: 0, y: 36 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -65,6 +53,7 @@ export function Clientes() {
             ejecutamos.
           </p>
         </motion.div>
+        </motion.div>
 
         <motion.div
           variants={logoListVariants}
@@ -78,7 +67,7 @@ export function Clientes() {
 
             return (
               <div key={group.country} className="py-8 first:pt-0 last:pb-0 lg:py-[clamp(1rem,4vh,3.5rem)] lg:first:pt-0 lg:last:pb-0">
-                <motion.div style={reduceMotion || groupIndex === 0 ? undefined : { x: brasilX, opacity: brasilOpacity }}>
+                <motion.div style={reduceMotion ? undefined : { y: groupY[groupIndex] ?? groupY[1] }}>
                 <p className="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-cyan-400 2xl:text-sm">
                   {group.country}
                 </p>
