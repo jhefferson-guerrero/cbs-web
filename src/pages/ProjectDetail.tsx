@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
+import { motion, useReducedMotion } from 'motion/react'
 import { PageLink } from '@/components/ui/PageLink'
 import { ArrowLeftIcon, ArrowUpRightIcon } from '@phosphor-icons/react'
 import { getProjectBySlug, projects } from '@/lib/projects'
@@ -8,8 +9,9 @@ import { ProjectFacts } from '@/components/project/ProjectFacts'
 import { PartnerLogosSection } from '@/components/project/PartnerLogosSection'
 import { ProjectGallery } from '@/components/project/ProjectGallery'
 
-export function ProjectDetail() {
+export function ProjectDetail({ ready = true }: { ready?: boolean }) {
   const { slug } = useParams()
+  const reduceMotion = useReducedMotion()
   const project = getProjectBySlug(slug)
 
   useEffect(() => {
@@ -39,14 +41,20 @@ export function ProjectDetail() {
 
   return (
     <main key={project.slug}>
-      <ProjectHero project={project} />
+      <ProjectHero project={project} ready={ready} />
       <ProjectFacts project={project} />
       {project.showPartnerLogos && <PartnerLogosSection />}
       <ProjectGallery images={project.gallery} />
 
       {nextProject && (
         <section className="border-b border-white/10 bg-navy-950">
-          <div className="mx-auto w-full max-w-[1400px] px-6 py-14 lg:px-10 xl:px-16 2xl:max-w-[1700px] 2xl:px-14">
+          <motion.div
+            initial={reduceMotion ? false : { opacity: 0, y: 36 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.8 }}
+            transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+            className="mx-auto w-full max-w-[1400px] px-6 py-14 lg:px-10 xl:px-16 2xl:max-w-[1700px] 2xl:px-14"
+          >
             <PageLink
               to={`/proyectos/${nextProject.slug}`}
               className="group inline-flex items-center gap-3 text-lg font-bold text-white transition-colors hover:text-cyan-300"
@@ -58,7 +66,7 @@ export function ProjectDetail() {
                 className="shrink-0 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
               />
             </PageLink>
-          </div>
+          </motion.div>
         </section>
       )}
     </main>

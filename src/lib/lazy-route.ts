@@ -1,6 +1,8 @@
 import { lazy, type ComponentType } from 'react'
 
-type RouteModule = { default: ComponentType }
+// `ready`: el preloader ya terminó (lo usan las páginas cuya animación de entrada debe esperarlo).
+type RouteProps = { ready?: boolean }
+type RouteModule = { default: ComponentType<RouteProps> }
 
 // Como React.lazy, pero con precarga. React.lazy siempre "suspende" la primera vez que se dibuja, aunque
 // el código ya esté descargado, y al volver a mostrar el contenido espera hasta ~300 ms (la pausa

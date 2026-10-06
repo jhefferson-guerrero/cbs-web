@@ -113,15 +113,25 @@ export function ProjectGallery({ images }: { images: GalleryImage[] }) {
     <section className="border-t border-navy-100 bg-slate-50">
       <div className="mx-auto w-full max-w-[1400px] px-6 py-14 lg:px-10 lg:py-16 xl:px-16 2xl:max-w-[1700px] 2xl:px-14 2xl:py-20">
         <div className="mx-auto max-w-5xl 2xl:max-w-[1450px]">
-          <p className="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-cyan-700 2xl:text-sm">
+          <motion.p
+            initial={reduceMotion ? false : { opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.8 }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            className="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-cyan-700 2xl:text-sm"
+          >
             Galería del proyecto
-          </p>
+          </motion.p>
 
           <div className="mt-8 grid gap-4 sm:grid-cols-[1fr_auto]">
-          <button
+          <motion.button
             type="button"
             onClick={() => setLightboxOpen(true)}
             aria-label="Ver foto en pantalla completa"
+            initial={reduceMotion ? false : { opacity: 0, y: 48, scale: 0.97 }}
+            whileInView={{ opacity: 1, y: 0, scale: 1 }}
+            viewport={{ once: true, amount: 0.25 }}
+            transition={{ duration: 1.1, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
             className="group relative block aspect-video w-full overflow-hidden bg-navy-950 sm:aspect-auto sm:h-[480px] 2xl:h-[700px]"
           >
             <AnimatePresence>
@@ -140,18 +150,25 @@ export function ProjectGallery({ images }: { images: GalleryImage[] }) {
             </AnimatePresence>
             <span aria-hidden="true" className="absolute -right-px -top-px h-7 w-7 border-r-2 border-t-2 border-cyan-500" />
             <span aria-hidden="true" className="absolute -bottom-px -left-px h-7 w-7 border-b-2 border-l-2 border-cyan-500" />
-          </button>
+          </motion.button>
 
           {images.length > 1 && (
             <div className="scrollbar-thin hidden gap-2 overflow-y-auto sm:flex sm:flex-col sm:pr-3 sm:h-[480px] 2xl:h-[700px]">
               {images.map((img, i) => (
-                <button
+                <motion.div
                   key={img.src}
+                  className="shrink-0"
+                  initial={reduceMotion ? false : { opacity: 0, x: 36 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true, amount: 0.3 }}
+                  transition={{ duration: 0.8, delay: 0.35 + i * 0.1, ease: [0.16, 1, 0.3, 1] }}
+                >
+                <button
                   type="button"
                   onClick={() => setActive(i)}
                   aria-label={`Ver foto ${i + 1}`}
                   aria-current={i === active}
-                  className={`relative flex shrink-0 items-center gap-3 p-1.5 pl-3 text-left transition-colors duration-200 ${
+                  className={`relative flex w-full shrink-0 items-center gap-3 p-1.5 pl-3 text-left transition-colors duration-200 ${
                     i === active ? 'bg-white' : 'hover:bg-white/70'
                   }`}
                 >
@@ -166,6 +183,7 @@ export function ProjectGallery({ images }: { images: GalleryImage[] }) {
                     <img src={img.src} alt="" loading="lazy" decoding="async" className="h-full w-full object-cover" />
                   </span>
                 </button>
+                </motion.div>
               ))}
             </div>
           )}
@@ -173,8 +191,14 @@ export function ProjectGallery({ images }: { images: GalleryImage[] }) {
           {images.length > 1 && (
             <div className="grid grid-cols-3 gap-3 sm:hidden">
               {images.map((img, i) => (
-                <button
+                <motion.div
                   key={img.src}
+                  initial={reduceMotion ? false : { opacity: 0, y: 28 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.4 }}
+                  transition={{ duration: 0.8, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
+                >
+                <button
                   type="button"
                   onClick={() => setActive(i)}
                   aria-label={`Ver foto ${i + 1}`}
@@ -187,6 +211,7 @@ export function ProjectGallery({ images }: { images: GalleryImage[] }) {
                 >
                   <img src={img.src} alt="" loading="lazy" decoding="async" className="absolute inset-0 h-full w-full object-cover" />
                 </button>
+                </motion.div>
               ))}
             </div>
           )}

@@ -46,7 +46,7 @@ function App() {
         <Suspense fallback={null}>
           <Routes>
             <Route path="/" element={<Home ready={!isLoading} />} />
-            <Route path="/proyectos/:slug" element={<ProjectDetail />} />
+            <Route path="/proyectos/:slug" element={<ProjectDetail ready={!isLoading} />} />
             <Route path="/limp-city" element={<LimpCity />} />
           </Routes>
           {/* Dentro del mismo Suspense que las rutas: así el pie de página aparece junto con la

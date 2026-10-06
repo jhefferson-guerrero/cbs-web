@@ -1,6 +1,22 @@
 import { motion, useReducedMotion } from 'motion/react'
 import type { Project } from '@/lib/projects'
 
+const EASE = [0.16, 1, 0.3, 1] as const
+
+// Las cuatro fichas entran en cascada: cada una sube y aparece, y su línea superior se dibuja de izquierda a
+// derecha. Se dispara una sola vez, cuando la lista entra en pantalla.
+const listVariants = {
+  show: { transition: { staggerChildren: 0.18, delayChildren: 0.2 } },
+}
+const itemVariants = {
+  hidden: { opacity: 0, y: 48 },
+  show: { opacity: 1, y: 0, transition: { duration: 1, ease: EASE } },
+}
+const lineVariants = {
+  hidden: { scaleX: 0 },
+  show: { scaleX: 1, transition: { duration: 1.2, ease: EASE } },
+}
+
 export function ProjectFacts({ project }: { project: Project }) {
   const reduceMotion = useReducedMotion()
 
@@ -14,20 +30,34 @@ export function ProjectFacts({ project }: { project: Project }) {
   return (
     <section className="bg-white">
       <div className="mx-auto w-full max-w-[1400px] px-6 py-16 lg:px-10 lg:py-20 xl:px-16 2xl:max-w-[1700px] 2xl:px-14 2xl:py-24">
-        <p className="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-cyan-700 2xl:text-sm">
+        <motion.p
+          initial={reduceMotion ? false : { opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.8 }}
+          transition={{ duration: 0.8, ease: EASE }}
+          className="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-cyan-700 2xl:text-sm"
+        >
           Ficha del proyecto
-        </p>
+        </motion.p>
 
-        <dl className="mt-8 grid grid-cols-1 gap-x-12 gap-y-8 sm:grid-cols-2">
-          {facts.map((fact, i) => (
+        <motion.dl
+          variants={listVariants}
+          initial={reduceMotion ? false : 'hidden'}
+          whileInView="show"
+          viewport={{ once: true, amount: 0.25 }}
+          className="mt-8 grid grid-cols-1 gap-x-12 gap-y-8 sm:grid-cols-2"
+        >
+          {facts.map((fact) => (
             <motion.div
               key={fact.label}
-              initial={reduceMotion ? false : { opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.5 }}
-              transition={{ duration: 0.6, delay: i * 0.08, ease: [0.16, 1, 0.3, 1] }}
-              className="flex items-center justify-between gap-4 border-t border-navy-100 pt-6 sm:gap-6"
+              variants={itemVariants}
+              className="relative flex items-center justify-between gap-4 pt-6 sm:gap-6"
             >
+              <motion.span
+                variants={lineVariants}
+                aria-hidden="true"
+                className="absolute inset-x-0 top-0 h-px origin-left bg-navy-200"
+              />
               <div className="min-w-0">
                 <dt className="font-mono text-xs font-semibold tracking-[0.2em] text-cyan-600 2xl:text-sm">
                   {fact.label.toUpperCase()}
@@ -48,7 +78,7 @@ export function ProjectFacts({ project }: { project: Project }) {
               )}
             </motion.div>
           ))}
-        </dl>
+        </motion.dl>
       </div>
     </section>
   )
