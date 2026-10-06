@@ -103,7 +103,7 @@ export function Hero({ ready }: { ready: boolean }) {
       <section
         id="top"
         ref={sectionRef}
-        className="relative flex min-h-[100svh] items-end pb-[max(8.75rem,env(safe-area-inset-bottom))] pt-16 sm:items-center sm:pb-0 lg:pt-20 2xl:pt-24"
+        className="relative flex min-h-[100svh] items-end pb-[max(6rem,env(safe-area-inset-bottom))] pt-16 sm:items-center sm:pb-0 lg:pt-20 2xl:pt-24"
       >
         <div className="relative z-10 mx-auto w-full max-w-[1400px] px-6 lg:px-10 xl:px-16 2xl:max-w-[1700px] 2xl:px-14">
           <motion.div

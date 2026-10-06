@@ -1,8 +1,8 @@
 // Corre de inmediato durante el parseo del HTML, antes de que se
 // descargue/ejecute el bundle de JS de la app, así el navegador puede
-// empezar a descargar la imagen del hero lo antes posible. Mantené estos
+// empezar a descargar la imagen del hero lo antes posible. Mantén estos
 // srcset sincronizados con src/lib/hero-image.ts y src/lib/limp-city-hero.ts
-// (no se pueden importar acá).
+// (no se pueden importar aquí).
 // Cada hero solo se precarga en su propia ruta: el de CBS en el inicio y el de
 // Limp City en /limp-city. En el resto de páginas no se usan.
 // Cada ruta puede tener varias variantes con un media: el navegador solo precarga
