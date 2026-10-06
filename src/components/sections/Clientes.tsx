@@ -1,5 +1,4 @@
-import { useRef } from 'react'
-import { motion, useReducedMotion, useScroll, useTransform } from 'motion/react'
+import { motion, useReducedMotion } from 'motion/react'
 import { clientGroups } from '@/lib/clients'
 
 // Los logos entran en cascada continua (Perú y luego Brasil), con retardo inicial para que no arranque
@@ -14,18 +13,9 @@ const logoVariants = {
 
 export function Clientes() {
   const reduceMotion = useReducedMotion()
-  const sectionRef = useRef<HTMLElement>(null)
-
-  // Efecto de scroll por capas: mientras la sección pasa por la pantalla, el título se queda un poco atrás y los
-  // logos de cada país suben a distinta velocidad (Brasil más que Perú), así los planos se separan y hay
-  // profundidad. Va ligado a la posición del scroll: al subir, se deshace. El movimiento es 0 cuando la
-  // sección está centrada, que es cuando más se ve. Las líneas que separan los países no se mueven.
-  const { scrollYProgress } = useScroll({ target: sectionRef, offset: ['start end', 'end start'] })
-  const headerY = useTransform(scrollYProgress, [0, 1], [-46, 46])
-  const groupY = [useTransform(scrollYProgress, [0, 1], [22, -22]), useTransform(scrollYProgress, [0, 1], [60, -60])]
 
   return (
-    <section ref={sectionRef} className="bg-navy-950">
+    <section className="bg-navy-950">
       {/* Espacio de respiro arriba y abajo, fuera del ancla (#clientes está en el bloque
           del medio): al pulsar "Clientes" en el menú no se ve, solo al hacer scroll. */}
       <div aria-hidden="true" className="hidden lg:block lg:h-[clamp(2rem,8vh,6rem)]" />
@@ -34,7 +24,6 @@ export function Clientes() {
       <span aria-hidden="true" className="absolute bottom-6 left-6 h-6 w-6 border-b-2 border-l-2 border-white/70 lg:bottom-9 lg:left-9 lg:h-7 lg:w-7" />
 
       <div className="mx-auto w-full max-w-[1400px] px-6 py-16 lg:flex lg:h-full lg:flex-col lg:justify-center lg:px-10 lg:py-[clamp(1rem,3.5vh,3rem)] xl:px-16 2xl:max-w-[1700px] 2xl:px-14">
-        <motion.div style={reduceMotion ? undefined : { y: headerY }}>
         <motion.div
           initial={reduceMotion ? false : { opacity: 0, y: 36 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -53,7 +42,6 @@ export function Clientes() {
             ejecutamos.
           </p>
         </motion.div>
-        </motion.div>
 
         <motion.div
           variants={logoListVariants}
@@ -62,12 +50,11 @@ export function Clientes() {
           viewport={{ once: true, amount: 0.2 }}
           className="mt-12 flex flex-col divide-y divide-white/15 lg:mt-[clamp(1rem,5vh,4rem)]"
         >
-          {clientGroups.map((group, groupIndex) => {
+          {clientGroups.map((group) => {
             const solo = group.clients.length === 1
 
             return (
               <div key={group.country} className="py-8 first:pt-0 last:pb-0 lg:py-[clamp(1rem,4vh,3.5rem)] lg:first:pt-0 lg:last:pb-0">
-                <motion.div style={reduceMotion ? undefined : { y: groupY[groupIndex] ?? groupY[1] }}>
                 <p className="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-cyan-400 2xl:text-sm">
                   {group.country}
                 </p>
@@ -95,7 +82,6 @@ export function Clientes() {
                     </motion.div>
                   ))}
                 </div>
-                </motion.div>
               </div>
             )
           })}
