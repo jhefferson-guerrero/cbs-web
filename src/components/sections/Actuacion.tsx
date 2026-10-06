@@ -83,8 +83,10 @@ export function Actuacion() {
           <span aria-hidden="true" className="absolute right-4 top-4 h-5 w-5 border-r-2 border-t-2 border-white/70 lg:right-6 lg:top-6 lg:h-6 lg:w-6" />
           <span aria-hidden="true" className="absolute bottom-4 left-4 h-5 w-5 border-b-2 border-l-2 border-white/70 lg:bottom-6 lg:left-6 lg:h-6 lg:w-6" />
 
-          {/* Cortina navy que se achica hacia la derecha, revelando el mapa de
-              izquierda a derecha (scaleX, igual que en la foto de Nosotros). */}
+          {/* Escritorio: cortina navy que se achica hacia la derecha, revelando el mapa de izquierda a derecha
+              (scaleX, igual que en la foto de Nosotros). En móvil el mapa mide más que la pantalla y solo se ve
+              su parte izquierda: con esta cortina (de todo el mapa) esa parte se descubría casi de golpe, así que
+              allí se usa la de abajo, que mide lo que se ve. */}
           <motion.div
             aria-hidden="true"
             initial={reduceMotion ? false : { scaleX: 1 }}
@@ -92,7 +94,7 @@ export function Actuacion() {
             viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
             style={{ transformOrigin: 'right' }}
-            className="absolute inset-0 bg-navy-950"
+            className="absolute inset-0 hidden bg-navy-950 lg:block"
           />
 
           <button
@@ -104,6 +106,19 @@ export function Actuacion() {
           />
         </div>
       </div>
+        {/* Móvil: cortina del ancho de la pantalla (no del mapa completo), con una curva suave de salida y entrada
+            para que el mapa se descubra de izquierda a derecha de forma visible y no aparezca de golpe. */}
+        {!reduceMotion && (
+          <motion.div
+            aria-hidden="true"
+            initial={{ scaleX: 1 }}
+            whileInView={{ scaleX: 0 }}
+            viewport={{ once: true, amount: 0.6 }}
+            transition={{ duration: 1.1, ease: [0.65, 0, 0.35, 1] }}
+            style={{ transformOrigin: 'right' }}
+            className="pointer-events-none absolute inset-0 bg-navy-950 lg:hidden"
+          />
+        )}
         <button
           type="button"
           onClick={toggleCountry}
