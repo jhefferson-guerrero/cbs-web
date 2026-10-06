@@ -49,18 +49,21 @@ export function PartnerLogosSection() {
           Aliados
         </p>
 
-        <div className="mt-8 flex flex-col gap-4 2xl:gap-6">
+        {/* En móvil los grupos de 5 no existen: cada grupo es `contents` y los 10 logos forman una sola cuadrícula
+            de 2 columnas (5 líneas completas; con grupos de 5 quedaban dos logos solos). Desde 640 px cada grupo
+            es una fila de 5 que se desliza por su cuenta. */}
+        <div className="mt-8 grid grid-cols-2 gap-4 sm:flex sm:flex-col 2xl:gap-6">
           {rows.map((row, rowIndex) => (
             <motion.div
               key={rowIndex}
               style={slides ? { x: rowX[rowIndex % 2] } : undefined}
-              className="grid grid-cols-2 gap-4 sm:grid-cols-5"
+              className="contents sm:grid sm:grid-cols-5 sm:gap-4"
             >
               {row.map((partner, i) => (
                 <motion.div
                   key={partner.name}
                   variants={tileVariants}
-                  custom={(rowIndex * Math.ceil(PER_ROW / 2) + Math.floor(i / 2)) * 0.12 + (i % 2) * 0.06}
+                  custom={Math.floor((rowIndex * PER_ROW + i) / 2) * 0.12 + ((rowIndex * PER_ROW + i) % 2) * 0.06}
                   initial={entrance ? 'hidden' : false}
                   whileInView={entrance ? 'show' : undefined}
                   viewport={{ once: true, amount: 0.5 }}
