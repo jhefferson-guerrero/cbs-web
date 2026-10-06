@@ -3,18 +3,17 @@ import type { Project } from '@/lib/projects'
 
 const EASE = [0.16, 1, 0.3, 1] as const
 
-// Las cuatro fichas entran en cascada: cada una sube y aparece, y su línea superior se dibuja de izquierda a
-// derecha. Se dispara una sola vez, cuando la lista entra en pantalla.
-const listVariants = {
-  show: { transition: { staggerChildren: 0.18, delayChildren: 0.2 } },
-}
+// Cada ficha entra cuando ELLA aparece en pantalla (no todas a la vez): sube y aparece, y su línea superior se
+// dibuja de izquierda a derecha. Así la fila de abajo (Monto contratado y Financiamiento), que en una laptop
+// queda fuera de la primera pantalla, también se anima al llegar a ella. `custom` es el retardo: la ficha de la
+// derecha de cada fila entra un poco después que la de la izquierda.
 const itemVariants = {
   hidden: { opacity: 0, y: 48 },
-  show: { opacity: 1, y: 0, transition: { duration: 1, ease: EASE } },
+  show: (delay: number) => ({ opacity: 1, y: 0, transition: { duration: 1, delay, ease: EASE } }),
 }
 const lineVariants = {
   hidden: { scaleX: 0 },
-  show: { scaleX: 1, transition: { duration: 1.2, ease: EASE } },
+  show: (delay: number) => ({ scaleX: 1, transition: { duration: 1.2, delay: delay + 0.1, ease: EASE } }),
 }
 
 export function ProjectFacts({ project }: { project: Project }) {
@@ -40,17 +39,15 @@ export function ProjectFacts({ project }: { project: Project }) {
           Ficha del proyecto
         </motion.p>
 
-        <motion.dl
-          variants={listVariants}
-          initial={reduceMotion ? false : 'hidden'}
-          whileInView="show"
-          viewport={{ once: true, amount: 0.25 }}
-          className="mt-8 grid grid-cols-1 gap-x-12 gap-y-8 sm:grid-cols-2"
-        >
-          {facts.map((fact) => (
+        <dl className="mt-8 grid grid-cols-1 gap-x-12 gap-y-8 sm:grid-cols-2">
+          {facts.map((fact, i) => (
             <motion.div
               key={fact.label}
               variants={itemVariants}
+              custom={0.15 + (i % 2) * 0.15}
+              initial={reduceMotion ? false : 'hidden'}
+              whileInView="show"
+              viewport={{ once: true, amount: 0.5 }}
               className="relative flex items-center justify-between gap-4 pt-6 sm:gap-6"
             >
               <motion.span
@@ -78,7 +75,7 @@ export function ProjectFacts({ project }: { project: Project }) {
               )}
             </motion.div>
           ))}
-        </motion.dl>
+        </dl>
       </div>
     </section>
   )

@@ -4,13 +4,12 @@ import { partnerLogos } from '@/lib/projects'
 
 const EASE = [0.16, 1, 0.3, 1] as const
 
-// Los logos entran en cascada, uno tras otro, con un leve zoom: se dispara una sola vez al llegar a la sección.
-const gridVariants = {
-  show: { transition: { staggerChildren: 0.09, delayChildren: 0.2 } },
-}
+// Cada logo entra cuando ÉL aparece en pantalla, con un leve zoom (así, en el móvil, donde la lista es más alta
+// que la pantalla, los de abajo también se animan al llegar a ellos). `custom` es el retardo: dentro de una
+// misma fila van uno tras otro, de izquierda a derecha.
 const tileVariants = {
   hidden: { opacity: 0, y: 34, scale: 0.94 },
-  show: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.85, ease: EASE } },
+  show: (delay: number) => ({ opacity: 1, y: 0, scale: 1, transition: { duration: 0.85, delay, ease: EASE } }),
 }
 
 export function PartnerLogosSection() {
@@ -29,17 +28,15 @@ export function PartnerLogosSection() {
           Aliados y financiamiento
         </motion.p>
 
-        <motion.div
-          variants={gridVariants}
-          initial={reduceMotion ? false : 'hidden'}
-          whileInView="show"
-          viewport={{ once: true, amount: 0.2 }}
-          className="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-5"
-        >
-          {partnerLogos.map((partner) => (
+        <div className="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-5">
+          {partnerLogos.map((partner, i) => (
             <motion.div
               key={partner.name}
               variants={tileVariants}
+              custom={0.1 + (i % 5) * 0.09}
+              initial={reduceMotion ? false : 'hidden'}
+              whileInView="show"
+              viewport={{ once: true, amount: 0.4 }}
               className="flex items-center justify-center border border-navy-100 p-5 2xl:p-7"
             >
               <img
@@ -53,7 +50,7 @@ export function PartnerLogosSection() {
               />
             </motion.div>
           ))}
-        </motion.div>
+        </div>
       </div>
     </section>
   )
