@@ -6,11 +6,11 @@ import type { GalleryImage } from '@/lib/projects'
 
 // Miniaturas del lateral (escritorio): entran en cascada, de arriba hacia abajo.
 const railVariants = {
-  show: { transition: { staggerChildren: 0.1, delayChildren: 0.35 } },
+  show: { transition: { staggerChildren: 0.14, delayChildren: 0.4 } },
 }
 const railItemVariants = {
-  hidden: { opacity: 0, y: 24 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] as const } },
+  hidden: { opacity: 0, y: 40, scale: 0.92 },
+  show: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.9, ease: [0.16, 1, 0.3, 1] as const } },
 }
 
 export function ProjectGallery({ images }: { images: GalleryImage[] }) {
@@ -169,17 +169,23 @@ export function ProjectGallery({ images }: { images: GalleryImage[] }) {
               variants={railVariants}
               initial={reduceMotion ? false : 'hidden'}
               whileInView="show"
-              viewport={{ once: true, amount: 0.15 }}
+              viewport={{ once: true, amount: 0.4 }}
               className="scrollbar-thin hidden gap-2 overflow-y-auto overflow-x-hidden sm:flex sm:flex-col sm:pr-3 sm:h-[480px] 2xl:h-[700px]"
             >
               {images.map((img, i) => (
-                <motion.div key={img.src} className="shrink-0" variants={railItemVariants}>
+                // Las miniaturas se reparten el alto del lateral (hasta un máximo de 76 px, el tamaño de siempre):
+                // así caben todas sin scroll aunque haya 6 o 7. El scroll del lateral queda solo como respaldo.
+                <motion.div
+                  key={img.src}
+                  className="min-h-10 min-w-0 max-h-[4.75rem] flex-1 basis-0"
+                  variants={railItemVariants}
+                >
                 <button
                   type="button"
                   onClick={() => setActive(i)}
                   aria-label={`Ver foto ${i + 1}`}
                   aria-current={i === active}
-                  className={`relative flex w-full shrink-0 items-center gap-3 p-1.5 pl-3 text-left transition-colors duration-200 ${
+                  className={`relative flex h-full w-full items-center gap-3 p-1.5 pl-3 text-left transition-colors duration-200 ${
                     i === active ? 'bg-white' : 'hover:bg-white/70'
                   }`}
                 >
@@ -190,7 +196,7 @@ export function ProjectGallery({ images }: { images: GalleryImage[] }) {
                       transition={reduceMotion ? { duration: 0 } : { type: 'spring', stiffness: 420, damping: 34 }}
                     />
                   )}
-                  <span className="h-16 w-24 shrink-0 overflow-hidden">
+                  <span className="h-full w-24 shrink-0 overflow-hidden">
                     <img src={img.src} alt="" loading="lazy" decoding="async" className="h-full w-full object-cover" />
                   </span>
                 </button>

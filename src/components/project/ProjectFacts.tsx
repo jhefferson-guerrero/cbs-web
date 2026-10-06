@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 import { motion, useReducedMotion } from 'motion/react'
 import { Counter } from '@/components/ui/Counter'
 import { withCommas } from '@/lib/utils'
@@ -25,8 +26,20 @@ const lineVariants = {
   show: (delay: number) => ({ scaleX: 1, transition: { duration: 1.2, delay: delay + 0.1, ease: EASE } }),
 }
 
-export function ProjectFacts({ project }: { project: Project }) {
+export function ProjectFacts({ project, ready = true }: { project: Project; ready?: boolean }) {
   const reduceMotion = useReducedMotion()
+
+  // La ficha está justo debajo del hero y se ve a la vez, así que espera a que el hero termine su entrada
+  // (título y ubicación) para aparecer después y no antes. En una carga directa el preloader retrasa el hero,
+  // por eso se espera un poco más. Pasado ese momento, cada ficha anima cuando ella aparece en pantalla.
+  const [behindPreloader] = useState(() => !ready)
+  const [heroDone, setHeroDone] = useState(false)
+  useEffect(() => {
+    if (!ready) return
+    const id = window.setTimeout(() => setHeroDone(true), behindPreloader ? 1700 : 1200)
+    return () => window.clearTimeout(id)
+  }, [ready, behindPreloader])
+  const started = reduceMotion || heroDone
 
   const facts = [
     { label: 'Cliente', value: project.client.name, note: project.client.note, logo: project.client.logo },
@@ -40,7 +53,7 @@ export function ProjectFacts({ project }: { project: Project }) {
       <div className="mx-auto w-full max-w-[1400px] px-6 py-16 lg:px-10 lg:py-20 xl:px-16 2xl:max-w-[1700px] 2xl:px-14 2xl:py-24">
         <motion.p
           initial={reduceMotion ? false : { opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          whileInView={started ? { opacity: 1, y: 0 } : undefined}
           viewport={{ once: true, amount: 0.8 }}
           transition={{ duration: 0.8, ease: EASE }}
           className="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-cyan-700 2xl:text-sm"
@@ -55,7 +68,7 @@ export function ProjectFacts({ project }: { project: Project }) {
               variants={itemVariants}
               custom={0.15 + (i % 2) * 0.15}
               initial={reduceMotion ? false : 'hidden'}
-              whileInView="show"
+              whileInView={started ? 'show' : undefined}
               viewport={{ once: true, amount: 0.5 }}
               className="relative flex items-center justify-between gap-4 pt-6 sm:gap-6"
             >
@@ -72,7 +85,12 @@ export function ProjectFacts({ project }: { project: Project }) {
                     el ancho de los dígitos fijo para que el texto no tiemble mientras sube. */}
                 <dd className="mt-2 text-xl font-bold tabular-nums text-navy-900 md:text-2xl 2xl:text-3xl">
                   {'amount' in fact && fact.amount ? (
-                    <Counter to={fact.amount.to} format={(n) => `${fact.amount?.prefix ?? ''}${withCommas(n)}`} />
+                    // El conteo arranca junto con la ficha (no antes, mientras el hero aún está entrando).
+                    started ? (
+                      <Counter to={fact.amount.to} format={(n) => `${fact.amount?.prefix ?? ''}${withCommas(n)}`} />
+                    ) : (
+                      `${fact.amount.prefix}0`
+                    )
                   ) : (
                     fact.value
                   )}

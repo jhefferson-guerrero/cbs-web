@@ -42,7 +42,7 @@ export function ProjectDetail({ ready = true }: { ready?: boolean }) {
   return (
     <main key={project.slug}>
       <ProjectHero project={project} ready={ready} />
-      <ProjectFacts project={project} />
+      <ProjectFacts project={project} ready={ready} />
       {project.showPartnerLogos && <PartnerLogosSection />}
       <ProjectGallery images={project.gallery} />
 
