@@ -1,20 +1,30 @@
 import { useRef } from 'react'
 import { motion, useReducedMotion, useScroll, useTransform } from 'motion/react'
 import { clientGroups } from '@/lib/clients'
+import { useMediaQuery } from '@/lib/use-media-query'
 
-// Los logos entran en cascada continua (Perú y luego Brasil), con retardo inicial para que no arranque
-// mientras el scroll suave todavía se está asentando.
+// Escritorio: la sección ocupa una pantalla y los logos entran en cascada continua (Perú y luego Brasil), con
+// retardo inicial para que no arranque mientras el scroll suave todavía se está asentando.
 const logoListVariants = {
   show: { transition: { staggerChildren: 0.1, delayChildren: 0.4 } },
 }
+// `custom` es el retardo propio del logo (solo se usa debajo de lg, donde cada logo anima al aparecer).
 const logoVariants = {
   hidden: { opacity: 0, y: 40, scale: 0.94 },
-  show: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.75, ease: [0.16, 1, 0.3, 1] as const } },
+  show: (delay?: number) => ({
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: { duration: 0.75, ease: [0.16, 1, 0.3, 1] as const, ...(delay ? { delay } : {}) },
+  }),
 }
 
 export function Clientes() {
   const reduceMotion = useReducedMotion()
   const sectionRef = useRef<HTMLElement>(null)
+  // Debajo de lg la lista es más alta que la pantalla: si la cascada arrancara al asomar la lista, los últimos
+  // logos se animarían sin verse. Allí cada logo anima cuando él aparece en pantalla.
+  const isDesktop = useMediaQuery('(min-width: 1024px)')
 
   // Efecto de scroll por capas: mientras la sección pasa por la pantalla, el título se queda un poco atrás y los
   // logos de cada país suben a distinta velocidad (Brasil más que Perú), así los planos se separan y hay
@@ -56,9 +66,9 @@ export function Clientes() {
         </motion.div>
 
         <motion.div
-          variants={logoListVariants}
-          initial={reduceMotion ? false : 'hidden'}
-          whileInView="show"
+          variants={isDesktop ? logoListVariants : undefined}
+          initial={reduceMotion || !isDesktop ? false : 'hidden'}
+          whileInView={isDesktop ? 'show' : undefined}
           viewport={{ once: true, amount: 0.2 }}
           className="mt-12 flex flex-col divide-y divide-white/15 lg:mt-[clamp(1rem,5vh,4rem)]"
         >
@@ -73,10 +83,15 @@ export function Clientes() {
                 </p>
 
                 <div className="mt-6 flex flex-wrap gap-3 lg:mt-[clamp(0.75rem,2.6vh,2rem)]">
-                  {group.clients.map((client) => (
+                  {group.clients.map((client, i) => (
                     <motion.div
                       key={client.name}
                       variants={logoVariants}
+                      // Debajo de lg: entra al aparecer en pantalla (retardo corto entre los de una misma fila).
+                      custom={(i % 3) * 0.06}
+                      initial={isDesktop || reduceMotion ? undefined : 'hidden'}
+                      whileInView={isDesktop ? undefined : 'show'}
+                      viewport={{ once: true, amount: 0.5 }}
                       className={`group relative flex items-center justify-center bg-white ${
                         solo
                           ? 'h-20 w-56 shrink-0 p-3 sm:h-24 sm:w-72 sm:p-4 lg:h-[clamp(4.75rem,14vh,8.5rem)] lg:w-[clamp(14rem,42vh,25.5rem)] 2xl:p-5'
