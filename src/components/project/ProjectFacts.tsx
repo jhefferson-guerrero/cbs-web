@@ -1,7 +1,16 @@
 import { motion, useReducedMotion } from 'motion/react'
+import { Counter } from '@/components/ui/Counter'
+import { withCommas } from '@/lib/utils'
 import type { Project } from '@/lib/projects'
 
 const EASE = [0.16, 1, 0.3, 1] as const
+
+// "S/ 62,826,654" -> prefijo "S/ " y el número 62826654, para que el monto cuente de 0 hasta su valor, igual
+// que las demás cifras del sitio. Si el texto no tiene ese formato, se muestra tal cual.
+function parseAmount(amount: string) {
+  const match = amount.match(/^(\D*)(\d{1,3}(?:,\d{3})*|\d+)$/)
+  return match ? { prefix: match[1], to: Number(match[2].replace(/,/g, '')) } : null
+}
 
 // Cada ficha entra cuando ELLA aparece en pantalla (no todas a la vez): sube y aparece, y su línea superior se
 // dibuja de izquierda a derecha. Así la fila de abajo (Monto contratado y Financiamiento), que en una laptop
@@ -22,7 +31,7 @@ export function ProjectFacts({ project }: { project: Project }) {
   const facts = [
     { label: 'Cliente', value: project.client.name, note: project.client.note, logo: project.client.logo },
     { label: 'Contratista', value: project.contractor.name, note: project.contractor.note, logo: project.contractor.logo },
-    { label: 'Monto contratado', value: project.amount, note: undefined, logo: undefined },
+    { label: 'Monto contratado', value: project.amount, note: undefined, logo: undefined, amount: parseAmount(project.amount) },
     { label: 'Financiamiento', value: project.funding.name, note: project.funding.note, logo: project.funding.logo },
   ]
 
@@ -59,7 +68,15 @@ export function ProjectFacts({ project }: { project: Project }) {
                 <dt className="font-mono text-xs font-semibold tracking-[0.2em] text-cyan-600 2xl:text-sm">
                   {fact.label.toUpperCase()}
                 </dt>
-                <dd className="mt-2 text-xl font-bold text-navy-900 md:text-2xl 2xl:text-3xl">{fact.value}</dd>
+                {/* El monto cuenta de 0 hasta su valor (como las cifras del resto del sitio); tabular-nums mantiene
+                    el ancho de los dígitos fijo para que el texto no tiemble mientras sube. */}
+                <dd className="mt-2 text-xl font-bold tabular-nums text-navy-900 md:text-2xl 2xl:text-3xl">
+                  {'amount' in fact && fact.amount ? (
+                    <Counter to={fact.amount.to} format={(n) => `${fact.amount?.prefix ?? ''}${withCommas(n)}`} />
+                  ) : (
+                    fact.value
+                  )}
+                </dd>
                 {fact.note && <p className="mt-1 text-sm text-slate-600 2xl:text-base">{fact.note}</p>}
               </div>
               {fact.logo && (
