@@ -4,6 +4,15 @@ import { useLenis } from 'lenis/react'
 import { ArrowLeftIcon, ArrowRightIcon, XIcon } from '@phosphor-icons/react'
 import type { GalleryImage } from '@/lib/projects'
 
+// Miniaturas del lateral (escritorio): entran en cascada, de arriba hacia abajo.
+const railVariants = {
+  show: { transition: { staggerChildren: 0.1, delayChildren: 0.35 } },
+}
+const railItemVariants = {
+  hidden: { opacity: 0, y: 24 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] as const } },
+}
+
 export function ProjectGallery({ images }: { images: GalleryImage[] }) {
   const reduceMotion = useReducedMotion()
   const lenis = useLenis()
@@ -153,16 +162,18 @@ export function ProjectGallery({ images }: { images: GalleryImage[] }) {
           </motion.button>
 
           {images.length > 1 && (
-            <div className="scrollbar-thin hidden gap-2 overflow-y-auto sm:flex sm:flex-col sm:pr-3 sm:h-[480px] 2xl:h-[700px]">
+            // La animación la dispara el lateral completo (no cada miniatura): las que quedan cortadas por el
+            // borde del lateral también entran, y como no hay desplazamiento horizontal no aparece una barra
+            // de scroll horizontal mientras se asientan (overflow-x-hidden por si acaso).
+            <motion.div
+              variants={railVariants}
+              initial={reduceMotion ? false : 'hidden'}
+              whileInView="show"
+              viewport={{ once: true, amount: 0.15 }}
+              className="scrollbar-thin hidden gap-2 overflow-y-auto overflow-x-hidden sm:flex sm:flex-col sm:pr-3 sm:h-[480px] 2xl:h-[700px]"
+            >
               {images.map((img, i) => (
-                <motion.div
-                  key={img.src}
-                  className="shrink-0"
-                  initial={reduceMotion ? false : { opacity: 0, x: 36 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true, amount: 0.3 }}
-                  transition={{ duration: 0.8, delay: 0.35 + i * 0.1, ease: [0.16, 1, 0.3, 1] }}
-                >
+                <motion.div key={img.src} className="shrink-0" variants={railItemVariants}>
                 <button
                   type="button"
                   onClick={() => setActive(i)}
@@ -185,7 +196,7 @@ export function ProjectGallery({ images }: { images: GalleryImage[] }) {
                 </button>
                 </motion.div>
               ))}
-            </div>
+            </motion.div>
           )}
 
           {images.length > 1 && (
