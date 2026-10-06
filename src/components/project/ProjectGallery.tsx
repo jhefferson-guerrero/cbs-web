@@ -9,7 +9,8 @@ const railVariants = {
   show: { transition: { staggerChildren: 0.14, delayChildren: 0.4 } },
 }
 const railItemVariants = {
-  hidden: { opacity: 0, y: 40, scale: 0.92 },
+  // y negativo: cada miniatura "cae" desde arriba y no empuja el alto del lateral hacia abajo mientras entra.
+  hidden: { opacity: 0, y: -32, scale: 0.92 },
   show: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.9, ease: [0.16, 1, 0.3, 1] as const } },
 }
 
@@ -162,15 +163,18 @@ export function ProjectGallery({ images }: { images: GalleryImage[] }) {
           </motion.button>
 
           {images.length > 1 && (
-            // La animación la dispara el lateral completo (no cada miniatura): las que quedan cortadas por el
-            // borde del lateral también entran, y como no hay desplazamiento horizontal no aparece una barra
-            // de scroll horizontal mientras se asientan (overflow-x-hidden por si acaso).
+            // La animación la dispara el lateral completo (no cada miniatura). Mientras quepan (hasta 10), el lateral
+            // es overflow-hidden: así nunca aparece una barra de scroll, ni durante la entrada ni cuando el
+            // indicador se desliza al cambiar de foto, y el navegador no puede moverlo al enfocar un botón (eso
+            // era el temblor). Solo con más de 10 miniaturas se deja el scroll como respaldo.
             <motion.div
               variants={railVariants}
               initial={reduceMotion ? false : 'hidden'}
               whileInView="show"
               viewport={{ once: true, amount: 0.4 }}
-              className="scrollbar-thin hidden gap-2 overflow-y-auto overflow-x-hidden sm:flex sm:flex-col sm:pr-3 sm:h-[480px] 2xl:h-[700px]"
+              className={`scrollbar-thin hidden gap-2 sm:flex sm:flex-col sm:pr-3 sm:h-[480px] 2xl:h-[700px] ${
+                images.length > 10 ? 'overflow-y-auto overflow-x-hidden' : 'overflow-hidden'
+              }`}
             >
               {images.map((img, i) => (
                 // Las miniaturas se reparten el alto del lateral (hasta un máximo de 76 px, el tamaño de siempre):
@@ -193,7 +197,8 @@ export function ProjectGallery({ images }: { images: GalleryImage[] }) {
                     <motion.span
                       layoutId="gallery-rail-indicator"
                       className="absolute inset-y-0 left-0 w-0.5 bg-cyan-500"
-                      transition={reduceMotion ? { duration: 0 } : { type: 'spring', stiffness: 420, damping: 34 }}
+                      // damping 42 (sin rebote): con 34 se pasaba unos px del borde y asomaba la barra de scroll.
+                      transition={reduceMotion ? { duration: 0 } : { type: 'spring', stiffness: 420, damping: 42 }}
                     />
                   )}
                   <span className="h-full w-24 shrink-0 overflow-hidden">

@@ -46,7 +46,7 @@ export function PartnerLogosSection() {
     <section ref={sectionRef} className="overflow-x-clip border-t border-navy-100 bg-white">
       <div className="mx-auto w-full max-w-[1400px] px-6 py-14 lg:px-10 lg:py-16 xl:px-16 2xl:max-w-[1700px] 2xl:px-14 2xl:py-20">
         <p className="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-cyan-700 2xl:text-sm">
-          Aliados y financiamiento
+          Aliados
         </p>
 
         <div className="mt-8 flex flex-col gap-4 2xl:gap-6">

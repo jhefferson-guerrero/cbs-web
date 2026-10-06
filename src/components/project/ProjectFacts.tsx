@@ -36,7 +36,7 @@ export function ProjectFacts({ project, ready = true }: { project: Project; read
   const [heroDone, setHeroDone] = useState(false)
   useEffect(() => {
     if (!ready) return
-    const id = window.setTimeout(() => setHeroDone(true), behindPreloader ? 1700 : 1200)
+    const id = window.setTimeout(() => setHeroDone(true), behindPreloader ? 1250 : 800)
     return () => window.clearTimeout(id)
   }, [ready, behindPreloader])
   const started = reduceMotion || heroDone
