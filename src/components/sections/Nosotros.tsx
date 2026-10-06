@@ -96,25 +96,33 @@ export function Nosotros() {
               Nosotros
             </motion.h2>
 
-            <motion.div
-              initial={reduceMotion ? false : { opacity: 0, y: 18 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.4 }}
-              transition={{ duration: 0.65, delay: 0.12, ease: [0.16, 1, 0.3, 1] }}
-              className="mt-8 flex max-w-xl flex-col gap-5 lg:mt-[clamp(1rem,3.4vh,3rem)] lg:max-w-[min(100%,clamp(36rem,74vh,50rem))] lg:gap-[clamp(0.75rem,2.4vh,1.75rem)]"
-            >
-              <p className="text-[15.5px] leading-relaxed text-navy-200 lg:text-[clamp(15.5px,2.1vh,22px)]">
+            {/* Cada párrafo anima cuando él aparece en pantalla: en móvil el segundo queda más abajo y no debe
+                animarse antes de verse. */}
+            <div className="mt-8 flex max-w-xl flex-col gap-5 lg:mt-[clamp(1rem,3.4vh,3rem)] lg:max-w-[min(100%,clamp(36rem,74vh,50rem))] lg:gap-[clamp(0.75rem,2.4vh,1.75rem)]">
+              <motion.p
+                initial={reduceMotion ? false : { opacity: 0, y: 18 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.4 }}
+                transition={{ duration: 0.65, delay: 0.12, ease: [0.16, 1, 0.3, 1] }}
+                className="text-[15.5px] leading-relaxed text-navy-200 lg:text-[clamp(15.5px,2.1vh,22px)]"
+              >
                 Somos una organización con sólida trayectoria en la ejecución de obras de saneamiento,
                 agua potable, drenaje urbano e infraestructura hidráulica. Desde nuestra fundación en
                 2009, hemos asumido el compromiso de transformar vidas a través de soluciones integrales
                 que garanticen acceso sostenible a agua potable y sistemas de desagüe eficientes.
-              </p>
-              <p className="text-[15.5px] leading-relaxed text-navy-200 lg:text-[clamp(15.5px,2.1vh,22px)]">
+              </motion.p>
+              <motion.p
+                initial={reduceMotion ? false : { opacity: 0, y: 18 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.4 }}
+                transition={{ duration: 0.65, delay: 0.22, ease: [0.16, 1, 0.3, 1] }}
+                className="text-[15.5px] leading-relaxed text-navy-200 lg:text-[clamp(15.5px,2.1vh,22px)]"
+              >
                 Guiados por valores como integridad, responsabilidad social y cuidado ambiental, en CBS
                 no solo materializamos los proyectos de nuestros clientes, sino también confianza y
                 bienestar para las comunidades donde operamos.
-              </p>
-            </motion.div>
+              </motion.p>
+            </div>
 
             <div
               ref={timelineRef}
