@@ -19,6 +19,8 @@ const logoVariants = {
   }),
 }
 
+const logoOwnTrigger = { whileInView: 'show', viewport: { once: true, amount: 0.5 } } as const
+
 export function Clientes() {
   const reduceMotion = useReducedMotion()
   const sectionRef = useRef<HTMLElement>(null)
@@ -87,11 +89,10 @@ export function Clientes() {
                     <motion.div
                       key={client.name}
                       variants={logoVariants}
-                      // Debajo de lg: entra al aparecer en pantalla (retardo corto entre los de una misma fila).
-                      custom={(i % 3) * 0.06}
-                      initial={isDesktop || reduceMotion ? undefined : 'hidden'}
-                      whileInView={isDesktop ? undefined : 'show'}
-                      viewport={{ once: true, amount: 0.5 }}
+                      // Debajo de lg: entra al aparecer en pantalla (retardo corto entre los de una misma fila). En
+                      // escritorio estas propiedades NO se pasan (ni vacías): con `viewport` el logo se activaría
+                      // por su cuenta y rompería el orden de la cascada que dirige la lista.
+                      {...(isDesktop ? {} : { ...logoOwnTrigger, custom: (i % 3) * 0.06, initial: reduceMotion ? undefined : 'hidden' })}
                       className={`group relative flex items-center justify-center bg-white ${
                         solo
                           ? 'h-20 w-56 shrink-0 p-3 sm:h-24 sm:w-72 sm:p-4 lg:h-[clamp(4.75rem,14vh,8.5rem)] lg:w-[clamp(14rem,42vh,25.5rem)] 2xl:p-5'
