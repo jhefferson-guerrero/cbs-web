@@ -14,9 +14,12 @@
       {
         // Debe coincidir con HERO_IMAGE_MOBILE_* de src/lib/hero-image.ts.
         media: '(max-width: 639.98px) and (orientation: portrait)',
+        // AVIF (el hero pide la misma variante): un navegador que no lo entiende ignora esta precarga
+        // gracias a type y baja el WebP de respaldo cuando se dibuja el hero.
+        type: 'image/avif',
         sizes: 'max(100vw, 80vh)',
-        href: '/hero-planta-movil.webp',
-        srcset: '/hero-planta-movil-900.webp 900w, /hero-planta-movil.webp 1338w',
+        href: '/hero-planta-movil.avif',
+        srcset: '/hero-planta-movil-900.avif 900w, /hero-planta-movil.avif 1338w',
       },
       {
         media: 'not all and (max-width: 639.98px) and (orientation: portrait)',
@@ -55,6 +58,7 @@
     heroPreload.imageSizes = hero.sizes
     heroPreload.fetchPriority = 'high'
     if (hero.media) heroPreload.media = hero.media
+    if (hero.type) heroPreload.type = hero.type
     document.head.appendChild(heroPreload)
   })
 })()

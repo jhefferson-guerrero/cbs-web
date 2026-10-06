@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { animate, motion, useMotionValue, useReducedMotion } from 'motion/react'
 import { useLocation } from 'react-router-dom'
 import logoMobileCbs from '@/assets/images/logo-mobile-cbs.webp'
-import { getHeroImageVariant } from '@/lib/hero-image'
+import { HERO_IMAGE_SIZES, HERO_IMAGE_SOURCES, HERO_IMAGE_SRC, HERO_IMAGE_SRCSET } from '@/lib/hero-image'
 import { getLimpCityHeroVariant } from '@/lib/limp-city-hero'
 
 // El hero usa solo estas dos: el resto de pesos (negrita, mono) pertenece a secciones de más abajo y
@@ -23,6 +23,30 @@ function preloadImage(src: string, srcset?: string, sizes?: string) {
     if (sizes) img.sizes = sizes
     if (srcset) img.srcset = srcset
     img.src = src
+  })
+}
+
+// Descarga la imagen del hero de CBS con un <picture> suelto (sin insertarlo en la página): el navegador elige
+// entre las mismas fuentes que el hero real (recorte móvil en AVIF o WebP, o la foto completa), así el hero
+// la encuentra ya descargada.
+function preloadHeroPicture() {
+  return new Promise<void>((resolve) => {
+    const picture = document.createElement('picture')
+    for (const { media, type, sizes, srcSet } of HERO_IMAGE_SOURCES) {
+      const source = document.createElement('source')
+      source.media = media
+      source.type = type
+      source.sizes = sizes
+      source.srcset = srcSet
+      picture.append(source)
+    }
+    const img = document.createElement('img')
+    img.onload = () => resolve()
+    img.onerror = () => resolve()
+    img.sizes = HERO_IMAGE_SIZES
+    img.srcset = HERO_IMAGE_SRCSET
+    img.src = HERO_IMAGE_SRC
+    picture.append(img)
   })
 }
 
@@ -52,9 +76,8 @@ export function Preloader({ onReady }: { onReady: () => void }) {
     // preloader bloquea otra página, como un detalle de proyecto.
     // En Limp City, un móvil vertical descarga el recorte de la foto y no la foto completa.
     const limpCityHero = getLimpCityHeroVariant()
-    const cbsHero = getHeroImageVariant()
     const heroReady = isHome
-      ? preloadImage(cbsHero.src, cbsHero.srcset, cbsHero.sizes)
+      ? preloadHeroPicture()
       : isLimpCity
         ? preloadImage(limpCityHero.src, limpCityHero.srcset, limpCityHero.sizes)
         : Promise.resolve()

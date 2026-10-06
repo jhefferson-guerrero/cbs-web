@@ -16,16 +16,22 @@ export const HERO_IMAGE_SRCSET =
 // mantiene sincronizado a mano con public/hero-preload.js. La posición equivalente al 90% de la foto
 // completa es 86% en el recorte (ver Hero.tsx).
 export const HERO_IMAGE_MOBILE_QUERY = '(max-width: 639.98px) and (orientation: portrait)'
-export const HERO_IMAGE_MOBILE_SRC = '/hero-planta-movil.webp'
 // El recorte mide 0.804 veces su alto y se ajusta al alto de la pantalla: 80vh es su ancho real.
 export const HERO_IMAGE_MOBILE_SIZES = 'max(100vw, 80vh)'
-export const HERO_IMAGE_MOBILE_SRCSET = '/hero-planta-movil-900.webp 900w, /hero-planta-movil.webp 1338w'
 
-// La variante que corresponde a este dispositivo (para el preloader, que pide la imagen por código y debe
-// bajar la misma que va a mostrar el <picture>).
-export function getHeroImageVariant() {
-  const isMobilePortrait = typeof window !== 'undefined' && window.matchMedia(HERO_IMAGE_MOBILE_QUERY).matches
-  return isMobilePortrait
-    ? { src: HERO_IMAGE_MOBILE_SRC, srcset: HERO_IMAGE_MOBILE_SRCSET, sizes: HERO_IMAGE_MOBILE_SIZES }
-    : { src: HERO_IMAGE_SRC, srcset: HERO_IMAGE_SRCSET, sizes: HERO_IMAGE_SIZES }
-}
+// Fuentes del <picture> del hero, en orden de preferencia. El recorte móvil va en AVIF (121 KB, la mitad que el
+// WebP a la misma nitidez visible) con WebP de respaldo para navegadores sin AVIF; la foto completa solo en WebP.
+export const HERO_IMAGE_SOURCES = [
+  {
+    media: HERO_IMAGE_MOBILE_QUERY,
+    type: 'image/avif',
+    sizes: HERO_IMAGE_MOBILE_SIZES,
+    srcSet: '/hero-planta-movil-900.avif 900w, /hero-planta-movil.avif 1338w',
+  },
+  {
+    media: HERO_IMAGE_MOBILE_QUERY,
+    type: 'image/webp',
+    sizes: HERO_IMAGE_MOBILE_SIZES,
+    srcSet: '/hero-planta-movil-900.webp 900w, /hero-planta-movil.webp 1338w',
+  },
+]

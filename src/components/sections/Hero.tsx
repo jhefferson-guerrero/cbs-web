@@ -4,14 +4,7 @@ import { ArrowRightIcon } from '@phosphor-icons/react'
 import { Button } from '@/components/ui/Button'
 import { Counter } from '@/components/ui/Counter'
 import { cn, withCommas } from '@/lib/utils'
-import {
-  HERO_IMAGE_MOBILE_QUERY,
-  HERO_IMAGE_MOBILE_SIZES,
-  HERO_IMAGE_MOBILE_SRCSET,
-  HERO_IMAGE_SIZES,
-  HERO_IMAGE_SRC,
-  HERO_IMAGE_SRCSET,
-} from '@/lib/hero-image'
+import { HERO_IMAGE_SIZES, HERO_IMAGE_SOURCES, HERO_IMAGE_SRC, HERO_IMAGE_SRCSET } from '@/lib/hero-image'
 
 const headline = ['Infraestructura,', 'agua y', 'saneamiento']
 
@@ -75,10 +68,12 @@ export function Hero({ ready }: { ready: boolean }) {
       {/* Fondo: fijo detrás del hero mientras está en vista; el contenido sube y lo tapa */}
       <div className={cn('inset-x-0 top-0 -z-10 h-lvh overflow-hidden bg-navy-950', pinned ? 'fixed' : 'absolute')}>
         <motion.div style={reduceMotion ? undefined : { scale: backdropScale }} className="absolute inset-0">
-        {/* En celular vertical se descarga un recorte de la foto (la zona que se ve, a resolución original);
-            object-[86%] en ese recorte equivale al 90% de la foto completa. */}
+        {/* En celular vertical se descarga un recorte de la foto (la zona que se ve, a resolución original, en
+            AVIF con WebP de respaldo); object-[86%] en ese recorte equivale al 90% de la foto completa. */}
         <picture>
-          <source media={HERO_IMAGE_MOBILE_QUERY} srcSet={HERO_IMAGE_MOBILE_SRCSET} sizes={HERO_IMAGE_MOBILE_SIZES} />
+          {HERO_IMAGE_SOURCES.map((source) => (
+            <source key={source.type} {...source} />
+          ))}
           <motion.img
             src={HERO_IMAGE_SRC}
             srcSet={HERO_IMAGE_SRCSET}

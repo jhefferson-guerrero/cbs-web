@@ -25,7 +25,7 @@ export function Footer() {
                 width={1080}
                 height={211}
                 loading="lazy"
-                className="h-11 w-auto brightness-0 invert 2xl:h-14"
+                className="h-11 w-auto max-w-none brightness-0 invert 2xl:h-14"
               />
             </a>
           </div>
