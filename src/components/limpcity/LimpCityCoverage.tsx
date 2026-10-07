@@ -101,13 +101,16 @@ export function LimpCityCoverage() {
                 viewport={{ once: true, amount: 0.3 }}
                 // El primer punto espera a que la cortina termine de descubrir el mapa (~0.9 s); luego, uno tras otro.
                 transition={{ duration: 0.6, delay: 1 + i * 0.16, ease: [0.16, 1, 0.3, 1] }}
+                // Se coloca por su esquina (centro menos medio aro) y NO con translate(-50%): con medidas fraccionarias, el
+                // navegador redondea distinto el desplazamiento mientras el aro anima y al terminar, y el aro "se asentaba"
+                // ~1 px hacia un lado al acabar la entrada.
                 style={{
-                  left: `${(city.x / IMAGE_W) * 100}%`,
-                  top: `${(city.y / IMAGE_H) * 100}%`,
+                  left: `${((city.x - POINT_SIZE / 2) / IMAGE_W) * 100}%`,
+                  top: `${((city.y - POINT_SIZE / 2) / IMAGE_H) * 100}%`,
                   width: `${(POINT_SIZE / IMAGE_W) * 100}%`,
                   aspectRatio: '1',
                 }}
-                className="pointer-events-none absolute -translate-x-1/2 -translate-y-1/2"
+                className="pointer-events-none absolute"
               >
                 {/* Aro fijo alrededor del punto */}
                 <span className="absolute inset-[30%] rounded-full border-2 border-moss-400 bg-moss-400/25 shadow-[0_0_0_1px_rgba(255,255,255,0.55)]" />
