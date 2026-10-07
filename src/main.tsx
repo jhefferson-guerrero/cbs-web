@@ -16,7 +16,13 @@ window.scrollTo(0, 0)
 // public/hero-preload.js, referenciado desde index.html, así corre antes de
 // que este bundle se descargue/parsee, no después.
 
-createRoot(document.getElementById('root')!).render(
+// El HTML trae el contenido de la página ya dibujado (prerrenderizado, para buscadores y vistas previas). La app lo
+// reemplaza al arrancar: se vacía el contenedor y se dibuja de cero, con el preloader y las animaciones de siempre.
+const root = document.getElementById('root')!
+root.replaceChildren()
+root.removeAttribute('data-prerendered')
+
+createRoot(root).render(
   <StrictMode>
     <App />
   </StrictMode>,

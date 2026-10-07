@@ -85,6 +85,19 @@
   }
 }
 
+/* Contenido prerrenderizado (ver main.tsx e index.html): oculto para quien tiene JavaScript hasta que la app arranca. Si
+   el JavaScript no llega a cargar, a los 8 s se muestra igual para que la página no quede en blanco. */
+#root[data-prerendered] {
+  visibility: hidden;
+  animation: show-prerendered 0s 8s forwards;
+}
+
+@keyframes show-prerendered {
+  to {
+    visibility: visible;
+  }
+}
+
 @layer base {
   body {
     @apply bg-navy-950 text-navy-900 antialiased;

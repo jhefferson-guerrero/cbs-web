@@ -33,11 +33,22 @@ function AnchorScrollBridge() {
     if (!lenis) return
 
     const onClick = (event: MouseEvent) => {
-      const anchor = (event.target as HTMLElement).closest('a[href^="#"]')
+      const anchor = (event.target as HTMLElement).closest('a[href^="#"], a[href^="/#"]')
       if (!anchor) return
 
-      const href = anchor.getAttribute('href')
-      if (!href || href.length < 2) return
+      // En las páginas que no son la Home, los enlaces a secciones apuntan a "/#seccion" (ver sectionHref): se navega a
+      // la Home con la transición de página. En la Home se tratan como el ancla "#seccion" de siempre.
+      const rawHref = anchor.getAttribute('href')
+      if (!rawHref) return
+      const isHomeLink = rawHref.startsWith('/#')
+      const href = isHomeLink ? rawHref.slice(1) : rawHref
+      if (href.length < 2) return
+
+      if (isHomeLink && location.pathname !== '/') {
+        event.preventDefault()
+        void navigateWithTransition(navigate, rawHref)
+        return
+      }
 
       const target = document.querySelector(href)
 
@@ -68,9 +79,24 @@ function AnchorScrollBridge() {
     if (!lenis) return
 
     if (location.hash) {
-      const raf = requestAnimationFrame(() => scrollToHash(lenis, location.hash, true))
+      // La sección puede no existir todavía: la Home se carga con carga diferida (lazy), y si el visitante entró directo
+      // a otra página o abrió un enlace con #sección, su código llega unos instantes después. Se reintenta cada 100 ms
+      // (hasta 6 s) hasta que aparezca, y entonces se salta a ella.
+      let timer: number | undefined
+      let attempts = 0
+      const attempt = () => {
+        if (document.getElementById(location.hash.slice(1))) {
+          scrollToHash(lenis, location.hash, true)
+        } else if (++attempts < 60) {
+          timer = window.setTimeout(attempt, 100)
+        }
+      }
+      const raf = requestAnimationFrame(attempt)
       prevPathname.current = location.pathname
-      return () => cancelAnimationFrame(raf)
+      return () => {
+        cancelAnimationFrame(raf)
+        window.clearTimeout(timer)
+      }
     }
 
     if (prevPathname.current !== location.pathname) {

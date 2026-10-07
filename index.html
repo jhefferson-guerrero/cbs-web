@@ -1,18 +1,20 @@
 <!doctype html>
-<html lang="es">
+<html lang="es-PE">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta
-      name="description"
-      content="CBS - Construtora Baiana de Saneamento. Infraestructura de agua, saneamiento y obras civiles a gran escala en el Perú."
-    />
-    <title>CBS | Infraestructura, Agua y Saneamiento</title>
+    <meta name="theme-color" content="#0a1530" />
+    <!-- Título, descripción, canónica, Open Graph y datos estructurados de cada página: los escribe scripts/prerender.mjs al
+         compilar (src/lib/seo.ts). Con el servidor de desarrollo los pone RouteSeo al cargar. -->
+    <!--seo-head-->
     <script defer src="/hero-preload.js"></script>
+    <noscript><style>#root[data-prerendered]{visibility:visible!important;display:block;max-width:60rem;margin:0 auto;padding:1.5rem;background:#fff;color:#101f3f;font:16px/1.6 system-ui,sans-serif}#root[data-prerendered] a{color:#0a76a8}#root[data-prerendered] img{max-width:100%;height:auto}</style></noscript>
   </head>
   <body>
-    <div id="root"></div>
+    <!-- Contenido prerrenderizado de la página (scripts/prerender.mjs). Para quien tiene JavaScript se oculta y la app lo
+         reemplaza al arrancar (ver main.tsx); para buscadores y sin JavaScript queda visible. -->
+    <div id="root" data-prerendered><!--app-html--></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

@@ -5,7 +5,9 @@ export function Counter({ to, format }: { to: number; format: (n: number) => str
   const reduceMotion = useReducedMotion()
   const ref = useRef<HTMLSpanElement>(null)
   const isInView = useInView(ref, { once: true })
-  const count = useMotionValue(0)
+  // En el servidor (HTML prerrenderizado que leen los buscadores) se escribe la cifra final; en el navegador arranca en 0
+  // y cuenta hasta ella al aparecer.
+  const count = useMotionValue(typeof window === 'undefined' ? to : 0)
   const display = useTransform(count, (v) => format(Math.round(v)))
 
   useEffect(() => {

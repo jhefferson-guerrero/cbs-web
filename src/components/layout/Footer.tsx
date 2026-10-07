@@ -1,12 +1,14 @@
 import { useState } from 'react'
+import { useLocation } from 'react-router-dom'
 import { motion, useReducedMotion } from 'motion/react'
 import { EnvelopeSimpleIcon } from '@phosphor-icons/react'
 import logoCbs from '@/assets/images/logo-cbs.webp'
-import { navLinks } from '@/lib/nav-links'
+import { navLinks, sectionHref } from '@/lib/nav-links'
 import { CONTACT_EMAIL } from '@/lib/contact'
 
 export function Footer() {
   const year = new Date().getFullYear()
+  const { pathname } = useLocation()
   const reduceMotion = useReducedMotion()
   const [hoveredHref, setHoveredHref] = useState<string | null>(null)
 
@@ -18,7 +20,7 @@ export function Footer() {
       <div className="mx-auto w-full max-w-[1400px] px-6 py-12 sm:px-10 sm:py-16 lg:px-16 lg:py-20 xl:px-24 2xl:max-w-none 2xl:py-24">
         <div className="grid gap-10 sm:gap-8 sm:grid-cols-2 lg:grid-cols-[1fr_auto_1fr] lg:items-start lg:gap-12">
           <div className="sm:col-span-2 lg:col-span-1">
-            <a href="#top" aria-label="CBS - Inicio" className="inline-block w-fit">
+            <a href={sectionHref(pathname, '#top')} aria-label="CBS - Inicio" className="inline-block w-fit">
               <img
                 src={logoCbs}
                 alt="CBS - Construtora Baiana de Saneamento"
@@ -43,7 +45,7 @@ export function Footer() {
               {navLinks.map((link) => (
                 <a
                   key={link.href}
-                  href={link.href}
+                  href={sectionHref(pathname, link.href)}
                   onMouseEnter={() => setHoveredHref(link.href)}
                   onFocus={() => setHoveredHref(link.href)}
                   onBlur={() => setHoveredHref(null)}

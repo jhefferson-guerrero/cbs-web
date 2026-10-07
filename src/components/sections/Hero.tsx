@@ -131,6 +131,8 @@ export function Hero({ ready }: { ready: boolean }) {
                   className="block"
                 >
                   {line}
+                  {/* Espacio entre líneas (cada una es un bloque): así lectores de pantalla y buscadores leen el titular completo. */}
+                  {i < headline.length - 1 ? ' ' : null}
                 </motion.span>
               ))}
             </h1>

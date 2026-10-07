@@ -6,7 +6,7 @@ import { ArrowUpRightIcon } from '@phosphor-icons/react'
 import logoCbs from '@/assets/images/logo-cbs.webp'
 import logoMobileCbs from '@/assets/images/logo-mobile-cbs.webp'
 import { PageLink } from '@/components/ui/PageLink'
-import { navLinks } from '@/lib/nav-links'
+import { navLinks, sectionHref } from '@/lib/nav-links'
 import { partners, type Partner } from '@/lib/partners'
 import { cn } from '@/lib/utils'
 
@@ -157,7 +157,7 @@ export function Navbar({ ready }: { ready: boolean }) {
       )}
     >
       <nav id="site-navbar" className="mx-auto flex h-14 max-w-[1400px] items-center justify-between px-6 lg:h-16 lg:px-10 xl:max-w-[1600px] xl:px-12 2xl:h-20 2xl:max-w-[1850px] 2xl:px-16">
-        <a href="#top" className="relative block shrink-0" aria-label="CBS - Inicio">
+        <a href={sectionHref(pathname, '#top')} className="relative block shrink-0" aria-label="CBS - Inicio">
           <span className="grid lg:hidden">
             <img
               src={logoMobileCbs}
@@ -217,7 +217,7 @@ export function Navbar({ ready }: { ready: boolean }) {
             return (
               <a
                 key={link.href}
-                href={link.href}
+                href={sectionHref(pathname, link.href)}
                 onMouseEnter={() => setHoveredHref(link.href)}
                 onFocus={() => setHoveredHref(link.href)}
                 onBlur={() => setHoveredHref(null)}
@@ -331,7 +331,7 @@ export function Navbar({ ready }: { ready: boolean }) {
                   return (
                     <motion.a
                       key={link.href}
-                      href={link.href}
+                      href={sectionHref(pathname, link.href)}
                       onClick={() => setIsMenuOpen(false)}
                       aria-current={isActive ? 'true' : undefined}
                       initial={reduceMotion ? false : { opacity: 0, x: -12 }}

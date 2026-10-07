@@ -1,40 +1,21 @@
-import { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { motion, useReducedMotion } from 'motion/react'
 import { PageLink } from '@/components/ui/PageLink'
-import { ArrowLeftIcon, ArrowUpRightIcon } from '@phosphor-icons/react'
+import { ArrowUpRightIcon } from '@phosphor-icons/react'
 import { getProjectBySlug, projects } from '@/lib/projects'
 import { ProjectHero } from '@/components/project/ProjectHero'
 import { ProjectFacts } from '@/components/project/ProjectFacts'
 import { PartnerLogosSection } from '@/components/project/PartnerLogosSection'
 import { ProjectGallery } from '@/components/project/ProjectGallery'
+import { NotFound } from '@/pages/NotFound'
 
 export function ProjectDetail({ ready = true }: { ready?: boolean }) {
   const { slug } = useParams()
   const reduceMotion = useReducedMotion()
   const project = getProjectBySlug(slug)
 
-  useEffect(() => {
-    document.title = project ? `${project.title} | CBS` : 'Proyecto no encontrado | CBS'
-  }, [project])
-
-  if (!project) {
-    return (
-      <main>
-        <section className="flex min-h-[60vh] flex-col items-center justify-center gap-6 bg-white px-6 text-center">
-          <p className="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-cyan-700">404</p>
-          <h1 className="text-2xl font-bold text-navy-900">No encontramos ese proyecto</h1>
-          <PageLink
-            to="/#proyectos"
-            className="inline-flex items-center gap-2 text-sm font-semibold text-cyan-700 transition-colors hover:text-cyan-800"
-          >
-            <ArrowLeftIcon size={16} weight="regular" />
-            Volver a proyectos
-          </PageLink>
-        </section>
-      </main>
-    )
-  }
+  // Un proyecto que no existe es una 404 más (el título y noindex los pone RouteSeo).
+  if (!project) return <NotFound />
 
   const currentIndex = projects.findIndex((p) => p.slug === project.slug)
   const nextProject = projects.length > 1 ? projects[(currentIndex + 1) % projects.length] : undefined

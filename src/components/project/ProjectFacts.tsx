@@ -85,8 +85,11 @@ export function ProjectFacts({ project, ready = true }: { project: Project; read
                     el ancho de los dígitos fijo para que el texto no tiemble mientras sube. */}
                 <dd className="mt-2 text-xl font-bold tabular-nums text-navy-900 md:text-2xl 2xl:text-3xl">
                   {'amount' in fact && fact.amount ? (
-                    // El conteo arranca junto con la ficha (no antes, mientras el hero aún está entrando).
-                    started ? (
+                    // El conteo arranca junto con la ficha (no antes, mientras el hero aún está entrando). En el servidor
+                    // (HTML prerrenderizado) se escribe el monto completo.
+                    typeof window === 'undefined' ? (
+                      fact.value
+                    ) : started ? (
                       <Counter to={fact.amount.to} format={(n) => `${fact.amount?.prefix ?? ''}${withCommas(n)}`} />
                     ) : (
                       `${fact.amount.prefix}0`

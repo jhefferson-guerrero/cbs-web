@@ -6,6 +6,8 @@ import { Preloader } from '@/components/layout/Preloader'
 import { SmoothScroll } from '@/components/layout/SmoothScroll'
 import { Footer } from '@/components/layout/Footer'
 import { BackToTop } from '@/components/layout/BackToTop'
+import { RouteSeo } from '@/components/layout/RouteSeo'
+import { NotFound } from '@/pages/NotFound'
 import { prefetchLimpCity } from '@/lib/prefetch-limp-city'
 import { limpCityRoute, projectDetailRoute } from '@/lib/routes'
 
@@ -40,6 +42,7 @@ function App() {
     // useTransitions={false}: la actualización de la ruta es inmediata, necesario para la transición de página
     // (ver lib/page-transition.ts).
     <BrowserRouter useTransitions={false}>
+      <RouteSeo />
       <AnimatePresence>{isLoading && <Preloader onReady={() => setIsLoading(false)} />}</AnimatePresence>
       <SmoothScroll>
         <Navbar ready={!isLoading} />
@@ -48,6 +51,7 @@ function App() {
             <Route path="/" element={<Home ready={!isLoading} />} />
             <Route path="/proyectos/:slug" element={<ProjectDetail ready={!isLoading} />} />
             <Route path="/limp-city" element={<LimpCity />} />
+            <Route path="*" element={<NotFound />} />
           </Routes>
           {/* Dentro del mismo Suspense que las rutas: así el pie de página aparece junto con la
               página y no antes. Si estuviera fuera, se dibujaría arriba mientras llega el
