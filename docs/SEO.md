@@ -26,6 +26,7 @@ en la carga. Si el JavaScript no llega a cargar, a los 8 s el contenido se muest
 | Un proyecto nuevo | `src/lib/projects.ts` (entra solo al sitemap y se prerrenderiza). Falta su imagen `public/og/proyecto-<slug>.jpg` (1200x630) |
 | Una página nueva | Ruta en `src/App.tsx` **y** en `src/entry-server.tsx`, datos en `getSeo()` y su ruta en `indexablePaths` (`src/lib/seo.ts`) |
 | Imágenes para compartir | `public/og/*.jpg`, 1200x630 |
+| Íconos (pestaña del navegador, iPhone, Android) | `public/favicon.ico`, `icon-192.png`, `icon-512.png`, `icon-maskable-512.png`, `apple-touch-icon.png` y `site.webmanifest`. Letras CBS del logo con sus colores originales sobre fondo blanco; si cambia el logo, hay que regenerarlos |
 
 ## Reglas que conviene no romper
 
