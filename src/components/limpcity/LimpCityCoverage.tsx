@@ -137,8 +137,8 @@ export function LimpCityCoverage() {
               </motion.span>
             ))}
           </motion.div>
-          <span aria-hidden="true" className="absolute right-4 top-4 h-5 w-5 border-r-2 border-t-2 border-navy-900/50 lg:right-6 lg:top-6 lg:h-6 lg:w-6" />
-          <span aria-hidden="true" className="absolute bottom-4 left-4 h-5 w-5 border-b-2 border-l-2 border-navy-900/50 lg:bottom-6 lg:left-6 lg:h-6 lg:w-6" />
+          <span aria-hidden="true" className="absolute right-4 top-4 h-5 w-5 border-r-2 border-t-2 border-moss-500 lg:right-6 lg:top-6 lg:h-6 lg:w-6" />
+          <span aria-hidden="true" className="absolute bottom-4 left-4 h-5 w-5 border-b-2 border-l-2 border-moss-500 lg:bottom-6 lg:left-6 lg:h-6 lg:w-6" />
           {/* Cortina que se achica hacia la derecha y revela el mapa de izquierda a derecha. */}
           <motion.div
             aria-hidden="true"
