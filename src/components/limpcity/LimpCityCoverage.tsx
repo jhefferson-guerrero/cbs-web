@@ -68,7 +68,7 @@ export function LimpCityCoverage() {
             Área de <span className="text-moss-700">actuación</span>
           </h2>
           <p className="mt-1.5 text-[15.5px] leading-relaxed text-slate-700 lg:mt-[clamp(0.25rem,1.2vh,0.75rem)] lg:text-[clamp(15.5px,1.9vh,19px)]">
-            Siete ciudades donde prestamos servicio de limpieza urbana.
+            Prestamos servicio de limpieza urbana en siete ciudades del nordeste de Brasil.
           </p>
         </div>
       </motion.div>
@@ -98,7 +98,7 @@ export function LimpCityCoverage() {
           >
             <img
               src={coverageMap}
-              alt={`Mapa de Bahía con las ciudades donde opera Limp City: ${limpCityCities.join(', ')}`}
+              alt={`Mapa del nordeste de Brasil con las ciudades donde opera Limp City: ${limpCityCities.join(', ')}`}
               width={IMAGE_W}
               height={IMAGE_H}
               loading="lazy"
