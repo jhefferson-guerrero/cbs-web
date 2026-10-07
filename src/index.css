@@ -49,6 +49,21 @@
 
   --shadow-nav: 0 12px 30px -18px rgba(10, 21, 48, 0.35);
   --shadow-card: 0 24px 48px -20px rgba(10, 21, 48, 0.28);
+
+  /* Onda que sale de cada ciudad en el mapa de Limp City (LimpCityCoverage). Solo transform y opacity, así corre en el compositor. */
+  --animate-city-pulse: city-pulse 2.8s cubic-bezier(0.2, 0.6, 0.3, 1) infinite;
+
+  @keyframes city-pulse {
+    0% {
+      transform: scale(0.45);
+      opacity: 0.95;
+    }
+    80%,
+    100% {
+      transform: scale(1);
+      opacity: 0;
+    }
+  }
 }
 
 /* Altura de la navbar (h-14 / lg:h-16 / 2xl:h-20 en Navbar.tsx). Las secciones

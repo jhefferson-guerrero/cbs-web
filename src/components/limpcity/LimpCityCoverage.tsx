@@ -1,4 +1,4 @@
-import type { CSSProperties } from 'react'
+import { useState, type CSSProperties } from 'react'
 import { motion, useReducedMotion } from 'motion/react'
 import { coverageMap, limpCityCities } from '@/lib/limp-city'
 
@@ -22,8 +22,25 @@ const MOBILE_CROP_W = 1872
 const MOBILE_IMAGE_WIDTH = `${(IMAGE_W / MOBILE_CROP_W) * 100}%`
 const MOBILE_IMAGE_LEFT = `-${(MOBILE_CROP_X / MOBILE_CROP_W) * 100}%`
 
+// Posición (en px de la imagen de 2752x1536) del punto blanco de cada ciudad. Se pintan encima, con el mismo
+// recorte que la imagen, para que sigan pegados a ella en escritorio y en móvil. Si se cambia la imagen del mapa,
+// hay que volver a medirlos.
+const CITY_POINTS = [
+  { name: 'Juazeiro', x: 1213, y: 344 },
+  { name: 'Petrolina', x: 1368, y: 334 },
+  { name: 'Campo Formoso', x: 1188, y: 505 },
+  { name: 'Alagoinhas', x: 1307, y: 647 },
+  { name: 'Salvador', x: 1363, y: 674 },
+  { name: 'Lauro de Freitas', x: 1336, y: 725 },
+  { name: 'Eunápolis', x: 1268, y: 1022 },
+]
+// Diámetro del aro de cada ciudad, en px de la imagen.
+const POINT_SIZE = 100
+
 export function LimpCityCoverage() {
   const reduceMotion = useReducedMotion()
+  // Las ondas arrancan cuando el mapa aparece (no al cargar la página), para que se encienda una ciudad tras otra.
+  const [pulsing, setPulsing] = useState(false)
 
   return (
     <section className="bg-moss-50">
@@ -57,19 +74,53 @@ export function LimpCityCoverage() {
             } as CSSProperties
           }
         >
-          <motion.img
-            src={coverageMap}
-            alt={`Mapa de Bahía con las ciudades donde opera Limp City: ${limpCityCities.join(', ')}`}
-            width={IMAGE_W}
-            height={IMAGE_H}
-            loading="lazy"
-            decoding="async"
+          {/* La imagen y los puntos comparten esta capa (mismo tamaño y posición), así los puntos se miden en % de la imagen. */}
+          <motion.div
             initial={reduceMotion ? false : { scale: 1.05 }}
             whileInView={{ scale: 1 }}
             viewport={{ once: true, amount: 0.3 }}
+            onViewportEnter={() => setPulsing(true)}
             transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1] }}
-            className="absolute top-0 h-auto max-w-none [left:var(--m-left)] [width:var(--m-w)] lg:left-0 lg:[width:var(--map-w)]"
-          />
+            className="absolute top-0 max-w-none [left:var(--m-left)] [width:var(--m-w)] lg:left-0 lg:[width:var(--map-w)]"
+          >
+            <img
+              src={coverageMap}
+              alt={`Mapa de Bahía con las ciudades donde opera Limp City: ${limpCityCities.join(', ')}`}
+              width={IMAGE_W}
+              height={IMAGE_H}
+              loading="lazy"
+              decoding="async"
+              className="block h-auto w-full"
+            />
+            {CITY_POINTS.map((city, i) => (
+              <motion.span
+                key={city.name}
+                aria-hidden="true"
+                initial={reduceMotion ? false : { opacity: 0, scale: 0.4 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true, amount: 0.3 }}
+                // El primer punto espera a que la cortina termine de descubrir el mapa (~0.9 s); luego, uno tras otro.
+                transition={{ duration: 0.6, delay: 1 + i * 0.16, ease: [0.16, 1, 0.3, 1] }}
+                style={{
+                  left: `${(city.x / IMAGE_W) * 100}%`,
+                  top: `${(city.y / IMAGE_H) * 100}%`,
+                  width: `${(POINT_SIZE / IMAGE_W) * 100}%`,
+                  aspectRatio: '1',
+                }}
+                className="pointer-events-none absolute -translate-x-1/2 -translate-y-1/2"
+              >
+                {/* Aro fijo alrededor del punto */}
+                <span className="absolute inset-[30%] rounded-full border-2 border-moss-400 bg-moss-400/25 shadow-[0_0_0_1px_rgba(255,255,255,0.55)]" />
+                {/* Onda que sale del punto; sin movimiento si el visitante lo pidió. */}
+                {!reduceMotion && pulsing && (
+                  <span
+                    style={{ animationDelay: `${1.4 + i * 0.32}s`, animationFillMode: 'backwards' }}
+                    className="absolute inset-0 animate-city-pulse rounded-full border-2 border-moss-400 bg-moss-400/25"
+                  />
+                )}
+              </motion.span>
+            ))}
+          </motion.div>
           <span aria-hidden="true" className="absolute right-4 top-4 h-5 w-5 border-r-2 border-t-2 border-navy-900/50 lg:right-6 lg:top-6 lg:h-6 lg:w-6" />
           <span aria-hidden="true" className="absolute bottom-4 left-4 h-5 w-5 border-b-2 border-l-2 border-navy-900/50 lg:bottom-6 lg:left-6 lg:h-6 lg:w-6" />
           {/* Cortina que se achica hacia la derecha y revela el mapa de izquierda a derecha. */}
