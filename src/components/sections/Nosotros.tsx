@@ -3,6 +3,7 @@ import { motion, useInView, useReducedMotion } from 'motion/react'
 import { Parallax } from '@/components/ui/Parallax'
 import { cn } from '@/lib/utils'
 import nosotrosPhoto from '@/assets/images/nosotros.webp'
+import nosotrosPhotoAvif from '@/assets/images/nosotros.avif'
 
 const timeline = [
   { year: '2009', label: 'Fundación del grupo en Brasil', current: false },
@@ -139,19 +140,24 @@ export function Nosotros() {
           {/* La mesa de planos y el grupo están al lado derecho de la foto (del 50% al 91% del ancho): se ancla
               a la derecha para que se vea completa. travel más corto = la capa se amplía menos y no recorta. */}
           <Parallax travel={10}>
-          <motion.img
-            src={nosotrosPhoto}
-            alt="Obra de infraestructura ejecutada por CBS"
-            width={1372}
-            height={768}
-            loading="lazy"
-            decoding="async"
-            initial={reduceMotion ? false : { scale: 1.15 }}
-            whileInView={{ scale: 1 }}
-            viewport={{ once: true, amount: 0.15 }}
-            transition={{ duration: 1.1, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
-            className="h-full w-full object-cover object-[88%_65%]"
-          />
+          {/* Mismos píxeles en dos formatos: AVIF (392 KB) para los navegadores que lo entienden y el WebP (665 KB)
+              de respaldo para los demás. `contents` hace que el <picture> no afecte al diseño. */}
+          <picture className="contents">
+            <source srcSet={nosotrosPhotoAvif} type="image/avif" />
+            <motion.img
+              src={nosotrosPhoto}
+              alt="Obra de infraestructura ejecutada por CBS"
+              width={2744}
+              height={1536}
+              loading="lazy"
+              decoding="async"
+              initial={reduceMotion ? false : { scale: 1.15 }}
+              whileInView={{ scale: 1 }}
+              viewport={{ once: true, amount: 0.15 }}
+              transition={{ duration: 1.1, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
+              className="h-full w-full object-cover object-[88%_65%]"
+            />
+          </picture>
           </Parallax>
           <div className="absolute inset-0 bg-gradient-to-br from-cyan-700/70 via-navy-900/30 to-navy-950/70" />
 
