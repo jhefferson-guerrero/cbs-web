@@ -53,21 +53,23 @@ export function LimpCityCoverage() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.3 }}
         transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-        className="mx-auto flex max-w-4xl items-center justify-center gap-3 sm:gap-6 lg:gap-[clamp(1.25rem,3vh,2.5rem)]"
+        className="mx-auto grid max-w-4xl grid-cols-[auto_1fr] items-center gap-x-3 gap-y-2 sm:gap-x-6 lg:flex lg:justify-center lg:gap-[clamp(1.25rem,3vh,2.5rem)]"
       >
         {/* El "7" con contorno musgo (el mismo recurso que el "2012" de "Sobre la empresa") cuenta de 0 a 7 al aparecer. Es
-            decorativo: el número ya está dicho en el texto de al lado. */}
+            decorativo: el número ya está dicho en el texto de al lado. Debajo de lg (celular y tablet) el "7" y el título van
+            en una fila y el subtítulo debajo, a todo el ancho (el contenedor de texto es `contents` y sus hijos entran
+            directo en la cuadrícula); desde lg, el "7" a la izquierda y título y subtítulo apilados a su lado. */}
         <p
           aria-hidden="true"
-          className="shrink-0 font-mono text-[4.5rem] font-bold leading-[0.85] tracking-tighter tabular-nums text-transparent [-webkit-text-stroke:2.5px_var(--color-moss-500)] sm:text-[6rem] lg:text-[clamp(4.75rem,13.2vh,9rem)] lg:[-webkit-text-stroke:3px_var(--color-moss-500)]"
+          className="shrink-0 font-mono text-[5rem] font-bold leading-[0.85] tracking-tighter tabular-nums text-transparent [-webkit-text-stroke:2.5px_var(--color-moss-500)] sm:text-[6rem] lg:text-[clamp(4.75rem,13.2vh,9rem)] lg:[-webkit-text-stroke:3px_var(--color-moss-500)]"
         >
           <Counter to={7} format={(n) => String(n)} />
         </p>
-        <div className="text-left">
+        <div className="contents text-left lg:block">
           <h2 className="text-[1.625rem] font-semibold leading-tight tracking-tight text-navy-900 min-[400px]:text-3xl md:text-4xl lg:text-[clamp(2.25rem,5.4vh,3.75rem)]">
             Área de <span className="text-moss-700">actuación</span>
           </h2>
-          <p className="mt-1.5 text-[15.5px] leading-relaxed text-slate-700 lg:mt-[clamp(0.25rem,1.2vh,0.75rem)] lg:text-[clamp(15.5px,1.9vh,19px)]">
+          <p className="col-span-2 text-[15.5px] leading-relaxed text-slate-700 lg:mt-[clamp(0.25rem,1.2vh,0.75rem)] lg:text-[clamp(15.5px,1.9vh,19px)]">
             Prestamos servicio de limpieza urbana en siete ciudades del nordeste de Brasil.
           </p>
         </div>
