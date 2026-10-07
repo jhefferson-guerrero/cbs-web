@@ -7,13 +7,15 @@ import mapaCobertura from '@/assets/images/actuacion-mapa.webp'
 
 // Proporción de la imagen fuente: la tarjeta tiene exactamente esta forma,
 // así el mapa se ve completo y sin franjas de otro tono alrededor.
-const MAP_RATIO = '1483 / 704'
+const MAP_WIDTH = 2752
+const MAP_HEIGHT = 1536
+const MAP_RATIO = `${MAP_WIDTH} / ${MAP_HEIGHT}`
 
 export function Actuacion() {
   const reduceMotion = useReducedMotion()
   const scrollerRef = useRef<HTMLDivElement>(null)
   const openerRef = useRef<HTMLButtonElement>(null)
-  // En escritorio el mapa se puede ampliar con un clic; en móvil ya se desliza, así que no hace falta.
+  // En escritorio el mapa se puede ampliar con un clic (el visor permite acercar y arrastrar); en móvil ya se desliza, así que no hace falta.
   const [zoomed, setZoomed] = useState(false)
   // En móvil el mapa es más ancho que la pantalla y se desliza: el botón de flecha avisa de ello
   // y lleva de un país al otro. Cuando se llega al final, cambia de lado y de sentido.
@@ -69,8 +71,8 @@ export function Actuacion() {
           <motion.img
             src={mapaCobertura}
             alt="Mapa de cobertura de CBS en Perú y Brasil, con las regiones donde opera en cada país"
-            width={1483}
-            height={704}
+            width={MAP_WIDTH}
+            height={MAP_HEIGHT}
             loading="lazy"
             decoding="async"
             initial={reduceMotion ? false : { scale: 1.06 }}
@@ -142,7 +144,8 @@ export function Actuacion() {
         }}
         src={mapaCobertura}
         alt="Mapa de cobertura de CBS en Perú y Brasil, con las regiones donde opera en cada país"
-        width={1483}
+        width={MAP_WIDTH}
+        height={MAP_HEIGHT}
       />
     </section>
   )

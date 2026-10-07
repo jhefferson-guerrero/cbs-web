@@ -2,19 +2,24 @@ import type { CSSProperties } from 'react'
 import { motion, useReducedMotion } from 'motion/react'
 import { coverageMap, limpCityCities } from '@/lib/limp-city'
 
-// La imagen fuente mide 1365x661, pero a la derecha de las etiquetas y debajo de
-// Eunápolis solo hay mar vacío. La tarjeta muestra únicamente la zona útil
-// (1170x560 px de la imagen): el mapa se ve más grande y todas las etiquetas
-// siguen completas.
-const MAP_RATIO = '1170 / 560'
-const MAP_IMAGE_WIDTH = `${(1365 / 1170) * 100}%`
+// La imagen fuente mide 2752x1536, pero a la derecha de las etiquetas y debajo de
+// Eunápolis solo hay fondo vacío. La tarjeta muestra únicamente la zona útil
+// (2477x1186 px de la imagen, desde la esquina superior izquierda): el mapa se ve más
+// grande y todas las etiquetas siguen completas (la más larga, "Campo Formoso",
+// termina al 86% del ancho).
+const IMAGE_W = 2752
+const IMAGE_H = 1536
+const CROP_W = 2477
+const CROP_H = 1186
+const MAP_RATIO = `${CROP_W} / ${CROP_H}`
+const MAP_IMAGE_WIDTH = `${(IMAGE_W / CROP_W) * 100}%`
 
 // En móvil (menos de lg) no cabe el mapa completo con etiquetas legibles: se muestra solo la
-// franja de la derecha, desde el este de Bahía hasta el final de las etiquetas (px 300 a 1170
-// de la imagen), sin scroll horizontal.
-const MOBILE_CROP_X = 300
-const MOBILE_CROP_W = 870
-const MOBILE_IMAGE_WIDTH = `${(1365 / MOBILE_CROP_W) * 100}%`
+// franja de la derecha, desde el este de Bahía hasta el final de las etiquetas (px 605 a 2477
+// de la imagen, 1872x1205), sin scroll horizontal. Las proporciones de la tarjeta (aspect-[...] abajo) deben coincidir.
+const MOBILE_CROP_X = 605
+const MOBILE_CROP_W = 1872
+const MOBILE_IMAGE_WIDTH = `${(IMAGE_W / MOBILE_CROP_W) * 100}%`
 const MOBILE_IMAGE_LEFT = `-${(MOBILE_CROP_X / MOBILE_CROP_W) * 100}%`
 
 export function LimpCityCoverage() {
@@ -42,7 +47,7 @@ export function LimpCityCoverage() {
 
       <div className="mt-8 lg:mt-[clamp(0.75rem,3vh,2.5rem)] lg:flex lg:min-h-0 lg:flex-1 lg:justify-center">
         <div
-          className="relative isolate aspect-[870/560] w-full overflow-hidden bg-moss-100 shadow-card ring-1 ring-moss-700/15 lg:aspect-[1170/560] lg:h-full lg:w-auto"
+          className="relative isolate aspect-[1872/1205] w-full overflow-hidden bg-moss-100 shadow-card ring-1 ring-moss-700/15 lg:aspect-[2477/1186] lg:h-full lg:w-auto"
           style={
             {
               '--map-ratio': MAP_RATIO,
@@ -55,8 +60,8 @@ export function LimpCityCoverage() {
           <motion.img
             src={coverageMap}
             alt={`Mapa de Bahía con las ciudades donde opera Limp City: ${limpCityCities.join(', ')}`}
-            width={1365}
-            height={661}
+            width={IMAGE_W}
+            height={IMAGE_H}
             loading="lazy"
             decoding="async"
             initial={reduceMotion ? false : { scale: 1.05 }}
