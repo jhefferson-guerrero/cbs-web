@@ -43,7 +43,7 @@ export function LimpCityCoverage() {
   const [pulsing, setPulsing] = useState(false)
 
   return (
-    <section className="bg-moss-50">
+    <section className="border-t border-moss-100 bg-white">
       {/* Espacio de respiro arriba y abajo, fuera del bloque de una vista. */}
       <div aria-hidden="true" className="hidden lg:block lg:h-[clamp(2rem,8vh,6rem)]" />
       <div className="flex flex-col px-6 py-16 sm:px-10 lg:h-[calc(100svh-var(--nav-h))] lg:min-h-[440px] lg:py-[clamp(1.25rem,4.5vh,4rem)] xl:px-16 2xl:px-24">
@@ -63,8 +63,19 @@ export function LimpCityCoverage() {
       </motion.div>
 
       <div className="mt-8 lg:mt-[clamp(0.75rem,3vh,2.5rem)] lg:flex lg:min-h-0 lg:flex-1 lg:justify-center">
+        {/* Esta capa fija el tamaño del mapa y hospeda el marco musgo desplazado (el mismo recurso que la foto de "Sobre
+            la empresa"); el marco no puede ir dentro de la tarjeta porque ella recorta lo que se sale (overflow-hidden). */}
+        <div className="relative isolate aspect-[1872/1205] w-full lg:aspect-[2477/1186] lg:h-full lg:w-auto">
+        <motion.span
+          aria-hidden="true"
+          initial={reduceMotion ? false : { opacity: 0, x: -14, y: -14 }}
+          whileInView={{ opacity: 1, x: 0, y: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.8, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
+          className="absolute -bottom-3 -right-3 -z-10 h-full w-full border-[2.5px] border-moss-500 lg:-bottom-5 lg:-right-5"
+        />
         <div
-          className="relative isolate aspect-[1872/1205] w-full overflow-hidden bg-moss-100 shadow-card ring-1 ring-moss-700/15 lg:aspect-[2477/1186] lg:h-full lg:w-auto"
+          className="absolute inset-0 isolate overflow-hidden bg-moss-100 shadow-card ring-1 ring-moss-700/15"
           style={
             {
               '--map-ratio': MAP_RATIO,
@@ -134,8 +145,9 @@ export function LimpCityCoverage() {
             viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
             style={{ transformOrigin: 'right' }}
-            className="absolute inset-0 bg-moss-50"
+            className="absolute inset-0 bg-white"
           />
+        </div>
         </div>
       </div>
       </div>
