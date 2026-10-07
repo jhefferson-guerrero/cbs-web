@@ -1,5 +1,6 @@
 import { useState, type CSSProperties } from 'react'
 import { motion, useReducedMotion } from 'motion/react'
+import { Counter } from '@/components/ui/Counter'
 import { coverageMap, limpCityCities } from '@/lib/limp-city'
 
 // La imagen fuente mide 2752x1536, pero a la derecha de las etiquetas y debajo de
@@ -52,14 +53,24 @@ export function LimpCityCoverage() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.3 }}
         transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-        className="mx-auto max-w-4xl text-center"
+        className="mx-auto flex max-w-4xl items-center justify-center gap-3 sm:gap-6 lg:gap-[clamp(1.25rem,3vh,2.5rem)]"
       >
-        <h2 className="text-3xl font-semibold leading-tight tracking-tight text-navy-900 md:text-4xl lg:text-[clamp(2.25rem,5.4vh,3.75rem)]">
-          Área de actuación
-        </h2>
-        <p className="mt-3 text-[15.5px] leading-relaxed text-slate-700 lg:mt-[clamp(0.25rem,1.2vh,0.75rem)] lg:text-[clamp(15.5px,1.9vh,19px)]">
-          Siete ciudades donde prestamos servicio de limpieza urbana.
+        {/* El "7" con contorno musgo (el mismo recurso que el "2012" de "Sobre la empresa") cuenta de 0 a 7 al aparecer. Es
+            decorativo: el número ya está dicho en el texto de al lado. */}
+        <p
+          aria-hidden="true"
+          className="shrink-0 font-mono text-[3.75rem] font-bold leading-[0.85] tracking-tighter tabular-nums text-transparent [-webkit-text-stroke:2px_var(--color-moss-500)] sm:text-[5rem] lg:text-[clamp(4rem,11vh,7.5rem)] lg:[-webkit-text-stroke:2.5px_var(--color-moss-500)]"
+        >
+          <Counter to={7} format={(n) => String(n)} />
         </p>
+        <div className="text-left">
+          <h2 className="text-[1.625rem] font-semibold leading-tight tracking-tight text-navy-900 min-[400px]:text-3xl md:text-4xl lg:text-[clamp(2.25rem,5.4vh,3.75rem)]">
+            Área de <span className="text-moss-700">actuación</span>
+          </h2>
+          <p className="mt-1.5 text-[15.5px] leading-relaxed text-slate-700 lg:mt-[clamp(0.25rem,1.2vh,0.75rem)] lg:text-[clamp(15.5px,1.9vh,19px)]">
+            Siete ciudades donde prestamos servicio de limpieza urbana.
+          </p>
+        </div>
       </motion.div>
 
       <div className="mt-8 lg:mt-[clamp(0.75rem,3vh,2.5rem)] lg:flex lg:min-h-0 lg:flex-1 lg:justify-center">
