@@ -59,7 +59,7 @@ export function LimpCityCoverage() {
             decorativo: el número ya está dicho en el texto de al lado. */}
         <p
           aria-hidden="true"
-          className="shrink-0 font-mono text-[3.75rem] font-bold leading-[0.85] tracking-tighter tabular-nums text-transparent [-webkit-text-stroke:2px_var(--color-moss-500)] sm:text-[5rem] lg:text-[clamp(4rem,11vh,7.5rem)] lg:[-webkit-text-stroke:2.5px_var(--color-moss-500)]"
+          className="shrink-0 font-mono text-[4.5rem] font-bold leading-[0.85] tracking-tighter tabular-nums text-transparent [-webkit-text-stroke:2.5px_var(--color-moss-500)] sm:text-[6rem] lg:text-[clamp(4.75rem,13.2vh,9rem)] lg:[-webkit-text-stroke:3px_var(--color-moss-500)]"
         >
           <Counter to={7} format={(n) => String(n)} />
         </p>
