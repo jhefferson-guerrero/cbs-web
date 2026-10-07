@@ -146,7 +146,7 @@ export function Nosotros() {
             <source srcSet={nosotrosPhotoAvif} type="image/avif" />
             <motion.img
               src={nosotrosPhoto}
-              alt="Obra de infraestructura ejecutada por CBS"
+              alt="Equipo de CBS con cascos y chalecos revisando planos sobre una mesa en una obra de infraestructura"
               width={2744}
               height={1536}
               loading="lazy"

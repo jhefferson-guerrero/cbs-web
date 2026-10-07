@@ -1,5 +1,5 @@
 import { CONTACT_EMAIL } from '@/lib/contact'
-import { limpCityCities } from '@/lib/limp-city'
+import { limpCityCities, limpCityServices } from '@/lib/limp-city'
 import { getProjectBySlug, projects, type Project } from '@/lib/projects'
 import {
   FOUNDING_YEAR,
@@ -32,6 +32,26 @@ const absolute = (path: string) => `${SITE_URL}${path}`
 const ORGANIZATION_ID = `${SITE_URL}/#organization`
 const WEBSITE_ID = `${SITE_URL}/#website`
 
+// Los datos estructurados solo describen lo que la página ya muestra al visitante (norma de Google): los servicios de CBS son
+// los del párrafo del hero y los de Limp City, los de su sección de servicios.
+const CBS_SERVICES = [
+  'Abastecimiento de agua',
+  'Construcción de represas',
+  'Alcantarillado sanitario',
+  'Drenaje urbano',
+  'Defensa ribereña',
+  'Infraestructura urbana',
+]
+
+const offerCatalog = (name: string, services: string[], providerId: string): JsonLd => ({
+  '@type': 'OfferCatalog',
+  name,
+  itemListElement: services.map((service) => ({
+    '@type': 'Offer',
+    itemOffered: { '@type': 'Service', name: service, provider: { '@id': providerId } },
+  })),
+})
+
 // Datos estructurados de la empresa: salen en todas las páginas. No se incluyen las certificaciones ISO ni otros datos
 // que la empresa aún no haya confirmado (ver certifications.ts).
 const organization: JsonLd = {
@@ -59,6 +79,7 @@ const organization: JsonLd = {
     'Infraestructura urbana',
   ],
   contactPoint: [{ '@type': 'ContactPoint', contactType: 'customer service', email: CONTACT_EMAIL, availableLanguage: ['es'] }],
+  hasOfferCatalog: offerCatalog('Servicios de CBS Perú', CBS_SERVICES, ORGANIZATION_ID),
 }
 
 const website: JsonLd = {
@@ -75,7 +96,7 @@ const breadcrumbs = (items: { name: string; path: string }[]): JsonLd => ({
   itemListElement: items.map((item, i) => ({ '@type': 'ListItem', position: i + 1, name: item.name, item: absolute(item.path) })),
 })
 
-const webPage = (path: string, name: string, description: string, image: string): JsonLd => ({
+const webPage = (path: string, name: string, description: string, image: string, extra: JsonLd = {}): JsonLd => ({
   '@type': 'WebPage',
   '@id': `${absolute(path)}#webpage`,
   url: absolute(path),
@@ -85,12 +106,13 @@ const webPage = (path: string, name: string, description: string, image: string)
   isPartOf: { '@id': WEBSITE_ID },
   about: { '@id': ORGANIZATION_ID },
   primaryImageOfPage: { '@type': 'ImageObject', url: `${SITE_URL}${image}` },
+  ...extra,
 })
 
 const HOME: SeoData = {
-  title: 'CBS Perú · Obras de agua y saneamiento | Construtora Baiana',
+  title: 'CBS Perú | Construtora Baiana de Saneamento – Agua y saneamiento',
   description:
-    'Obras de agua potable, alcantarillado, drenaje pluvial y represas en Perú y Brasil. CBS Perú, Construtora Baiana de Saneamento: más de 80 proyectos desde 2009.',
+    'Obras de agua potable, alcantarillado, drenaje pluvial y represas en Perú y Brasil desde 2009: más de 80 proyectos. CBS Perú, Construtora Baiana de Saneamento.',
   path: '/',
   image: '/og/inicio.jpg',
   imageAlt: 'Planta de tratamiento de agua construida por CBS Perú',
@@ -98,13 +120,27 @@ const HOME: SeoData = {
   noindex: false,
   jsonLd: [],
 }
-HOME.jsonLd = [organization, website, webPage(HOME.path, HOME.title, HOME.description, HOME.image)]
+HOME.jsonLd = [
+  organization,
+  website,
+  webPage(HOME.path, HOME.title, HOME.description, HOME.image),
+  {
+    '@type': 'ItemList',
+    name: 'Proyectos de CBS Perú',
+    itemListElement: projects.map((project, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      url: absolute(`/proyectos/${project.slug}`),
+      name: project.title,
+    })),
+  },
+]
 
 const LIMP_CITY_DESCRIPTION =
-  'Limp City presta servicios de limpieza urbana y manejo de residuos sólidos en siete ciudades del nordeste de Brasil: recolección, barrido mecanizado, limpieza de playas y canales.'
+  'Limpieza urbana y manejo de residuos sólidos en siete ciudades del nordeste de Brasil: recolección, barrido mecanizado, limpieza de playas y canales.'
 
 const LIMP_CITY: SeoData = {
-  title: 'Limp City · Limpieza urbana y residuos sólidos en Brasil | CBS Perú',
+  title: 'Limp City · Limpieza urbana y residuos sólidos | CBS Perú',
   description: LIMP_CITY_DESCRIPTION,
   path: '/limp-city',
   image: '/og/limp-city.jpg',
@@ -122,6 +158,11 @@ const LIMP_CITY: SeoData = {
       foundingDate: '2012',
       description: LIMP_CITY_DESCRIPTION,
       areaServed: limpCityCities.map((name) => ({ '@type': 'City', name })),
+      hasOfferCatalog: offerCatalog(
+        'Servicios de Limp City',
+        limpCityServices.map((service) => service.name),
+        `${absolute('/limp-city')}#organization`,
+      ),
     },
     webPage('/limp-city', 'Limp City', LIMP_CITY_DESCRIPTION, '/og/limp-city.jpg'),
     breadcrumbs([
@@ -142,10 +183,16 @@ const NOT_FOUND: SeoData = {
   jsonLd: [],
 }
 
+// Títulos para Google: el servicio y el lugar primero (el título completo del proyecto es largo y Google lo recorta).
+const PROJECT_SEO_TITLES: Record<string, string> = {
+  'rio-huatanay': 'Agua potable en Cusco: margen derecha del Huatanay',
+  'drenaje-tambopata': 'Drenaje pluvial en Puerto Maldonado: sector Tambopata',
+}
+
 function projectSeo(project: Project): SeoData {
   const path = `/proyectos/${project.slug}`
-  const description = `${project.category} en ${project.location}. Cliente: ${project.client.name}. Contratista: ${project.contractor.name}. Monto contratado ${project.amount}, financiado por ${project.funding.name}.`
-  const title = `${project.title} | CBS Perú`
+  const description = `${project.category} en ${project.location}. Cliente: ${project.client.name}. Monto contratado: ${project.amount}.`
+  const title = `${PROJECT_SEO_TITLES[project.slug] ?? project.title} | CBS Perú`
   const image = `/og/proyecto-${project.slug}.jpg`
   return {
     title,
@@ -158,7 +205,7 @@ function projectSeo(project: Project): SeoData {
     jsonLd: [
       organization,
       website,
-      webPage(path, project.title, description, image),
+      webPage(path, project.title, description, image, { contentLocation: { '@type': 'Place', name: project.location } }),
       breadcrumbs([
         { name: 'Inicio', path: '/' },
         { name: project.title, path },
