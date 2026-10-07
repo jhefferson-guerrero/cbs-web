@@ -74,17 +74,8 @@ export function LimpCityCoverage() {
       </motion.div>
 
       <div className="mt-8 lg:mt-[clamp(0.75rem,3vh,2.5rem)] lg:flex lg:min-h-0 lg:flex-1 lg:justify-center">
-        {/* Esta capa fija el tamaño del mapa y hospeda el marco musgo desplazado (el mismo recurso que la foto de "Sobre
-            la empresa"); el marco no puede ir dentro de la tarjeta porque ella recorta lo que se sale (overflow-hidden). */}
+        {/* Esta capa fija el tamaño del mapa (la tarjeta de dentro ocupa todo su espacio). */}
         <div className="relative isolate aspect-[1872/1205] w-full lg:aspect-[2477/1186] lg:h-full lg:w-auto">
-        <motion.span
-          aria-hidden="true"
-          initial={reduceMotion ? false : { opacity: 0, x: -14, y: -14 }}
-          whileInView={{ opacity: 1, x: 0, y: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.8, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
-          className="absolute -bottom-3 -right-3 -z-10 h-full w-full border-[2.5px] border-moss-500 lg:-bottom-5 lg:-right-5"
-        />
         <div
           className="absolute inset-0 isolate overflow-hidden bg-moss-100 shadow-card ring-1 ring-moss-700/15"
           style={
