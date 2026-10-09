@@ -68,7 +68,9 @@ export function Proyectos() {
                 </span>
               </div>
 
-              <div className="p-6 sm:p-8 lg:p-[clamp(1rem,2.8vh,2rem)]">
+              {/* -mt-px: el texto tapa 1 px de la foto. Sin esto, mientras la tarjeta entra (posiciones con fracciones de
+                  píxel) el borde foto/texto se suaviza por separado y deja ver una línea fina de la foto. */}
+              <div className="relative -mt-px bg-navy-950 p-6 sm:p-8 lg:p-[clamp(1rem,2.8vh,2rem)]">
                 <h3 className="text-xl font-bold leading-snug text-white lg:text-[clamp(1.05rem,2.4vh,1.6rem)]">
                   {project.title}
                 </h3>
