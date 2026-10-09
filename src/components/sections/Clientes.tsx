@@ -6,7 +6,7 @@ import { useMediaQuery } from '@/lib/use-media-query'
 // Escritorio: la sección ocupa una pantalla y los logos entran en cascada continua (Perú y luego Brasil), con
 // retardo inicial para que no arranque mientras el scroll suave todavía se está asentando.
 const logoListVariants = {
-  show: { transition: { staggerChildren: 0.1, delayChildren: 0.3 } },
+  show: { transition: { staggerChildren: 0.1, delayChildren: 0.2 } },
 }
 // `custom` es el retardo propio del logo (solo se usa debajo de lg, donde cada logo anima al aparecer).
 const logoVariants = {
