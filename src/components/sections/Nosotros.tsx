@@ -13,6 +13,9 @@ const timeline = [
 
 // Segundos que tarda cada hito en encenderse después del anterior.
 const MILESTONE_STEP = 0.6
+// Segundos que espera la línea de tiempo antes de empezar: el titular y los dos párrafos entran primero (el segundo
+// arranca a 0.22 s y dura 0.65 s) y la línea de tiempo sigue después, en vez de salir junto con ellos.
+const TIMELINE_START = 0.6
 
 // Un hito de la línea de tiempo. Cuando la lista entra en pantalla (una sola vez), su punto se enciende en
 // cian y la línea hacia el siguiente se rellena, uno tras otro de arriba hacia abajo.
@@ -28,14 +31,14 @@ function TimelineItem({
   reduceMotion: boolean | null
 }) {
   const total = timeline.length
-  const dotDelay = 0.35 + index * MILESTONE_STEP
+  const dotDelay = TIMELINE_START + 0.35 + index * MILESTONE_STEP
 
   return (
     <motion.div
       initial={reduceMotion ? false : { opacity: 0, y: 10 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.5 }}
-      transition={{ duration: 0.5, delay: index * 0.12, ease: [0.16, 1, 0.3, 1] }}
+      transition={{ duration: 0.5, delay: TIMELINE_START + index * 0.12, ease: [0.16, 1, 0.3, 1] }}
       className="flex gap-4"
     >
       <div className="flex flex-col items-center">
