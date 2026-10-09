@@ -111,6 +111,17 @@
     font-family: var(--font-display);
   }
 
+  /* Texto seleccionado: cian claro de la marca con texto navy. Se lee igual sobre fondos blancos y oscuros (el azul
+     por defecto del navegador no pertenece a la paleta y tiñe logos y fotos). */
+  ::selection {
+    background-color: var(--color-cyan-200);
+    color: var(--color-navy-950);
+  }
+
+  img::selection {
+    background-color: transparent;
+  }
+
   html {
     scrollbar-width: none;
   }
