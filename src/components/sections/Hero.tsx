@@ -183,7 +183,7 @@ export function Hero({ ready }: { ready: boolean }) {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, amount: 0.6 }}
                   transition={{ duration: 0.7, delay: 0.15 + i * 0.12, ease: [0.16, 1, 0.3, 1] }}
-                  className="flex flex-col gap-2 lg:px-8 lg:first:pl-0 lg:last:pr-0"
+                  className="flex flex-col items-center gap-2 text-center lg:px-8"
                 >
                   <p className="whitespace-nowrap font-mono text-4xl font-bold tabular-nums text-white xl:text-5xl 2xl:text-6xl">
                     {stat.kind === 'count' ? <Counter to={stat.to} format={stat.format} /> : stat.value}

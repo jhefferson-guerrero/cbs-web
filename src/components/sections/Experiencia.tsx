@@ -85,7 +85,7 @@ export function Experiencia() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.6 }}
               transition={{ duration: 0.6, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
-              className="flex flex-col gap-2 sm:px-6 sm:first:pl-0 sm:last:pr-0"
+              className="flex flex-col items-center gap-2 text-center sm:px-6"
             >
               <p className="font-mono text-2xl font-bold tabular-nums text-white sm:text-3xl xl:text-4xl 2xl:text-5xl">
                 <Counter to={stat.to} format={stat.format} />

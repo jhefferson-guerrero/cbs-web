@@ -93,7 +93,7 @@ export function LimpCityHero() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.6 }}
               transition={{ duration: 0.6, delay: 0.3 + i * 0.1, ease: [0.16, 1, 0.3, 1] }}
-              className="flex flex-col gap-1 sm:gap-2 sm:px-6 sm:first:pl-0 sm:last:pr-0"
+              className="flex flex-col items-center gap-1 text-center sm:gap-2 sm:px-6"
             >
               <p className="font-mono text-[1.375rem] font-bold tabular-nums text-moss-300 sm:text-3xl lg:text-[clamp(1.875rem,5vh,3.5rem)]">
                 <Counter to={stat.to} format={stat.format} />

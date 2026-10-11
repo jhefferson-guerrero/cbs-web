@@ -39,7 +39,7 @@ export function Certificaciones() {
                 viewport={{ once: true, amount: 0.3 }}
                 transition={{ type: 'spring', stiffness: 70, damping: 18, delay: i * 0.08 }}
                 className={cn(
-                  'group relative flex flex-col justify-between gap-10 bg-navy-950 p-6 transition-[translate,background-color,box-shadow] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1.5 hover:bg-navy-900 hover:shadow-card lg:gap-4 lg:p-[clamp(1.25rem,2.4vh,2rem)]',
+                  'group relative flex flex-col justify-between gap-10 bg-navy-950 p-6 text-center transition-[translate,background-color,box-shadow] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1.5 hover:bg-navy-900 hover:shadow-card lg:gap-4 lg:p-[clamp(1.25rem,2.4vh,2rem)]',
                   i < 3 ? 'md:col-span-2' : 'md:col-span-3',
                   'lg:col-span-1 lg:min-h-[calc((100cqw-4*var(--cert-gap))/5*1.3)]',
                 )}
