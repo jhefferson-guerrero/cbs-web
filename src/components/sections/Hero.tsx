@@ -53,22 +53,15 @@ export function Hero({ ready }: { ready: boolean }) {
     return () => observer.disconnect()
   }, [])
 
+  // Entrada del texto, en orden: las tres líneas del titular, el párrafo y los botones, cada uno 0.08-0.12 s después del
+  // anterior. El párrafo es el elemento LCP (Chrome lo registra cuando termina de aparecer), así que la cascada es corta:
+  // todo termina ~1 s después de que el preloader suelta la página.
   const fadeUp = (delay: number) => ({
     initial: reduceMotion ? false : { opacity: 0, y: 18, filter: 'blur(4px)' },
     animate: play
       ? { opacity: 1, y: 0, filter: 'blur(0px)' }
       : { opacity: 0, y: 18, filter: 'blur(4px)' },
-    transition: { duration: 0.7, delay, ease: [0.16, 1, 0.3, 1] as const },
-  })
-
-  // El párrafo es el elemento más grande de la primera pantalla: es el LCP que mide Lighthouse. Chrome no lo cuenta
-  // mientras está en opacity 0 y, en la práctica, lo registra cuando termina de aparecer (retardo + fundido). Por eso este
-  // no nace transparente: queda pintado desde el primer render (tapado por el preloader) y entra "enfocándose" y subiendo,
-  // sin fundido de opacidad.
-  const focusIn = (delay: number) => ({
-    initial: reduceMotion ? false : { opacity: 1, y: 18, filter: 'blur(4px)' },
-    animate: play ? { opacity: 1, y: 0, filter: 'blur(0px)' } : { opacity: 1, y: 18, filter: 'blur(4px)' },
-    transition: { duration: 0.7, delay, ease: [0.16, 1, 0.3, 1] as const },
+    transition: { duration: 0.6, delay, ease: [0.16, 1, 0.3, 1] as const },
   })
 
   return (
@@ -135,7 +128,7 @@ export function Hero({ ready }: { ready: boolean }) {
                       ? { opacity: 1, y: 0, filter: 'blur(0px)' }
                       : { opacity: 0, y: 22, filter: 'blur(6px)' }
                   }
-                  transition={{ duration: 0.7, delay: 0.15 + i * 0.1, ease: [0.16, 1, 0.3, 1] }}
+                  transition={{ duration: 0.6, delay: 0.1 + i * 0.08, ease: [0.16, 1, 0.3, 1] }}
                   className="block"
                 >
                   {line}
@@ -146,7 +139,7 @@ export function Hero({ ready }: { ready: boolean }) {
             </h1>
 
             <motion.p
-              {...focusIn(0.25)}
+              {...fadeUp(0.34)}
               className="mt-8 max-w-[54ch] text-pretty text-base leading-relaxed text-white/85 sm:mt-6 md:text-lg 2xl:max-w-[46ch] 2xl:text-xl [@media(max-height:600px)]:mt-4"
             >
               Desde 2009 ejecutamos proyectos de infraestructura de mediana y gran escala en
@@ -155,7 +148,7 @@ export function Hero({ ready }: { ready: boolean }) {
             </motion.p>
 
             <motion.div
-              {...fadeUp(0.4)}
+              {...fadeUp(0.46)}
               className="mt-10 flex flex-wrap items-center gap-3 sm:mt-9 sm:gap-4 [@media(max-height:600px)]:mt-6"
             >
               <Button href="#proyectos" variant="solid" icon={<ArrowRightIcon size={18} weight="regular" />}>
