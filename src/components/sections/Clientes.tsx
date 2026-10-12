@@ -1,6 +1,6 @@
-import { useRef } from 'react'
+import { useLayoutEffect, useRef, useState, type RefObject } from 'react'
 import { motion, useReducedMotion, useScroll, useTransform } from 'motion/react'
-import { clientGroups } from '@/lib/clients'
+import { clientGroups, type Client } from '@/lib/clients'
 import { useMediaQuery } from '@/lib/use-media-query'
 
 // Escritorio: la sección ocupa una pantalla y los logos entran en cascada continua (Perú y luego Brasil), con
@@ -20,6 +20,86 @@ const logoVariants = {
 }
 
 const logoOwnTrigger = { whileInView: 'show', viewport: { once: true, amount: 0.5 } } as const
+
+// Segundos de diferencia entre un logo y el de su derecha, dentro de una misma fila.
+const COLUMN_STEP = 0.06
+
+// Retardo de entrada de cada logo según su columna real (la primera de cada fila, 0; la siguiente, un paso más...), para
+// que en cada fila entren de izquierda a derecha. Cuántos logos caben por fila depende del ancho de la pantalla (2 en un
+// celular angosto, 3 o más en uno ancho), así que no se puede suponer: se mide qué logos quedaron en la misma línea y se
+// vuelve a medir si cambia el ancho (giro del celular, por ejemplo).
+function useColumnDelays(listRef: RefObject<HTMLElement | null>, count: number) {
+  const [delays, setDelays] = useState<number[]>([])
+
+  useLayoutEffect(() => {
+    const list = listRef.current
+    if (!list) return
+
+    const measure = () => {
+      let column = 0
+      let previousTop = Number.NaN
+      const next = Array.from(list.children, (child) => {
+        const top = Math.round((child as HTMLElement).offsetTop)
+        column = top === previousTop ? column + 1 : 0
+        previousTop = top
+        return column * COLUMN_STEP
+      })
+      setDelays((current) => (current.length === next.length && current.every((d, i) => d === next[i]) ? current : next))
+    }
+
+    measure()
+    const observer = new ResizeObserver(measure)
+    observer.observe(list)
+    return () => observer.disconnect()
+  }, [listRef, count])
+
+  return delays
+}
+
+function ClientLogos({
+  clients,
+  solo,
+  isDesktop,
+  reduceMotion,
+}: {
+  clients: Client[]
+  solo: boolean
+  isDesktop: boolean
+  reduceMotion: boolean | null
+}) {
+  const listRef = useRef<HTMLDivElement>(null)
+  const delays = useColumnDelays(listRef, clients.length)
+
+  return (
+    <div ref={listRef} className="mt-6 flex flex-wrap gap-3 lg:mt-[clamp(0.75rem,2.6vh,2rem)]">
+      {clients.map((client, i) => (
+        <motion.div
+          key={client.name}
+          variants={logoVariants}
+          // Debajo de lg: entra al aparecer en pantalla (retardo corto entre los de una misma fila). En
+          // escritorio estas propiedades NO se pasan (ni vacías): con `viewport` el logo se activaría
+          // por su cuenta y rompería el orden de la cascada que dirige la lista.
+          {...(isDesktop ? {} : { ...logoOwnTrigger, custom: delays[i] ?? 0, initial: reduceMotion ? undefined : 'hidden' })}
+          className={`group relative flex items-center justify-center bg-white ${
+            solo
+              ? 'h-20 w-56 shrink-0 p-3 sm:h-24 sm:w-72 sm:p-4 lg:h-[clamp(4.75rem,14vh,8.5rem)] lg:w-[clamp(14rem,42vh,25.5rem)] 2xl:p-5'
+              : 'h-28 min-w-28 max-w-40 flex-1 p-2.5 sm:h-32 sm:min-w-32 sm:max-w-48 sm:p-3 lg:h-[clamp(5.75rem,19vh,10.5rem)] 2xl:min-w-40 2xl:max-w-56 2xl:p-4'
+          }`}
+        >
+          <span aria-hidden="true" className="absolute -left-px -top-px h-4 w-4 border-l-2 border-t-2 border-navy-200" />
+          <span aria-hidden="true" className="absolute -bottom-px -right-px h-4 w-4 border-b-2 border-r-2 border-navy-200" />
+          <img
+            src={client.logo}
+            alt={client.name}
+            loading="lazy"
+            decoding="async"
+            className="h-full w-full object-contain transition-transform duration-300 group-hover:scale-105"
+          />
+        </motion.div>
+      ))}
+    </div>
+  )
+}
 
 export function Clientes() {
   const reduceMotion = useReducedMotion()
@@ -84,33 +164,7 @@ export function Clientes() {
                   {group.country}
                 </p>
 
-                <div className="mt-6 flex flex-wrap gap-3 lg:mt-[clamp(0.75rem,2.6vh,2rem)]">
-                  {group.clients.map((client, i) => (
-                    <motion.div
-                      key={client.name}
-                      variants={logoVariants}
-                      // Debajo de lg: entra al aparecer en pantalla (retardo corto entre los de una misma fila). En
-                      // escritorio estas propiedades NO se pasan (ni vacías): con `viewport` el logo se activaría
-                      // por su cuenta y rompería el orden de la cascada que dirige la lista.
-                      {...(isDesktop ? {} : { ...logoOwnTrigger, custom: (i % 3) * 0.06, initial: reduceMotion ? undefined : 'hidden' })}
-                      className={`group relative flex items-center justify-center bg-white ${
-                        solo
-                          ? 'h-20 w-56 shrink-0 p-3 sm:h-24 sm:w-72 sm:p-4 lg:h-[clamp(4.75rem,14vh,8.5rem)] lg:w-[clamp(14rem,42vh,25.5rem)] 2xl:p-5'
-                          : 'h-28 min-w-28 max-w-40 flex-1 p-2.5 sm:h-32 sm:min-w-32 sm:max-w-48 sm:p-3 lg:h-[clamp(5.75rem,19vh,10.5rem)] 2xl:min-w-40 2xl:max-w-56 2xl:p-4'
-                      }`}
-                    >
-                      <span aria-hidden="true" className="absolute -left-px -top-px h-4 w-4 border-l-2 border-t-2 border-navy-200" />
-                      <span aria-hidden="true" className="absolute -bottom-px -right-px h-4 w-4 border-b-2 border-r-2 border-navy-200" />
-                      <img
-                        src={client.logo}
-                        alt={client.name}
-                        loading="lazy"
-                        decoding="async"
-                        className="h-full w-full object-contain transition-transform duration-300 group-hover:scale-105"
-                      />
-                    </motion.div>
-                  ))}
-                </div>
+                <ClientLogos clients={group.clients} solo={solo} isDesktop={isDesktop} reduceMotion={reduceMotion} />
                 </motion.div>
               </div>
             )
