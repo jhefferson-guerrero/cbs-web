@@ -53,13 +53,21 @@ export function Hero({ ready }: { ready: boolean }) {
     return () => observer.disconnect()
   }, [])
 
-  // El párrafo del hero es el elemento más grande de la primera pantalla (el LCP que mide Lighthouse):
-  // mientras se desvanece, la métrica sigue contando, por eso estos tiempos son cortos.
   const fadeUp = (delay: number) => ({
     initial: reduceMotion ? false : { opacity: 0, y: 18, filter: 'blur(4px)' },
     animate: play
       ? { opacity: 1, y: 0, filter: 'blur(0px)' }
       : { opacity: 0, y: 18, filter: 'blur(4px)' },
+    transition: { duration: 0.7, delay, ease: [0.16, 1, 0.3, 1] as const },
+  })
+
+  // El párrafo es el elemento más grande de la primera pantalla: es el LCP que mide Lighthouse. Chrome no lo cuenta
+  // mientras está en opacity 0 y, en la práctica, lo registra cuando termina de aparecer (retardo + fundido). Por eso este
+  // no nace transparente: queda pintado desde el primer render (tapado por el preloader) y entra "enfocándose" y subiendo,
+  // sin fundido de opacidad.
+  const focusIn = (delay: number) => ({
+    initial: reduceMotion ? false : { opacity: 1, y: 18, filter: 'blur(4px)' },
+    animate: play ? { opacity: 1, y: 0, filter: 'blur(0px)' } : { opacity: 1, y: 18, filter: 'blur(4px)' },
     transition: { duration: 0.7, delay, ease: [0.16, 1, 0.3, 1] as const },
   })
 
@@ -138,7 +146,7 @@ export function Hero({ ready }: { ready: boolean }) {
             </h1>
 
             <motion.p
-              {...fadeUp(0.4)}
+              {...focusIn(0.25)}
               className="mt-8 max-w-[54ch] text-pretty text-base leading-relaxed text-white/85 sm:mt-6 md:text-lg 2xl:max-w-[46ch] 2xl:text-xl [@media(max-height:600px)]:mt-4"
             >
               Desde 2009 ejecutamos proyectos de infraestructura de mediana y gran escala en
@@ -147,7 +155,7 @@ export function Hero({ ready }: { ready: boolean }) {
             </motion.p>
 
             <motion.div
-              {...fadeUp(0.55)}
+              {...fadeUp(0.4)}
               className="mt-10 flex flex-wrap items-center gap-3 sm:mt-9 sm:gap-4 [@media(max-height:600px)]:mt-6"
             >
               <Button href="#proyectos" variant="solid" icon={<ArrowRightIcon size={18} weight="regular" />}>

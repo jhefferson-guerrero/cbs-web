@@ -9,7 +9,8 @@ import { getLimpCityHeroVariant } from '@/lib/limp-city-hero'
 // puede llegar después sin que se note, así que el preloader no las espera.
 const CRITICAL_FONTS = ['400 1em "IBM Plex Sans"', '600 1em "IBM Plex Sans"']
 
-const MIN_DISPLAY_MS = 400
+// Tiempo mínimo en pantalla: lo justo para que se vea el logo, sin retrasar el texto del hero (es el LCP de la página).
+const MIN_DISPLAY_MS = 300
 const MAX_DISPLAY_MS = 4000
 
 function preloadImage(src: string, srcset?: string, sizes?: string) {
@@ -93,11 +94,13 @@ export function Preloader({ onReady }: { onReady: () => void }) {
     Promise.race([Promise.all([assetsReady, minTimer]), maxTimer]).then(() => {
       if (cancelled) return
 
+      // La página se libera de inmediato: el contador llega a 100 mientras el preloader se desvanece, y los textos
+      // del hero entran por debajo. Antes se esperaba a que el contador terminara (0.25 s) para soltar la página.
+      onReady()
       if (reduceMotion) {
         count.set(100)
-        onReady()
       } else {
-        animate(count, 100, { duration: 0.25, ease: 'easeOut', onComplete: onReady })
+        animate(count, 100, { duration: 0.25, ease: 'easeOut' })
       }
     })
 
