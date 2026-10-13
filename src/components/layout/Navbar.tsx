@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useState } from 'react'
+import { Fragment, useEffect, useLayoutEffect, useState } from 'react'
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react'
 import { useLenis } from 'lenis/react'
 import { useLocation } from 'react-router-dom'
@@ -68,6 +68,8 @@ function PartnerLogo({
 export function Navbar({ ready }: { ready: boolean }) {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  // true durante el cambio de página: la barra toma su estado nuevo (blanca o transparente) sin la transición de color.
+  const [instant, setInstant] = useState(false)
   const [hoveredHref, setHoveredHref] = useState<string | null>(null)
   const [activeHref, setActiveHref] = useState<string | null>(null)
   const reduceMotion = useReducedMotion()
@@ -80,6 +82,20 @@ export function Navbar({ ready }: { ready: boolean }) {
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
+
+  // Al cambiar de página el scroll se reposiciona (SmoothScroll) y el evento "scroll" llega un fotograma después: sin
+  // esto, la página nueva se pintaba una vez con la barra de la anterior (blanca o transparente) y luego se animaba
+  // 300 ms hacia la correcta, que se veía como un parpadeo. Aquí se lee el scroll ya reposicionado, antes de pintar, y
+  // se suspenden las transiciones de la barra por esos fotogramas.
+  useLayoutEffect(() => {
+    // oxlint-disable-next-line react/set-state-in-effect -- sincroniza con un valor externo (window.scrollY) antes de pintar
+    setIsScrolled(window.scrollY > 16)
+    setInstant(true)
+    let frame = requestAnimationFrame(() => {
+      frame = requestAnimationFrame(() => setInstant(false))
+    })
+    return () => cancelAnimationFrame(frame)
+  }, [pathname])
 
   // Scrollspy: la sección activa es la última cuyo inicio ya pasó una línea de
   // lectura ubicada al 40% de la altura de la pantalla. Se calcula con la
@@ -147,6 +163,7 @@ export function Navbar({ ready }: { ready: boolean }) {
   return (
     <motion.header
       id="site-header"
+      data-instant={instant ? '' : undefined}
       initial={reduceMotion ? false : { opacity: 0, y: -12 }}
       animate={reduceMotion || ready ? { opacity: 1, y: 0 } : { opacity: 0, y: -12 }}
       transition={{ duration: 0.7, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}

@@ -131,6 +131,13 @@
   }
 }
 
+/* La barra de navegación cambia de estado (blanca / transparente) sin transición mientras se cambia de página
+   (ver Navbar.tsx): así no se anima un estado de la página anterior. */
+#site-header[data-instant],
+#site-header[data-instant] * {
+  transition: none !important;
+}
+
 /* Transición entre páginas (los enlaces PageLink la piden, ver lib/page-transition.ts): el navegador toma una
    "foto" de la página que se va y la funde con la nueva. La anterior se queda debajo, intacta, y la nueva
    aparece encima poco a poco; así nunca hay un instante vacío ni un corte seco, incluso al pasar de una
