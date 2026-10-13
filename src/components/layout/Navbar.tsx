@@ -35,7 +35,7 @@ function PartnerLogo({
         width={256}
         height={256}
         loading="lazy"
-        className={cn('[grid-area:1/1] w-auto transition-opacity duration-300', className, isSolid ? 'opacity-100' : 'opacity-0')}
+        className={cn('[grid-area:1/1] w-auto', className, isSolid ? 'opacity-100' : 'opacity-0')}
       />
       <img
         src={partner.logo}
@@ -44,7 +44,7 @@ function PartnerLogo({
         width={256}
         height={256}
         loading="lazy"
-        className={cn('[grid-area:1/1] w-auto brightness-0 invert transition-opacity duration-300', className, isSolid ? 'opacity-0' : 'opacity-100')}
+        className={cn('[grid-area:1/1] w-auto brightness-0 invert', className, isSolid ? 'opacity-0' : 'opacity-100')}
       />
     </>
   )
@@ -68,8 +68,6 @@ function PartnerLogo({
 export function Navbar({ ready }: { ready: boolean }) {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
-  // true durante el cambio de página: la barra toma su estado nuevo (blanca o transparente) sin la transición de color.
-  const [instant, setInstant] = useState(false)
   const [hoveredHref, setHoveredHref] = useState<string | null>(null)
   const [activeHref, setActiveHref] = useState<string | null>(null)
   const reduceMotion = useReducedMotion()
@@ -84,17 +82,16 @@ export function Navbar({ ready }: { ready: boolean }) {
   }, [])
 
   // Al cambiar de página el scroll se reposiciona (SmoothScroll) y el evento "scroll" llega un fotograma después: sin
-  // esto, la página nueva se pintaba una vez con la barra de la anterior (blanca o transparente) y luego se animaba
-  // 300 ms hacia la correcta, que se veía como un parpadeo. Aquí se lee el scroll ya reposicionado, antes de pintar, y
-  // se suspenden las transiciones de la barra por esos fotogramas.
+  // esto, la página nueva se pintaba una vez con la barra de la anterior (blanca o transparente) y recién después
+  // pasaba a la correcta. Aquí se lee el scroll ya reposicionado, antes de pintar.
+  //
+  // La barra cambia de estado (blanca / transparente) de golpe, sin transiciones de color ni de opacidad: con
+  // transiciones, al terminar el fundido Chrome repintaba la barra y en 1 de cada ~8 cambios un fotograma salía en
+  // blanco (un parpadeo), y a mitad del fundido el texto quedaba ilegible. Sin ellas, fondo, texto y logos cambian en
+  // el mismo fotograma.
   useLayoutEffect(() => {
     // oxlint-disable-next-line react/set-state-in-effect -- sincroniza con un valor externo (window.scrollY) antes de pintar
     setIsScrolled(window.scrollY > 16)
-    setInstant(true)
-    let frame = requestAnimationFrame(() => {
-      frame = requestAnimationFrame(() => setInstant(false))
-    })
-    return () => cancelAnimationFrame(frame)
   }, [pathname])
 
   // Scrollspy: la sección activa es la última cuyo inicio ya pasó una línea de
@@ -163,13 +160,11 @@ export function Navbar({ ready }: { ready: boolean }) {
   return (
     <motion.header
       id="site-header"
-      data-instant={instant ? '' : undefined}
       initial={reduceMotion ? false : { opacity: 0, y: -12 }}
       animate={reduceMotion || ready ? { opacity: 1, y: 0 } : { opacity: 0, y: -12 }}
       transition={{ duration: 0.7, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
       className={cn(
-        'fixed inset-x-0 top-0 z-50 transition-colors',
-        isMenuOpen ? 'duration-0' : 'duration-300',
+        'fixed inset-x-0 top-0 z-50',
         isSolid ? 'bg-white shadow-nav' : 'bg-transparent',
       )}
     >
@@ -182,7 +177,7 @@ export function Navbar({ ready }: { ready: boolean }) {
               width={652}
               height={296}
               className={cn(
-                '[grid-area:1/1] h-9 w-auto transition-opacity duration-300',
+                '[grid-area:1/1] h-9 w-auto',
                 isSolid ? 'opacity-100' : 'opacity-0',
               )}
             />
@@ -192,7 +187,7 @@ export function Navbar({ ready }: { ready: boolean }) {
               width={652}
               height={296}
               className={cn(
-                '[grid-area:1/1] h-9 w-auto brightness-0 invert transition-opacity duration-300',
+                '[grid-area:1/1] h-9 w-auto brightness-0 invert',
                 isSolid ? 'opacity-0' : 'opacity-100',
               )}
             />
@@ -206,7 +201,7 @@ export function Navbar({ ready }: { ready: boolean }) {
               height={211}
               loading="lazy"
               className={cn(
-                '[grid-area:1/1] h-9 w-auto transition-opacity duration-300 xl:h-10 2xl:h-12',
+                '[grid-area:1/1] h-9 w-auto xl:h-10 2xl:h-12',
                 isSolid ? 'opacity-100' : 'opacity-0',
               )}
             />
@@ -217,7 +212,7 @@ export function Navbar({ ready }: { ready: boolean }) {
               height={211}
               loading="lazy"
               className={cn(
-                '[grid-area:1/1] h-9 w-auto brightness-0 invert transition-opacity duration-300 xl:h-10 2xl:h-12',
+                '[grid-area:1/1] h-9 w-auto brightness-0 invert xl:h-10 2xl:h-12',
                 isSolid ? 'opacity-0' : 'opacity-100',
               )}
             />
@@ -240,7 +235,7 @@ export function Navbar({ ready }: { ready: boolean }) {
                 onBlur={() => setHoveredHref(null)}
                 aria-current={isActive ? 'true' : undefined}
                 className={cn(
-                  'relative rounded-lg px-2 py-2 text-[15px] font-semibold outline-none transition-colors focus-visible:ring-2 focus-visible:ring-cyan-400 xl:px-4 xl:text-base 2xl:px-5 2xl:text-lg',
+                  'relative rounded-lg px-2 py-2 text-[15px] font-semibold outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 xl:px-4 xl:text-base 2xl:px-5 2xl:text-lg',
                   isActive
                     ? isSolid
                       ? 'text-cyan-700'
@@ -288,7 +283,7 @@ export function Navbar({ ready }: { ready: boolean }) {
               {i > 0 && (
                 <span
                   aria-hidden="true"
-                  className={cn('h-6 w-px transition-colors duration-300 2xl:h-8', isSolid ? 'bg-navy-200' : 'bg-white/30')}
+                  className={cn('h-6 w-px 2xl:h-8', isSolid ? 'bg-navy-200' : 'bg-white/30')}
                 />
               )}
               <PartnerLogo partner={partner} isSolid={isSolid} className="h-8 xl:h-10 2xl:h-12" />
@@ -300,7 +295,7 @@ export function Navbar({ ready }: { ready: boolean }) {
           type="button"
           onClick={() => setIsMenuOpen((open) => !open)}
           className={cn(
-            'inline-flex h-10 w-10 items-center justify-center rounded-md transition-colors lg:hidden',
+            'inline-flex h-10 w-10 items-center justify-center rounded-md lg:hidden',
             isSolid ? 'text-navy-900' : 'text-white',
           )}
           aria-label={isMenuOpen ? 'Cerrar menú' : 'Abrir menú'}
