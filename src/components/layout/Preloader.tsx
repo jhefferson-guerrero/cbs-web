@@ -9,9 +9,13 @@ import { getLimpCityHeroVariant } from '@/lib/limp-city-hero'
 // puede llegar después sin que se note, así que el preloader no las espera.
 const CRITICAL_FONTS = ['400 1em "IBM Plex Sans"', '600 1em "IBM Plex Sans"']
 
-// Tiempo mínimo en pantalla: lo justo para que se vea el logo, sin retrasar el texto del hero (es el LCP de la página).
-const MIN_DISPLAY_MS = 300
-const MAX_DISPLAY_MS = 4000
+// Tiempo mínimo en pantalla: el logo tarda 0.85 s en dibujarse (0.25 s de retardo + 0.6 s de recorrido), así que la animación
+// siempre se ve completa antes de entrar a la página, por rápido que cargue todo. Si los recursos importantes (imagen del hero y
+// fuentes) tardan más, el preloader espera hasta que estén listos, con un tope por si la conexión es muy lenta.
+const MIN_DISPLAY_MS = 950
+// Sin animación (reducir movimiento) no hay logo que dibujar: basta un instante.
+const MIN_DISPLAY_REDUCED_MS = 300
+const MAX_DISPLAY_MS = 6000
 
 function preloadImage(src: string, srcset?: string, sizes?: string) {
   return new Promise<void>((resolve) => {
@@ -70,7 +74,7 @@ export function Preloader({ onReady }: { onReady: () => void }) {
   useEffect(() => {
     let cancelled = false
 
-    const minTimer = wait(MIN_DISPLAY_MS)
+    const minTimer = wait(reduceMotion ? MIN_DISPLAY_REDUCED_MS : MIN_DISPLAY_MS)
     const maxTimer = wait(MAX_DISPLAY_MS)
     // Cada fondo de hero solo se muestra en su ruta (el de CBS en el inicio, el
     // de Limp City en /limp-city); no gastar datos descargándolos mientras el
@@ -88,19 +92,19 @@ export function Preloader({ onReady }: { onReady: () => void }) {
     const assetsReady = Promise.all([heroReady, fontsReady])
 
     if (!reduceMotion) {
-      animate(count, 92, { duration: 0.6, ease: [0.16, 1, 0.3, 1] })
+      // El contador avanza al ritmo del logo (llega a 92 cuando éste termina de dibujarse) y espera ahí a los recursos.
+      animate(count, 92, { duration: MIN_DISPLAY_MS / 1000, ease: [0.16, 1, 0.3, 1] })
     }
 
     Promise.race([Promise.all([assetsReady, minTimer]), maxTimer]).then(() => {
       if (cancelled) return
 
-      // La página se libera de inmediato: el contador llega a 100 mientras el preloader se desvanece, y los textos
-      // del hero entran por debajo. Antes se esperaba a que el contador terminara (0.25 s) para soltar la página.
-      onReady()
+      // Todo listo: el contador llega a 100 y recién entonces se libera la página.
       if (reduceMotion) {
         count.set(100)
+        onReady()
       } else {
-        animate(count, 100, { duration: 0.25, ease: 'easeOut' })
+        animate(count, 100, { duration: 0.2, ease: 'easeOut', onComplete: onReady })
       }
     })
 
