@@ -4,6 +4,7 @@ import { ArrowLeftIcon, ArrowRightIcon } from '@phosphor-icons/react'
 import { Lightbox } from '@/components/ui/Lightbox'
 import { cn } from '@/lib/utils'
 import mapaCobertura from '@/assets/images/actuacion-mapa.webp'
+import mapaCobertura1600 from '@/assets/images/actuacion-mapa-1600.webp'
 
 // Proporción de la imagen fuente: la tarjeta tiene exactamente esta forma,
 // así el mapa se ve completo y sin franjas de otro tono alrededor.
@@ -45,7 +46,7 @@ export function Actuacion() {
         initial={reduceMotion ? false : { opacity: 0, y: 24 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.3 }}
-        transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+        transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
         className="mx-auto max-w-4xl text-center"
       >
         <p className="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-cyan-700 2xl:text-sm">
@@ -68,8 +69,12 @@ export function Actuacion() {
           className="relative isolate min-w-[760px] overflow-hidden bg-navy-950 shadow-card lg:h-full lg:min-w-0"
           style={{ aspectRatio: MAP_RATIO }}
         >
+          {/* Dos tamaños de la misma imagen: un celular (el mapa se muestra a ~760 px de ancho) no necesita decodificar la de 2752 px
+              (~17 MB en memoria, un tirón justo cuando la sección entra). El visor ampliado (Lightbox) usa siempre la grande. */}
           <motion.img
             src={mapaCobertura}
+            srcSet={`${mapaCobertura1600} 1600w, ${mapaCobertura} 2752w`}
+            sizes="(min-width: 1024px) 100vw, 760px"
             alt="Mapa de cobertura de CBS en Perú y Brasil, con las regiones donde opera en cada país"
             width={MAP_WIDTH}
             height={MAP_HEIGHT}
@@ -78,7 +83,7 @@ export function Actuacion() {
             initial={reduceMotion ? false : { scale: 1.06 }}
             whileInView={{ scale: 1 }}
             viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
             className="h-full w-full object-cover"
           />
 
@@ -108,15 +113,16 @@ export function Actuacion() {
           />
         </div>
       </div>
-        {/* Móvil: cortina del ancho de la pantalla (no del mapa completo), con una curva suave de salida y entrada
-            para que el mapa se descubra de izquierda a derecha de forma visible y no aparezca de golpe. */}
+        {/* Móvil: cortina del ancho de la pantalla (no del mapa completo). Arranca en cuanto asoma el mapa (25%, antes 60%) y
+            empieza a moverse de inmediato y frena al final (antes: curva lenta al inicio y al final, 1.1 s): el mapa se descubre de
+            izquierda a derecha de forma visible, sin hacer esperar. */}
         {!reduceMotion && (
           <motion.div
             aria-hidden="true"
             initial={{ scaleX: 1 }}
             whileInView={{ scaleX: 0 }}
-            viewport={{ once: true, amount: 0.6 }}
-            transition={{ duration: 1.1, ease: [0.65, 0, 0.35, 1] }}
+            viewport={{ once: true, amount: 0.25 }}
+            transition={{ duration: 0.7, ease: [0.33, 1, 0.68, 1] }}
             style={{ transformOrigin: 'right' }}
             className="pointer-events-none absolute inset-0 bg-navy-950 lg:hidden"
           />
