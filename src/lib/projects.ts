@@ -3,6 +3,11 @@ import galeriaRioHuatanay02 from '@/assets/images/proyectos/rio-huatanay/galeria
 import galeriaRioHuatanay03 from '@/assets/images/proyectos/rio-huatanay/galeria-03.webp'
 import galeriaRioHuatanay04 from '@/assets/images/proyectos/rio-huatanay/galeria-04.webp'
 import galeriaRioHuatanay05 from '@/assets/images/proyectos/rio-huatanay/galeria-05.webp'
+import coverRioHuatanay640 from '@/assets/images/proyectos/rio-huatanay/cover-640.webp'
+import coverRioHuatanay960 from '@/assets/images/proyectos/rio-huatanay/cover-960.webp'
+import coverRioHuatanay1280 from '@/assets/images/proyectos/rio-huatanay/cover-1280.webp'
+import coverTambopata640 from '@/assets/images/proyectos/drenaje-tambopata/cover-640.webp'
+import coverTambopata960 from '@/assets/images/proyectos/drenaje-tambopata/cover-960.webp'
 import galeriaTambopata01 from '@/assets/images/proyectos/drenaje-tambopata/galeria-01.webp'
 import galeriaTambopata02 from '@/assets/images/proyectos/drenaje-tambopata/galeria-02.webp'
 import galeriaTambopata03 from '@/assets/images/proyectos/drenaje-tambopata/galeria-03.webp'
@@ -42,6 +47,8 @@ export interface Project {
   title: string
   location: string
   cover: string
+  /** La portada en varios tamaños: la tarjeta de la Home la usa con `sizes` (un celular no necesita descargar ni decodificar la foto grande). La cabecera del proyecto usa `cover`. */
+  coverSrcSet: string
   client: Party
   contractor: Party
   amount: string
@@ -58,6 +65,7 @@ export const projects: Project[] = [
     title: 'Ampliación del servicio de agua potable — Margen derecha del Huatanay',
     location: 'Distrito Santiago, Cusco',
     cover: galeriaRioHuatanay04,
+    coverSrcSet: `${coverRioHuatanay640} 640w, ${coverRioHuatanay960} 960w, ${coverRioHuatanay1280} 1280w, ${galeriaRioHuatanay04} 1536w`,
     client: { name: 'Programa Nacional de Saneamiento Urbano', logo: logoClientePnsu },
     contractor: { name: 'Consorcio Río Huatanay', logo: logoContratistaRioHuatanay, note: '50% de participación' },
     amount: 'S/ 62,826,654',
@@ -77,6 +85,7 @@ export const projects: Project[] = [
     title: 'Sistema de drenaje pluvial urbano — Sector Tambopata',
     location: 'Distrito de Tambopata, Madre de Dios',
     cover: galeriaTambopata01,
+    coverSrcSet: `${coverTambopata640} 640w, ${coverTambopata960} 960w, ${galeriaTambopata01} 1365w`,
     client: { name: 'Programa Nacional de Saneamiento Urbano', logo: logoClientePnsu },
     contractor: { name: 'Consorcio Tambopata', logo: logoContratistaTambopata, note: 'CBS Líder, 50% de participación' },
     amount: 'S/ 323,553,522',

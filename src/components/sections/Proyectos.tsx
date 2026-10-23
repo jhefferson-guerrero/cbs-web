@@ -3,6 +3,10 @@ import { PageLink } from '@/components/ui/PageLink'
 import { ArrowUpRightIcon, MapPinIcon } from '@phosphor-icons/react'
 import { projects } from '@/lib/projects'
 
+// Ancho real de la foto en la tarjeta (con margen: la foto se recorta con object-cover, así que a veces se amplía un poco): en
+// celular, casi todo el ancho; desde 768 px, algo más de la mitad. El navegador elige la versión más chica que alcance.
+const COVER_SIZES = '(min-width: 768px) 55vw, calc(100vw - 3rem)'
+
 export function Proyectos() {
   const reduceMotion = useReducedMotion()
 
@@ -56,6 +60,8 @@ export function Proyectos() {
               <div className="relative aspect-[4/3] overflow-hidden sm:aspect-[2/1] lg:aspect-auto lg:min-h-0 lg:flex-1">
                 <img
                   src={project.cover}
+                  srcSet={project.coverSrcSet}
+                  sizes={COVER_SIZES}
                   alt={project.title}
                   loading="lazy"
                   decoding="async"
