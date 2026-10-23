@@ -74,7 +74,7 @@ export function Actuacion() {
           <motion.img
             src={mapaCobertura}
             srcSet={`${mapaCobertura1600} 1600w, ${mapaCobertura} 2752w`}
-            sizes="(min-width: 1024px) 100vw, 760px"
+            sizes="(min-width: 1024px) 100vw, max(760px, calc(100vw - 5rem))"
             alt="Mapa de cobertura de CBS en Perú y Brasil, con las regiones donde opera en cada país"
             width={MAP_WIDTH}
             height={MAP_HEIGHT}
