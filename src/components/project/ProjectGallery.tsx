@@ -290,7 +290,22 @@ export function ProjectGallery({ images }: { images: GalleryImage[] }) {
             <div
               ref={lightboxFrameRef}
               className="relative h-[85vh] w-full max-w-5xl"
-              onClick={(event) => event.stopPropagation()}
+              onClick={(event) => {
+                event.stopPropagation()
+                // La foto se ajusta dentro de este marco (object-contain), que es más grande que ella: las franjas vacías de los
+                // lados también reciben el clic. Se cierra si el clic cae fuera de la foto misma; sobre la foto, o con zoom, no.
+                const img = event.currentTarget.querySelector('img')
+                if (zoomed || !img || !img.naturalWidth) return
+                const box = img.getBoundingClientRect()
+                const fit = Math.min(box.width / img.naturalWidth, box.height / img.naturalHeight)
+                const width = img.naturalWidth * fit
+                const height = img.naturalHeight * fit
+                const left = box.left + (box.width - width) / 2
+                const top = box.top + (box.height - height) / 2
+                const onPhoto =
+                  event.clientX >= left && event.clientX <= left + width && event.clientY >= top && event.clientY <= top + height
+                if (!onPhoto) setLightboxOpen(false)
+              }}
             >
               <motion.div
                 onTap={handleImageTap}
