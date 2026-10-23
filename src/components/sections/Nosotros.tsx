@@ -11,11 +11,17 @@ const timeline = [
   { year: 'Hoy', label: '3 proyectos en desarrollo en Perú', current: true },
 ]
 
+// Esquina decorativa de la foto: entra con un pequeño zoom, justo cuando el riel la va descubriendo.
+const cornerVariants = (delay: number) => ({
+  hidden: { opacity: 0, scale: 1.6 },
+  show: { opacity: 1, scale: 1, transition: { duration: 0.3, delay, ease: 'easeOut' as const } },
+})
+
 // Segundos que tarda cada hito en encenderse después del anterior.
-const MILESTONE_STEP = 0.6
+const MILESTONE_STEP = 0.28
 // Segundos que espera la línea de tiempo antes de empezar: el titular y los dos párrafos entran primero (el segundo
-// arranca a 0.22 s y dura 0.65 s) y la línea de tiempo sigue después, en vez de salir junto con ellos.
-const TIMELINE_START = 0.6
+// arranca a 0.16 s y dura 0.5 s) y la línea de tiempo sigue después, en vez de salir junto con ellos.
+const TIMELINE_START = 0.3
 
 // Un hito de la línea de tiempo. Cuando la lista entra en pantalla (una sola vez), su punto se enciende en
 // cian y la línea hacia el siguiente se rellena, uno tras otro de arriba hacia abajo.
@@ -31,14 +37,14 @@ function TimelineItem({
   reduceMotion: boolean | null
 }) {
   const total = timeline.length
-  const dotDelay = TIMELINE_START + 0.35 + index * MILESTONE_STEP
+  const dotDelay = TIMELINE_START + 0.15 + index * MILESTONE_STEP
 
   return (
     <motion.div
       initial={reduceMotion ? false : { opacity: 0, y: 10 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.5 }}
-      transition={{ duration: 0.5, delay: TIMELINE_START + index * 0.12, ease: [0.16, 1, 0.3, 1] }}
+      viewport={{ once: true, amount: 0.3 }}
+      transition={{ duration: 0.45, delay: TIMELINE_START + index * 0.08, ease: [0.16, 1, 0.3, 1] }}
       className="flex gap-4"
     >
       <div className="flex flex-col items-center">
@@ -56,7 +62,7 @@ function TimelineItem({
             <motion.span
               initial={reduceMotion ? false : { scaleY: 0 }}
               animate={lit ? { scaleY: 1 } : undefined}
-              transition={{ duration: MILESTONE_STEP - 0.1, delay: dotDelay + 0.15, ease: [0.16, 1, 0.3, 1] }}
+              transition={{ duration: MILESTONE_STEP - 0.04, delay: dotDelay + 0.08, ease: [0.16, 1, 0.3, 1] }}
               className="absolute inset-0 origin-top bg-cyan-500"
             />
           </span>
@@ -83,7 +89,7 @@ function TimelineItem({
 export function Nosotros() {
   const reduceMotion = useReducedMotion()
   const timelineRef = useRef<HTMLDivElement>(null)
-  const timelineInView = useInView(timelineRef, { once: true, amount: 0.6 })
+  const timelineInView = useInView(timelineRef, { once: true, amount: 0.4 })
 
   return (
     <section id="nosotros" className="bg-white">
@@ -93,8 +99,8 @@ export function Nosotros() {
             <motion.h2
               initial={reduceMotion ? false : { opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.8 }}
-              transition={{ duration: 0.65, delay: 0.06, ease: [0.16, 1, 0.3, 1] }}
+              viewport={{ once: true, amount: 0.5 }}
+              transition={{ duration: 0.5, delay: 0, ease: [0.16, 1, 0.3, 1] }}
               className="text-3xl font-bold leading-tight text-white md:text-4xl lg:text-[clamp(2.25rem,5.6vh,4.25rem)]"
             >
               Nosotros
@@ -106,8 +112,8 @@ export function Nosotros() {
               <motion.p
                 initial={reduceMotion ? false : { opacity: 0, y: 18 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.4 }}
-                transition={{ duration: 0.65, delay: 0.12, ease: [0.16, 1, 0.3, 1] }}
+                viewport={{ once: true, amount: 0.3 }}
+                transition={{ duration: 0.5, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
                 className="text-[15.5px] leading-relaxed text-navy-200 lg:text-[clamp(15.5px,2.1vh,22px)]"
               >
                 Somos una organización con sólida trayectoria en la ejecución de obras de saneamiento,
@@ -118,8 +124,8 @@ export function Nosotros() {
               <motion.p
                 initial={reduceMotion ? false : { opacity: 0, y: 18 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.4 }}
-                transition={{ duration: 0.65, delay: 0.22, ease: [0.16, 1, 0.3, 1] }}
+                viewport={{ once: true, amount: 0.3 }}
+                transition={{ duration: 0.5, delay: 0.16, ease: [0.16, 1, 0.3, 1] }}
                 className="text-[15.5px] leading-relaxed text-navy-200 lg:text-[clamp(15.5px,2.1vh,22px)]"
               >
                 Guiados por valores como integridad, responsabilidad social y cuidado ambiental, en CBS
@@ -139,7 +145,15 @@ export function Nosotros() {
           </div>
         </div>
 
-        <div className="relative h-full min-h-[360px] overflow-hidden lg:min-h-0">
+        {/* Un solo disparo para la columna de la foto: el riel y las dos esquinas arrancan juntos. Antes cada esquina tenía el
+            suyo (con amount 0.8 sobre un cuadro de 28 px), y la de abajo, pegada al borde de la sección, esperaba a que casi
+            toda la sección estuviera en pantalla. */}
+        <motion.div
+          initial={reduceMotion ? false : 'hidden'}
+          whileInView="show"
+          viewport={{ once: true, amount: 0.15 }}
+          className="relative h-full min-h-[360px] overflow-hidden lg:min-h-0"
+        >
           {/* La mesa de planos y el grupo están al lado derecho de la foto (del 50% al 91% del ancho): se ancla
               a la derecha para que se vea completa. travel más corto = la capa se amplía menos y no recorta. */}
           <Parallax travel={10}>
@@ -166,18 +180,12 @@ export function Nosotros() {
 
           <motion.span
             aria-hidden="true"
-            initial={reduceMotion ? false : { opacity: 0, scale: 1.6 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true, amount: 0.8 }}
-            transition={{ duration: 0.4, delay: 0.5, ease: 'easeOut' }}
+            variants={cornerVariants(0.2)}
             className="absolute right-9 top-9 h-7 w-7 border-r-2 border-t-2 border-white/70"
           />
           <motion.span
             aria-hidden="true"
-            initial={reduceMotion ? false : { opacity: 0, scale: 1.6 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true, amount: 0.8 }}
-            transition={{ duration: 0.4, delay: 0.6, ease: 'easeOut' }}
+            variants={cornerVariants(0.3)}
             className="absolute bottom-9 left-9 h-7 w-7 border-b-2 border-l-2 border-white/70"
           />
 
@@ -193,7 +201,7 @@ export function Nosotros() {
             style={{ transformOrigin: 'left' }}
             className="absolute inset-0 bg-navy-950"
           />
-        </div>
+        </motion.div>
       </div>
     </section>
   )
