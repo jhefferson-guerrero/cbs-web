@@ -18,12 +18,12 @@ function parseAmount(amount: string) {
 // queda fuera de la primera pantalla, también se anima al llegar a ella. `custom` es el retardo: la ficha de la
 // derecha de cada fila entra un poco después que la de la izquierda.
 const itemVariants = {
-  hidden: { opacity: 0, y: 48 },
-  show: (delay: number) => ({ opacity: 1, y: 0, transition: { duration: 1, delay, ease: EASE } }),
+  hidden: { opacity: 0, y: 28 },
+  show: (delay: number) => ({ opacity: 1, y: 0, transition: { duration: 0.6, delay, ease: EASE } }),
 }
 const lineVariants = {
   hidden: { scaleX: 0 },
-  show: (delay: number) => ({ scaleX: 1, transition: { duration: 1.2, delay: delay + 0.1, ease: EASE } }),
+  show: (delay: number) => ({ scaleX: 1, transition: { duration: 0.7, delay: delay + 0.05, ease: EASE } }),
 }
 
 export function ProjectFacts({ project, ready = true }: { project: Project; ready?: boolean }) {
@@ -36,7 +36,7 @@ export function ProjectFacts({ project, ready = true }: { project: Project; read
   const [heroDone, setHeroDone] = useState(false)
   useEffect(() => {
     if (!ready) return
-    const id = window.setTimeout(() => setHeroDone(true), behindPreloader ? 1250 : 800)
+    const id = window.setTimeout(() => setHeroDone(true), behindPreloader ? 800 : 350)
     return () => window.clearTimeout(id)
   }, [ready, behindPreloader])
   const started = reduceMotion || heroDone
@@ -54,8 +54,8 @@ export function ProjectFacts({ project, ready = true }: { project: Project; read
         <motion.p
           initial={reduceMotion ? false : { opacity: 0, y: 20 }}
           whileInView={started ? { opacity: 1, y: 0 } : undefined}
-          viewport={{ once: true, amount: 0.8 }}
-          transition={{ duration: 0.8, ease: EASE }}
+          viewport={{ once: true, amount: 0.5 }}
+          transition={{ duration: 0.5, ease: EASE }}
           className="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-cyan-700 2xl:text-sm"
         >
           Ficha del proyecto
@@ -66,10 +66,10 @@ export function ProjectFacts({ project, ready = true }: { project: Project; read
             <motion.div
               key={fact.label}
               variants={itemVariants}
-              custom={0.15 + (i % 2) * 0.15}
+              custom={0.05 + (i % 2) * 0.08}
               initial={reduceMotion ? false : 'hidden'}
               whileInView={started ? 'show' : undefined}
-              viewport={{ once: true, amount: 0.5 }}
+              viewport={{ once: true, amount: 0.3 }}
               className="relative flex items-center justify-between gap-4 pt-6 sm:gap-6"
             >
               <motion.span
@@ -90,7 +90,7 @@ export function ProjectFacts({ project, ready = true }: { project: Project; read
                     typeof window === 'undefined' ? (
                       fact.value
                     ) : started ? (
-                      <Counter to={fact.amount.to} format={(n) => `${fact.amount?.prefix ?? ''}${withCommas(n)}`} />
+                      <Counter to={fact.amount.to} duration={1.4} delay={0.1} format={(n) => `${fact.amount?.prefix ?? ''}${withCommas(n)}`} />
                     ) : (
                       `${fact.amount.prefix}0`
                     )

@@ -22,13 +22,13 @@ export function ProjectHero({ project, ready }: { project: Project; ready: boole
     animate: play
       ? { opacity: 1, y: 0, filter: 'blur(0px)' }
       : { opacity: 0, y: distance, filter: 'blur(6px)' },
-    transition: { duration: 0.85, delay: delay + wait, ease: EASE },
+    transition: { duration: 0.6, delay: delay + wait, ease: EASE },
   })
 
   const corner = (delay: number) => ({
     initial: reduceMotion ? (false as const) : { opacity: 0, scale: 1.8 },
     animate: play ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 1.8 },
-    transition: { duration: 0.6, delay: delay + wait, ease: 'easeOut' as const },
+    transition: { duration: 0.4, delay: delay + wait, ease: 'easeOut' as const },
   })
 
   return (
@@ -41,25 +41,25 @@ export function ProjectHero({ project, ready }: { project: Project; ready: boole
         decoding="async"
         initial={reduceMotion ? false : { scale: 1.14 }}
         animate={{ scale: play ? 1 : 1.14 }}
-        transition={{ duration: 2.4, ease: EASE }}
+        transition={{ duration: 1.8, ease: EASE }}
         className="absolute inset-0 h-full w-full object-cover object-center saturate-[1.05] contrast-[1.02] brightness-[0.7]"
       />
       <div className="absolute inset-0 bg-navy-950/45" />
       <div className="absolute inset-0 bg-gradient-to-t from-navy-950 via-navy-950/60 to-navy-950/15" />
 
       <motion.span
-        {...corner(0.75)}
+        {...corner(0.4)}
         aria-hidden="true"
         className="absolute right-6 top-20 h-6 w-6 border-r-2 border-t-2 border-white/70 lg:right-9 lg:top-24 lg:h-7 lg:w-7"
       />
       <motion.span
-        {...corner(0.9)}
+        {...corner(0.5)}
         aria-hidden="true"
         className="absolute bottom-6 left-6 h-6 w-6 border-b-2 border-l-2 border-white/70 lg:bottom-9 lg:left-9 lg:h-7 lg:w-7"
       />
 
       <div className="relative z-10 mx-auto flex w-full max-w-[1400px] flex-col justify-end gap-6 px-6 pb-14 pt-28 lg:px-10 lg:pb-20 lg:pt-36 xl:px-16 2xl:max-w-[1700px] 2xl:px-14 2xl:pb-24 2xl:pt-44">
-        <motion.div {...rise(0.15, 18)}>
+        <motion.div {...rise(0.05, 18)}>
           <PageLink
             to="/#proyectos"
             className="inline-flex items-center gap-2 font-mono text-xs font-semibold uppercase tracking-[0.15em] text-cyan-300 transition-colors hover:text-cyan-200"
@@ -71,13 +71,13 @@ export function ProjectHero({ project, ready }: { project: Project; ready: boole
 
         <div>
           <motion.h1
-            {...rise(0.2)}
+            {...rise(0.1)}
             className="max-w-3xl text-3xl font-bold leading-tight text-white md:text-4xl 2xl:text-5xl"
           >
             {project.title}
           </motion.h1>
           <motion.p
-            {...rise(0.45, 22)}
+            {...rise(0.25, 22)}
             className="mt-4 flex items-center gap-2 text-sm text-navy-200 2xl:text-base"
           >
             <MapPinIcon size={18} weight="regular" className="shrink-0 text-cyan-400" />

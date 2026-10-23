@@ -30,10 +30,10 @@ export function ProjectDetail({ ready = true }: { ready?: boolean }) {
       {nextProject && (
         <section className="border-b border-white/10 bg-navy-950">
           <motion.div
-            initial={reduceMotion ? false : { opacity: 0, y: 36 }}
+            initial={reduceMotion ? false : { opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.8 }}
-            transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+            viewport={{ once: true, amount: 0.5 }}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
             className="mx-auto w-full max-w-[1400px] px-6 py-14 lg:px-10 xl:px-16 2xl:max-w-[1700px] 2xl:px-14"
           >
             <PageLink

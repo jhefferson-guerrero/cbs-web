@@ -16,7 +16,7 @@ const SLIDE_PX = 80
 // poco después que el de la izquierda; así, aunque varios queden a la vista a la vez, se ven en orden.
 const tileVariants = {
   hidden: { opacity: 0, y: 30, scale: 0.95 },
-  show: (delay: number) => ({ opacity: 1, y: 0, scale: 1, transition: { duration: 0.8, delay, ease: EASE } }),
+  show: (delay: number) => ({ opacity: 1, y: 0, scale: 1, transition: { duration: 0.55, delay, ease: EASE } }),
 }
 
 const rows = Array.from({ length: Math.ceil(partnerLogos.length / PER_ROW) }, (_, row) =>
@@ -63,7 +63,7 @@ export function PartnerLogosSection() {
                 <motion.div
                   key={partner.name}
                   variants={tileVariants}
-                  custom={Math.floor((rowIndex * PER_ROW + i) / 2) * 0.12 + ((rowIndex * PER_ROW + i) % 2) * 0.06}
+                  custom={Math.floor((rowIndex * PER_ROW + i) / 2) * 0.06 + ((rowIndex * PER_ROW + i) % 2) * 0.03}
                   initial={entrance ? 'hidden' : false}
                   whileInView={entrance ? 'show' : undefined}
                   viewport={{ once: true, amount: 0.5 }}

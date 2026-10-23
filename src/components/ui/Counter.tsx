@@ -1,7 +1,18 @@
 import { useEffect, useRef } from 'react'
 import { animate, motion, useInView, useMotionValue, useReducedMotion, useTransform } from 'motion/react'
 
-export function Counter({ to, format }: { to: number; format: (n: number) => string }) {
+// `duration` y `delay` (segundos): por defecto el conteo es pausado (cifras grandes de la Home); la ficha de un proyecto usa uno más corto.
+export function Counter({
+  to,
+  format,
+  duration = 2.2,
+  delay = 0.4,
+}: {
+  to: number
+  format: (n: number) => string
+  duration?: number
+  delay?: number
+}) {
   const reduceMotion = useReducedMotion()
   const ref = useRef<HTMLSpanElement>(null)
   const isInView = useInView(ref, { once: true })
@@ -16,9 +27,9 @@ export function Counter({ to, format }: { to: number; format: (n: number) => str
       count.set(to)
       return
     }
-    const controls = animate(count, to, { duration: 2.2, ease: [0.16, 1, 0.3, 1], delay: 0.4 })
+    const controls = animate(count, to, { duration, ease: [0.16, 1, 0.3, 1], delay })
     return () => controls.stop()
-  }, [isInView, to, reduceMotion, count])
+  }, [isInView, to, reduceMotion, count, duration, delay])
 
   return <motion.span ref={ref}>{display}</motion.span>
 }

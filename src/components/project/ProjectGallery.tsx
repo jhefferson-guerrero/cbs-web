@@ -6,12 +6,12 @@ import type { GalleryImage } from '@/lib/projects'
 
 // Miniaturas del lateral (escritorio): entran en cascada, de arriba hacia abajo.
 const railVariants = {
-  show: { transition: { staggerChildren: 0.14, delayChildren: 0.4 } },
+  show: { transition: { staggerChildren: 0.07, delayChildren: 0.15 } },
 }
 const railItemVariants = {
   // y negativo: cada miniatura "cae" desde arriba y no empuja el alto del lateral hacia abajo mientras entra.
   hidden: { opacity: 0, y: -32, scale: 0.92 },
-  show: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.9, ease: [0.16, 1, 0.3, 1] as const } },
+  show: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] as const } },
 }
 
 export function ProjectGallery({ images }: { images: GalleryImage[] }) {
@@ -126,8 +126,8 @@ export function ProjectGallery({ images }: { images: GalleryImage[] }) {
           <motion.p
             initial={reduceMotion ? false : { opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.8 }}
-            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            viewport={{ once: true, amount: 0.5 }}
+            transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
             className="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-cyan-700 2xl:text-sm"
           >
             Galería del proyecto
@@ -138,10 +138,10 @@ export function ProjectGallery({ images }: { images: GalleryImage[] }) {
             type="button"
             onClick={() => setLightboxOpen(true)}
             aria-label="Ver foto en pantalla completa"
-            initial={reduceMotion ? false : { opacity: 0, y: 48, scale: 0.97 }}
+            initial={reduceMotion ? false : { opacity: 0, y: 28, scale: 0.97 }}
             whileInView={{ opacity: 1, y: 0, scale: 1 }}
-            viewport={{ once: true, amount: 0.25 }}
-            transition={{ duration: 1.1, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.7, delay: 0.05, ease: [0.16, 1, 0.3, 1] }}
             className="group relative block aspect-video w-full overflow-hidden bg-navy-950 sm:aspect-auto sm:h-[480px] 2xl:h-[700px]"
           >
             <AnimatePresence>
@@ -171,7 +171,7 @@ export function ProjectGallery({ images }: { images: GalleryImage[] }) {
               variants={railVariants}
               initial={reduceMotion ? false : 'hidden'}
               whileInView="show"
-              viewport={{ once: true, amount: 0.4 }}
+              viewport={{ once: true, amount: 0.3 }}
               className={`scrollbar-thin hidden gap-2 sm:flex sm:flex-col sm:pr-3 sm:h-[480px] 2xl:h-[700px] ${
                 images.length > 10 ? 'overflow-y-auto overflow-x-hidden' : 'overflow-hidden'
               }`}
@@ -217,8 +217,8 @@ export function ProjectGallery({ images }: { images: GalleryImage[] }) {
                   key={img.src}
                   initial={reduceMotion ? false : { opacity: 0, y: 28 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, amount: 0.4 }}
-                  transition={{ duration: 0.8, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
+                  viewport={{ once: true, amount: 0.3 }}
+                  transition={{ duration: 0.5, delay: i * 0.05, ease: [0.16, 1, 0.3, 1] }}
                 >
                 <button
                   type="button"
