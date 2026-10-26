@@ -68,6 +68,10 @@ export function ProjectGallery({ images }: { images: GalleryImage[] }) {
   // arrastrar para moverse mientras está ampliada, y otro toque
   // (o cambiar de foto / cerrar) para restablecer.
   const ZOOM_SCALE = 2.4
+  // Al arrastrar, la foto se mueve esta fracción de lo que se mueve el cursor (1 sería pegada al cursor, que con el zoom se sentía
+  // demasiado rápido), y se detiene donde se suelta, sin inercia.
+  const PAN_SPEED = 0.6
+  const panStart = useRef({ x: 0, y: 0 })
   const lightboxFrameRef = useRef<HTMLDivElement>(null)
   const [zoomed, setZoomed] = useState(false)
   const zoomScale = useMotionValue(1)
@@ -366,10 +370,15 @@ export function ProjectGallery({ images }: { images: GalleryImage[] }) {
             >
               <motion.div
                 onTap={handleImageTap}
-                drag={zoomed}
-                dragConstraints={dragBounds}
-                dragElastic={0.5}
-                dragTransition={{ power: 0.3, timeConstant: 200, bounceStiffness: 300, bounceDamping: 30 }}
+                onPanStart={() => {
+                  panStart.current = { x: zoomX.get(), y: zoomY.get() }
+                }}
+                onPan={(_event, info) => {
+                  if (!zoomed) return
+                  const clamp = (value: number, min: number, max: number) => Math.max(min, Math.min(max, value))
+                  zoomX.set(clamp(panStart.current.x + info.offset.x * PAN_SPEED, dragBounds.left, dragBounds.right))
+                  zoomY.set(clamp(panStart.current.y + info.offset.y * PAN_SPEED, dragBounds.top, dragBounds.bottom))
+                }}
                 style={{ x: zoomX, y: zoomY }}
                 // Lupa para acercar (un clic); con la foto ampliada, la manito para arrastrarla.
                 className={`relative h-full w-full ${zoomed ? 'cursor-grab active:cursor-grabbing' : 'cursor-zoom-in'}`}
