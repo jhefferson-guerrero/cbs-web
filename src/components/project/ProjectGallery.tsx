@@ -94,7 +94,24 @@ export function ProjectGallery({ images }: { images: GalleryImage[] }) {
     animate(zoomY, 0, { duration, ease: [0.16, 1, 0.3, 1] })
   }, [zoomScale, zoomX, zoomY, reduceMotion])
 
-  // Un toque o clic acerca hacia el punto tocado; con la foto ampliada, otro toque (sin arrastrar) la devuelve a su tamaño.
+  // La foto se ajusta dentro del marco del visor (object-contain), que es más grande que ella: las franjas vacías de los lados
+  // también reciben el cursor y los clics. Esto dice si un punto de la pantalla cae sobre la foto misma (sin zoom).
+  const isOnPhoto = useCallback((clientX: number, clientY: number) => {
+    const img = lightboxFrameRef.current?.querySelector<HTMLImageElement>('img[data-placeholder]')
+    if (!img || !img.naturalWidth) return false
+    const box = img.getBoundingClientRect()
+    const fit = Math.min(box.width / img.naturalWidth, box.height / img.naturalHeight)
+    const width = img.naturalWidth * fit
+    const height = img.naturalHeight * fit
+    const left = box.left + (box.width - width) / 2
+    const top = box.top + (box.height - height) / 2
+    return clientX >= left && clientX <= left + width && clientY >= top && clientY <= top + height
+  }, [])
+  // Solo para el cursor: la lupa aparece únicamente cuando el cursor está sobre la foto.
+  const [overPhoto, setOverPhoto] = useState(false)
+
+  // Un toque o clic sobre la foto la acerca hacia el punto tocado; con la foto ampliada, otro toque (sin arrastrar) la devuelve a su
+  // tamaño. Un toque en las franjas vacías no acerca (cierra el visor, ver el clic del marco).
   const handleImageTap = useCallback(
     (_event: unknown, info: { point: { x: number; y: number } }) => {
       if (panned.current) return
@@ -102,6 +119,7 @@ export function ProjectGallery({ images }: { images: GalleryImage[] }) {
         resetZoom()
         return
       }
+      if (!isOnPhoto(info.point.x - window.scrollX, info.point.y - window.scrollY)) return
       const rect = lightboxFrameRef.current?.getBoundingClientRect()
       const duration = reduceMotion ? 0 : 0.3
       const ease = [0.16, 1, 0.3, 1] as const
@@ -119,7 +137,7 @@ export function ProjectGallery({ images }: { images: GalleryImage[] }) {
       setZoomed(true)
       animate(zoomScale, ZOOM_SCALE, { duration, ease })
     },
-    [zoomed, zoomScale, zoomX, zoomY, resetZoom, reduceMotion],
+    [zoomed, zoomScale, zoomX, zoomY, resetZoom, reduceMotion, isOnPhoto],
   )
 
   // Restablece el zoom cada vez que cambia la foto o el estado de apertura,
@@ -354,21 +372,17 @@ export function ProjectGallery({ images }: { images: GalleryImage[] }) {
             <div
               ref={lightboxFrameRef}
               className="relative h-[85vh] w-full max-w-5xl"
+              onPointerMove={(event) => {
+                const over = !zoomed && isOnPhoto(event.clientX, event.clientY)
+                if (over !== overPhoto) setOverPhoto(over)
+              }}
               onClick={(event) => {
                 event.stopPropagation()
-                // La foto se ajusta dentro de este marco (object-contain), que es más grande que ella: las franjas vacías de los
-                // lados también reciben el clic. Se cierra si el clic cae fuera de la foto misma; sobre la foto, o con zoom, no.
-                const img = event.currentTarget.querySelector<HTMLImageElement>('img[data-placeholder]')
-                if (zoomed || !img || !img.naturalWidth) return
-                const box = img.getBoundingClientRect()
-                const fit = Math.min(box.width / img.naturalWidth, box.height / img.naturalHeight)
-                const width = img.naturalWidth * fit
-                const height = img.naturalHeight * fit
-                const left = box.left + (box.width - width) / 2
-                const top = box.top + (box.height - height) / 2
-                const onPhoto =
-                  event.clientX >= left && event.clientX <= left + width && event.clientY >= top && event.clientY <= top + height
-                if (!onPhoto) setLightboxOpen(false)
+                // Se cierra si el clic cae fuera de la foto misma; sobre la foto, o con zoom, no.
+                if (zoomed) return
+                const img = lightboxFrameRef.current?.querySelector<HTMLImageElement>('img[data-placeholder]')
+                if (!img?.naturalWidth) return
+                if (!isOnPhoto(event.clientX, event.clientY)) setLightboxOpen(false)
               }}
             >
               <motion.div
@@ -387,8 +401,8 @@ export function ProjectGallery({ images }: { images: GalleryImage[] }) {
                   zoomY.set(clamp(panStart.current.y + info.offset.y * PAN_SPEED, dragBounds.top, dragBounds.bottom))
                 }}
                 style={{ x: zoomX, y: zoomY }}
-                // Lupa para acercar (un clic); con la foto ampliada, la manito para arrastrarla.
-                className={`relative h-full w-full ${zoomed ? 'cursor-grab active:cursor-grabbing' : 'cursor-zoom-in'}`}
+                // Lupa solo sobre la foto (un clic acerca); con la foto ampliada, la manito para arrastrarla.
+                className={`relative h-full w-full ${zoomed ? 'cursor-grab active:cursor-grabbing' : overPhoto ? 'cursor-zoom-in' : ''}`}
               >
                 {/* Relleno del visor: la miniatura se ve mientras llega la foto grande. Tiene las mismas proporciones y el mismo marco. */}
                 <img
