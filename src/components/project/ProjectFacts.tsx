@@ -70,47 +70,51 @@ export function ProjectFacts({ project, ready = true }: { project: Project; read
               initial={reduceMotion ? false : 'hidden'}
               whileInView={started ? 'show' : undefined}
               viewport={{ once: true, amount: 0.3 }}
-              className="relative flex items-center justify-between gap-4 pt-6 sm:gap-6"
+              className="relative pt-6"
             >
-              <motion.span
-                variants={lineVariants}
-                aria-hidden="true"
-                className="absolute inset-x-0 top-0 h-px origin-left bg-navy-200"
-              />
-              <div className="min-w-0">
-                <dt className="font-mono text-xs font-semibold tracking-[0.2em] text-cyan-600 2xl:text-sm">
-                  {fact.label.toUpperCase()}
-                </dt>
-                {/* El monto cuenta de 0 hasta su valor (como las cifras del resto del sitio); tabular-nums mantiene
-                    el ancho de los dígitos fijo para que el texto no tiemble mientras sube. */}
-                <dd className="mt-2 text-xl font-bold tabular-nums text-navy-900 md:text-2xl 2xl:text-3xl">
-                  {'amount' in fact && fact.amount ? (
-                    // El conteo arranca junto con la ficha (no antes, mientras el hero aún está entrando). En el servidor
-                    // (HTML prerrenderizado) se escribe el monto completo.
-                    typeof window === 'undefined' ? (
-                      fact.value
-                    ) : started ? (
-                      <Counter to={fact.amount.to} duration={1.4} delay={0.1} format={(n) => `${fact.amount?.prefix ?? ''}${withCommas(n)}`} />
-                    ) : (
-                      `${fact.amount.prefix}0`
-                    )
-                  ) : (
-                    fact.value
-                  )}
-                </dd>
-                {fact.note && <p className="mt-1 text-sm text-slate-600 2xl:text-base">{fact.note}</p>}
-              </div>
-              {fact.logo && (
-                <img
-                  src={fact.logo}
-                  alt={`Logo de ${fact.value}`}
-                  // lazy: React 19 espera a que carguen las imágenes sin loading="lazy" antes de mostrar una
-                  // página nueva; estos logos no deben retrasar la entrada al proyecto.
-                  loading="lazy"
-                  decoding="async"
-                  className="h-10 w-auto shrink-0 object-contain sm:h-16 2xl:h-20"
+              {/* Cada grupo de la lista (<div> dentro de <dl>) solo puede contener <dt> y <dd>: la línea decorativa va dentro del <dt>
+                  (se posiciona respecto del grupo, que es relative) y el logo, dentro del <dd>, al lado del valor. */}
+              <dt className="font-mono text-xs font-semibold tracking-[0.2em] text-cyan-700 2xl:text-sm">
+                <motion.span
+                  variants={lineVariants}
+                  aria-hidden="true"
+                  className="absolute inset-x-0 top-0 h-px origin-left bg-navy-200"
                 />
-              )}
+                {fact.label.toUpperCase()}
+              </dt>
+              <dd className="mt-2 flex items-center justify-between gap-4 sm:gap-6">
+                <div className="min-w-0">
+                  {/* El monto cuenta de 0 hasta su valor (como las cifras del resto del sitio); tabular-nums mantiene
+                      el ancho de los dígitos fijo para que el texto no tiemble mientras sube. */}
+                  <p className="text-xl font-bold tabular-nums text-navy-900 md:text-2xl 2xl:text-3xl">
+                    {'amount' in fact && fact.amount ? (
+                      // El conteo arranca junto con la ficha (no antes, mientras el hero aún está entrando). En el servidor
+                      // (HTML prerrenderizado) se escribe el monto completo.
+                      typeof window === 'undefined' ? (
+                        fact.value
+                      ) : started ? (
+                        <Counter to={fact.amount.to} duration={1.4} delay={0.1} format={(n) => `${fact.amount?.prefix ?? ''}${withCommas(n)}`} />
+                      ) : (
+                        `${fact.amount.prefix}0`
+                      )
+                    ) : (
+                      fact.value
+                    )}
+                  </p>
+                  {fact.note && <p className="mt-1 text-sm text-slate-600 2xl:text-base">{fact.note}</p>}
+                </div>
+                {fact.logo && (
+                  <img
+                    src={fact.logo}
+                    alt={`Logo de ${fact.value}`}
+                    // lazy: React 19 espera a que carguen las imágenes sin loading="lazy" antes de mostrar una
+                    // página nueva; estos logos no deben retrasar la entrada al proyecto.
+                    loading="lazy"
+                    decoding="async"
+                    className="h-10 w-auto shrink-0 object-contain sm:h-16 2xl:h-20"
+                  />
+                )}
+              </dd>
             </motion.div>
           ))}
         </dl>
