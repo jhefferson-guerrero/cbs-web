@@ -26,8 +26,11 @@ export function ProjectGallery({ images }: { images: GalleryImage[] }) {
     (delta: number) => setActive((current) => (current + delta + images.length) % images.length),
     [images.length],
   )
-  const markLoaded = (i: number) => setLoaded((prev) => (prev[i] ? prev : { ...prev, [i]: true }))
+  const markLoaded = useCallback((i: number) => setLoaded((prev) => (prev[i] ? prev : { ...prev, [i]: true })), [])
   const isLoaded = (i: number) => reduceMotion || loaded[i]
+  // Una foto grande ya descargada (la vista antes o precargada) entra nítida y de inmediato; solo la que aún no llegó se funde
+  // encima de su miniatura.
+  const enterOpacity = (i: number) => (loaded[i] ? 1 : 0)
 
   // Las miniaturas son versiones chicas: la foto grande (la del marco principal y la del visor) se baja cuando hace falta. Para que
   // no se note la espera: se empieza a pedir apenas el visitante muestra intención (cursor encima, foco o toque en la miniatura), y
@@ -42,9 +45,10 @@ export function ProjectGallery({ images }: { images: GalleryImage[] }) {
       const image = new window.Image()
       image.fetchPriority = 'low'
       image.decoding = 'async'
+      image.onload = () => markLoaded(i)
       image.src = images[i].src
     },
-    [images],
+    [images, markLoaded],
   )
   const engage = (i: number) => {
     engaged.current = true
@@ -192,7 +196,7 @@ export function ProjectGallery({ images }: { images: GalleryImage[] }) {
                 alt={images[active].alt}
                 loading="lazy"
                 onLoad={() => markLoaded(active)}
-                initial={reduceMotion ? false : { opacity: 0 }}
+                initial={reduceMotion ? false : { opacity: enterOpacity(active) }}
                 animate={{ opacity: isLoaded(active) ? 1 : 0 }}
                 exit={reduceMotion ? undefined : { opacity: 0 }}
                 transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
@@ -361,7 +365,8 @@ export function ProjectGallery({ images }: { images: GalleryImage[] }) {
                 dragElastic={0.5}
                 dragTransition={{ power: 0.3, timeConstant: 200, bounceStiffness: 300, bounceDamping: 30 }}
                 style={{ x: zoomX, y: zoomY }}
-                className="relative h-full w-full"
+                // Lupa para acercar (doble clic); con la foto ampliada, la manito para arrastrarla.
+                className={`relative h-full w-full ${zoomed ? 'cursor-grab active:cursor-grabbing' : 'cursor-zoom-in'}`}
               >
                 {/* Relleno del visor: la miniatura se ve mientras llega la foto grande. Tiene las mismas proporciones y el mismo marco. */}
                 <img
@@ -371,10 +376,12 @@ export function ProjectGallery({ images }: { images: GalleryImage[] }) {
                   aria-hidden="true"
                   className="absolute inset-0 h-full w-full object-contain"
                 />
-                <AnimatePresence mode="wait">
+                {/* Sin mode="wait": la foto que sale y la que entra se cruzan. Con "wait" la que sale se desvanecía sobre la
+                    miniatura de la siguiente y se veía un instante borrosa aunque la grande ya estuviera descargada. */}
+                <AnimatePresence>
                   <motion.img
                     key={active}
-                    initial={reduceMotion ? false : { opacity: 0 }}
+                    initial={reduceMotion ? false : { opacity: enterOpacity(active) }}
                     animate={{ opacity: isLoaded(active) ? 1 : 0 }}
                     exit={reduceMotion ? undefined : { opacity: 0 }}
                     transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
