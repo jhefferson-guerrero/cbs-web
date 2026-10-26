@@ -64,12 +64,11 @@ export function ProjectGallery({ images }: { images: GalleryImage[] }) {
   }, [active, lightboxOpen, images.length, prefetch])
 
   // Alternativa al pellizco para hacer zoom (desactivado arriba con
-  // touch-none): doble toque en la foto a pantalla completa para acercar,
-  // arrastrar para moverse mientras está ampliada, y doble toque de nuevo
+  // touch-none): un toque en la foto a pantalla completa para acercar,
+  // arrastrar para moverse mientras está ampliada, y otro toque
   // (o cambiar de foto / cerrar) para restablecer.
   const ZOOM_SCALE = 2.4
   const lightboxFrameRef = useRef<HTMLDivElement>(null)
-  const lastTapRef = useRef(0)
   const [zoomed, setZoomed] = useState(false)
   const zoomScale = useMotionValue(1)
   const zoomX = useMotionValue(0)
@@ -89,25 +88,32 @@ export function ProjectGallery({ images }: { images: GalleryImage[] }) {
     animate(zoomY, 0, { duration, ease: [0.16, 1, 0.3, 1] })
   }, [zoomScale, zoomX, zoomY, reduceMotion])
 
-  const handleImageTap = useCallback(() => {
-    const now = Date.now()
-    const isDoubleTap = now - lastTapRef.current < 300
-    lastTapRef.current = now
-    if (!isDoubleTap) return
-
-    if (zoomed) {
-      resetZoom()
-    } else {
+  // Un toque o clic acerca hacia el punto tocado; con la foto ampliada, otro toque (sin arrastrar) la devuelve a su tamaño.
+  const handleImageTap = useCallback(
+    (_event: unknown, info: { point: { x: number; y: number } }) => {
+      if (zoomed) {
+        resetZoom()
+        return
+      }
       const rect = lightboxFrameRef.current?.getBoundingClientRect()
+      const duration = reduceMotion ? 0 : 0.3
+      const ease = [0.16, 1, 0.3, 1] as const
       if (rect) {
         const overflowX = ((ZOOM_SCALE - 1) / 2) * rect.width
         const overflowY = ((ZOOM_SCALE - 1) / 2) * rect.height
         setDragBounds({ left: -overflowX, right: overflowX, top: -overflowY, bottom: overflowY })
+        // El punto tocado queda bajo el cursor: se desplaza la foto lo que el punto se aleja del centro, sin salirse de los límites.
+        const offsetX = info.point.x - window.scrollX - (rect.left + rect.width / 2)
+        const offsetY = info.point.y - window.scrollY - (rect.top + rect.height / 2)
+        const clamp = (value: number, limit: number) => Math.max(-limit, Math.min(limit, value))
+        animate(zoomX, clamp(-offsetX * (ZOOM_SCALE - 1), overflowX), { duration, ease })
+        animate(zoomY, clamp(-offsetY * (ZOOM_SCALE - 1), overflowY), { duration, ease })
       }
       setZoomed(true)
-      animate(zoomScale, ZOOM_SCALE, { duration: reduceMotion ? 0 : 0.3, ease: [0.16, 1, 0.3, 1] })
-    }
-  }, [zoomed, zoomScale, resetZoom, reduceMotion])
+      animate(zoomScale, ZOOM_SCALE, { duration, ease })
+    },
+    [zoomed, zoomScale, zoomX, zoomY, resetZoom, reduceMotion],
+  )
 
   // Restablece el zoom cada vez que cambia la foto o el estado de apertura,
   // calculado durante el render (la forma recomendada por React para
@@ -365,7 +371,7 @@ export function ProjectGallery({ images }: { images: GalleryImage[] }) {
                 dragElastic={0.5}
                 dragTransition={{ power: 0.3, timeConstant: 200, bounceStiffness: 300, bounceDamping: 30 }}
                 style={{ x: zoomX, y: zoomY }}
-                // Lupa para acercar (doble clic); con la foto ampliada, la manito para arrastrarla.
+                // Lupa para acercar (un clic); con la foto ampliada, la manito para arrastrarla.
                 className={`relative h-full w-full ${zoomed ? 'cursor-grab active:cursor-grabbing' : 'cursor-zoom-in'}`}
               >
                 {/* Relleno del visor: la miniatura se ve mientras llega la foto grande. Tiene las mismas proporciones y el mismo marco. */}
@@ -374,7 +380,8 @@ export function ProjectGallery({ images }: { images: GalleryImage[] }) {
                   src={images[active].thumb}
                   alt=""
                   aria-hidden="true"
-                  className="absolute inset-0 h-full w-full object-contain"
+                  draggable={false}
+                  className="absolute inset-0 h-full w-full select-none object-contain"
                 />
                 {/* Sin mode="wait": la foto que sale y la que entra se cruzan. Con "wait" la que sale se desvanecía sobre la
                     miniatura de la siguiente y se veía un instante borrosa aunque la grande ya estuviera descargada. */}
@@ -390,7 +397,9 @@ export function ProjectGallery({ images }: { images: GalleryImage[] }) {
                     decoding="async"
                     onLoad={() => markLoaded(active)}
                     style={{ scale: zoomScale }}
-                    className="absolute inset-0 h-full w-full object-contain"
+                    // Sin esto el navegador intenta arrastrar la imagen como archivo y el arrastre de la foto ampliada se traba.
+                    draggable={false}
+                    className="absolute inset-0 h-full w-full select-none object-contain"
                   />
                 </AnimatePresence>
               </motion.div>
