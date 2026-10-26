@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import { AnimatePresence, animate, motion, useMotionValue, useReducedMotion } from 'motion/react'
 import { useLenis } from 'lenis/react'
 import { ArrowLeftIcon, ArrowRightIcon, XIcon } from '@phosphor-icons/react'
+import { isConnectionConstrained } from '@/lib/connection'
 import type { GalleryImage } from '@/lib/projects'
 
 // Miniaturas del lateral (escritorio): entran en cascada, de arriba hacia abajo.
@@ -27,6 +28,36 @@ export function ProjectGallery({ images }: { images: GalleryImage[] }) {
   )
   const markLoaded = (i: number) => setLoaded((prev) => (prev[i] ? prev : { ...prev, [i]: true }))
   const isLoaded = (i: number) => reduceMotion || loaded[i]
+
+  // Las miniaturas son versiones chicas: la foto grande (la del marco principal y la del visor) se baja cuando hace falta. Para que
+  // no se note la espera: se empieza a pedir apenas el visitante muestra intención (cursor encima, foco o toque en la miniatura), y
+  // una vez que interactuó con la galería se precargan en segundo plano las fotos vecinas de la activa (anterior y siguiente). Mientras
+  // la grande llega, el marco muestra su miniatura y la grande aparece encima con un fundido.
+  const requested = useRef(new Set<number>())
+  const engaged = useRef(false)
+  const prefetch = useCallback(
+    (i: number) => {
+      if (requested.current.has(i)) return
+      requested.current.add(i)
+      const image = new window.Image()
+      image.fetchPriority = 'low'
+      image.decoding = 'async'
+      image.src = images[i].src
+    },
+    [images],
+  )
+  const engage = (i: number) => {
+    engaged.current = true
+    prefetch(i)
+  }
+  useEffect(() => {
+    if ((!engaged.current && !lightboxOpen) || isConnectionConstrained()) return
+    const id = window.setTimeout(() => {
+      prefetch((active + 1) % images.length)
+      prefetch((active - 1 + images.length) % images.length)
+    }, 250)
+    return () => window.clearTimeout(id)
+  }, [active, lightboxOpen, images.length, prefetch])
 
   // Alternativa al pellizco para hacer zoom (desactivado arriba con
   // touch-none): doble toque en la foto a pantalla completa para acercar,
@@ -144,6 +175,16 @@ export function ProjectGallery({ images }: { images: GalleryImage[] }) {
             transition={{ duration: 0.7, delay: 0.05, ease: [0.16, 1, 0.3, 1] }}
             className="group relative block aspect-video w-full overflow-hidden bg-navy-950 sm:aspect-auto sm:h-[480px] 2xl:h-[700px]"
           >
+            {/* Relleno: la miniatura de la foto activa (ya descargada) se ve al instante; la grande se funde encima al llegar. */}
+            <img
+              key={`placeholder-${active}`}
+              src={images[active].thumb}
+              alt=""
+              aria-hidden="true"
+              loading="lazy"
+              decoding="async"
+              className="absolute inset-0 h-full w-full object-cover"
+            />
             <AnimatePresence>
               <motion.img
                 key={active}
@@ -187,6 +228,9 @@ export function ProjectGallery({ images }: { images: GalleryImage[] }) {
                 <button
                   type="button"
                   onClick={() => setActive(i)}
+                  onPointerEnter={() => engage(i)}
+                  onFocus={() => engage(i)}
+                  onTouchStart={() => engage(i)}
                   aria-label={`Ver foto ${i + 1}`}
                   aria-current={i === active}
                   className={`relative flex h-full w-full items-center gap-3 p-1.5 pl-3 text-left transition-colors duration-200 ${
@@ -202,7 +246,7 @@ export function ProjectGallery({ images }: { images: GalleryImage[] }) {
                     />
                   )}
                   <span className="h-full w-24 shrink-0 overflow-hidden">
-                    <img src={img.src} alt="" loading="lazy" decoding="async" className="h-full w-full object-cover" />
+                    <img src={img.thumb} alt="" loading="lazy" decoding="async" className="h-full w-full object-cover" />
                   </span>
                 </button>
                 </motion.div>
@@ -223,6 +267,9 @@ export function ProjectGallery({ images }: { images: GalleryImage[] }) {
                 <button
                   type="button"
                   onClick={() => setActive(i)}
+                  onPointerEnter={() => engage(i)}
+                  onFocus={() => engage(i)}
+                  onTouchStart={() => engage(i)}
                   aria-label={`Ver foto ${i + 1}`}
                   aria-current={i === active}
                   className={`relative aspect-[3/2] w-full overflow-hidden transition-all duration-300 ${
@@ -231,7 +278,7 @@ export function ProjectGallery({ images }: { images: GalleryImage[] }) {
                       : 'opacity-60 hover:opacity-100'
                   }`}
                 >
-                  <img src={img.src} alt="" loading="lazy" decoding="async" className="absolute inset-0 h-full w-full object-cover" />
+                  <img src={img.thumb} alt="" loading="lazy" decoding="async" className="absolute inset-0 h-full w-full object-cover" />
                 </button>
                 </motion.div>
               ))}
@@ -294,7 +341,7 @@ export function ProjectGallery({ images }: { images: GalleryImage[] }) {
                 event.stopPropagation()
                 // La foto se ajusta dentro de este marco (object-contain), que es más grande que ella: las franjas vacías de los
                 // lados también reciben el clic. Se cierra si el clic cae fuera de la foto misma; sobre la foto, o con zoom, no.
-                const img = event.currentTarget.querySelector('img')
+                const img = event.currentTarget.querySelector<HTMLImageElement>('img[data-placeholder]')
                 if (zoomed || !img || !img.naturalWidth) return
                 const box = img.getBoundingClientRect()
                 const fit = Math.min(box.width / img.naturalWidth, box.height / img.naturalHeight)
@@ -316,6 +363,14 @@ export function ProjectGallery({ images }: { images: GalleryImage[] }) {
                 style={{ x: zoomX, y: zoomY }}
                 className="relative h-full w-full"
               >
+                {/* Relleno del visor: la miniatura se ve mientras llega la foto grande. Tiene las mismas proporciones y el mismo marco. */}
+                <img
+                  data-placeholder
+                  src={images[active].thumb}
+                  alt=""
+                  aria-hidden="true"
+                  className="absolute inset-0 h-full w-full object-contain"
+                />
                 <AnimatePresence mode="wait">
                   <motion.img
                     key={active}

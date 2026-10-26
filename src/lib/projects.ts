@@ -1,18 +1,28 @@
 import galeriaRioHuatanay01 from '@/assets/images/proyectos/rio-huatanay/galeria-01.webp'
+import thumbRioHuatanay01 from '@/assets/images/proyectos/rio-huatanay/thumb-01.webp'
 import galeriaRioHuatanay02 from '@/assets/images/proyectos/rio-huatanay/galeria-02.webp'
+import thumbRioHuatanay02 from '@/assets/images/proyectos/rio-huatanay/thumb-02.webp'
 import galeriaRioHuatanay03 from '@/assets/images/proyectos/rio-huatanay/galeria-03.webp'
+import thumbRioHuatanay03 from '@/assets/images/proyectos/rio-huatanay/thumb-03.webp'
 import galeriaRioHuatanay04 from '@/assets/images/proyectos/rio-huatanay/galeria-04.webp'
+import thumbRioHuatanay04 from '@/assets/images/proyectos/rio-huatanay/thumb-04.webp'
 import galeriaRioHuatanay05 from '@/assets/images/proyectos/rio-huatanay/galeria-05.webp'
+import thumbRioHuatanay05 from '@/assets/images/proyectos/rio-huatanay/thumb-05.webp'
 import coverRioHuatanay640 from '@/assets/images/proyectos/rio-huatanay/cover-640.webp'
 import coverRioHuatanay960 from '@/assets/images/proyectos/rio-huatanay/cover-960.webp'
 import coverRioHuatanay1280 from '@/assets/images/proyectos/rio-huatanay/cover-1280.webp'
 import coverTambopata640 from '@/assets/images/proyectos/drenaje-tambopata/cover-640.webp'
 import coverTambopata960 from '@/assets/images/proyectos/drenaje-tambopata/cover-960.webp'
 import galeriaTambopata01 from '@/assets/images/proyectos/drenaje-tambopata/galeria-01.webp'
+import thumbTambopata01 from '@/assets/images/proyectos/drenaje-tambopata/thumb-01.webp'
 import galeriaTambopata02 from '@/assets/images/proyectos/drenaje-tambopata/galeria-02.webp'
+import thumbTambopata02 from '@/assets/images/proyectos/drenaje-tambopata/thumb-02.webp'
 import galeriaTambopata03 from '@/assets/images/proyectos/drenaje-tambopata/galeria-03.webp'
+import thumbTambopata03 from '@/assets/images/proyectos/drenaje-tambopata/thumb-03.webp'
 import galeriaTambopata04 from '@/assets/images/proyectos/drenaje-tambopata/galeria-04.webp'
+import thumbTambopata04 from '@/assets/images/proyectos/drenaje-tambopata/thumb-04.webp'
 import galeriaTambopata05 from '@/assets/images/proyectos/drenaje-tambopata/galeria-05.webp'
+import thumbTambopata05 from '@/assets/images/proyectos/drenaje-tambopata/thumb-05.webp'
 
 import logoClientePnsu from '@/assets/images/proyectos/logos/cliente-pnsu.webp'
 import logoContratistaRioHuatanay from '@/assets/images/proyectos/logos/contratista-rio-huatanay.webp'
@@ -38,6 +48,8 @@ export interface Party {
 
 export interface GalleryImage {
   src: string
+  /** Miniatura (400 px de ancho): la usan las miniaturas de la galería y de relleno mientras llega la foto grande. */
+  thumb: string
   alt: string
 }
 
@@ -72,11 +84,11 @@ export const projects: Project[] = [
     funding: { name: 'Banco Mundial', logo: logoFinanciamientoBancoMundial },
     showPartnerLogos: true,
     gallery: [
-      { src: galeriaRioHuatanay01, alt: 'Maquinaria pesada del Consorcio Río Huatanay en obra' },
-      { src: galeriaRioHuatanay02, alt: 'Armado de acero de la losa circular del reservorio con equipo de trabajo' },
-      { src: galeriaRioHuatanay03, alt: 'Vista aérea del reservorio en etapa avanzada de construcción' },
-      { src: galeriaRioHuatanay04, alt: 'Vista aérea del reservorio de agua potable junto a la ciudad de Cusco' },
-      { src: galeriaRioHuatanay05, alt: 'Vista aérea del trazo de la línea de conducción sobre el cerro' },
+      { src: galeriaRioHuatanay01, thumb: thumbRioHuatanay01, alt: 'Maquinaria pesada del Consorcio Río Huatanay en obra' },
+      { src: galeriaRioHuatanay02, thumb: thumbRioHuatanay02, alt: 'Armado de acero de la losa circular del reservorio con equipo de trabajo' },
+      { src: galeriaRioHuatanay03, thumb: thumbRioHuatanay03, alt: 'Vista aérea del reservorio en etapa avanzada de construcción' },
+      { src: galeriaRioHuatanay04, thumb: thumbRioHuatanay04, alt: 'Vista aérea del reservorio de agua potable junto a la ciudad de Cusco' },
+      { src: galeriaRioHuatanay05, thumb: thumbRioHuatanay05, alt: 'Vista aérea del trazo de la línea de conducción sobre el cerro' },
     ],
   },
   {
@@ -91,11 +103,11 @@ export const projects: Project[] = [
     amount: 'S/ 323,553,522',
     funding: { name: 'Banco Interamericano de Desarrollo', logo: logoFinanciamientoBid },
     gallery: [
-      { src: galeriaTambopata01, alt: 'Vista aérea de Puerto Maldonado en la confluencia de los ríos Madre de Dios y Tambopata' },
-      { src: galeriaTambopata02, alt: 'Vista aérea de la plaza principal de Puerto Maldonado' },
-      { src: galeriaTambopata03, alt: 'Objetivos físicos del sistema de drenaje pluvial urbano' },
-      { src: galeriaTambopata04, alt: 'Estudio de diseño: mapa de soluciones conceptuales del sistema de drenaje pluvial' },
-      { src: galeriaTambopata05, alt: 'Esquema conceptual de la cárcava Costanera Norte: canal escalonado, pozo de disipación, contención de taludes y control de desembocadura' },
+      { src: galeriaTambopata01, thumb: thumbTambopata01, alt: 'Vista aérea de Puerto Maldonado en la confluencia de los ríos Madre de Dios y Tambopata' },
+      { src: galeriaTambopata02, thumb: thumbTambopata02, alt: 'Vista aérea de la plaza principal de Puerto Maldonado' },
+      { src: galeriaTambopata03, thumb: thumbTambopata03, alt: 'Objetivos físicos del sistema de drenaje pluvial urbano' },
+      { src: galeriaTambopata04, thumb: thumbTambopata04, alt: 'Estudio de diseño: mapa de soluciones conceptuales del sistema de drenaje pluvial' },
+      { src: galeriaTambopata05, thumb: thumbTambopata05, alt: 'Esquema conceptual de la cárcava Costanera Norte: canal escalonado, pozo de disipación, contención de taludes y control de desembocadura' },
     ],
   },
 ]
