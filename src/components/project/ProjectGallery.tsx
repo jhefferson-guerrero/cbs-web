@@ -72,6 +72,8 @@ export function ProjectGallery({ images }: { images: GalleryImage[] }) {
   // demasiado rápido), y se detiene donde se suelta, sin inercia.
   const PAN_SPEED = 0.6
   const panStart = useRef({ x: 0, y: 0 })
+  // Arrastrar y soltar también cuenta como un toque para el navegador: se anota para no confundirlo con el toque que restablece el zoom.
+  const panned = useRef(false)
   const lightboxFrameRef = useRef<HTMLDivElement>(null)
   const [zoomed, setZoomed] = useState(false)
   const zoomScale = useMotionValue(1)
@@ -95,6 +97,7 @@ export function ProjectGallery({ images }: { images: GalleryImage[] }) {
   // Un toque o clic acerca hacia el punto tocado; con la foto ampliada, otro toque (sin arrastrar) la devuelve a su tamaño.
   const handleImageTap = useCallback(
     (_event: unknown, info: { point: { x: number; y: number } }) => {
+      if (panned.current) return
       if (zoomed) {
         resetZoom()
         return
@@ -370,7 +373,11 @@ export function ProjectGallery({ images }: { images: GalleryImage[] }) {
             >
               <motion.div
                 onTap={handleImageTap}
+                onPointerDown={() => {
+                  panned.current = false
+                }}
                 onPanStart={() => {
+                  panned.current = true
                   panStart.current = { x: zoomX.get(), y: zoomY.get() }
                 }}
                 onPan={(_event, info) => {
