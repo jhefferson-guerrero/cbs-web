@@ -67,8 +67,8 @@ function PartnerLogo({
 
 const MENU_EASE = [0.16, 1, 0.3, 1] as const
 
-// Cómo se retira el menú: con la X o el botón, se desvanece; al tocar el logo de un aliado (otra página), espera un instante
-// mientras arranca la transición de página; y al tocar un enlace a una sección se retira de golpe (ver closeMenuForSection).
+// Cómo se retira el menú: al tocar el logo de un aliado (otra página) espera un instante mientras arranca la transición de página;
+// con la X o el botón, y al tocar un enlace a una sección (ver closeMenuForSection), se retira de golpe.
 type MenuExit = 'close' | 'page' | 'section'
 const MENU_PAGE_EXIT_DELAY = 0.3
 const menuPanelVariants = {
@@ -77,13 +77,11 @@ const menuPanelVariants = {
   exit: (mode: MenuExit) => ({
     clipPath: 'inset(0 0 100% 0)',
     opacity: 0,
-    // En "section" no hay desvanecido: una animación de opacidad corre en el compositor sin esperar a que el navegador pinte la
-    // zona de destino (acaba de saltar muy lejos), y mientras el menú se desvanecía se veía la página en blanco unos instantes.
-    // Quitado de golpe, el navegador espera a tener la sección pintada antes de mostrarla.
+    // Sin desvanecido al cerrar: una animación de opacidad corre en el compositor sin esperar a que el navegador pinte lo que hay
+    // debajo del menú (mientras estaba abierto cubriéndolo no se pintó), y durante el desvanecido se veía la página en blanco
+    // casi 1 s en un celular. Quitado de golpe, el navegador espera a tener la página pintada antes de mostrarla.
     transition:
-      mode === 'section'
-        ? { duration: 0 }
-        : { duration: 0.25, delay: mode === 'page' ? MENU_PAGE_EXIT_DELAY : 0, ease: MENU_EASE },
+      mode === 'page' ? { duration: 0.25, delay: MENU_PAGE_EXIT_DELAY, ease: MENU_EASE } : { duration: 0 },
   }),
 }
 
