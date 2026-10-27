@@ -341,11 +341,6 @@ export function Navbar({ ready }: { ready: boolean }) {
             transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
             className="relative min-h-[calc(100dvh-3.5rem)] overflow-hidden border-t border-navy-100 bg-white lg:hidden"
           >
-            <span
-              aria-hidden="true"
-              className="pointer-events-none absolute bottom-6 right-6 h-7 w-7 border-b-2 border-r-2 border-cyan-500/40"
-            />
-
             <div className="flex flex-col px-6 py-8">
               <nav className="flex flex-col divide-y divide-navy-100">
                 {navLinks.map((link, i) => {
