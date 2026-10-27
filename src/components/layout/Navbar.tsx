@@ -67,17 +67,23 @@ function PartnerLogo({
 
 const MENU_EASE = [0.16, 1, 0.3, 1] as const
 
-// Al tocar un enlace, la página salta a la sección mientras el menú aún cubre la pantalla. Las secciones muestran su contenido
-// recién cuando entran en pantalla (con un pequeño retardo), así que si el menú se retirara al instante se vería la sección vacía
-// (en blanco) hasta que el contenido aparezca. Por eso, en ese caso el menú espera 0,3 s antes de retirarse.
-const MENU_LINK_EXIT_DELAY = 0.3
+// Cómo se retira el menú: con la X o el botón, se desvanece; al tocar el logo de un aliado (otra página), espera un instante
+// mientras arranca la transición de página; y al tocar un enlace a una sección se retira de golpe (ver closeMenuForSection).
+type MenuExit = 'close' | 'page' | 'section'
+const MENU_PAGE_EXIT_DELAY = 0.3
 const menuPanelVariants = {
   hidden: { clipPath: 'inset(0 0 100% 0)', opacity: 0 },
   show: { clipPath: 'inset(0 0 0% 0)', opacity: 1, transition: { duration: 0.25, ease: MENU_EASE } },
-  exit: (leavingForLink: boolean) => ({
+  exit: (mode: MenuExit) => ({
     clipPath: 'inset(0 0 100% 0)',
     opacity: 0,
-    transition: { duration: 0.25, delay: leavingForLink ? MENU_LINK_EXIT_DELAY : 0, ease: MENU_EASE },
+    // En "section" no hay desvanecido: una animación de opacidad corre en el compositor sin esperar a que el navegador pinte la
+    // zona de destino (acaba de saltar muy lejos), y mientras el menú se desvanecía se veía la página en blanco unos instantes.
+    // Quitado de golpe, el navegador espera a tener la sección pintada antes de mostrarla.
+    transition:
+      mode === 'section'
+        ? { duration: 0 }
+        : { duration: 0.25, delay: mode === 'page' ? MENU_PAGE_EXIT_DELAY : 0, ease: MENU_EASE },
   }),
 }
 
@@ -85,8 +91,7 @@ export function Navbar({ ready }: { ready: boolean }) {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [hoveredHref, setHoveredHref] = useState<string | null>(null)
-  // true cuando el menú se cierra porque se tocó un enlace (no la X ni el botón): entonces espera un poco antes de retirarse.
-  const [leavingForLink, setLeavingForLink] = useState(false)
+  const [menuExit, setMenuExit] = useState<MenuExit>('close')
   const [activeHref, setActiveHref] = useState<string | null>(null)
   const reduceMotion = useReducedMotion()
   const lenis = useLenis()
@@ -184,11 +189,61 @@ export function Navbar({ ready }: { ready: boolean }) {
 
   // Al tocar un enlace del menú, el scroll tiene que estar libre ya en este mismo clic: el manejador de anclas (SmoothScroll) corre
   // justo después y Lenis ignora scrollTo mientras está detenido, así que si se esperaba al efecto de arriba la página no se movía.
-  const closeMenuForNavigation = () => {
+  const releaseScroll = () => {
     document.documentElement.style.overflow = ''
     lenis?.start()
-    setLeavingForLink(true)
+  }
+
+  // Logos de aliados (otra página): el menú se retira tras un instante, mientras la transición de página arranca.
+  const closeMenuForNavigation = () => {
+    releaseScroll()
+    setMenuExit('page')
     setIsMenuOpen(false)
+  }
+
+  // Enlaces a secciones: la página salta a la sección debajo del menú y el menú se queda cubriendo la pantalla hasta que lo que hay
+  // debajo está listo para verse. Si se retirara enseguida, en un celular se veía la pantalla en blanco hasta que el navegador
+  // terminaba de pintar esa zona lejana (y de decodificar sus imágenes). Se espera a que se pinten dos fotogramas y a que se
+  // decodifiquen las imágenes que ya están a la vista, con un tope de 1,2 s, y un último respiro para que arranque el contenido.
+  const closeMenuForSection = () => {
+    releaseScroll()
+    const header = document.getElementById('site-header')
+    const finish = () => {
+      setMenuExit('section')
+      setIsMenuOpen(false)
+    }
+    const cap = window.setTimeout(finish, 1200)
+    requestAnimationFrame(() =>
+      requestAnimationFrame(() => {
+        const pending = [...document.images].filter((img) => {
+          const box = img.getBoundingClientRect()
+          return !img.complete && !header?.contains(img) && box.bottom > 0 && box.top < window.innerHeight
+        })
+        // Con las imágenes listas, se espera además a que el contenido de la sección ya sea visible (cada bloque entra con una
+        // animación de aparición que arranca recién cuando llega a la pantalla), y un par de fotogramas más para que se pinte.
+        const effectiveOpacity = (el: Element) => {
+          let opacity = 1
+          for (let node: Element | null = el; node && node !== document.body; node = node.parentElement) {
+            opacity *= Number(getComputedStyle(node).opacity)
+          }
+          return opacity
+        }
+        const contentShown = () => {
+          const inView = [...document.querySelectorAll('h2, h3, p, img, li')].filter((el) => {
+            const box = el.getBoundingClientRect()
+            return !header?.contains(el) && box.height > 0 && box.bottom > 0 && box.top < window.innerHeight
+          })
+          const shown = inView.filter((el) => effectiveOpacity(el) > 0.6).length
+          return shown >= Math.min(3, inView.length)
+        }
+        const waitForContent = () => {
+          if (!contentShown()) return requestAnimationFrame(waitForContent)
+          window.clearTimeout(cap)
+          requestAnimationFrame(() => requestAnimationFrame(finish))
+        }
+        void Promise.all(pending.map((img) => img.decode().catch(() => undefined))).then(waitForContent)
+      }),
+    )
   }
 
   const isSolid = isScrolled || isMenuOpen
@@ -330,7 +385,7 @@ export function Navbar({ ready }: { ready: boolean }) {
         <button
           type="button"
           onClick={() => {
-            setLeavingForLink(false)
+            setMenuExit('close')
             setIsMenuOpen((open) => !open)
           }}
           className={cn(
@@ -360,13 +415,13 @@ export function Navbar({ ready }: { ready: boolean }) {
         </button>
       </nav>
 
-      <AnimatePresence custom={leavingForLink}>
+      <AnimatePresence custom={menuExit}>
         {isMenuOpen && (
           <motion.div
             // El panel se revela con clip-path y opacidad (los dos van por la GPU) en vez de animar su alto: animar `height`
             // obligaba al navegador a recalcular el diseño del panel en cada fotograma, y en un móvil eso se sentía a pocos fps.
             variants={menuPanelVariants}
-            custom={leavingForLink}
+            custom={menuExit}
             initial={reduceMotion ? false : 'hidden'}
             animate="show"
             exit="exit"
@@ -381,7 +436,7 @@ export function Navbar({ ready }: { ready: boolean }) {
                     <motion.a
                       key={link.href}
                       href={sectionHref(pathname, link.href)}
-                      onClick={closeMenuForNavigation}
+                      onClick={closeMenuForSection}
                       data-instant-scroll
                       aria-current={isActive ? 'true' : undefined}
                       initial={reduceMotion ? false : { opacity: 0, x: -12 }}
