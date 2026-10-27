@@ -142,18 +142,27 @@ export function Navbar({ ready }: { ready: boolean }) {
     }
   }, [pathname])
 
+  // El bloqueo del scroll de la página (overflow del <html>) hace que el navegador recalcule el diseño de toda la página, y si
+  // ocurre en el mismo instante en que arranca la animación del menú, ésta salta. Se aplica (y se quita) cuando la animación
+  // ya terminó; mientras tanto el menú cubre la pantalla y Lenis ya está detenido.
   useEffect(() => {
-    document.documentElement.style.overflow = isMenuOpen ? 'hidden' : ''
     if (isMenuOpen) {
       lenis?.stop()
     } else {
       lenis?.start()
     }
+    const id = window.setTimeout(() => {
+      document.documentElement.style.overflow = isMenuOpen ? 'hidden' : ''
+    }, 300)
+    return () => window.clearTimeout(id)
+  }, [isMenuOpen, lenis])
+
+  useEffect(() => {
     return () => {
       document.documentElement.style.overflow = ''
       lenis?.start()
     }
-  }, [isMenuOpen, lenis])
+  }, [lenis])
 
   const isSolid = isScrolled || isMenuOpen
 
@@ -324,9 +333,11 @@ export function Navbar({ ready }: { ready: boolean }) {
       <AnimatePresence>
         {isMenuOpen && (
           <motion.div
-            initial={reduceMotion ? false : { height: 0, opacity: 0 }}
-            animate={{ height: 'auto', opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
+            // El panel se revela con clip-path y opacidad (los dos van por la GPU) en vez de animar su alto: animar `height`
+            // obligaba al navegador a recalcular el diseño del panel en cada fotograma, y en un móvil eso se sentía a pocos fps.
+            initial={reduceMotion ? false : { clipPath: 'inset(0 0 100% 0)', opacity: 0 }}
+            animate={{ clipPath: 'inset(0 0 0% 0)', opacity: 1 }}
+            exit={{ clipPath: 'inset(0 0 100% 0)', opacity: 0 }}
             transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
             className="relative min-h-[calc(100dvh-3.5rem)] overflow-hidden border-t border-navy-100 bg-white lg:hidden"
           >
