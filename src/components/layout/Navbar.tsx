@@ -164,6 +164,14 @@ export function Navbar({ ready }: { ready: boolean }) {
     }
   }, [lenis])
 
+  // Al tocar un enlace del menú, el scroll tiene que estar libre ya en este mismo clic: el manejador de anclas (SmoothScroll) corre
+  // justo después y Lenis ignora scrollTo mientras está detenido, así que si se esperaba al efecto de arriba la página no se movía.
+  const closeMenuForNavigation = () => {
+    document.documentElement.style.overflow = ''
+    lenis?.start()
+    setIsMenuOpen(false)
+  }
+
   const isSolid = isScrolled || isMenuOpen
 
   return (
@@ -350,7 +358,8 @@ export function Navbar({ ready }: { ready: boolean }) {
                     <motion.a
                       key={link.href}
                       href={sectionHref(pathname, link.href)}
-                      onClick={() => setIsMenuOpen(false)}
+                      onClick={closeMenuForNavigation}
+                      data-instant-scroll
                       aria-current={isActive ? 'true' : undefined}
                       initial={reduceMotion ? false : { opacity: 0, x: -12 }}
                       animate={{ opacity: 1, x: 0 }}
@@ -383,7 +392,7 @@ export function Navbar({ ready }: { ready: boolean }) {
                   {partners.map((partner, i) => (
                     <Fragment key={partner.name}>
                       {i > 0 && <span aria-hidden="true" className="h-8 w-px bg-navy-200" />}
-                      <PartnerLogo partner={partner} isSolid className="h-12" onNavigate={() => setIsMenuOpen(false)} />
+                      <PartnerLogo partner={partner} isSolid className="h-12" onNavigate={closeMenuForNavigation} />
                     </Fragment>
                   ))}
                 </div>

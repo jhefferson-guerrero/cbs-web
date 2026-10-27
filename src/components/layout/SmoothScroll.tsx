@@ -61,7 +61,8 @@ function AnchorScrollBridge() {
       }
 
       event.preventDefault()
-      scrollToHash(lenis, href)
+      // Los enlaces del menú móvil saltan directo: el menú todavía cubre la pantalla mientras se cierra y así no se ve la página pasar en blanco.
+      scrollToHash(lenis, href, anchor.hasAttribute('data-instant-scroll'))
       history.pushState(null, '', href)
     }
 
