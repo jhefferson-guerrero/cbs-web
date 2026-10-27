@@ -65,10 +65,28 @@ function PartnerLogo({
   )
 }
 
+const MENU_EASE = [0.16, 1, 0.3, 1] as const
+
+// Al tocar un enlace, la página salta a la sección mientras el menú aún cubre la pantalla. Las secciones muestran su contenido
+// recién cuando entran en pantalla (con un pequeño retardo), así que si el menú se retirara al instante se vería la sección vacía
+// (en blanco) hasta que el contenido aparezca. Por eso, en ese caso el menú espera 0,3 s antes de retirarse.
+const MENU_LINK_EXIT_DELAY = 0.3
+const menuPanelVariants = {
+  hidden: { clipPath: 'inset(0 0 100% 0)', opacity: 0 },
+  show: { clipPath: 'inset(0 0 0% 0)', opacity: 1, transition: { duration: 0.25, ease: MENU_EASE } },
+  exit: (leavingForLink: boolean) => ({
+    clipPath: 'inset(0 0 100% 0)',
+    opacity: 0,
+    transition: { duration: 0.25, delay: leavingForLink ? MENU_LINK_EXIT_DELAY : 0, ease: MENU_EASE },
+  }),
+}
+
 export function Navbar({ ready }: { ready: boolean }) {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [hoveredHref, setHoveredHref] = useState<string | null>(null)
+  // true cuando el menú se cierra porque se tocó un enlace (no la X ni el botón): entonces espera un poco antes de retirarse.
+  const [leavingForLink, setLeavingForLink] = useState(false)
   const [activeHref, setActiveHref] = useState<string | null>(null)
   const reduceMotion = useReducedMotion()
   const lenis = useLenis()
@@ -169,6 +187,7 @@ export function Navbar({ ready }: { ready: boolean }) {
   const closeMenuForNavigation = () => {
     document.documentElement.style.overflow = ''
     lenis?.start()
+    setLeavingForLink(true)
     setIsMenuOpen(false)
   }
 
@@ -310,7 +329,10 @@ export function Navbar({ ready }: { ready: boolean }) {
 
         <button
           type="button"
-          onClick={() => setIsMenuOpen((open) => !open)}
+          onClick={() => {
+            setLeavingForLink(false)
+            setIsMenuOpen((open) => !open)
+          }}
           className={cn(
             'inline-flex h-10 w-10 items-center justify-center rounded-md lg:hidden',
             isSolid ? 'text-navy-900' : 'text-white',
@@ -338,15 +360,16 @@ export function Navbar({ ready }: { ready: boolean }) {
         </button>
       </nav>
 
-      <AnimatePresence>
+      <AnimatePresence custom={leavingForLink}>
         {isMenuOpen && (
           <motion.div
             // El panel se revela con clip-path y opacidad (los dos van por la GPU) en vez de animar su alto: animar `height`
             // obligaba al navegador a recalcular el diseño del panel en cada fotograma, y en un móvil eso se sentía a pocos fps.
-            initial={reduceMotion ? false : { clipPath: 'inset(0 0 100% 0)', opacity: 0 }}
-            animate={{ clipPath: 'inset(0 0 0% 0)', opacity: 1 }}
-            exit={{ clipPath: 'inset(0 0 100% 0)', opacity: 0 }}
-            transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+            variants={menuPanelVariants}
+            custom={leavingForLink}
+            initial={reduceMotion ? false : 'hidden'}
+            animate="show"
+            exit="exit"
             className="relative min-h-[calc(100dvh-3.5rem)] overflow-hidden border-t border-navy-100 bg-white lg:hidden"
           >
             <div className="flex flex-col px-6 py-8">
