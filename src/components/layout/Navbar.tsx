@@ -199,49 +199,12 @@ export function Navbar({ ready }: { ready: boolean }) {
     setIsMenuOpen(false)
   }
 
-  // Enlaces a secciones: la página salta a la sección debajo del menú y el menú se queda cubriendo la pantalla hasta que lo que hay
-  // debajo está listo para verse. Si se retirara enseguida, en un celular se veía la pantalla en blanco hasta que el navegador
-  // terminaba de pintar esa zona lejana (y de decodificar sus imágenes). Se espera a que se pinten dos fotogramas y a que se
-  // decodifiquen las imágenes que ya están a la vista, con un tope de 1,2 s, y un último respiro para que arranque el contenido.
+  // Enlaces a secciones: el menú se retira de golpe (sin desvanecido, ver menuPanelVariants) y la página se desplaza con la animación
+  // de siempre hasta la sección. La página de debajo está donde estaba, así que no hay zona lejana que pintar mientras el menú se va.
   const closeMenuForSection = () => {
     releaseScroll()
-    const header = document.getElementById('site-header')
-    const finish = () => {
-      setMenuExit('section')
-      setIsMenuOpen(false)
-    }
-    const cap = window.setTimeout(finish, 1200)
-    requestAnimationFrame(() =>
-      requestAnimationFrame(() => {
-        const pending = [...document.images].filter((img) => {
-          const box = img.getBoundingClientRect()
-          return !img.complete && !header?.contains(img) && box.bottom > 0 && box.top < window.innerHeight
-        })
-        // Con las imágenes listas, se espera además a que el contenido de la sección ya sea visible (cada bloque entra con una
-        // animación de aparición que arranca recién cuando llega a la pantalla), y un par de fotogramas más para que se pinte.
-        const effectiveOpacity = (el: Element) => {
-          let opacity = 1
-          for (let node: Element | null = el; node && node !== document.body; node = node.parentElement) {
-            opacity *= Number(getComputedStyle(node).opacity)
-          }
-          return opacity
-        }
-        const contentShown = () => {
-          const inView = [...document.querySelectorAll('h2, h3, p, img, li')].filter((el) => {
-            const box = el.getBoundingClientRect()
-            return !header?.contains(el) && box.height > 0 && box.bottom > 0 && box.top < window.innerHeight
-          })
-          const shown = inView.filter((el) => effectiveOpacity(el) > 0.6).length
-          return shown >= Math.min(3, inView.length)
-        }
-        const waitForContent = () => {
-          if (!contentShown()) return requestAnimationFrame(waitForContent)
-          window.clearTimeout(cap)
-          requestAnimationFrame(() => requestAnimationFrame(finish))
-        }
-        void Promise.all(pending.map((img) => img.decode().catch(() => undefined))).then(waitForContent)
-      }),
-    )
+    setMenuExit('section')
+    setIsMenuOpen(false)
   }
 
   const isSolid = isScrolled || isMenuOpen
@@ -435,7 +398,6 @@ export function Navbar({ ready }: { ready: boolean }) {
                       key={link.href}
                       href={sectionHref(pathname, link.href)}
                       onClick={closeMenuForSection}
-                      data-instant-scroll
                       aria-current={isActive ? 'true' : undefined}
                       initial={reduceMotion ? false : { opacity: 0, x: -12 }}
                       animate={{ opacity: 1, x: 0 }}
