@@ -130,14 +130,6 @@ El resultado de `npm run build` es estático (`dist/`).
 Si se agrega un servicio externo (analítica, mapas, etc.), hay que permitirlo en la `Content-Security-Policy` de **ambos**
 archivos: `vercel.json` y `deploy/hostinger.htaccess`.
 
-## Pendientes de confirmar con la empresa
-
-- Descripciones de las normas ISO (`certifications.ts`) y que las cinco estén vigentes.
-- Descripciones de los servicios de Limp City (`limp-city.ts`).
-- Cifras escritas en el código: proyectos ejecutados, portafolio, años, "3 proyectos en desarrollo en Perú", y las de Experiencia
-  y Limp City.
-- Que la clave de Web3Forms esté restringida a `www.cbsperu.com` y los mensajes lleguen a `contacto@cbsperu.com`.
-
 ## Convenciones
 
 - Textos y comentarios del código en español.
