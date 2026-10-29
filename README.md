@@ -23,7 +23,7 @@ Requiere Node 20.19+ o 22.12+ (requisito de Vite 8).
 
 ```bash
 npm install
-cp .env.example .env.local   # y completar la clave (ver "Variables de entorno")
+cp .env.example .env.local   # opcional: solo para probar el formulario (ver "Variables de entorno")
 npm run dev                  # servidor de desarrollo
 ```
 
@@ -42,9 +42,15 @@ npm run dev                  # servidor de desarrollo
 |---|---|
 | `VITE_WEB3FORMS_ACCESS_KEY` | Access key de Web3Forms del formulario de contacto. |
 
-Se **incrusta en el JavaScript al compilar** (no se lee en el servidor) y es pública por diseño del servicio. Va en `.env.local`
-(ignorado por git) en local, y en *Settings → Environment Variables* en Vercel. Si falta, el formulario muestra el error genérico
-de envío sin más aviso.
+Se **incrusta en el JavaScript al compilar** (no se lee en el servidor) y es pública por diseño del servicio.
+
+- **Producción (Vercel):** la clave ya está configurada directamente en el panel del proyecto (*Settings → Environment Variables*),
+  por eso no existe en el repositorio ni hace falta un `.env.local` para publicar: Vercel compila con ella.
+- **Local:** un `npm run build` o `npm run dev` sin `.env.local` genera un sitio **sin clave**, y allí el formulario no envía. Solo
+  hace falta crearlo (copia de `.env.example`, ignorado por git) para probar el formulario en la máquina propia, o al publicar
+  en Hostinger, que se compila localmente.
+
+Si la clave falta, el formulario muestra el error genérico de envío sin más aviso.
 
 ## Estructura
 
