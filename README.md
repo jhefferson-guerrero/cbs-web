@@ -129,10 +129,3 @@ El resultado de `npm run build` es estático (`dist/`).
 
 Si se agrega un servicio externo (analítica, mapas, etc.), hay que permitirlo en la `Content-Security-Policy` de **ambos**
 archivos: `vercel.json` y `deploy/hostinger.htaccess`.
-
-## Convenciones
-
-- Textos y comentarios del código en español.
-- Colores solo de la paleta de `src/index.css` (`navy`, `cyan`, y `moss` exclusivo de Limp City; `brand-red` solo para el logo).
-- Un único `<h1>` por página, y títulos/descripciones únicos (máx. ~60 y ~155 caracteres).
-- No agregar a los datos estructurados información sin confirmar (por ejemplo, las certificaciones).
