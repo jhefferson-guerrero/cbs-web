@@ -1,6 +1,7 @@
 # CBS Perú — sitio web corporativo
 
-Sitio de **CBS — Construtora Baiana de Saneamento** (https://www.cbsperu.com): empresa de obras de agua potable, alcantarillado,
+Sitio de **CBS — Construtora Baiana de Saneamento**, pensado para publicarse en https://www.cbsperu.com (por ahora está
+publicado solo en Vercel, en su dirección `*.vercel.app`): empresa de obras de agua potable, alcantarillado,
 drenaje pluvial y represas en Perú y Brasil. Incluye la página de su empresa hermana **Limp City** (limpieza urbana, Brasil) y
 una página por cada proyecto destacado.
 
@@ -119,7 +120,9 @@ La ruta, el sitemap y el prerenderizado salen solos de la lista de proyectos.
 El resultado de `npm run build` es estático (`dist/`).
 
 - **Vercel:** cada push a `main` despliega solo. `vercel.json` ya trae URLs limpias, 404 real, redirección de `cbsperu.com` a
-  `www.cbsperu.com`, cabeceras de seguridad (incluida CSP) y `noindex` en las direcciones `*.vercel.app`.
+  `www.cbsperu.com`, cabeceras de seguridad (incluida CSP) y `noindex` en las direcciones `*.vercel.app`, así que mientras el
+  sitio viva solo ahí, Google no lo indexa. Al pasar a `www.cbsperu.com` (agregar el dominio en *Domains* y apuntar el DNS, ver
+  [deploy/README.md](deploy/README.md)) empieza a indexarse solo.
 - **Hostinger (Apache/LiteSpeed):** `npm run build:hostinger` y subir todo el contenido de `dist/` (incluido el `.htaccess`) a
   `public_html`. Pasos, DNS y comprobaciones en [deploy/README.md](deploy/README.md). El `.htaccess` aún está sin probar en
   Hostinger.
