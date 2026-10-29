@@ -77,46 +77,24 @@ docs/SEO.md           Cómo está hecho el SEO y dónde cambiarlo
 vercel.json           Redirecciones, cabeceras de seguridad y caché en Vercel
 ```
 
-### Datos en `src/lib/`
+### Datos del sitio en `src/lib/`
 
-| Archivo | Contenido |
-|---|---|
-| `projects.ts` | Proyectos (portada, ficha, galería) y logos de aliados. |
-| `clients.ts` | Clientes por país. |
-| `certifications.ts` | Normas ISO. |
-| `limp-city.ts` | Cifras, servicios y ciudades de Limp City. |
-| `partners.ts` | Empresas del grupo que aparecen en la navbar. |
-| `nav-links.ts` | Enlaces de sección del menú (y `sectionHref`). |
-| `seo.ts` | Título, descripción, imagen y datos estructurados de cada página. |
-| `site.ts`, `contact.ts` | Dominio, nombre, año de fundación, logo, correo de contacto. |
-| `hero-image.ts`, `limp-city-hero.ts` | Variantes responsive de las imágenes de los heros. |
-| `routes.ts`, `lazy-route.ts`, `page-transition.ts` | Carga diferida de páginas y transición entre ellas. |
-| `prefetch-*.ts`, `connection.ts` | Precarga en segundo plano (se omite con ahorro de datos o 2G). |
+Los textos y datos viven aquí, separados del diseño: para cambiar un texto o agregar un proyecto casi siempre se edita un archivo
+de esta carpeta y no los componentes.
+
+- **Contenido:** `projects.ts` (proyectos y aliados), `clients.ts`, `certifications.ts`, `limp-city.ts`, `partners.ts`, `nav-links.ts`.
+- **Empresa y SEO:** `site.ts` (dominio, nombre, logo), `contact.ts` (correo), `seo.ts` (título y descripción de cada página).
+- **Internos de carga:** el resto (`routes`, `prefetch-*`, `hero-image`, etc.); normalmente no hace falta tocarlos.
 
 ## Cómo funciona
 
-### Prerenderizado (SEO)
-La app es una SPA, pero `npm run build` hace tres pasos para que buscadores y vistas previas (WhatsApp, LinkedIn) lean cada página
-sin ejecutar JavaScript:
-
-1. `vite build` → cliente en `dist/`.
-2. `vite build --ssr src/entry-server.tsx` → versión de servidor en `dist-ssr/` (no se publica).
-3. `node scripts/prerender.mjs` → un HTML por página con su `<head>` completo (título, descripción, canónica, Open Graph,
-   JSON-LD) y el contenido en versión semántica, más `404.html` y `sitemap.xml`.
-
-Al arrancar en el navegador, la app descarta ese contenido y se dibuja de cero. Si el JavaScript no llega a cargar, a los 8 s el
-contenido prerrenderizado se muestra igual.
-
-Detalle completo y reglas a respetar en [docs/SEO.md](docs/SEO.md).
-
-### Carga y rendimiento
-- Código dividido por ruta; las páginas de Limp City y de proyecto se precargan en segundo plano.
-- Todo el CSS va incrustado en el HTML y las dos fuentes críticas se precargan, para que el primer pintado ya sea azul marino.
-- Las imágenes de los heros tienen varias variantes (`srcset`, recorte móvil en AVIF) y se precargan desde `public/hero-preload.js`.
-  Ese script **no puede importar módulos**: sus `srcset` deben mantenerse sincronizados a mano con `hero-image.ts` y
-  `limp-city-hero.ts`.
-- El preloader espera a la imagen del hero y a las fuentes críticas (mínimo 0.95 s, máximo 6 s).
-- Se respeta `prefers-reduced-motion` en todas las animaciones.
+- **Prerenderizado:** `npm run build` genera un HTML completo por página (con su SEO) para que buscadores y vistas previas
+  (WhatsApp, LinkedIn) lean el contenido sin ejecutar JavaScript. Al abrir el sitio, la app lo reemplaza y se dibuja normalmente.
+  Detalle y reglas en [docs/SEO.md](docs/SEO.md).
+- **Carga rápida:** el código se divide por página, el CSS va dentro del HTML y las imágenes de los heros tienen versiones por
+  tamaño de pantalla. `public/hero-preload.js` no puede importar módulos: sus `srcset` se mantienen a mano iguales a los de
+  `hero-image.ts` y `limp-city-hero.ts`.
+- **Animaciones:** se respeta la opción de "reducir movimiento" del sistema.
 
 ## Tareas comunes
 
