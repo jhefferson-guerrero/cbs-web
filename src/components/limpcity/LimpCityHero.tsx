@@ -66,8 +66,8 @@ export function LimpCityHero() {
                 className="h-14 w-auto brightness-0 invert sm:h-[4.5rem] lg:h-[clamp(4.5rem,12vh,8.5rem)]"
               />
               {/* Símbolo de reciclaje junto al logo: línea fina de separación y mismo blanco que el logo. */}
-              <span aria-hidden="true" className="h-12 w-px bg-white/40 sm:h-14 lg:h-[clamp(3.5rem,9vh,6.25rem)]" />
-              <RecycleSymbol className="h-12 w-12 shrink-0 text-white sm:h-14 sm:w-14 lg:h-[clamp(3.5rem,9vh,6.25rem)] lg:w-[clamp(3.5rem,9vh,6.25rem)]" />
+              <span aria-hidden="true" className="h-12 w-px bg-white/40 sm:h-16 lg:h-[clamp(4rem,10.5vh,7.5rem)]" />
+              <RecycleSymbol className="h-[3.25rem] w-[3.25rem] shrink-0 text-white sm:h-[4.25rem] sm:w-[4.25rem] lg:h-[clamp(4.25rem,11.5vh,8rem)] lg:w-[clamp(4.25rem,11.5vh,8rem)]" />
             </motion.div>
             <motion.h1
               {...rise(0.22)}
