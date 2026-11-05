@@ -6,8 +6,8 @@ import nosotrosPhoto from '@/assets/images/nosotros.webp'
 import nosotrosPhotoAvif from '@/assets/images/nosotros.avif'
 
 const timeline = [
-  { year: '2009', label: 'Fundación del grupo en Brasil', current: false },
-  { year: '2023', label: 'Brasil → Perú: inicio de la internacionalización del grupo', current: false },
+  { year: '2009', label: 'Fundación de CBS en Brasil', current: false },
+  { year: '2023', label: 'Brasil → Perú: inicio de la internacionalización', current: false },
   { year: 'Hoy', label: '4 proyectos en desarrollo en Perú', current: true },
 ]
 
