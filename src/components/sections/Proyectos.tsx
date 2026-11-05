@@ -35,18 +35,18 @@ export function Proyectos() {
           donde empieza el contenido y este espacio solo se ve al bajar desde arriba. */}
       <div aria-hidden="true" className="hidden lg:block lg:h-[clamp(2rem,8vh,6rem)]" />
       <div id="proyectos" className="lg:h-[calc(100svh-var(--nav-h))] lg:min-h-[540px]">
-        <div className="mx-auto w-full max-w-[1400px] px-6 py-16 lg:flex lg:h-full lg:flex-col lg:px-10 lg:py-[clamp(1rem,3.5vh,3rem)] xl:px-16 2xl:max-w-[1700px] 2xl:px-14">
+        <div className="mx-auto w-full max-w-[1400px] px-6 py-16 lg:flex lg:h-full lg:flex-row lg:items-center lg:gap-[clamp(2rem,4vw,4rem)] lg:px-10 lg:py-[clamp(1rem,3.5vh,3rem)] xl:px-16 2xl:max-w-[1700px] 2xl:px-14">
           <motion.div
             initial={reduceMotion ? false : { opacity: 0, y: 28 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.7, ease: EASE }}
-            className="max-w-2xl lg:max-w-4xl"
+            className="max-w-2xl lg:w-[clamp(16rem,30%,26rem)] lg:max-w-none lg:shrink-0"
           >
             <p className="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-cyan-700 2xl:text-sm">
               Nuestros proyectos
             </p>
-            <h2 className="mt-4 text-3xl font-bold leading-tight text-navy-900 md:text-4xl lg:mt-[clamp(0.25rem,1vh,0.75rem)] lg:text-[clamp(2.25rem,5vh,3.25rem)]">
+            <h2 className="mt-4 text-3xl font-bold leading-tight text-navy-900 md:text-4xl lg:mt-[clamp(0.5rem,1.6vh,1rem)] lg:text-[clamp(2rem,4.6vh,3rem)]">
               Presencia real en el territorio peruano
             </h2>
             <p className="mt-5 text-[15.5px] leading-relaxed text-slate-700 lg:mt-[clamp(0.25rem,1vh,0.75rem)] lg:text-[clamp(15.5px,1.9vh,19px)]">
@@ -63,8 +63,11 @@ export function Proyectos() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.8, delay: 0.1, ease: EASE }}
-            className="relative mt-12 flex flex-col gap-4 lg:mt-[clamp(0.75rem,2.5vh,2.5rem)] lg:block lg:min-h-0 lg:flex-1"
+            className="mt-12 lg:mt-0 lg:flex lg:h-full lg:min-w-0 lg:flex-1 lg:items-center"
           >
+            {/* En escritorio la foto toma la altura disponible pero nunca pasa de 16:10 de proporción: con el título en la
+                columna de al lado queda alta, no como una franja ancha. */}
+            <div className="relative flex w-full flex-col gap-4 lg:block lg:aspect-[16/10] lg:max-h-full">
             {/* Proyecto activo. Las fotos de todos los proyectos están apiladas y solo cambia cuál se ve: así la
                 siguiente ya está descargada cuando se pulsa y no hay parpadeo. */}
             <motion.div
@@ -75,7 +78,7 @@ export function Proyectos() {
                 if (info.offset.x < -50) go(active + 1)
                 else if (info.offset.x > 50) go(active - 1)
               }}
-              className="relative aspect-[4/5] overflow-hidden rounded-2xl bg-navy-950 shadow-card sm:aspect-[16/10] lg:aspect-auto lg:h-full"
+              className="relative aspect-[4/5] overflow-hidden rounded-2xl bg-navy-950 shadow-card sm:aspect-[16/10] lg:absolute lg:inset-0 lg:aspect-auto"
             >
               {projects.map((project, i) => (
                 <motion.img
@@ -190,6 +193,7 @@ export function Proyectos() {
                 })}
               </div>
             )}
+            </div>
           </motion.div>
 
           {/* Enlaces a todos los proyectos para buscadores y lectores de pantalla: en la vista solo uno está grande y los
