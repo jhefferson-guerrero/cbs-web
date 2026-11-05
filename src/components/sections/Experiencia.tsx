@@ -73,8 +73,8 @@ export function Experiencia() {
             className="mt-6 max-w-lg text-[15.5px] leading-relaxed text-navy-200 sm:mt-5 2xl:max-w-xl 2xl:text-lg"
           >
             Infraestructura y saneamiento, con un historial que se mide en kilómetros de redes de
-            alcantarillado, presas construidas, conexiones entregadas y construcción de hospitales y
-            escuelas.
+            alcantarillado, presas construidas, conexiones entregadas y hospitales y escuelas
+            construidos.
           </motion.p>
         </div>
 
