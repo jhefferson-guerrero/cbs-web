@@ -7,15 +7,15 @@ import { useMediaQuery } from '@/lib/use-media-query'
 import { projects } from '@/lib/projects'
 
 // Tamaños reales de las fotos para que el navegador elija la versión más chica que alcance: la grande ocupa casi todo
-// el ancho en celular y ~60% en escritorio; las miniaturas, un tercio del ancho en celular y ~14% en escritorio.
-const FEATURE_SIZES = '(min-width: 1024px) 62vw, 100vw'
+// el ancho; las miniaturas, un tercio del ancho en celular y ~11% en escritorio.
+const FEATURE_SIZES = '100vw'
 const THUMB_SIZES = '(min-width: 1024px) 14vw, 34vw'
 
 const EASE = [0.16, 1, 0.3, 1] as const
 const pad = (n: number) => String(n).padStart(2, '0')
 
-// Un proyecto grande a la vez, con los demás como miniaturas al costado (debajo en celular). Se cambia de proyecto
-// con las miniaturas, las flechas o deslizando en celular. No hay reproducción automática.
+// Un proyecto grande a la vez, con los demás como miniaturas verticales encima de la foto, a la derecha (debajo en
+// celular). Se cambia de proyecto con las miniaturas, las flechas o deslizando en celular. Sin reproducción automática.
 export function Proyectos() {
   const reduceMotion = useReducedMotion()
   const isDesktop = useMediaQuery('(min-width: 1024px)')
@@ -63,7 +63,7 @@ export function Proyectos() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.8, delay: 0.1, ease: EASE }}
-            className="mt-12 flex flex-col gap-4 lg:mt-[clamp(0.75rem,2.5vh,2.5rem)] lg:min-h-0 lg:flex-1 lg:flex-row lg:gap-[clamp(0.75rem,1.6vw,1.5rem)]"
+            className="relative mt-12 flex flex-col gap-4 lg:mt-[clamp(0.75rem,2.5vh,2.5rem)] lg:block lg:min-h-0 lg:flex-1"
           >
             {/* Proyecto activo. Las fotos de todos los proyectos están apiladas y solo cambia cuál se ve: así la
                 siguiente ya está descargada cuando se pulsa y no hay parpadeo. */}
@@ -75,58 +75,29 @@ export function Proyectos() {
                 if (info.offset.x < -50) go(active + 1)
                 else if (info.offset.x > 50) go(active - 1)
               }}
-              className="relative aspect-[4/5] sm:aspect-[16/10] lg:aspect-auto lg:min-h-0 lg:min-w-0 lg:flex-1"
+              className="relative aspect-[4/5] overflow-hidden rounded-2xl bg-navy-950 shadow-card sm:aspect-[16/10] lg:aspect-auto lg:h-full"
             >
-              <span aria-hidden="true" className="absolute -left-px -top-px z-10 h-7 w-7 border-l-2 border-t-2 border-cyan-500" />
-              <span aria-hidden="true" className="absolute -right-px -top-px z-10 h-7 w-7 border-r-2 border-t-2 border-cyan-500" />
-              <span aria-hidden="true" className="absolute -bottom-px -left-px z-10 h-7 w-7 border-b-2 border-l-2 border-cyan-500" />
-              <span aria-hidden="true" className="absolute -bottom-px -right-px z-10 h-7 w-7 border-b-2 border-r-2 border-cyan-500" />
+              {projects.map((project, i) => (
+                <motion.img
+                  key={project.slug}
+                  src={project.cover}
+                  srcSet={project.coverSrcSet}
+                  sizes={FEATURE_SIZES}
+                  alt={i === active ? project.title : ''}
+                  aria-hidden={i === active ? undefined : true}
+                  draggable={false}
+                  loading="lazy"
+                  decoding="async"
+                  initial={false}
+                  animate={{ opacity: i === active ? 1 : 0, scale: i === active ? 1 : 1.06 }}
+                  transition={{ duration: reduceMotion ? 0 : 0.9, ease: EASE }}
+                  className="absolute inset-0 h-full w-full object-cover"
+                />
+              ))}
+              <div className="absolute inset-0 bg-gradient-to-t from-navy-950/90 via-navy-950/20 to-navy-950/0 lg:from-navy-950/45 lg:via-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-r from-navy-950/20 via-transparent to-transparent lg:from-navy-950/80 lg:via-navy-950/30 lg:via-45%" />
 
-              <div className="absolute inset-0 overflow-hidden bg-navy-950">
-                {projects.map((project, i) => (
-                  <motion.img
-                    key={project.slug}
-                    src={project.cover}
-                    srcSet={project.coverSrcSet}
-                    sizes={FEATURE_SIZES}
-                    alt={i === active ? project.title : ''}
-                    aria-hidden={i === active ? undefined : true}
-                    draggable={false}
-                    loading="lazy"
-                    decoding="async"
-                    initial={false}
-                    animate={{ opacity: i === active ? 1 : 0, scale: i === active ? 1 : 1.06 }}
-                    transition={{ duration: reduceMotion ? 0 : 0.9, ease: EASE }}
-                    className="absolute inset-0 h-full w-full object-cover"
-                  />
-                ))}
-                <div className="absolute inset-0 bg-gradient-to-t from-navy-950 via-navy-950/35 to-navy-950/0" />
-                <div className="absolute inset-0 bg-gradient-to-r from-navy-950/55 via-transparent to-transparent" />
-              </div>
-
-              {canSwitch && (
-                <div className="absolute right-4 top-4 z-20 flex items-center gap-3 sm:right-6 sm:top-6">
-                  <p aria-live="polite" className="font-mono text-xs font-semibold tracking-[0.2em] text-white/85">
-                    {pad(active + 1)} / {pad(count)}
-                  </p>
-                  {[
-                    { label: 'Proyecto anterior', icon: <ArrowLeftIcon size={18} weight="regular" />, to: active - 1 },
-                    { label: 'Proyecto siguiente', icon: <ArrowRightIcon size={18} weight="regular" />, to: active + 1 },
-                  ].map((arrow) => (
-                    <button
-                      key={arrow.label}
-                      type="button"
-                      onClick={() => go(arrow.to)}
-                      aria-label={arrow.label}
-                      className="flex h-10 w-10 items-center justify-center rounded-full border border-white/40 bg-navy-950/60 text-white backdrop-blur-sm outline-none transition-colors hover:bg-navy-950/85 focus-visible:ring-2 focus-visible:ring-cyan-400 active:scale-95"
-                    >
-                      {arrow.icon}
-                    </button>
-                  ))}
-                </div>
-              )}
-
-              <div className="absolute inset-x-0 bottom-0 z-20 p-6 sm:p-8 lg:p-[clamp(1.25rem,3.2vh,2.5rem)]">
+              <div className="absolute inset-0 z-20 flex flex-col justify-end p-6 sm:p-8 lg:max-w-[46%] lg:justify-center lg:py-0 lg:pl-[clamp(2rem,4vw,4rem)] lg:pr-0">
                 <AnimatePresence mode="wait" initial={false}>
                   <motion.div
                     key={current.slug}
@@ -138,39 +109,52 @@ export function Proyectos() {
                     <span className="inline-block rounded-full border border-cyan-400/40 bg-navy-950/70 px-3 py-1 font-mono text-[11px] font-semibold uppercase tracking-[0.15em] text-cyan-300 backdrop-blur-sm">
                       {current.category}
                     </span>
-                    <h3 className="mt-3 max-w-2xl text-xl font-bold leading-snug text-white sm:text-2xl lg:mt-[clamp(0.5rem,1.4vh,0.875rem)] lg:text-[clamp(1.25rem,3.4vh,2.25rem)]">
+                    <h3 className="mt-3 text-xl font-bold leading-snug text-white sm:text-2xl lg:mt-[clamp(0.5rem,1.6vh,1rem)] lg:text-[clamp(1.25rem,3.6vh,2.5rem)] lg:leading-[1.15]">
                       {current.title}
                     </h3>
-                    <p className="mt-2 flex items-center gap-1.5 text-sm text-navy-200 lg:text-[clamp(0.875rem,1.8vh,1.05rem)]">
+                    <p className="mt-2 flex items-center gap-1.5 text-sm text-navy-100 lg:mt-[clamp(0.5rem,1.4vh,1rem)] lg:text-[clamp(0.875rem,1.9vh,1.1rem)]">
                       <MapPinIcon size={16} weight="regular" className="shrink-0 text-cyan-400" />
                       {current.location}
                     </p>
-                    <dl className="mt-4 hidden max-w-xl gap-x-10 gap-y-1 sm:grid sm:grid-cols-[auto_auto] sm:justify-start lg:mt-[clamp(0.5rem,1.8vh,1.25rem)]">
-                      <div>
-                        <dt className="font-mono text-[11px] font-semibold uppercase tracking-[0.15em] text-cyan-300">Cliente</dt>
-                        <dd className="mt-0.5 text-sm font-semibold text-white lg:text-[clamp(0.875rem,1.8vh,1.05rem)]">{current.client.name}</dd>
-                      </div>
-                      <div>
-                        <dt className="font-mono text-[11px] font-semibold uppercase tracking-[0.15em] text-cyan-300">Monto contratado</dt>
-                        <dd className="mt-0.5 text-sm font-semibold text-white lg:text-[clamp(0.875rem,1.8vh,1.05rem)]">{current.amount}</dd>
-                      </div>
-                    </dl>
                     <Button
                       href={`/proyectos/${current.slug}`}
                       variant="solid"
                       icon={<ArrowUpRightIcon size={18} weight="regular" />}
-                      className="mt-5 lg:mt-[clamp(0.75rem,2.2vh,1.5rem)]"
+                      className="mt-5 lg:mt-[clamp(0.75rem,2.4vh,1.75rem)]"
                     >
                       Ver proyecto
                     </Button>
                   </motion.div>
                 </AnimatePresence>
               </div>
+
+              {canSwitch && (
+                <div className="absolute right-4 top-4 z-20 flex items-center gap-3 sm:right-6 sm:top-6 lg:bottom-[clamp(1rem,4vh,2rem)] lg:left-[clamp(2rem,4vw,4rem)] lg:right-auto lg:top-auto">
+                  {[
+                    { label: 'Proyecto anterior', icon: <ArrowLeftIcon size={18} weight="bold" />, to: active - 1 },
+                    { label: 'Proyecto siguiente', icon: <ArrowRightIcon size={18} weight="bold" />, to: active + 1 },
+                  ].map((arrow) => (
+                    <button
+                      key={arrow.label}
+                      type="button"
+                      onClick={() => go(arrow.to)}
+                      aria-label={arrow.label}
+                      className="flex h-10 w-10 items-center justify-center rounded-lg bg-white/90 text-navy-900 shadow-sm outline-none transition hover:bg-white focus-visible:ring-2 focus-visible:ring-cyan-400 active:scale-95"
+                    >
+                      {arrow.icon}
+                    </button>
+                  ))}
+                  <p aria-live="polite" className="ml-1 font-mono text-xs font-semibold tracking-[0.2em] text-white/90">
+                    {pad(active + 1)} / {pad(count)}
+                  </p>
+                </div>
+              )}
             </motion.div>
 
-            {/* Los demás proyectos: miniaturas verticales al costado en escritorio y una fila debajo en celular. */}
+            {/* Los demás proyectos: en escritorio, miniaturas verticales encima de la foto, a la derecha y sobresaliendo un
+                poco del borde; en celular, una fila debajo de la foto. */}
             {canSwitch && (
-              <div className="grid auto-cols-fr grid-flow-col gap-3 lg:flex lg:flex-none lg:items-end lg:gap-[clamp(0.75rem,1.2vw,1.25rem)]">
+              <div className="grid auto-cols-fr grid-flow-col gap-3 lg:absolute lg:bottom-[12%] lg:-right-6 lg:z-30 lg:flex lg:h-[60%] lg:items-end lg:gap-[clamp(0.75rem,1.2vw,1.25rem)]">
                 {others.map((index) => {
                   const project = projects[index]
                   return (
@@ -181,7 +165,7 @@ export function Proyectos() {
                       type="button"
                       onClick={() => setActive(index)}
                       aria-label={`Ver proyecto: ${project.title}`}
-                      className="group relative h-28 overflow-hidden bg-navy-950 text-left outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 sm:h-32 lg:h-[78%] lg:w-[clamp(9.5rem,14vw,14rem)]"
+                      className="group relative h-28 overflow-hidden rounded-xl bg-navy-950 text-left shadow-xl shadow-navy-950/40 outline-none ring-1 ring-white/20 transition-transform duration-300 hover:-translate-y-1 focus-visible:ring-2 focus-visible:ring-cyan-400 sm:h-32 lg:h-full lg:w-auto lg:aspect-[2/3]"
                     >
                       <img
                         src={project.cover}
@@ -194,7 +178,7 @@ export function Proyectos() {
                         decoding="async"
                         className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-navy-950/90 via-navy-950/25 to-navy-950/10" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-navy-950/90 via-navy-950/20 to-navy-950/0" />
                       <span className="absolute left-3 top-3 rounded-full border border-cyan-400/40 bg-navy-950/70 px-2.5 py-0.5 font-mono text-[10px] font-semibold uppercase tracking-[0.12em] text-cyan-300 backdrop-blur-sm">
                         {project.category}
                       </span>
