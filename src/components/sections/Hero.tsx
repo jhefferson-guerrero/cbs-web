@@ -142,9 +142,11 @@ export function Hero({ ready }: { ready: boolean }) {
               {...fadeUp(0.34)}
               className="mt-8 max-w-[54ch] text-pretty text-base leading-relaxed text-white/85 sm:mt-6 md:text-lg 2xl:max-w-[46ch] 2xl:text-xl [@media(max-height:600px)]:mt-4"
             >
-              Desde 2009 ejecutamos proyectos de infraestructura de mediana y gran escala en
-              Perú y Brasil: abastecimiento de agua, represas, alcantarillado sanitario, drenaje
-              urbano, defensa ribereña e infraestructura urbana.
+              Desde su fundación en Brasil en 2009, y con la experiencia adquirida y el firme
+              propósito de expansión, se inició con éxito la incursión en el mercado peruano en 2023,
+              ejecutando los siguientes proyectos de infraestructura: abastecimiento de agua,
+              represas, alcantarillado sanitario, drenaje urbano, defensa ribereña e infraestructura
+              urbana.
             </motion.p>
 
             <motion.div

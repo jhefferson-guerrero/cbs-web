@@ -7,8 +7,8 @@ import nosotrosPhotoAvif from '@/assets/images/nosotros.avif'
 
 const timeline = [
   { year: '2009', label: 'Fundación del grupo en Brasil', current: false },
-  { year: 'Brasil → Perú', label: 'Inicio de la internacionalización del grupo', current: false },
-  { year: 'Hoy', label: '3 proyectos en desarrollo en Perú', current: true },
+  { year: '2023', label: 'Brasil → Perú: inicio de la internacionalización del grupo', current: false },
+  { year: 'Hoy', label: '4 proyectos en desarrollo en Perú', current: true },
 ]
 
 // Esquina decorativa de la foto: entra con un pequeño zoom, justo cuando el riel la va descubriendo.
@@ -117,8 +117,8 @@ export function Nosotros() {
                 className="text-[15.5px] leading-relaxed text-navy-200 lg:text-[clamp(15.5px,2.1vh,22px)]"
               >
                 Somos una organización con sólida trayectoria en la ejecución de obras de saneamiento,
-                agua potable, drenaje urbano e infraestructura hidráulica. Desde nuestra fundación en
-                2009, hemos asumido el compromiso de transformar vidas a través de soluciones integrales
+                agua potable, drenaje urbano e infraestructura. Desde nuestra fundación, hemos
+                asumido el compromiso de transformar vidas a través de soluciones integrales
                 que garanticen acceso sostenible a agua potable y sistemas de desagüe eficientes.
               </motion.p>
               <motion.p
