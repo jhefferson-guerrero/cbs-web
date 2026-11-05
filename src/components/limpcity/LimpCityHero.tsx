@@ -1,7 +1,8 @@
 import { motion, useReducedMotion } from 'motion/react'
-import { ArrowRightIcon, RecycleIcon } from '@phosphor-icons/react'
+import { ArrowRightIcon } from '@phosphor-icons/react'
 import { Button } from '@/components/ui/Button'
 import { Counter } from '@/components/ui/Counter'
+import { RecycleSymbol } from '@/components/ui/RecycleSymbol'
 import { limpCityStats } from '@/lib/limp-city'
 import {
   LIMP_CITY_HERO_MOBILE_QUERY,
@@ -66,11 +67,7 @@ export function LimpCityHero() {
               />
               {/* Símbolo de reciclaje junto al logo: línea fina de separación y mismo blanco que el logo. */}
               <span aria-hidden="true" className="h-10 w-px bg-white/40 sm:h-12 lg:h-[clamp(3rem,8vh,5.5rem)]" />
-              <RecycleIcon
-                aria-hidden="true"
-                weight="regular"
-                className="h-9 w-9 shrink-0 text-white sm:h-11 sm:w-11 lg:h-[clamp(2.75rem,7vh,5rem)] lg:w-[clamp(2.75rem,7vh,5rem)]"
-              />
+              <RecycleSymbol className="h-9 w-9 shrink-0 text-white sm:h-11 sm:w-11 lg:h-[clamp(2.75rem,7vh,5rem)] lg:w-[clamp(2.75rem,7vh,5rem)]" />
             </motion.div>
             <motion.h1
               {...rise(0.22)}
