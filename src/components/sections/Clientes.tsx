@@ -138,7 +138,7 @@ export function Clientes() {
             Nuestros clientes
           </p>
           <h2 className="mt-4 text-3xl font-bold leading-tight text-white md:text-4xl lg:mt-[clamp(0.5rem,1.6vh,1rem)] lg:text-[clamp(2.25rem,5vh,3.25rem)]">
-            Confianza institucional en dos países
+            Confianza institucional en Latinoamérica
           </h2>
           <p className="mt-5 text-[15.5px] leading-relaxed text-navy-200 lg:mt-[clamp(0.5rem,1.6vh,1rem)] lg:text-[clamp(15.5px,1.9vh,19px)]">
             Organismos públicos y empresas de saneamiento en Perú y Brasil respaldan cada proyecto que
