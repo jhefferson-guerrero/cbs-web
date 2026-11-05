@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react'
 import { ArrowLeftIcon, ArrowRightIcon, ArrowUpRightIcon, MapPinIcon } from '@phosphor-icons/react'
-import { Button } from '@/components/ui/Button'
 import { PageLink } from '@/components/ui/PageLink'
 import { useMediaQuery } from '@/lib/use-media-query'
 import { projects } from '@/lib/projects'
@@ -27,6 +26,7 @@ export function Proyectos() {
   // Las miniaturas van en orden a partir del siguiente al activo (el primero es el "siguiente").
   const others = Array.from({ length: count - 1 }, (_, k) => (active + 1 + k) % count)
   const canSwitch = count > 1
+  const [mainTitle, subTitle] = current.title.split(' — ')
 
   return (
     <section className="bg-white">
@@ -100,7 +100,7 @@ export function Proyectos() {
               <div className="absolute inset-0 bg-gradient-to-t from-navy-950/90 via-navy-950/20 to-navy-950/0 lg:from-navy-950/45 lg:via-transparent" />
               <div className="absolute inset-0 bg-gradient-to-r from-navy-950/20 via-transparent to-transparent lg:from-navy-950/80 lg:via-navy-950/30 lg:via-45%" />
 
-              <div className="absolute inset-0 z-20 flex flex-col justify-end p-6 sm:p-8 lg:max-w-[46%] lg:justify-center lg:py-0 lg:pl-[clamp(2rem,4vw,4rem)] lg:pr-0">
+              <div className="absolute inset-0 z-20 flex flex-col justify-end p-6 sm:p-8 lg:max-w-[54%] lg:justify-center lg:py-0 lg:pl-[clamp(2rem,4vw,4rem)] lg:pr-0">
                 <AnimatePresence mode="wait" initial={false}>
                   <motion.div
                     key={current.slug}
@@ -112,21 +112,36 @@ export function Proyectos() {
                     <span className="inline-block rounded-full border border-cyan-400/40 bg-navy-950/70 px-3 py-1 font-mono text-[11px] font-semibold uppercase tracking-[0.15em] text-cyan-300 backdrop-blur-sm">
                       {current.category}
                     </span>
-                    <h3 className="mt-3 text-xl font-bold leading-snug text-white sm:text-2xl lg:mt-[clamp(0.5rem,1.6vh,1rem)] lg:text-[clamp(1.25rem,3.6vh,2.5rem)] lg:leading-[1.15]">
-                      {current.title}
+                    {/* El título largo ("Obra — Lugar") se parte en dos niveles: la obra grande y el lugar debajo, más chico. */}
+                    <h3 className="mt-3 text-2xl font-bold leading-[1.15] text-white sm:text-3xl lg:mt-[clamp(0.5rem,1.6vh,1rem)] lg:text-[clamp(1.75rem,5vh,3.25rem)]">
+                      {mainTitle}
+                      {subTitle && (
+                        <>
+                          <span className="sr-only"> — </span>
+                          <span className="mt-2 block text-base font-medium leading-snug text-white/80 sm:text-lg lg:mt-[clamp(0.25rem,1vh,0.625rem)] lg:text-[clamp(1.05rem,2.5vh,1.6rem)]">
+                            {subTitle}
+                          </span>
+                        </>
+                      )}
                     </h3>
                     <p className="mt-2 flex items-center gap-1.5 text-sm text-navy-100 lg:mt-[clamp(0.5rem,1.4vh,1rem)] lg:text-[clamp(0.875rem,1.9vh,1.1rem)]">
                       <MapPinIcon size={16} weight="regular" className="shrink-0 text-cyan-400" />
                       {current.location}
                     </p>
-                    <Button
-                      href={`/proyectos/${current.slug}`}
-                      variant="solid"
-                      icon={<ArrowUpRightIcon size={18} weight="regular" />}
-                      className="mt-5 lg:mt-[clamp(0.75rem,2.4vh,1.75rem)]"
+                    {/* Botón de vidrio: se rellena de blanco al pasar el cursor, y la flecha del círculo cambia a cian. */}
+                    <PageLink
+                      to={`/proyectos/${current.slug}`}
+                      className="group mt-5 inline-flex items-center gap-4 rounded-full border border-white/40 bg-white/15 py-1.5 pl-6 pr-1.5 text-base font-semibold text-white backdrop-blur-md outline-none transition-colors duration-300 hover:bg-white hover:text-navy-900 focus-visible:ring-2 focus-visible:ring-cyan-300 lg:mt-[clamp(0.75rem,2.4vh,1.75rem)] 2xl:text-lg"
                     >
                       Ver proyecto
-                    </Button>
+                      <span className="flex h-10 w-10 items-center justify-center rounded-full bg-white text-navy-900 transition-colors duration-300 group-hover:bg-cyan-700 group-hover:text-white">
+                        <ArrowUpRightIcon
+                          size={18}
+                          weight="bold"
+                          className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                        />
+                      </span>
+                    </PageLink>
                   </motion.div>
                 </AnimatePresence>
               </div>
@@ -142,7 +157,7 @@ export function Proyectos() {
                       type="button"
                       onClick={() => go(arrow.to)}
                       aria-label={arrow.label}
-                      className="flex h-10 w-10 items-center justify-center rounded-lg bg-white/90 text-navy-900 shadow-sm outline-none transition hover:bg-white focus-visible:ring-2 focus-visible:ring-cyan-400 active:scale-95"
+                      className="flex h-10 w-10 items-center justify-center rounded-full border border-white/40 bg-white/15 text-white backdrop-blur-md outline-none transition-colors duration-300 hover:bg-white hover:text-navy-900 focus-visible:ring-2 focus-visible:ring-cyan-300 active:scale-95"
                     >
                       {arrow.icon}
                     </button>
@@ -157,7 +172,7 @@ export function Proyectos() {
             {/* Los demás proyectos: en escritorio, miniaturas verticales encima de la foto, a la derecha y sobresaliendo un
                 poco del borde; en celular, una fila debajo de la foto. */}
             {canSwitch && (
-              <div className="grid auto-cols-fr grid-flow-col gap-3 lg:absolute lg:bottom-[12%] lg:-right-6 lg:z-30 lg:flex lg:h-[60%] lg:items-end lg:gap-[clamp(0.75rem,1.2vw,1.25rem)]">
+              <div className="grid auto-cols-fr grid-flow-col gap-3 lg:absolute lg:bottom-[12%] lg:-right-6 lg:z-30 lg:flex lg:h-[54%] lg:items-end lg:gap-[clamp(0.75rem,1.2vw,1.25rem)]">
                 {others.map((index) => {
                   const project = projects[index]
                   return (
@@ -168,7 +183,7 @@ export function Proyectos() {
                       type="button"
                       onClick={() => setActive(index)}
                       aria-label={`Ver proyecto: ${project.title}`}
-                      className="group relative h-28 overflow-hidden rounded-xl bg-navy-950 text-left shadow-xl shadow-navy-950/40 outline-none ring-1 ring-white/20 transition-transform duration-300 hover:-translate-y-1 focus-visible:ring-2 focus-visible:ring-cyan-400 sm:h-32 lg:h-full lg:w-auto lg:aspect-[2/3]"
+                      className="group relative h-28 overflow-hidden rounded-xl bg-navy-950 text-left shadow-xl shadow-navy-950/40 outline-none ring-1 ring-white/20 transition-transform duration-300 hover:-translate-y-1 focus-visible:ring-2 focus-visible:ring-cyan-400 sm:h-32 lg:h-full lg:w-auto lg:aspect-[7/8]"
                     >
                       <img
                         src={project.cover}
