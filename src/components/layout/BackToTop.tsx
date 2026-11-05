@@ -7,7 +7,7 @@ import { ArrowUpIcon } from '@phosphor-icons/react'
 const SHOW_AFTER_PX = 700
 
 // Botón flotante para volver arriba. Aparece al bajar y se esconde al llegar arriba; vale para todas las
-// páginas. Usa el scroll suave de Lenis para subir con el mismo movimiento que el resto del sitio.
+// páginas, pero solo en celular y tableta (lg:hidden): en escritorio se quitó porque tapaba contenido. Usa el scroll suave de Lenis para subir con el mismo movimiento que el resto del sitio.
 export function BackToTop() {
   const [visible, setVisible] = useState(false)
   const reduceMotion = useReducedMotion()
@@ -39,7 +39,7 @@ export function BackToTop() {
           animate={{ opacity: 1, y: 0, scale: 1 }}
           exit={reduceMotion ? undefined : { opacity: 0, y: 14, scale: 0.9 }}
           transition={{ duration: reduceMotion ? 0 : 0.35, ease: [0.16, 1, 0.3, 1] }}
-          className="fixed bottom-[max(1.25rem,env(safe-area-inset-bottom))] right-5 z-40 flex h-12 w-12 items-center justify-center rounded-lg bg-cyan-700 text-white shadow-card outline-none transition-colors duration-300 hover:bg-cyan-800 focus-visible:ring-2 focus-visible:ring-cyan-300 focus-visible:ring-offset-2 focus-visible:ring-offset-navy-950 active:scale-95 lg:bottom-8 lg:right-8"
+          className="fixed bottom-[max(1.25rem,env(safe-area-inset-bottom))] right-5 z-40 flex h-12 w-12 items-center justify-center rounded-lg bg-cyan-700 text-white shadow-card outline-none transition-colors duration-300 hover:bg-cyan-800 focus-visible:ring-2 focus-visible:ring-cyan-300 focus-visible:ring-offset-2 focus-visible:ring-offset-navy-950 active:scale-95 lg:hidden"
         >
           <ArrowUpIcon size={20} weight="bold" />
         </motion.button>
