@@ -1,5 +1,5 @@
 import { motion, useReducedMotion } from 'motion/react'
-import { ArrowRightIcon } from '@phosphor-icons/react'
+import { ArrowRightIcon, RecycleIcon } from '@phosphor-icons/react'
 import { Button } from '@/components/ui/Button'
 import { Counter } from '@/components/ui/Counter'
 import { limpCityStats } from '@/lib/limp-city'
@@ -56,13 +56,20 @@ export function LimpCityHero() {
           {/* El ancho del texto sigue al de la pantalla: así el titular baja a dos líneas y no llega a la zona donde está el operario de la foto. */}
           <div className="max-w-4xl lg:max-w-[min(100%,clamp(28rem,46vw,54rem))]">
             {/* La animación va en el contenedor: si se anima el filtro de la propia imagen se pisa el brightness-0 invert que la vuelve blanca. */}
-            <motion.div {...rise(0.1)}>
+            <motion.div {...rise(0.1)} className="flex items-center gap-4 lg:gap-[clamp(1rem,2.4vh,1.75rem)]">
               <img
                 src={logoLimpCity}
                 alt="Limp City"
                 width={256}
                 height={256}
                 className="h-14 w-auto brightness-0 invert sm:h-[4.5rem] lg:h-[clamp(4.5rem,12vh,8.5rem)]"
+              />
+              {/* Símbolo de reciclaje junto al logo: línea fina de separación y mismo blanco que el logo. */}
+              <span aria-hidden="true" className="h-10 w-px bg-white/40 sm:h-12 lg:h-[clamp(3rem,8vh,5.5rem)]" />
+              <RecycleIcon
+                aria-hidden="true"
+                weight="regular"
+                className="h-9 w-9 shrink-0 text-white sm:h-11 sm:w-11 lg:h-[clamp(2.75rem,7vh,5rem)] lg:w-[clamp(2.75rem,7vh,5rem)]"
               />
             </motion.div>
             <motion.h1
