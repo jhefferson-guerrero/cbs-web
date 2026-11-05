@@ -53,7 +53,7 @@ export function Actuacion() {
           Área de actuación
         </p>
         <h2 className="mt-3 text-3xl font-bold leading-tight text-navy-900 md:text-4xl lg:mt-[clamp(0.5rem,1.5vh,0.75rem)] 2xl:text-5xl">
-          Presencia en dos países
+          Presencia en Latinoamérica
         </h2>
         <p className="mt-3 text-[15.5px] leading-relaxed text-slate-700 lg:mt-[clamp(0.25rem,1vh,0.75rem)] lg:text-[clamp(15.5px,1.9vh,19px)]">
           Desde Brasil hasta Perú, ejecutamos obras en distintas regiones de ambos países.

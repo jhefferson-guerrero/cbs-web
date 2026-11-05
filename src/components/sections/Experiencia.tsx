@@ -64,7 +64,7 @@ export function Experiencia() {
             transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
             className="mt-5 max-w-2xl text-3xl font-bold leading-tight text-white sm:mt-4 md:text-4xl 2xl:text-5xl"
           >
-            Resultados que respaldan cada proyecto
+            Indicadores que nos respaldan
           </motion.h2>
           <motion.p
             initial={reduceMotion ? false : { opacity: 0, y: 20 }}
@@ -72,8 +72,9 @@ export function Experiencia() {
             transition={{ duration: 0.7, delay: 0.18, ease: [0.16, 1, 0.3, 1] }}
             className="mt-6 max-w-lg text-[15.5px] leading-relaxed text-navy-200 sm:mt-5 2xl:max-w-xl 2xl:text-lg"
           >
-            Infraestructura hidráulica ejecutada a gran escala en Perú, con un historial que se mide en
-            kilómetros de redes, presas construidas y conexiones entregadas.
+            Infraestructura y saneamiento, con un historial que se mide en kilómetros de redes de
+            alcantarillado, presas construidas, conexiones entregadas y construcción de hospitales y
+            escuelas.
           </motion.p>
         </div>
 
