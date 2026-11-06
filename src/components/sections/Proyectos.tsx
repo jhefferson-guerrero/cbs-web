@@ -78,7 +78,7 @@ export function Proyectos() {
                 if (info.offset.x < -50) go(active + 1)
                 else if (info.offset.x > 50) go(active - 1)
               }}
-              className="relative aspect-[4/5] overflow-hidden rounded-2xl bg-navy-950 shadow-card sm:aspect-[16/10] lg:absolute lg:inset-0 lg:aspect-auto"
+              className="relative aspect-[4/5] overflow-hidden rounded-md bg-navy-950 shadow-card sm:aspect-[16/10] lg:absolute lg:inset-0 lg:aspect-auto"
             >
               {projects.map((project, i) => (
                 <motion.img
@@ -99,6 +99,9 @@ export function Proyectos() {
               ))}
               <div className="absolute inset-0 bg-gradient-to-t from-navy-950/90 via-navy-950/20 to-navy-950/0 lg:from-navy-950/45 lg:via-transparent" />
               <div className="absolute inset-0 bg-gradient-to-r from-navy-950/20 via-transparent to-transparent lg:from-navy-950/90 lg:via-navy-950/55 lg:via-40%" />
+              {/* Marcas en L en dos esquinas opuestas (arriba a la derecha y abajo a la izquierda), como en el hero y en Clientes. Solo en escritorio: en celular arriba a la derecha van los controles. */}
+              <span aria-hidden="true" className="absolute right-5 top-5 z-20 hidden h-6 w-6 border-r-2 border-t-2 border-white/70 lg:block" />
+              <span aria-hidden="true" className="absolute bottom-5 left-5 z-20 hidden h-6 w-6 border-b-2 border-l-2 border-white/70 lg:block" />
 
               <div className="absolute inset-0 z-20 flex flex-col justify-end p-6 sm:p-8 lg:max-w-[54%] lg:justify-center lg:py-0 lg:pl-[clamp(2rem,4vw,4rem)] lg:pr-0">
                 <AnimatePresence mode="wait" initial={false}>
@@ -129,7 +132,7 @@ export function Proyectos() {
                     {/* Botón blanco sólido de esquinas casi rectas: se lee bien sobre la foto. Al pasar el cursor se atenúa un poco y la flecha avanza. */}
                     <PageLink
                       to={`/proyectos/${current.slug}`}
-                      className="group mt-7 inline-flex items-center gap-3 rounded-md bg-white px-6 py-3 text-base font-semibold text-navy-900 outline-none transition-colors duration-300 hover:bg-navy-100 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-navy-950 lg:mt-[clamp(1.25rem,3.8vh,2.5rem)] lg:px-7 2xl:text-lg"
+                      className="group mt-7 inline-flex items-center gap-3 rounded-lg bg-white px-6 py-3 text-base font-semibold text-navy-900 outline-none transition-colors duration-300 hover:bg-navy-100 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-navy-950 lg:mt-[clamp(1.25rem,3.8vh,2.5rem)] lg:px-7 2xl:text-lg"
                     >
                       Ver proyecto
                       <ArrowRightIcon
@@ -160,7 +163,7 @@ export function Proyectos() {
                     type="button"
                     onClick={() => go(arrow.to)}
                     aria-label={arrow.label}
-                    className="flex h-10 w-10 items-center justify-center rounded-full border border-white/40 bg-white/15 text-white backdrop-blur-md outline-none transition-colors duration-300 hover:border-white/70 hover:bg-white/25 focus-visible:ring-2 focus-visible:ring-white active:scale-95"
+                    className="flex h-10 w-10 items-center justify-center rounded-lg border border-white/40 bg-white/15 text-white backdrop-blur-md outline-none transition-colors duration-300 hover:border-white/70 hover:bg-white/25 focus-visible:ring-2 focus-visible:ring-white active:scale-95"
                   >
                     {arrow.icon}
                   </button>
@@ -182,7 +185,7 @@ export function Proyectos() {
                       type="button"
                       onClick={() => setActive(index)}
                       aria-label={`Ver proyecto: ${project.title}`}
-                      className="group relative h-28 overflow-hidden rounded-xl bg-navy-950 text-left shadow-xl shadow-navy-950/40 outline-none ring-1 ring-white/20 transition-transform duration-300 hover:-translate-y-1 focus-visible:ring-2 focus-visible:ring-cyan-400 sm:h-32 lg:h-full lg:w-auto lg:aspect-[7/8]"
+                      className="group relative h-28 overflow-hidden rounded-md bg-navy-950 text-left shadow-xl shadow-navy-950/40 outline-none ring-1 ring-white/20 transition-transform duration-300 hover:-translate-y-1 focus-visible:ring-2 focus-visible:ring-cyan-400 sm:h-32 lg:h-full lg:w-auto lg:aspect-[7/8]"
                     >
                       <img
                         src={project.cover}
