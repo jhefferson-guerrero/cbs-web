@@ -129,10 +129,10 @@ export function Proyectos() {
                       <MapPinIcon size={16} weight="regular" className="shrink-0 text-cyan-400" />
                       {current.location}
                     </p>
-                    {/* Botón blanco sólido de esquinas casi rectas: se lee bien sobre la foto. Al pasar el cursor se atenúa un poco y la flecha avanza. */}
+                    {/* Botón blanco sólido de esquinas casi rectas: se lee bien sobre la foto. Al pasar el cursor se queda blanco (sin cambio de color): sube un poco, gana sombra y la flecha avanza. */}
                     <PageLink
                       to={`/proyectos/${current.slug}`}
-                      className="group mt-7 inline-flex items-center gap-3 rounded-lg bg-white px-6 py-3 text-base font-semibold text-navy-900 outline-none transition-colors duration-300 hover:bg-navy-100 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-navy-950 lg:mt-[clamp(1.25rem,3.8vh,2.5rem)] lg:px-7 2xl:text-lg"
+                      className="group mt-7 inline-flex items-center gap-3 rounded-lg bg-white px-6 py-3 text-base font-semibold text-navy-900 outline-none transition-[transform,box-shadow] duration-300 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-black/30 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-navy-950 lg:mt-[clamp(1.25rem,3.8vh,2.5rem)] lg:px-7 2xl:text-lg"
                     >
                       Ver proyecto
                       <ArrowRightIcon
