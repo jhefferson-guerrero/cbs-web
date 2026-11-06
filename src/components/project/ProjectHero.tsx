@@ -42,10 +42,12 @@ export function ProjectHero({ project, ready }: { project: Project; ready: boole
         initial={reduceMotion ? false : { scale: 1.14 }}
         animate={{ scale: play ? 1 : 1.14 }}
         transition={{ duration: 1.8, ease: EASE }}
-        className="absolute inset-0 h-full w-full object-cover object-center saturate-[1.05] contrast-[1.02] brightness-[0.7]"
+        className="absolute inset-0 h-full w-full object-cover object-center saturate-[1.05] contrast-[1.02]"
       />
-      <div className="absolute inset-0 bg-navy-950/45" />
-      <div className="absolute inset-0 bg-gradient-to-t from-navy-950 via-navy-950/60 to-navy-950/15" />
+      {/* Sombreado solo donde hace falta: abajo, detrás del título y la ubicación, y una franja fina arriba para que el menú se lea. El resto de la foto se ve con sus colores. */}
+      <div className="absolute inset-0 bg-navy-950/10" />
+      <div className="absolute inset-0 bg-gradient-to-t from-navy-950/90 via-navy-950/35 via-45% to-transparent" />
+      <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-navy-950/55 to-transparent" />
 
       <motion.span
         {...corner(0.4)}
