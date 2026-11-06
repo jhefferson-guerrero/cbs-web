@@ -98,7 +98,7 @@ export function Proyectos() {
                 />
               ))}
               <div className="absolute inset-0 bg-gradient-to-t from-navy-950/90 via-navy-950/20 to-navy-950/0 lg:from-navy-950/45 lg:via-transparent" />
-              <div className="absolute inset-0 bg-gradient-to-r from-navy-950/20 via-transparent to-transparent lg:from-navy-950/80 lg:via-navy-950/30 lg:via-45%" />
+              <div className="absolute inset-0 bg-gradient-to-r from-navy-950/20 via-transparent to-transparent lg:from-navy-950/90 lg:via-navy-950/55 lg:via-40%" />
 
               <div className="absolute inset-0 z-20 flex flex-col justify-end p-6 sm:p-8 lg:max-w-[54%] lg:justify-center lg:py-0 lg:pl-[clamp(2rem,4vw,4rem)] lg:pr-0">
                 <AnimatePresence mode="wait" initial={false}>
@@ -109,13 +109,9 @@ export function Proyectos() {
                     exit={reduceMotion ? undefined : { opacity: 0, y: -10 }}
                     transition={{ duration: reduceMotion ? 0 : 0.4, ease: EASE }}
                   >
-                    {/* Categoría como texto con una línea corta delante, sin caja. */}
-                    <span className="flex items-center gap-3 font-mono text-[11px] font-semibold uppercase tracking-[0.18em] text-cyan-300">
-                      <span aria-hidden="true" className="h-px w-8 bg-cyan-300/70" />
-                      {current.category}
-                    </span>
+                    {/* La categoría no se muestra aquí: el propio título ya dice si es agua potable o drenaje. */}
                     {/* El título largo ("Obra — Lugar") se parte en dos niveles: la obra grande y el lugar debajo, más chico. */}
-                    <h3 className="mt-3 text-2xl font-bold leading-[1.15] text-white sm:text-3xl lg:mt-[clamp(0.5rem,1.6vh,1rem)] lg:text-[clamp(1.75rem,5vh,3.25rem)]">
+                    <h3 className="text-2xl font-bold leading-[1.15] text-white sm:text-3xl lg:text-[clamp(1.75rem,5vh,3.25rem)]">
                       {mainTitle}
                       {subTitle && (
                         <>
@@ -130,10 +126,10 @@ export function Proyectos() {
                       <MapPinIcon size={16} weight="regular" className="shrink-0 text-cyan-400" />
                       {current.location}
                     </p>
-                    {/* Enlace limpio, sin caja: texto, flecha y una línea fina debajo. Al pasar el cursor la línea y el texto se ponen blanco puro y la flecha avanza. */}
+                    {/* Botón blanco sólido de esquinas casi rectas: se lee bien sobre la foto. Al pasar el cursor se atenúa un poco y la flecha avanza. */}
                     <PageLink
                       to={`/proyectos/${current.slug}`}
-                      className="group mt-5 inline-flex items-center gap-3 border-b border-white/40 pb-2 text-base font-semibold text-white/85 outline-none transition-colors duration-300 hover:border-white hover:text-white focus-visible:border-white focus-visible:text-white lg:mt-[clamp(0.75rem,2.4vh,1.75rem)] 2xl:text-lg"
+                      className="group mt-5 inline-flex items-center gap-3 rounded-md bg-white px-6 py-3 text-base font-semibold text-navy-900 outline-none transition-colors duration-300 hover:bg-navy-100 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-navy-950 lg:mt-[clamp(0.75rem,2.4vh,1.75rem)] lg:px-7 2xl:text-lg"
                     >
                       Ver proyecto
                       <ArrowRightIcon
@@ -146,33 +142,36 @@ export function Proyectos() {
                 </AnimatePresence>
               </div>
 
-              {canSwitch && (
-                <div className="absolute right-4 top-4 z-20 flex items-center gap-3 sm:right-6 sm:top-6 lg:bottom-[clamp(1rem,4vh,2rem)] lg:left-[clamp(2rem,4vw,4rem)] lg:right-auto lg:top-auto">
-                  {[
-                    { label: 'Proyecto anterior', icon: <ArrowLeftIcon size={18} weight="bold" />, to: active - 1 },
-                    { label: 'Proyecto siguiente', icon: <ArrowRightIcon size={18} weight="bold" />, to: active + 1 },
-                  ].map((arrow) => (
-                    <button
-                      key={arrow.label}
-                      type="button"
-                      onClick={() => go(arrow.to)}
-                      aria-label={arrow.label}
-                      className="flex h-10 w-10 items-center justify-center rounded-full border border-white/40 bg-white/15 text-white backdrop-blur-md outline-none transition-colors duration-300 hover:border-white/70 hover:bg-white/25 focus-visible:ring-2 focus-visible:ring-cyan-300 active:scale-95"
-                    >
-                      {arrow.icon}
-                    </button>
-                  ))}
-                  <p aria-live="polite" className="ml-1 font-mono text-xs font-semibold tracking-[0.2em] text-white/90">
-                    {pad(active + 1)} / {pad(count)}
-                  </p>
-                </div>
-              )}
             </motion.div>
+
+            {/* Controles (flechas y contador): en escritorio van abajo a la derecha, justo debajo de la miniatura que cambian;
+                en celular, arriba a la derecha de la foto. */}
+            {canSwitch && (
+              <div className="absolute right-4 top-4 z-30 flex items-center gap-3 sm:right-6 sm:top-6 lg:bottom-[clamp(1rem,3.5vh,2rem)] lg:right-[clamp(1.25rem,2vw,2rem)] lg:top-auto">
+                <p aria-live="polite" className="mr-1 font-mono text-xs font-semibold tracking-[0.2em] text-white/90">
+                  {pad(active + 1)} / {pad(count)}
+                </p>
+                {[
+                  { label: 'Proyecto anterior', icon: <ArrowLeftIcon size={18} weight="bold" />, to: active - 1 },
+                  { label: 'Proyecto siguiente', icon: <ArrowRightIcon size={18} weight="bold" />, to: active + 1 },
+                ].map((arrow) => (
+                  <button
+                    key={arrow.label}
+                    type="button"
+                    onClick={() => go(arrow.to)}
+                    aria-label={arrow.label}
+                    className="flex h-10 w-10 items-center justify-center rounded-full border border-white/40 bg-white/15 text-white backdrop-blur-md outline-none transition-colors duration-300 hover:border-white/70 hover:bg-white/25 focus-visible:ring-2 focus-visible:ring-white active:scale-95"
+                  >
+                    {arrow.icon}
+                  </button>
+                ))}
+              </div>
+            )}
 
             {/* Los demás proyectos: en escritorio, miniaturas verticales encima de la foto, a la derecha y sobresaliendo un
                 poco del borde; en celular, una fila debajo de la foto. */}
             {canSwitch && (
-              <div className="grid auto-cols-fr grid-flow-col gap-3 lg:absolute lg:bottom-[12%] lg:-right-6 lg:z-30 lg:flex lg:h-[54%] lg:items-end lg:gap-[clamp(0.75rem,1.2vw,1.25rem)]">
+              <div className="grid auto-cols-fr grid-flow-col gap-3 lg:absolute lg:bottom-[calc(clamp(1rem,3.5vh,2rem)+3.5rem)] lg:-right-6 lg:z-30 lg:flex lg:h-[50%] lg:items-end lg:gap-[clamp(0.75rem,1.2vw,1.25rem)]">
                 {others.map((index) => {
                   const project = projects[index]
                   return (
@@ -197,11 +196,8 @@ export function Proyectos() {
                         className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-navy-950/90 via-navy-950/20 to-navy-950/0" />
-                      <span className="absolute inset-x-3 bottom-3 flex flex-col gap-1">
-                        <span className="font-mono text-[10px] font-semibold uppercase tracking-[0.14em] text-cyan-300">
-                          {project.category}
-                        </span>
-                        <span className="text-sm font-semibold leading-snug text-white">{project.location}</span>
+                      <span className="absolute inset-x-3 bottom-3 text-sm font-semibold leading-snug text-white">
+                        {project.location}
                       </span>
                     </motion.button>
                   )
