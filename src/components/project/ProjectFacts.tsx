@@ -86,7 +86,7 @@ export function ProjectFacts({ project, ready = true }: { project: Project; read
                 <div className="min-w-0">
                   {/* El monto cuenta de 0 hasta su valor (como las cifras del resto del sitio); tabular-nums mantiene
                       el ancho de los dígitos fijo para que el texto no tiemble mientras sube. */}
-                  <p className="text-xl font-bold tabular-nums text-navy-900 2xl:text-2xl">
+                  <p className="text-2xl font-bold tabular-nums text-navy-900">
                     {'amount' in fact && fact.amount ? (
                       // El conteo arranca junto con la ficha (no antes, mientras el hero aún está entrando). En el servidor
                       // (HTML prerrenderizado) se escribe el monto completo.
