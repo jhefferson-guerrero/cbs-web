@@ -13,18 +13,9 @@ const THUMB_SIZES = '(min-width: 1024px) 14vw, 34vw'
 const EASE = [0.16, 1, 0.3, 1] as const
 const pad = (n: number) => String(n).padStart(2, '0')
 
-// En escritorio las miniaturas se achican a medida que hay más (cada una mantiene su proporción), para que el conjunto
-// no avance sobre el texto de la izquierda: con una sola ocupa el 54% del alto de la foto; con tres, el 27%. Cuando
-// son tres o más la fila sube un poco, para no tocar las flechas centradas abajo.
-function thumbRailClass(thumbs: number) {
-  if (thumbs <= 1) return 'lg:bottom-[12%] lg:h-[54%]'
-  if (thumbs === 2) return 'lg:bottom-[12%] lg:h-[38%]'
-  if (thumbs === 3) return 'lg:bottom-[16%] lg:h-[27%]'
-  return 'lg:bottom-[16%] lg:h-[21%]'
-}
-
-// Un proyecto grande a la vez, con los demás como miniaturas verticales encima de la foto, a la derecha (debajo en
-// celular). Se cambia de proyecto con las miniaturas, las flechas o deslizando en celular. Sin reproducción automática.
+// Un proyecto grande a la vez. En escritorio, una sola miniatura (la del siguiente proyecto) encima de la foto, a la
+// derecha, sin importar cuántos proyectos haya: así no tapa el texto y el tamaño no cambia al agregar proyectos. En
+// celular, todos los demás en una fila debajo. Se cambia de proyecto con las miniaturas, las flechas o deslizando en celular. Sin reproducción automática.
 export function Proyectos() {
   const reduceMotion = useReducedMotion()
   const isDesktop = useMediaQuery('(min-width: 1024px)')
@@ -185,9 +176,9 @@ export function Proyectos() {
                 poco del borde; en celular, una fila debajo de la foto. */}
             {canSwitch && (
               <div
-                className={`grid auto-cols-fr grid-flow-col gap-3 lg:absolute lg:-right-6 lg:z-30 lg:flex lg:items-end lg:gap-[clamp(0.75rem,1.2vw,1.25rem)] ${thumbRailClass(others.length)}`}
+                className={`grid auto-cols-fr grid-flow-col gap-3 lg:absolute lg:-right-6 lg:z-30 lg:flex lg:items-end lg:gap-[clamp(0.75rem,1.2vw,1.25rem)] lg:bottom-[12%] lg:h-[54%]`}
               >
-                {others.map((index) => {
+                {others.map((index, k) => {
                   const project = projects[index]
                   return (
                     <motion.button
@@ -197,7 +188,7 @@ export function Proyectos() {
                       type="button"
                       onClick={() => setActive(index)}
                       aria-label={`Ver proyecto: ${project.title}`}
-                      className="group relative h-28 overflow-hidden bg-navy-950 text-left shadow-xl shadow-navy-950/40 outline-none ring-1 ring-white/20 focus-visible:ring-2 focus-visible:ring-cyan-400 sm:h-32 lg:h-full lg:w-auto lg:aspect-[7/8]"
+                      className={`group relative h-28 overflow-hidden bg-navy-950 text-left shadow-xl shadow-navy-950/40 outline-none ring-1 ring-white/20 focus-visible:ring-2 focus-visible:ring-cyan-400 sm:h-32 lg:h-full lg:w-auto lg:aspect-[7/8] ${k > 0 ? 'lg:hidden' : ''}`}
                     >
                       <img
                         src={project.cover}
@@ -211,9 +202,8 @@ export function Proyectos() {
                         className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-navy-950/90 via-navy-950/20 to-navy-950/0" />
-                      <span
-                        className={`absolute inset-x-3 bottom-3 text-sm font-semibold leading-snug text-white ${others.length >= 2 ? 'lg:inset-x-2.5 lg:bottom-2.5 lg:text-xs' : ''}`}
-                      >
+                      <span className="absolute inset-x-3 bottom-3 text-sm font-semibold leading-snug text-white">
+                        <span className="mb-1 hidden font-mono text-[10px] font-semibold uppercase tracking-[0.2em] text-cyan-300 lg:block">Siguiente</span>
                         {project.location}
                       </span>
                     </motion.button>
