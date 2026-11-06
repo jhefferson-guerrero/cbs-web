@@ -40,10 +40,11 @@ export function PartnerLogosSection() {
 
         {/* En móvil los grupos de 5 no existen: cada grupo es `contents` y los logos forman una sola cuadrícula de
             2 columnas (si la cantidad es impar, el último ocupa las dos columnas y queda centrado). Desde 640 px
-            cada grupo es una fila de 5. */}
+            cada grupo es una fila de 5 repartida de borde a borde (justify-between): el primer logo queda alineado
+            con el título y el último con el borde derecho, y el espacio entre logos es parejo aunque midan distinto. */}
         <div className="mt-8 grid grid-cols-2 gap-4 sm:flex sm:flex-col 2xl:gap-6">
           {rows.map((row, rowIndex) => (
-            <div key={rowIndex} className="contents sm:grid sm:grid-cols-5 sm:gap-4">
+            <div key={rowIndex} className="contents sm:flex sm:items-center sm:justify-between sm:gap-4">
               {row.map((partner, i) => (
                 <motion.div
                   key={partner.name}
@@ -53,7 +54,7 @@ export function PartnerLogosSection() {
                   whileInView={reduceMotion ? undefined : 'show'}
                   viewport={{ once: true, amount: 0.5 }}
                   className={cn(
-                    'flex items-center justify-center p-5 2xl:p-7',
+                    'flex items-center justify-center p-5 sm:px-0 2xl:py-7',
                     rowIndex * PER_ROW + i === partnerLogos.length - 1 && partnerLogos.length % 2 === 1 && 'col-span-2 sm:col-span-1',
                   )}
                 >
