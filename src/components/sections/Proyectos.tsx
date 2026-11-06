@@ -185,7 +185,7 @@ export function Proyectos() {
                       type="button"
                       onClick={() => setActive(index)}
                       aria-label={`Ver proyecto: ${project.title}`}
-                      className="group relative h-28 overflow-hidden rounded-md bg-navy-950 text-left shadow-xl shadow-navy-950/40 outline-none ring-1 ring-white/20 transition-transform duration-300 hover:-translate-y-1 focus-visible:ring-2 focus-visible:ring-cyan-400 sm:h-32 lg:h-full lg:w-auto lg:aspect-[7/8]"
+                      className="group relative h-28 overflow-hidden rounded-md bg-navy-950 text-left shadow-xl shadow-navy-950/40 outline-none ring-1 ring-white/20 focus-visible:ring-2 focus-visible:ring-cyan-400 sm:h-32 lg:h-full lg:w-auto lg:aspect-[7/8]"
                     >
                       <img
                         src={project.cover}
