@@ -109,7 +109,9 @@ export function Proyectos() {
                     exit={reduceMotion ? undefined : { opacity: 0, y: -10 }}
                     transition={{ duration: reduceMotion ? 0 : 0.4, ease: EASE }}
                   >
-                    <span className="inline-block rounded-full border border-cyan-400/40 bg-navy-950/70 px-3 py-1 font-mono text-[11px] font-semibold uppercase tracking-[0.15em] text-cyan-300 backdrop-blur-sm">
+                    {/* Categoría como texto con una línea corta delante, sin caja. */}
+                    <span className="flex items-center gap-3 font-mono text-[11px] font-semibold uppercase tracking-[0.18em] text-cyan-300">
+                      <span aria-hidden="true" className="h-px w-8 bg-cyan-300/70" />
                       {current.category}
                     </span>
                     {/* El título largo ("Obra — Lugar") se parte en dos niveles: la obra grande y el lugar debajo, más chico. */}
@@ -128,10 +130,10 @@ export function Proyectos() {
                       <MapPinIcon size={16} weight="regular" className="shrink-0 text-cyan-400" />
                       {current.location}
                     </p>
-                    {/* Enlace limpio, sin caja: texto, flecha y una línea fina debajo. Al pasar el cursor la línea y el texto pasan a cian y la flecha avanza. */}
+                    {/* Enlace limpio, sin caja: texto, flecha y una línea fina debajo. Al pasar el cursor la línea y el texto se ponen blanco puro y la flecha avanza. */}
                     <PageLink
                       to={`/proyectos/${current.slug}`}
-                      className="group mt-5 inline-flex items-center gap-3 border-b border-white/50 pb-2 text-base font-semibold text-white outline-none transition-colors duration-300 hover:border-cyan-300 hover:text-cyan-300 focus-visible:border-cyan-300 focus-visible:text-cyan-300 lg:mt-[clamp(0.75rem,2.4vh,1.75rem)] 2xl:text-lg"
+                      className="group mt-5 inline-flex items-center gap-3 border-b border-white/40 pb-2 text-base font-semibold text-white/85 outline-none transition-colors duration-300 hover:border-white hover:text-white focus-visible:border-white focus-visible:text-white lg:mt-[clamp(0.75rem,2.4vh,1.75rem)] 2xl:text-lg"
                     >
                       Ver proyecto
                       <ArrowRightIcon
@@ -195,11 +197,11 @@ export function Proyectos() {
                         className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-navy-950/90 via-navy-950/20 to-navy-950/0" />
-                      <span className="absolute left-3 top-3 rounded-full border border-cyan-400/40 bg-navy-950/70 px-2.5 py-0.5 font-mono text-[10px] font-semibold uppercase tracking-[0.12em] text-cyan-300 backdrop-blur-sm">
-                        {project.category}
-                      </span>
-                      <span className="absolute inset-x-3 bottom-3 text-sm font-semibold leading-snug text-white">
-                        {project.location}
+                      <span className="absolute inset-x-3 bottom-3 flex flex-col gap-1">
+                        <span className="font-mono text-[10px] font-semibold uppercase tracking-[0.14em] text-cyan-300">
+                          {project.category}
+                        </span>
+                        <span className="text-sm font-semibold leading-snug text-white">{project.location}</span>
                       </span>
                     </motion.button>
                   )
