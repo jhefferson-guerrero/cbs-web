@@ -35,12 +35,26 @@ import galeriaTambopata08 from '@/assets/images/proyectos/drenaje-tambopata/gale
 import thumbTambopata08 from '@/assets/images/proyectos/drenaje-tambopata/thumb-08.webp'
 import galeriaTambopata09 from '@/assets/images/proyectos/drenaje-tambopata/galeria-09.webp'
 import thumbTambopata09 from '@/assets/images/proyectos/drenaje-tambopata/thumb-09.webp'
+import galeriaQuerpon01 from '@/assets/images/proyectos/puente-querpon/galeria-01.webp'
+import thumbQuerpon01 from '@/assets/images/proyectos/puente-querpon/thumb-01.webp'
+import galeriaQuerpon02 from '@/assets/images/proyectos/puente-querpon/galeria-02.webp'
+import thumbQuerpon02 from '@/assets/images/proyectos/puente-querpon/thumb-02.webp'
+import galeriaQuerpon03 from '@/assets/images/proyectos/puente-querpon/galeria-03.webp'
+import thumbQuerpon03 from '@/assets/images/proyectos/puente-querpon/thumb-03.webp'
+import galeriaQuerpon04 from '@/assets/images/proyectos/puente-querpon/galeria-04.webp'
+import thumbQuerpon04 from '@/assets/images/proyectos/puente-querpon/thumb-04.webp'
+import coverQuerpon640 from '@/assets/images/proyectos/puente-querpon/cover-640.webp'
+import coverQuerpon960 from '@/assets/images/proyectos/puente-querpon/cover-960.webp'
+import coverQuerpon1280 from '@/assets/images/proyectos/puente-querpon/cover-1280.webp'
 
 import logoClientePnsu from '@/assets/images/proyectos/logos/cliente-pnsu.webp'
 import logoContratistaRioHuatanay from '@/assets/images/proyectos/logos/contratista-rio-huatanay.webp'
 import logoContratistaTambopata from '@/assets/images/proyectos/logos/contratista-tambopata.webp'
 import logoFinanciamientoBancoMundial from '@/assets/images/proyectos/logos/financiamiento-banco-mundial.webp'
 import logoFinanciamientoBid from '@/assets/images/proyectos/logos/financiamiento-bid.webp'
+import logoClienteOpos from '@/assets/images/proyectos/logos/cliente-opos.webp'
+import logoContratistaCbs from '@/assets/images/proyectos/logos/contratista-cbs.webp'
+import logoFinanciamientoMtc from '@/assets/images/proyectos/logos/financiamiento-mtc.webp'
 import aliado01 from '@/assets/images/proyectos/logos/aliado-01.webp'
 import aliado02 from '@/assets/images/proyectos/logos/aliado-02.webp'
 import aliado03 from '@/assets/images/proyectos/logos/aliado-03.webp'
@@ -122,6 +136,24 @@ export const projects: Project[] = [
       { src: galeriaTambopata07, thumb: thumbTambopata07, alt: 'Vista aérea de la cárcava de la Costanera desde otro ángulo, con viviendas junto al borde' },
       { src: galeriaTambopata08, thumb: thumbTambopata08, alt: 'Vista aérea del talud boscoso sobre el río, con la ciudad al fondo' },
       { src: galeriaTambopata09, thumb: thumbTambopata09, alt: 'Vista aérea del puerto sobre el río, con embarcaciones amarradas y viviendas en la orilla' },
+    ],
+  },
+  {
+    slug: 'puente-querpon',
+    category: 'Infraestructura vial',
+    title: 'Construcción del puente Querpón y obras de protección — Tramo 5 Piura – Olmos',
+    location: 'Olmos, Lambayeque',
+    cover: galeriaQuerpon04,
+    coverSrcSet: `${coverQuerpon640} 640w, ${coverQuerpon960} 960w, ${coverQuerpon1280} 1280w, ${galeriaQuerpon04} 1600w`,
+    client: { name: 'Odebrecht Perú Operadora de Servicios S.A.C. (OPOS)', logo: logoClienteOpos },
+    contractor: { name: 'Construtora Baiana de Saneamento', logo: logoContratistaCbs },
+    amount: 'S/ 56,184,951',
+    funding: { name: 'Ministerio de Transportes y Comunicaciones (MTC)', logo: logoFinanciamientoMtc },
+    gallery: [
+      { src: galeriaQuerpon01, thumb: thumbQuerpon01, alt: 'Imagen referencial: vista aérea del puente sobre el cauce, con obras de protección en las orillas' },
+      { src: galeriaQuerpon02, thumb: thumbQuerpon02, alt: 'Imagen referencial: vista aérea del puente Querpón y sus accesos' },
+      { src: galeriaQuerpon03, thumb: thumbQuerpon03, alt: 'Imagen referencial: calzada del puente con barandas y señalización vial' },
+      { src: galeriaQuerpon04, thumb: thumbQuerpon04, alt: 'Imagen referencial: vista inferior del tablero postensado y los pilares del puente' },
     ],
   },
 ]
