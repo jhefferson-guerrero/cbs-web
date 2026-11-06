@@ -47,7 +47,7 @@ export function Proyectos() {
               Nuestros proyectos
             </p>
             <h2 className="mt-4 text-3xl font-bold leading-tight text-navy-900 md:text-4xl lg:mt-[clamp(0.5rem,1.6vh,1rem)] lg:text-[clamp(2rem,4.6vh,3rem)]">
-              Presencia real en el territorio peruano
+              Presencia en el territorio peruano
             </h2>
             <p className="mt-5 text-[15.5px] leading-relaxed text-slate-700 lg:mt-[clamp(0.25rem,1vh,0.75rem)] lg:text-[clamp(15.5px,1.9vh,19px)]">
               Obras de agua y saneamiento en distintas regiones del país, con organismos públicos y
@@ -116,20 +116,20 @@ export function Proyectos() {
                       {subTitle && (
                         <>
                           <span className="sr-only"> — </span>
-                          <span className="mt-2 block text-base font-medium leading-snug text-white/80 sm:text-lg lg:mt-[clamp(0.25rem,1vh,0.625rem)] lg:text-[clamp(1.05rem,2.5vh,1.6rem)]">
+                          <span className="mt-2 block text-base font-medium leading-snug text-white/80 sm:text-lg lg:mt-[clamp(0.5rem,1.6vh,1rem)] lg:text-[clamp(1.05rem,2.5vh,1.6rem)]">
                             {subTitle}
                           </span>
                         </>
                       )}
                     </h3>
-                    <p className="mt-2 flex items-center gap-1.5 text-sm text-navy-100 lg:mt-[clamp(0.5rem,1.4vh,1rem)] lg:text-[clamp(0.875rem,1.9vh,1.1rem)]">
+                    <p className="mt-4 flex items-center gap-1.5 text-sm text-navy-100 lg:mt-[clamp(0.75rem,2.4vh,1.5rem)] lg:text-[clamp(0.875rem,1.9vh,1.1rem)]">
                       <MapPinIcon size={16} weight="regular" className="shrink-0 text-cyan-400" />
                       {current.location}
                     </p>
                     {/* Botón blanco sólido de esquinas casi rectas: se lee bien sobre la foto. Al pasar el cursor se atenúa un poco y la flecha avanza. */}
                     <PageLink
                       to={`/proyectos/${current.slug}`}
-                      className="group mt-5 inline-flex items-center gap-3 rounded-md bg-white px-6 py-3 text-base font-semibold text-navy-900 outline-none transition-colors duration-300 hover:bg-navy-100 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-navy-950 lg:mt-[clamp(0.75rem,2.4vh,1.75rem)] lg:px-7 2xl:text-lg"
+                      className="group mt-7 inline-flex items-center gap-3 rounded-md bg-white px-6 py-3 text-base font-semibold text-navy-900 outline-none transition-colors duration-300 hover:bg-navy-100 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-navy-950 lg:mt-[clamp(1.25rem,3.8vh,2.5rem)] lg:px-7 2xl:text-lg"
                     >
                       Ver proyecto
                       <ArrowRightIcon
@@ -144,10 +144,10 @@ export function Proyectos() {
 
             </motion.div>
 
-            {/* Controles (flechas y contador): en escritorio van abajo a la derecha, justo debajo de la miniatura que cambian;
+            {/* Controles (flechas y contador): en escritorio van abajo y centrados;
                 en celular, arriba a la derecha de la foto. */}
             {canSwitch && (
-              <div className="absolute right-4 top-4 z-30 flex items-center gap-3 sm:right-6 sm:top-6 lg:bottom-[clamp(1rem,3.5vh,2rem)] lg:right-[clamp(1.25rem,2vw,2rem)] lg:top-auto">
+              <div className="absolute right-4 top-4 z-30 flex items-center gap-3 sm:right-6 sm:top-6 lg:bottom-[clamp(1rem,3.5vh,2rem)] lg:left-1/2 lg:right-auto lg:top-auto lg:-translate-x-1/2">
                 <p aria-live="polite" className="mr-1 font-mono text-xs font-semibold tracking-[0.2em] text-white/90">
                   {pad(active + 1)} / {pad(count)}
                 </p>
@@ -171,7 +171,7 @@ export function Proyectos() {
             {/* Los demás proyectos: en escritorio, miniaturas verticales encima de la foto, a la derecha y sobresaliendo un
                 poco del borde; en celular, una fila debajo de la foto. */}
             {canSwitch && (
-              <div className="grid auto-cols-fr grid-flow-col gap-3 lg:absolute lg:bottom-[calc(clamp(1rem,3.5vh,2rem)+3.5rem)] lg:-right-6 lg:z-30 lg:flex lg:h-[50%] lg:items-end lg:gap-[clamp(0.75rem,1.2vw,1.25rem)]">
+              <div className="grid auto-cols-fr grid-flow-col gap-3 lg:absolute lg:bottom-[12%] lg:-right-6 lg:z-30 lg:flex lg:h-[54%] lg:items-end lg:gap-[clamp(0.75rem,1.2vw,1.25rem)]">
                 {others.map((index) => {
                   const project = projects[index]
                   return (
