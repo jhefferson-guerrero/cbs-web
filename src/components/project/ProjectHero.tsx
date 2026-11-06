@@ -64,9 +64,9 @@ export function ProjectHero({ project, ready }: { project: Project; ready: boole
         <motion.div {...rise(0.05, 18)}>
           <PageLink
             to="/#proyectos"
-            className="group inline-flex items-center gap-2.5 font-mono text-[13px] font-bold uppercase tracking-[0.15em] text-white [text-shadow:0_1px_10px_rgb(0_0_0/0.7)] sm:text-sm"
+            className="group inline-flex items-center gap-2.5 font-mono text-xs font-bold uppercase tracking-[0.15em] text-white [text-shadow:0_1px_10px_rgb(0_0_0/0.7)] sm:text-[13px]"
           >
-            <ArrowLeftIcon size={16} weight="bold" className="drop-shadow-[0_1px_6px_rgb(0_0_0/0.6)] transition-transform duration-300 group-hover:-translate-x-1.5" />
+            <ArrowLeftIcon size={15} weight="bold" className="drop-shadow-[0_1px_6px_rgb(0_0_0/0.6)] transition-transform duration-300 group-hover:-translate-x-1.5" />
             Volver a proyectos
           </PageLink>
         </motion.div>
