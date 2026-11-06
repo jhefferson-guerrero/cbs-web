@@ -46,7 +46,7 @@ export function ProjectHero({ project, ready }: { project: Project; ready: boole
       />
       {/* Sombreado solo donde hace falta: abajo, detrás del título y la ubicación, y una franja fina arriba para que el menú se lea. El resto de la foto se ve con sus colores. */}
       <div className="absolute inset-0 bg-navy-950/10" />
-      <div className="absolute inset-0 bg-gradient-to-t from-navy-950/90 via-navy-950/35 via-45% to-transparent" />
+      <div className="absolute inset-0 bg-gradient-to-t from-navy-950/90 via-navy-950/40 via-50% to-transparent" />
       <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-navy-950/55 to-transparent" />
 
       <motion.span
@@ -64,9 +64,9 @@ export function ProjectHero({ project, ready }: { project: Project; ready: boole
         <motion.div {...rise(0.05, 18)}>
           <PageLink
             to="/#proyectos"
-            className="inline-flex items-center gap-2 font-mono text-xs font-semibold uppercase tracking-[0.15em] text-cyan-300 transition-colors hover:text-cyan-200"
+            className="group inline-flex items-center gap-2.5 font-mono text-[13px] font-bold uppercase tracking-[0.15em] text-white [text-shadow:0_1px_10px_rgb(0_0_0/0.7)] sm:text-sm"
           >
-            <ArrowLeftIcon size={14} weight="bold" />
+            <ArrowLeftIcon size={16} weight="bold" className="drop-shadow-[0_1px_6px_rgb(0_0_0/0.6)] transition-transform duration-300 group-hover:-translate-x-1.5" />
             Volver a proyectos
           </PageLink>
         </motion.div>
