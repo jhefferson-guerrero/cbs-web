@@ -78,7 +78,7 @@ export function Proyectos() {
                 if (info.offset.x < -50) go(active + 1)
                 else if (info.offset.x > 50) go(active - 1)
               }}
-              className="relative aspect-[4/5] overflow-hidden rounded-md bg-navy-950 shadow-card sm:aspect-[16/10] lg:absolute lg:inset-0 lg:aspect-auto"
+              className="relative aspect-[4/5] overflow-hidden bg-navy-950 shadow-card sm:aspect-[16/10] lg:absolute lg:inset-0 lg:aspect-auto"
             >
               {projects.map((project, i) => (
                 <motion.img
@@ -185,7 +185,7 @@ export function Proyectos() {
                       type="button"
                       onClick={() => setActive(index)}
                       aria-label={`Ver proyecto: ${project.title}`}
-                      className="group relative h-28 overflow-hidden rounded-md bg-navy-950 text-left shadow-xl shadow-navy-950/40 outline-none ring-1 ring-white/20 focus-visible:ring-2 focus-visible:ring-cyan-400 sm:h-32 lg:h-full lg:w-auto lg:aspect-[7/8]"
+                      className="group relative h-28 overflow-hidden bg-navy-950 text-left shadow-xl shadow-navy-950/40 outline-none ring-1 ring-white/20 focus-visible:ring-2 focus-visible:ring-cyan-400 sm:h-32 lg:h-full lg:w-auto lg:aspect-[7/8]"
                     >
                       <img
                         src={project.cover}
