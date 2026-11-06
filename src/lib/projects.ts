@@ -95,7 +95,7 @@ export const projects: Project[] = [
     cover: galeriaTambopata01,
     coverSrcSet: `${coverTambopata640} 640w, ${coverTambopata960} 960w, ${galeriaTambopata01} 1365w`,
     client: { name: 'Programa Nacional de Saneamiento Urbano', logo: logoClientePnsu },
-    contractor: { name: 'Consorcio Tambopata', logo: logoContratistaTambopata, note: 'CBS Líder, 50% de participación' },
+    contractor: { name: 'Consorcio Tambopata', logo: logoContratistaTambopata, note: ['CBS Líder, 50% de participación', 'Conduto, 50% de participación'] },
     amount: 'S/ 323,553,522',
     funding: { name: 'Banco Interamericano de Desarrollo', logo: logoFinanciamientoBid },
     gallery: [
