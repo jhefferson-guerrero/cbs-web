@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { motion, useReducedMotion } from 'motion/react'
 import { Counter } from '@/components/ui/Counter'
-import { withCommas } from '@/lib/utils'
+import { cn, withCommas } from '@/lib/utils'
 import type { Project } from '@/lib/projects'
 
 const EASE = [0.16, 1, 0.3, 1] as const
@@ -86,7 +86,7 @@ export function ProjectFacts({ project, ready = true }: { project: Project; read
                 <div className="min-w-0">
                   {/* El monto cuenta de 0 hasta su valor (como las cifras del resto del sitio); tabular-nums mantiene
                       el ancho de los dígitos fijo para que el texto no tiemble mientras sube. */}
-                  <p className="text-xl font-bold tabular-nums text-navy-900 md:text-2xl 2xl:text-3xl">
+                  <p className={cn('font-bold tabular-nums text-navy-900', fact.value.length > 36 ? 'text-lg md:text-xl 2xl:text-2xl' : 'text-xl md:text-2xl 2xl:text-3xl')}>
                     {'amount' in fact && fact.amount ? (
                       // El conteo arranca junto con la ficha (no antes, mientras el hero aún está entrando). En el servidor
                       // (HTML prerrenderizado) se escribe el monto completo.
@@ -116,7 +116,7 @@ export function ProjectFacts({ project, ready = true }: { project: Project; read
                     // página nueva; estos logos no deben retrasar la entrada al proyecto.
                     loading="lazy"
                     decoding="async"
-                    className="h-10 w-auto shrink-0 object-contain sm:h-16 2xl:h-20"
+                    className="h-10 w-auto max-w-[7.5rem] shrink-0 object-contain sm:h-14 sm:max-w-[10rem] lg:h-16 lg:max-w-[12rem] 2xl:h-20 2xl:max-w-[18rem]"
                   />
                 )}
               </dd>
