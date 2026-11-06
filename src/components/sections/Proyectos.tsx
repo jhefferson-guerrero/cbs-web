@@ -128,10 +128,10 @@ export function Proyectos() {
                       <MapPinIcon size={16} weight="regular" className="shrink-0 text-cyan-400" />
                       {current.location}
                     </p>
-                    {/* Botón de vidrio: se rellena de blanco al pasar el cursor, y la flecha del círculo cambia a cian. */}
+                    {/* Botón de vidrio: al pasar el cursor sigue siendo de vidrio (un poco más claro, borde más marcado); el círculo pasa a cian y la flecha se desplaza en diagonal. */}
                     <PageLink
                       to={`/proyectos/${current.slug}`}
-                      className="group mt-5 inline-flex items-center gap-4 rounded-full border border-white/40 bg-white/15 py-1.5 pl-6 pr-1.5 text-base font-semibold text-white backdrop-blur-md outline-none transition-colors duration-300 hover:bg-white hover:text-navy-900 focus-visible:ring-2 focus-visible:ring-cyan-300 lg:mt-[clamp(0.75rem,2.4vh,1.75rem)] 2xl:text-lg"
+                      className="group mt-5 inline-flex items-center gap-4 rounded-full border border-white/40 bg-white/15 py-1.5 pl-6 pr-1.5 text-base font-semibold text-white backdrop-blur-md outline-none transition-colors duration-300 hover:border-white/70 hover:bg-white/25 focus-visible:ring-2 focus-visible:ring-cyan-300 lg:mt-[clamp(0.75rem,2.4vh,1.75rem)] 2xl:text-lg"
                     >
                       Ver proyecto
                       <span className="flex h-10 w-10 items-center justify-center rounded-full bg-white text-navy-900 transition-colors duration-300 group-hover:bg-cyan-700 group-hover:text-white">
@@ -157,7 +157,7 @@ export function Proyectos() {
                       type="button"
                       onClick={() => go(arrow.to)}
                       aria-label={arrow.label}
-                      className="flex h-10 w-10 items-center justify-center rounded-full border border-white/40 bg-white/15 text-white backdrop-blur-md outline-none transition-colors duration-300 hover:bg-white hover:text-navy-900 focus-visible:ring-2 focus-visible:ring-cyan-300 active:scale-95"
+                      className="flex h-10 w-10 items-center justify-center rounded-full border border-white/40 bg-white/15 text-white backdrop-blur-md outline-none transition-colors duration-300 hover:border-white/70 hover:bg-white/25 focus-visible:ring-2 focus-visible:ring-cyan-300 active:scale-95"
                     >
                       {arrow.icon}
                     </button>
