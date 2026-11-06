@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react'
-import { ArrowLeftIcon, ArrowRightIcon, ArrowUpRightIcon, MapPinIcon } from '@phosphor-icons/react'
+import { ArrowLeftIcon, ArrowRightIcon, MapPinIcon } from '@phosphor-icons/react'
 import { PageLink } from '@/components/ui/PageLink'
 import { useMediaQuery } from '@/lib/use-media-query'
 import { projects } from '@/lib/projects'
@@ -128,19 +128,17 @@ export function Proyectos() {
                       <MapPinIcon size={16} weight="regular" className="shrink-0 text-cyan-400" />
                       {current.location}
                     </p>
-                    {/* Botón de vidrio: al pasar el cursor sigue siendo de vidrio (un poco más claro, borde más marcado); el círculo pasa a cian y la flecha se desplaza en diagonal. */}
+                    {/* Enlace limpio, sin caja: texto, flecha y una línea fina debajo. Al pasar el cursor la línea y el texto pasan a cian y la flecha avanza. */}
                     <PageLink
                       to={`/proyectos/${current.slug}`}
-                      className="group mt-5 inline-flex items-center gap-4 rounded-full border border-white/40 bg-white/15 py-1.5 pl-6 pr-1.5 text-base font-semibold text-white backdrop-blur-md outline-none transition-colors duration-300 hover:border-white/70 hover:bg-white/25 focus-visible:ring-2 focus-visible:ring-cyan-300 lg:mt-[clamp(0.75rem,2.4vh,1.75rem)] 2xl:text-lg"
+                      className="group mt-5 inline-flex items-center gap-3 border-b border-white/50 pb-2 text-base font-semibold text-white outline-none transition-colors duration-300 hover:border-cyan-300 hover:text-cyan-300 focus-visible:border-cyan-300 focus-visible:text-cyan-300 lg:mt-[clamp(0.75rem,2.4vh,1.75rem)] 2xl:text-lg"
                     >
                       Ver proyecto
-                      <span className="flex h-10 w-10 items-center justify-center rounded-full bg-white text-navy-900 transition-colors duration-300 group-hover:bg-cyan-700 group-hover:text-white">
-                        <ArrowUpRightIcon
-                          size={18}
-                          weight="bold"
-                          className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-                        />
-                      </span>
+                      <ArrowRightIcon
+                        size={18}
+                        weight="bold"
+                        className="transition-transform duration-300 group-hover:translate-x-1.5 group-focus-visible:translate-x-1.5"
+                      />
                     </PageLink>
                   </motion.div>
                 </AnimatePresence>
