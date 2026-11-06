@@ -43,7 +43,8 @@ import aliado10 from '@/assets/images/proyectos/logos/aliado-10.webp'
 export interface Party {
   name: string
   logo?: string
-  note?: string
+  /** Texto bajo el nombre; si son varias líneas (p. ej. el reparto de un consorcio), una por cada elemento. */
+  note?: string | string[]
 }
 
 export interface GalleryImage {
@@ -79,7 +80,7 @@ export const projects: Project[] = [
     cover: galeriaRioHuatanay04,
     coverSrcSet: `${coverRioHuatanay640} 640w, ${coverRioHuatanay960} 960w, ${coverRioHuatanay1280} 1280w, ${galeriaRioHuatanay04} 1536w`,
     client: { name: 'Programa Nacional de Saneamiento Urbano', logo: logoClientePnsu },
-    contractor: { name: 'Consorcio Río Huatanay', logo: logoContratistaRioHuatanay, note: '50% de participación' },
+    contractor: { name: 'Consorcio Río Huatanay', logo: logoContratistaRioHuatanay, note: ['Conduto líder, 50% de participación', 'CBS, 50% de participación'] },
     amount: 'S/ 62,826,654',
     funding: { name: 'Banco Mundial', logo: logoFinanciamientoBancoMundial },
     showPartnerLogos: true,

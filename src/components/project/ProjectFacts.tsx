@@ -101,7 +101,12 @@ export function ProjectFacts({ project, ready = true }: { project: Project; read
                       fact.value
                     )}
                   </p>
-                  {fact.note && <p className="mt-1 text-sm text-slate-600 2xl:text-base">{fact.note}</p>}
+                  {/* La nota puede ser una sola línea o varias (una por socio del consorcio). */}
+                  {[fact.note ?? []].flat().map((line) => (
+                    <p key={line} className="mt-1 text-sm text-slate-600 2xl:text-base">
+                      {line}
+                    </p>
+                  ))}
                 </div>
                 {fact.logo && (
                   <img
