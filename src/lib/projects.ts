@@ -34,11 +34,6 @@ import aliado02 from '@/assets/images/proyectos/logos/aliado-02.webp'
 import aliado03 from '@/assets/images/proyectos/logos/aliado-03.webp'
 import aliado04 from '@/assets/images/proyectos/logos/aliado-04.webp'
 import aliado05 from '@/assets/images/proyectos/logos/aliado-05.webp'
-import aliado06 from '@/assets/images/proyectos/logos/aliado-06.webp'
-import aliado07 from '@/assets/images/proyectos/logos/aliado-07.webp'
-import aliado08 from '@/assets/images/proyectos/logos/aliado-08.webp'
-import aliado09 from '@/assets/images/proyectos/logos/aliado-09.webp'
-import aliado10 from '@/assets/images/proyectos/logos/aliado-10.webp'
 
 export interface Party {
   name: string
@@ -67,7 +62,7 @@ export interface Project {
   amount: string
   funding: Party
   gallery: GalleryImage[]
-  /** Los logos de aliados y financiamiento son específicos de este proyecto (entidades de agua de Cusco). */
+  /** Los logos de stakeholders y financiamiento son específicos de este proyecto (entidades de agua de Cusco). */
   showPartnerLogos?: boolean
 }
 
@@ -119,11 +114,6 @@ export const partnerLogos: { name: string; logo: string; large?: boolean }[] = [
   { name: 'OTASS', logo: aliado03 },
   { name: 'SUNASS', logo: aliado04 },
   { name: 'EPS Sedacusco', logo: aliado05, large: true },
-  { name: 'Agua Barranca', logo: aliado06 },
-  { name: 'Sedapar', logo: aliado07 },
-  { name: 'Agua Huaral', logo: aliado08 },
-  { name: 'Aguas Lima Norte', logo: aliado09 },
-  { name: 'Agua Pucallpa', logo: aliado10 },
 ]
 
 export function getProjectBySlug(slug: string | undefined): Project | undefined {
