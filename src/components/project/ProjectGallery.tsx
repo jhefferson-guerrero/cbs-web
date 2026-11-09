@@ -15,10 +15,28 @@ const railItemVariants = {
   show: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] as const } },
 }
 
+// Cuántas miniaturas caben en el lateral sin que se achiquen de más (480 px de alto: 7 de 56 px con sus separaciones). Con más
+// fotos el lateral se desplaza.
+const RAIL_FITS = 7
+
 export function ProjectGallery({ images }: { images: GalleryImage[] }) {
   const reduceMotion = useReducedMotion()
   const lenis = useLenis()
   const [active, setActive] = useState(0)
+  const railRef = useRef<HTMLDivElement>(null)
+
+  // Si el lateral tiene scroll, la miniatura activa se mantiene a la vista cuando se cambia de foto con las flechas o el teclado.
+  useEffect(() => {
+    const rail = railRef.current
+    if (!rail || rail.scrollHeight <= rail.clientHeight + 1) return
+    const item = rail.children[active] as HTMLElement | undefined
+    if (!item) return
+    const top = item.offsetTop
+    const bottom = top + item.offsetHeight
+    const behavior = reduceMotion ? 'auto' : 'smooth'
+    if (top < rail.scrollTop) rail.scrollTo({ top: Math.max(0, top - 8), behavior })
+    else if (bottom > rail.scrollTop + rail.clientHeight) rail.scrollTo({ top: bottom - rail.clientHeight + 8, behavior })
+  }, [active, reduceMotion])
   const [lightboxOpen, setLightboxOpen] = useState(false)
   const [loaded, setLoaded] = useState<Record<number, boolean>>({})
 
@@ -239,17 +257,20 @@ export function ProjectGallery({ images }: { images: GalleryImage[] }) {
           </motion.button>
 
           {images.length > 1 && (
-            // La animación la dispara el lateral completo (no cada miniatura). Mientras quepan (hasta 10), el lateral
+            // La animación la dispara el lateral completo (no cada miniatura). Mientras quepan (hasta 7), el lateral
             // es overflow-hidden: así nunca aparece una barra de scroll, ni durante la entrada ni cuando el
             // indicador se desliza al cambiar de foto, y el navegador no puede moverlo al enfocar un botón (eso
-            // era el temblor). Solo con más de 10 miniaturas se deja el scroll como respaldo.
+            // era el temblor). Con más fotos las miniaturas dejan de achicarse (mínimo 56 px) y el lateral tiene
+            // scroll; `data-lenis-prevent` hace que la rueda lo desplace a él y no a la página.
             <motion.div
+              ref={railRef}
               variants={railVariants}
               initial={reduceMotion ? false : 'hidden'}
               whileInView="show"
               viewport={{ once: true, amount: 0.3 }}
-              className={`scrollbar-thin hidden gap-2 sm:flex sm:flex-col sm:pr-3 sm:h-[480px] 2xl:h-[700px] ${
-                images.length > 10 ? 'overflow-y-auto overflow-x-hidden' : 'overflow-hidden'
+              {...(images.length > RAIL_FITS ? { 'data-lenis-prevent': true } : {})}
+              className={`scrollbar-thin relative hidden gap-2 sm:flex sm:flex-col sm:pr-3 sm:h-[480px] 2xl:h-[700px] ${
+                images.length > RAIL_FITS ? 'overflow-y-auto overflow-x-hidden' : 'overflow-hidden'
               }`}
             >
               {images.map((img, i) => (
@@ -257,7 +278,7 @@ export function ProjectGallery({ images }: { images: GalleryImage[] }) {
                 // así caben todas sin scroll aunque haya 6 o 7. El scroll del lateral queda solo como respaldo.
                 <motion.div
                   key={img.src}
-                  className="min-h-10 min-w-0 max-h-[4.75rem] flex-1 basis-0"
+                  className="min-h-14 min-w-0 max-h-[4.75rem] flex-1 basis-0"
                   variants={railItemVariants}
                 >
                 <button

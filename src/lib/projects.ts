@@ -27,6 +27,14 @@ import galeriaTambopata04 from '@/assets/images/proyectos/drenaje-tambopata/gale
 import thumbTambopata04 from '@/assets/images/proyectos/drenaje-tambopata/thumb-04.webp'
 import galeriaTambopata05 from '@/assets/images/proyectos/drenaje-tambopata/galeria-05.webp'
 import thumbTambopata05 from '@/assets/images/proyectos/drenaje-tambopata/thumb-05.webp'
+import galeriaTambopata06 from '@/assets/images/proyectos/drenaje-tambopata/galeria-06.webp'
+import thumbTambopata06 from '@/assets/images/proyectos/drenaje-tambopata/thumb-06.webp'
+import galeriaTambopata07 from '@/assets/images/proyectos/drenaje-tambopata/galeria-07.webp'
+import thumbTambopata07 from '@/assets/images/proyectos/drenaje-tambopata/thumb-07.webp'
+import galeriaTambopata08 from '@/assets/images/proyectos/drenaje-tambopata/galeria-08.webp'
+import thumbTambopata08 from '@/assets/images/proyectos/drenaje-tambopata/thumb-08.webp'
+import galeriaTambopata09 from '@/assets/images/proyectos/drenaje-tambopata/galeria-09.webp'
+import thumbTambopata09 from '@/assets/images/proyectos/drenaje-tambopata/thumb-09.webp'
 
 import logoClientePnsu from '@/assets/images/proyectos/logos/cliente-pnsu.webp'
 import logoContratistaRioHuatanay from '@/assets/images/proyectos/logos/contratista-rio-huatanay.webp'
@@ -110,6 +118,10 @@ export const projects: Project[] = [
       { src: galeriaTambopata03, thumb: thumbTambopata03, alt: 'Objetivos físicos del sistema de drenaje pluvial urbano' },
       { src: galeriaTambopata04, thumb: thumbTambopata04, alt: 'Estudio de diseño: mapa de soluciones conceptuales del sistema de drenaje pluvial' },
       { src: galeriaTambopata05, thumb: thumbTambopata05, alt: 'Esquema conceptual de la cárcava Costanera Norte: canal escalonado, pozo de disipación, contención de taludes y control de desembocadura' },
+      { src: galeriaTambopata06, thumb: thumbTambopata06, alt: 'Vista aérea de la cárcava de la Costanera, con viviendas al borde del talud' },
+      { src: galeriaTambopata07, thumb: thumbTambopata07, alt: 'Vista aérea de la cárcava de la Costanera desde otro ángulo, con viviendas junto al borde' },
+      { src: galeriaTambopata08, thumb: thumbTambopata08, alt: 'Vista aérea del talud boscoso sobre el río, con la ciudad al fondo' },
+      { src: galeriaTambopata09, thumb: thumbTambopata09, alt: 'Vista aérea del puerto sobre el río, con embarcaciones amarradas y viviendas en la orilla' },
     ],
   },
 ]
