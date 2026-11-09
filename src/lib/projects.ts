@@ -20,10 +20,6 @@ import galeriaRioHuatanay10 from '@/assets/images/proyectos/rio-huatanay/galeria
 import thumbRioHuatanay10 from '@/assets/images/proyectos/rio-huatanay/thumb-10.webp'
 import galeriaRioHuatanay11 from '@/assets/images/proyectos/rio-huatanay/galeria-11.webp'
 import thumbRioHuatanay11 from '@/assets/images/proyectos/rio-huatanay/thumb-11.webp'
-import galeriaRioHuatanay12 from '@/assets/images/proyectos/rio-huatanay/galeria-12.webp'
-import thumbRioHuatanay12 from '@/assets/images/proyectos/rio-huatanay/thumb-12.webp'
-import galeriaRioHuatanay13 from '@/assets/images/proyectos/rio-huatanay/galeria-13.webp'
-import thumbRioHuatanay13 from '@/assets/images/proyectos/rio-huatanay/thumb-13.webp'
 import coverRioHuatanay640 from '@/assets/images/proyectos/rio-huatanay/cover-640.webp'
 import coverRioHuatanay960 from '@/assets/images/proyectos/rio-huatanay/cover-960.webp'
 import coverRioHuatanay1280 from '@/assets/images/proyectos/rio-huatanay/cover-1280.webp'
@@ -145,12 +141,10 @@ export const projects: Project[] = [
       { src: galeriaRioHuatanay05, thumb: thumbRioHuatanay05, alt: 'Trabajadores acarreando material por una escalinata de tierra en un barrio de Cusco, junto a una tubería azul' },
       { src: galeriaRioHuatanay06, thumb: thumbRioHuatanay06, alt: 'Obrero con un equipo de rociado junto a una vereda de concreto recién vaciada en la avenida Luis Vallejo Santoni, Cusco' },
       { src: galeriaRioHuatanay07, thumb: thumbRioHuatanay07, alt: 'Cuadrilla instalando tuberías azules en una ladera rocosa de Cusco, con topógrafos al fondo' },
-      { src: galeriaRioHuatanay08, thumb: thumbRioHuatanay08, alt: 'Obrero junto a tuberías de desagüe anaranjadas en una escalinata de un barrio de Cusco' },
-      { src: galeriaRioHuatanay09, thumb: thumbRioHuatanay09, alt: 'Cuadrilla excavando una zanja empinada entre viviendas para tender tuberías en un barrio de Cusco' },
-      { src: galeriaRioHuatanay10, thumb: thumbRioHuatanay10, alt: 'Personal de obra realizando una prueba de agua en una tubería junto a una escalinata, con un supervisor presente' },
-      { src: galeriaRioHuatanay11, thumb: thumbRioHuatanay11, alt: 'Cuadrilla excavando una zanja en la roca de una ladera de Cusco' },
-      { src: galeriaRioHuatanay12, thumb: thumbRioHuatanay12, alt: 'Obreros dando acabado a una vereda de concreto recién vaciada en una calle en pendiente' },
-      { src: galeriaRioHuatanay13, thumb: thumbRioHuatanay13, alt: 'Vista aérea del trazo de la línea de conducción sobre el cerro' },
+      { src: galeriaRioHuatanay08, thumb: thumbRioHuatanay08, alt: 'Cuadrilla excavando una zanja empinada entre viviendas para tender tuberías en un barrio de Cusco' },
+      { src: galeriaRioHuatanay09, thumb: thumbRioHuatanay09, alt: 'Personal de obra realizando una prueba de agua en una tubería junto a una escalinata, con un supervisor presente' },
+      { src: galeriaRioHuatanay10, thumb: thumbRioHuatanay10, alt: 'Obreros dando acabado a una vereda de concreto recién vaciada en una calle en pendiente' },
+      { src: galeriaRioHuatanay11, thumb: thumbRioHuatanay11, alt: 'Vista aérea del trazo de la línea de conducción sobre el cerro' },
     ],
   },
   {
