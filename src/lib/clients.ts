@@ -1,4 +1,8 @@
 import ministerioViviendaLogo from '@/assets/images/clientes/ministerio-vivienda.webp'
+// Los logos de MTC, OPOS y el Gobierno Regional de Pasco son los mismos de la ficha de sus proyectos.
+import mtcLogo from '@/assets/images/proyectos/logos/financiamiento-mtc.webp'
+import oposLogo from '@/assets/images/proyectos/logos/cliente-opos.webp'
+import gorePascoLogo from '@/assets/images/proyectos/logos/cliente-gobierno-regional-pasco.webp'
 import codevasfLogo from '@/assets/images/clientes/codevasf.webp'
 import compesaLogo from '@/assets/images/clientes/compesa.webp'
 import conderLogo from '@/assets/images/clientes/conder.webp'
@@ -21,7 +25,12 @@ export interface ClientGroup {
 export const clientGroups: ClientGroup[] = [
   {
     country: 'Perú',
-    clients: [{ name: 'Ministerio de Vivienda, Construcción y Saneamiento', logo: ministerioViviendaLogo }],
+    clients: [
+      { name: 'Ministerio de Vivienda, Construcción y Saneamiento', logo: ministerioViviendaLogo },
+      { name: 'Ministerio de Transportes y Comunicaciones', logo: mtcLogo },
+      { name: 'OPOS', logo: oposLogo },
+      { name: 'Gobierno Regional de Pasco', logo: gorePascoLogo },
+    ],
   },
   {
     country: 'Brasil',
