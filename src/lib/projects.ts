@@ -53,6 +53,14 @@ import galeriaPasco02 from '@/assets/images/proyectos/cerro-de-pasco/galeria-02.
 import thumbPasco02 from '@/assets/images/proyectos/cerro-de-pasco/thumb-02.webp'
 import galeriaPasco03 from '@/assets/images/proyectos/cerro-de-pasco/galeria-03.webp'
 import thumbPasco03 from '@/assets/images/proyectos/cerro-de-pasco/thumb-03.webp'
+import galeriaPasco04 from '@/assets/images/proyectos/cerro-de-pasco/galeria-04.webp'
+import thumbPasco04 from '@/assets/images/proyectos/cerro-de-pasco/thumb-04.webp'
+import galeriaPasco05 from '@/assets/images/proyectos/cerro-de-pasco/galeria-05.webp'
+import thumbPasco05 from '@/assets/images/proyectos/cerro-de-pasco/thumb-05.webp'
+import galeriaPasco06 from '@/assets/images/proyectos/cerro-de-pasco/galeria-06.webp'
+import thumbPasco06 from '@/assets/images/proyectos/cerro-de-pasco/thumb-06.webp'
+import galeriaPasco07 from '@/assets/images/proyectos/cerro-de-pasco/galeria-07.webp'
+import thumbPasco07 from '@/assets/images/proyectos/cerro-de-pasco/thumb-07.webp'
 import coverPasco640 from '@/assets/images/proyectos/cerro-de-pasco/cover-640.webp'
 import coverPasco960 from '@/assets/images/proyectos/cerro-de-pasco/cover-960.webp'
 import logoClienteGorePasco from '@/assets/images/proyectos/logos/cliente-gobierno-regional-pasco.webp'
@@ -174,7 +182,7 @@ export const projects: Project[] = [
     title: 'Mejoramiento y ampliación de los servicios de saneamiento — EMAPA Pasco',
     location: 'Cerro de Pasco, Pasco',
     cover: galeriaPasco01,
-    coverSrcSet: `${coverPasco640} 640w, ${coverPasco960} 960w, ${galeriaPasco01} 1040w`,
+    coverSrcSet: `${coverPasco640} 640w, ${coverPasco960} 960w, ${galeriaPasco01} 1400w`,
     client: { name: 'Gobierno Regional de Pasco', logo: logoClienteGorePasco },
     contractor: {
       name: 'Consorcio Saneamiento Señor Cautivo',
@@ -185,8 +193,12 @@ export const projects: Project[] = [
     funding: { name: 'Recursos Ordinarios' },
     gallery: [
       { src: galeriaPasco01, thumb: thumbPasco01, alt: 'Vista de la ciudad de Cerro de Pasco con una laguna y los cerros al fondo' },
-      { src: galeriaPasco02, thumb: thumbPasco02, alt: 'Imagen satelital de Cerro de Pasco dividida en sectores de abastecimiento de agua potable' },
-      { src: galeriaPasco03, thumb: thumbPasco03, alt: 'Esquema del alcance de la obra: obras civiles, equipamiento hidráulico, líneas de agua potable y alcantarillado, redes y conexiones' },
+      { src: galeriaPasco02, thumb: thumbPasco02, alt: 'Personal de la obra con equipos de ensayo en una zanja abierta de la red de saneamiento' },
+      { src: galeriaPasco03, thumb: thumbPasco03, alt: 'Personal del consorcio junto a una cámara de concreto, con el tramo y el sector anotados en una pizarra' },
+      { src: galeriaPasco04, thumb: thumbPasco04, alt: 'Personal de obra revisando una cámara de concreto en una calle de Cerro de Pasco' },
+      { src: galeriaPasco05, thumb: thumbPasco05, alt: 'Personal del consorcio junto a una cámara de concreto y una tubería en la zanja' },
+      { src: galeriaPasco06, thumb: thumbPasco06, alt: 'Calle con zanja abierta y cámaras de concreto instaladas en la red de alcantarillado' },
+      { src: galeriaPasco07, thumb: thumbPasco07, alt: 'Personal del consorcio junto a una cámara de concreto en el sector Paragsha' },
     ],
   },
 ]
