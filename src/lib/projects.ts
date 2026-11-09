@@ -88,9 +88,9 @@ export const projects: Project[] = [
       { src: galeriaRioHuatanay02, thumb: thumbRioHuatanay02, alt: 'Armado de acero de la losa circular del reservorio con equipo de trabajo' },
       { src: galeriaRioHuatanay03, thumb: thumbRioHuatanay03, alt: 'Vista aérea del reservorio en etapa avanzada de construcción' },
       { src: galeriaRioHuatanay04, thumb: thumbRioHuatanay04, alt: 'Vista aérea del reservorio de agua potable junto a la ciudad de Cusco' },
-      { src: galeriaRioHuatanay05, thumb: thumbRioHuatanay05, alt: 'Vista aérea del trazo de la línea de conducción sobre el cerro' },
-      { src: galeriaRioHuatanay06, thumb: thumbRioHuatanay06, alt: 'Trabajadores acarreando material por una escalinata de tierra en un barrio de Cusco, junto a una tubería azul' },
-      { src: galeriaRioHuatanay07, thumb: thumbRioHuatanay07, alt: 'Obrero con un equipo de rociado junto a una vereda de concreto recién vaciada en la avenida Luis Vallejo Santoni, Cusco' },
+      { src: galeriaRioHuatanay05, thumb: thumbRioHuatanay05, alt: 'Trabajadores acarreando material por una escalinata de tierra en un barrio de Cusco, junto a una tubería azul' },
+      { src: galeriaRioHuatanay06, thumb: thumbRioHuatanay06, alt: 'Obrero con un equipo de rociado junto a una vereda de concreto recién vaciada en la avenida Luis Vallejo Santoni, Cusco' },
+      { src: galeriaRioHuatanay07, thumb: thumbRioHuatanay07, alt: 'Vista aérea del trazo de la línea de conducción sobre el cerro' },
     ],
   },
   {
