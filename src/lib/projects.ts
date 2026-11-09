@@ -8,6 +8,10 @@ import galeriaRioHuatanay04 from '@/assets/images/proyectos/rio-huatanay/galeria
 import thumbRioHuatanay04 from '@/assets/images/proyectos/rio-huatanay/thumb-04.webp'
 import galeriaRioHuatanay05 from '@/assets/images/proyectos/rio-huatanay/galeria-05.webp'
 import thumbRioHuatanay05 from '@/assets/images/proyectos/rio-huatanay/thumb-05.webp'
+import galeriaRioHuatanay06 from '@/assets/images/proyectos/rio-huatanay/galeria-06.webp'
+import thumbRioHuatanay06 from '@/assets/images/proyectos/rio-huatanay/thumb-06.webp'
+import galeriaRioHuatanay07 from '@/assets/images/proyectos/rio-huatanay/galeria-07.webp'
+import thumbRioHuatanay07 from '@/assets/images/proyectos/rio-huatanay/thumb-07.webp'
 import coverRioHuatanay640 from '@/assets/images/proyectos/rio-huatanay/cover-640.webp'
 import coverRioHuatanay960 from '@/assets/images/proyectos/rio-huatanay/cover-960.webp'
 import coverRioHuatanay1280 from '@/assets/images/proyectos/rio-huatanay/cover-1280.webp'
@@ -85,6 +89,8 @@ export const projects: Project[] = [
       { src: galeriaRioHuatanay03, thumb: thumbRioHuatanay03, alt: 'Vista aérea del reservorio en etapa avanzada de construcción' },
       { src: galeriaRioHuatanay04, thumb: thumbRioHuatanay04, alt: 'Vista aérea del reservorio de agua potable junto a la ciudad de Cusco' },
       { src: galeriaRioHuatanay05, thumb: thumbRioHuatanay05, alt: 'Vista aérea del trazo de la línea de conducción sobre el cerro' },
+      { src: galeriaRioHuatanay06, thumb: thumbRioHuatanay06, alt: 'Trabajadores acarreando material por una escalinata de tierra en un barrio de Cusco, junto a una tubería azul' },
+      { src: galeriaRioHuatanay07, thumb: thumbRioHuatanay07, alt: 'Obrero con un equipo de rociado junto a una vereda de concreto recién vaciada en la avenida Luis Vallejo Santoni, Cusco' },
     ],
   },
   {
