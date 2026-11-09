@@ -81,8 +81,8 @@ export function Hero({ ready }: { ready: boolean }) {
             sizes={HERO_IMAGE_SIZES}
             alt=""
             aria-hidden="true"
-            width={2574}
-            height={1664}
+            width={2560}
+            height={1439}
             fetchPriority="high"
             decoding="async"
             initial={reduceMotion ? false : { scale: 1.06 }}
