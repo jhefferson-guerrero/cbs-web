@@ -99,8 +99,8 @@ export function ProjectGallery({ images }: { images: GalleryImage[] }) {
   // arrastrar para moverse mientras está ampliada, y otro toque
   // (o cambiar de foto / cerrar) para restablecer.
   const ZOOM_SCALE = 2.4
-  // Al arrastrar, la foto se mueve esta fracción de lo que se mueve el cursor (1 sería pegada al cursor; con 0.6 se sentía lenta y
-  // demasiado rápido), y se detiene donde se suelta, sin inercia.
+  // Al arrastrar, la foto se mueve esta fracción de lo que se mueve el cursor (1 sería pegada al cursor: con 1 se sentía
+  // demasiado rápido y con 0.6, lenta), y se detiene donde se suelta, sin inercia.
   const PAN_SPEED = 0.85
   const panStart = useRef({ x: 0, y: 0 })
   // Arrastrar y soltar también cuenta como un toque para el navegador: se anota para no confundirlo con el toque que restablece el zoom.
