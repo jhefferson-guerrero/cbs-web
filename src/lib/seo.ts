@@ -188,6 +188,7 @@ const PROJECT_SEO_TITLES: Record<string, string> = {
   'rio-huatanay': 'Agua potable en Cusco: margen derecha del Huatanay',
   'drenaje-tambopata': 'Drenaje pluvial en Puerto Maldonado: sector Tambopata',
   'puente-querpon': 'Puente Querpón en Olmos, Lambayeque: tramo 5 Piura – Olmos',
+  'cerro-de-pasco': 'Saneamiento en Cerro de Pasco: ampliación de agua y alcantarillado de EMAPA Pasco',
 }
 
 function projectSeo(project: Project): SeoData {

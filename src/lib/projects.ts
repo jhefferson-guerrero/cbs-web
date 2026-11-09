@@ -47,6 +47,16 @@ import coverQuerpon640 from '@/assets/images/proyectos/puente-querpon/cover-640.
 import coverQuerpon960 from '@/assets/images/proyectos/puente-querpon/cover-960.webp'
 import coverQuerpon1280 from '@/assets/images/proyectos/puente-querpon/cover-1280.webp'
 
+import galeriaPasco01 from '@/assets/images/proyectos/cerro-de-pasco/galeria-01.webp'
+import thumbPasco01 from '@/assets/images/proyectos/cerro-de-pasco/thumb-01.webp'
+import galeriaPasco02 from '@/assets/images/proyectos/cerro-de-pasco/galeria-02.webp'
+import thumbPasco02 from '@/assets/images/proyectos/cerro-de-pasco/thumb-02.webp'
+import galeriaPasco03 from '@/assets/images/proyectos/cerro-de-pasco/galeria-03.webp'
+import thumbPasco03 from '@/assets/images/proyectos/cerro-de-pasco/thumb-03.webp'
+import coverPasco640 from '@/assets/images/proyectos/cerro-de-pasco/cover-640.webp'
+import coverPasco960 from '@/assets/images/proyectos/cerro-de-pasco/cover-960.webp'
+import logoClienteGorePasco from '@/assets/images/proyectos/logos/cliente-gobierno-regional-pasco.webp'
+import logoContratistaSenorCautivo from '@/assets/images/proyectos/logos/contratista-saneamiento-senor-cautivo.webp'
 import logoClientePnsu from '@/assets/images/proyectos/logos/cliente-pnsu.webp'
 import logoContratistaRioHuatanay from '@/assets/images/proyectos/logos/contratista-rio-huatanay.webp'
 import logoContratistaTambopata from '@/assets/images/proyectos/logos/contratista-tambopata.webp'
@@ -156,6 +166,27 @@ export const projects: Project[] = [
       { src: galeriaQuerpon02, thumb: thumbQuerpon02, alt: 'Imagen referencial: vista aérea del puente Querpón y sus accesos' },
       { src: galeriaQuerpon03, thumb: thumbQuerpon03, alt: 'Imagen referencial: calzada del puente con barandas y señalización vial' },
       { src: galeriaQuerpon04, thumb: thumbQuerpon04, alt: 'Imagen referencial: vista inferior del tablero postensado y los pilares del puente' },
+    ],
+  },
+  {
+    slug: 'cerro-de-pasco',
+    category: 'Agua potable y saneamiento',
+    title: 'Mejoramiento y ampliación de los servicios de saneamiento — EMAPA Pasco, Componente II',
+    location: 'Cerro de Pasco, Pasco',
+    cover: galeriaPasco01,
+    coverSrcSet: `${coverPasco640} 640w, ${coverPasco960} 960w, ${galeriaPasco01} 1040w`,
+    client: { name: 'Gobierno Regional de Pasco', logo: logoClienteGorePasco },
+    contractor: {
+      name: 'Consorcio Saneamiento Señor Cautivo',
+      logo: logoContratistaSenorCautivo,
+      note: ['Grupo Ravys líder, 55% de participación', 'Enfil, 35% de participación', 'CBS, 10% de participación'],
+    },
+    amount: 'S/ 460,732,843',
+    funding: { name: 'Recursos Ordinarios' },
+    gallery: [
+      { src: galeriaPasco01, thumb: thumbPasco01, alt: 'Vista de la ciudad de Cerro de Pasco con una laguna y los cerros al fondo' },
+      { src: galeriaPasco02, thumb: thumbPasco02, alt: 'Imagen satelital de Cerro de Pasco dividida en sectores de abastecimiento de agua potable' },
+      { src: galeriaPasco03, thumb: thumbPasco03, alt: 'Esquema del alcance de la obra: obras civiles, equipamiento hidráulico, líneas de agua potable y alcantarillado, redes y conexiones' },
     ],
   },
 ]
