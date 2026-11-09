@@ -64,6 +64,8 @@ import aliado05 from '@/assets/images/proyectos/logos/aliado-05.webp'
 export interface Party {
   name: string
   logo?: string
+  /** Logo muy compacto y de mucho peso visual (p. ej. el isotipo de CBS): se muestra un poco más pequeño. */
+  logoSmall?: boolean
   /** Texto bajo el nombre; si son varias líneas (p. ej. el reparto de un consorcio), una por cada elemento. */
   note?: string | string[]
 }
@@ -146,7 +148,7 @@ export const projects: Project[] = [
     cover: galeriaQuerpon03,
     coverSrcSet: `${coverQuerpon640} 640w, ${coverQuerpon960} 960w, ${coverQuerpon1280} 1280w, ${galeriaQuerpon03} 1600w`,
     client: { name: 'Odebrecht Perú Operadora de Servicios S.A.C. (OPOS)', logo: logoClienteOpos },
-    contractor: { name: 'Construtora Baiana de Saneamento', logo: logoContratistaCbs },
+    contractor: { name: 'Construtora Baiana de Saneamento', logo: logoContratistaCbs, logoSmall: true },
     amount: 'S/ 56,184,951',
     funding: { name: 'Ministerio de Transportes y Comunicaciones (MTC)', logo: logoFinanciamientoMtc },
     gallery: [

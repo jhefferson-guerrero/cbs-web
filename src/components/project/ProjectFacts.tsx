@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { motion, useReducedMotion } from 'motion/react'
 import { Counter } from '@/components/ui/Counter'
-import { withCommas } from '@/lib/utils'
+import { cn, withCommas } from '@/lib/utils'
 import type { Project } from '@/lib/projects'
 
 const EASE = [0.16, 1, 0.3, 1] as const
@@ -41,9 +41,9 @@ export function ProjectFacts({ project, ready = true }: { project: Project; read
   }, [ready, behindPreloader])
   const started = reduceMotion || heroDone
 
-  const facts = [
+  const facts: { label: string; value: string; note?: string | string[]; logo?: string; logoSmall?: boolean; amount?: ReturnType<typeof parseAmount> }[] = [
     { label: 'Cliente', value: project.client.name, note: project.client.note, logo: project.client.logo },
-    { label: 'Contratista', value: project.contractor.name, note: project.contractor.note, logo: project.contractor.logo },
+    { label: 'Contratista', value: project.contractor.name, note: project.contractor.note, logo: project.contractor.logo, logoSmall: project.contractor.logoSmall },
     { label: 'Monto contratado', value: project.amount, note: undefined, logo: undefined, amount: parseAmount(project.amount) },
     { label: 'Financiamiento', value: project.funding.name, note: project.funding.note, logo: project.funding.logo },
   ]
@@ -116,7 +116,10 @@ export function ProjectFacts({ project, ready = true }: { project: Project; read
                     // página nueva; estos logos no deben retrasar la entrada al proyecto.
                     loading="lazy"
                     decoding="async"
-                    className="h-10 w-auto max-w-[7.5rem] shrink-0 object-contain sm:h-14 sm:max-w-[10rem] lg:h-16 lg:max-w-[12rem] 2xl:h-20 2xl:max-w-[18rem]"
+                    className={cn(
+                      'w-auto max-w-[7.5rem] shrink-0 object-contain sm:max-w-[10rem] lg:max-w-[12rem] 2xl:max-w-[18rem]',
+                      fact.logoSmall ? 'h-8 sm:h-10 lg:h-12 2xl:h-14' : 'h-10 sm:h-14 lg:h-16 2xl:h-20',
+                    )}
                   />
                 )}
               </dd>
