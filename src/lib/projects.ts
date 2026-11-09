@@ -166,7 +166,7 @@ export const projects: Project[] = [
     cover: galeriaQuerpon03,
     coverSrcSet: `${coverQuerpon640} 640w, ${coverQuerpon960} 960w, ${coverQuerpon1280} 1280w, ${galeriaQuerpon03} 1600w`,
     client: { name: 'Odebrecht Perú Operadora de Servicios S.A.C. (OPOS)', logo: logoClienteOpos },
-    contractor: { name: 'Construtora Baiana de Saneamento', logo: logoContratistaCbs, logoSmall: true },
+    contractor: { name: 'Construtora Baiana de Saneamento', logo: logoContratistaCbs, logoSmall: true, note: 'CBS, 100% de participación' },
     amount: 'S/ 56,184,951',
     funding: { name: 'Ministerio de Transportes y Comunicaciones (MTC)', logo: logoFinanciamientoMtc },
     gallery: [
