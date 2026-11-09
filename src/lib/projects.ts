@@ -63,10 +63,6 @@ import galeriaPasco07 from '@/assets/images/proyectos/cerro-de-pasco/galeria-07.
 import thumbPasco07 from '@/assets/images/proyectos/cerro-de-pasco/thumb-07.webp'
 import galeriaPasco08 from '@/assets/images/proyectos/cerro-de-pasco/galeria-08.webp'
 import thumbPasco08 from '@/assets/images/proyectos/cerro-de-pasco/thumb-08.webp'
-import galeriaPasco09 from '@/assets/images/proyectos/cerro-de-pasco/galeria-09.webp'
-import thumbPasco09 from '@/assets/images/proyectos/cerro-de-pasco/thumb-09.webp'
-import galeriaPasco10 from '@/assets/images/proyectos/cerro-de-pasco/galeria-10.webp'
-import thumbPasco10 from '@/assets/images/proyectos/cerro-de-pasco/thumb-10.webp'
 import coverPasco640 from '@/assets/images/proyectos/cerro-de-pasco/cover-640.webp'
 import coverPasco960 from '@/assets/images/proyectos/cerro-de-pasco/cover-960.webp'
 import logoClienteGorePasco from '@/assets/images/proyectos/logos/cliente-gobierno-regional-pasco.webp'
@@ -206,8 +202,6 @@ export const projects: Project[] = [
       { src: galeriaPasco06, thumb: thumbPasco06, alt: 'Profesionales midiendo con cinta métrica el nivel de agua en una cámara de concreto' },
       { src: galeriaPasco07, thumb: thumbPasco07, alt: 'Personal del consorcio midiendo el nivel de agua en una cámara de concreto durante la prueba de estanqueidad' },
       { src: galeriaPasco08, thumb: thumbPasco08, alt: 'Personal del consorcio junto a una cámara de concreto y una tubería naranja en una calle de Cerro de Pasco' },
-      { src: galeriaPasco09, thumb: thumbPasco09, alt: 'Calle con zanja abierta y cámaras de concreto en la red de alcantarillado de Cerro de Pasco' },
-      { src: galeriaPasco10, thumb: thumbPasco10, alt: 'Personal del consorcio y de supervisión junto a una cámara de concreto con la pizarra de la prueba de estanqueidad' },
     ],
   },
 ]
