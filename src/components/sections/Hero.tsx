@@ -57,10 +57,10 @@ export function Hero({ ready }: { ready: boolean }) {
   // anterior. El párrafo es el elemento LCP (Chrome lo registra cuando termina de aparecer), así que la cascada es corta:
   // todo termina ~1 s después de que el preloader suelta la página.
   const fadeUp = (delay: number) => ({
-    initial: reduceMotion ? false : { opacity: 0, y: 18, filter: 'blur(4px)' },
-    animate: play
-      ? { opacity: 1, y: 0, filter: 'blur(0px)' }
-      : { opacity: 0, y: 18, filter: 'blur(4px)' },
+    // Solo opacidad y desplazamiento (los resuelve la GPU): el desenfoque (filter: blur) obliga a repintar el texto en cada
+    // cuadro y se notaba como un pequeño trabón justo cuando el preloader suelta la página.
+    initial: reduceMotion ? false : { opacity: 0, y: 18 },
+    animate: play ? { opacity: 1, y: 0 } : { opacity: 0, y: 18 },
     transition: { duration: 0.6, delay, ease: [0.16, 1, 0.3, 1] as const },
   })
 
@@ -122,12 +122,8 @@ export function Hero({ ready }: { ready: boolean }) {
               {headline.map((line, i) => (
                 <motion.span
                   key={line}
-                  initial={reduceMotion ? false : { opacity: 0, y: 22, filter: 'blur(6px)' }}
-                  animate={
-                    play
-                      ? { opacity: 1, y: 0, filter: 'blur(0px)' }
-                      : { opacity: 0, y: 22, filter: 'blur(6px)' }
-                  }
+                  initial={reduceMotion ? false : { opacity: 0, y: 22 }}
+                  animate={play ? { opacity: 1, y: 0 } : { opacity: 0, y: 22 }}
                   transition={{ duration: 0.6, delay: 0.1 + i * 0.08, ease: [0.16, 1, 0.3, 1] }}
                   className="block"
                 >
