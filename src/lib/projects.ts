@@ -171,7 +171,7 @@ export const projects: Project[] = [
   {
     slug: 'cerro-de-pasco',
     category: 'Agua potable y saneamiento',
-    title: 'Mejoramiento y ampliación de los servicios de saneamiento — EMAPA Pasco, Componente II',
+    title: 'Mejoramiento y ampliación de los servicios de saneamiento — EMAPA Pasco',
     location: 'Cerro de Pasco, Pasco',
     cover: galeriaPasco01,
     coverSrcSet: `${coverPasco640} 640w, ${coverPasco960} 960w, ${galeriaPasco01} 1040w`,
