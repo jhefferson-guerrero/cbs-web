@@ -3,8 +3,8 @@ import { motion, useReducedMotion } from 'motion/react'
 import { ArrowLeftIcon, ArrowRightIcon } from '@phosphor-icons/react'
 import { Lightbox } from '@/components/ui/Lightbox'
 import { cn } from '@/lib/utils'
-import mapaCobertura from '@/assets/images/actuacion-mapa-2.webp'
-import mapaCobertura1600 from '@/assets/images/actuacion-mapa-2-1600.webp'
+import mapaCobertura from '@/assets/images/actuacion-mapa-hd.webp'
+import mapaCobertura1600 from '@/assets/images/actuacion-mapa-hd-1600.webp'
 
 // Proporción de la imagen fuente: la tarjeta tiene exactamente esta forma,
 // así el mapa se ve completo y sin franjas de otro tono alrededor.
