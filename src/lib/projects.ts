@@ -4,6 +4,7 @@ import galeriaRioHuatanay02 from '@/assets/images/proyectos/rio-huatanay/galeria
 import thumbRioHuatanay02 from '@/assets/images/proyectos/rio-huatanay/thumb-02.webp'
 import galeriaRioHuatanay03 from '@/assets/images/proyectos/rio-huatanay/galeria-03.webp'
 import thumbRioHuatanay03 from '@/assets/images/proyectos/rio-huatanay/thumb-03.webp'
+import coverRioHuatanay1536 from '@/assets/images/proyectos/rio-huatanay/cover-1536.webp'
 import galeriaRioHuatanay04 from '@/assets/images/proyectos/rio-huatanay/galeria-04.webp'
 import thumbRioHuatanay04 from '@/assets/images/proyectos/rio-huatanay/thumb-04.webp'
 import galeriaRioHuatanay05 from '@/assets/images/proyectos/rio-huatanay/galeria-05.webp'
@@ -12,14 +13,6 @@ import galeriaRioHuatanay06 from '@/assets/images/proyectos/rio-huatanay/galeria
 import thumbRioHuatanay06 from '@/assets/images/proyectos/rio-huatanay/thumb-06.webp'
 import galeriaRioHuatanay07 from '@/assets/images/proyectos/rio-huatanay/galeria-07.webp'
 import thumbRioHuatanay07 from '@/assets/images/proyectos/rio-huatanay/thumb-07.webp'
-import galeriaRioHuatanay08 from '@/assets/images/proyectos/rio-huatanay/galeria-08.webp'
-import thumbRioHuatanay08 from '@/assets/images/proyectos/rio-huatanay/thumb-08.webp'
-import galeriaRioHuatanay09 from '@/assets/images/proyectos/rio-huatanay/galeria-09.webp'
-import thumbRioHuatanay09 from '@/assets/images/proyectos/rio-huatanay/thumb-09.webp'
-import galeriaRioHuatanay10 from '@/assets/images/proyectos/rio-huatanay/galeria-10.webp'
-import thumbRioHuatanay10 from '@/assets/images/proyectos/rio-huatanay/thumb-10.webp'
-import galeriaRioHuatanay11 from '@/assets/images/proyectos/rio-huatanay/galeria-11.webp'
-import thumbRioHuatanay11 from '@/assets/images/proyectos/rio-huatanay/thumb-11.webp'
 import coverRioHuatanay640 from '@/assets/images/proyectos/rio-huatanay/cover-640.webp'
 import coverRioHuatanay960 from '@/assets/images/proyectos/rio-huatanay/cover-960.webp'
 import coverRioHuatanay1280 from '@/assets/images/proyectos/rio-huatanay/cover-1280.webp'
@@ -126,8 +119,8 @@ export const projects: Project[] = [
     category: 'Agua potable',
     title: 'Ampliación del servicio de agua potable — Margen derecha del Huatanay',
     location: 'Distrito Santiago, Cusco',
-    cover: galeriaRioHuatanay04,
-    coverSrcSet: `${coverRioHuatanay640} 640w, ${coverRioHuatanay960} 960w, ${coverRioHuatanay1280} 1280w, ${galeriaRioHuatanay04} 1536w`,
+    cover: coverRioHuatanay1536,
+    coverSrcSet: `${coverRioHuatanay640} 640w, ${coverRioHuatanay960} 960w, ${coverRioHuatanay1280} 1280w, ${coverRioHuatanay1536} 1536w`,
     client: { name: 'Programa Nacional de Saneamiento Urbano', logo: logoClientePnsu },
     contractor: { name: 'Consorcio Río Huatanay', logo: logoContratistaRioHuatanay, note: ['Conduto líder, 50% de participación', 'CBS, 50% de participación'] },
     amount: 'S/ 62,826,654',
@@ -137,14 +130,10 @@ export const projects: Project[] = [
       { src: galeriaRioHuatanay01, thumb: thumbRioHuatanay01, alt: 'Maquinaria pesada del Consorcio Río Huatanay en obra' },
       { src: galeriaRioHuatanay02, thumb: thumbRioHuatanay02, alt: 'Armado de acero de la losa circular del reservorio con equipo de trabajo' },
       { src: galeriaRioHuatanay03, thumb: thumbRioHuatanay03, alt: 'Vista aérea del reservorio en etapa avanzada de construcción' },
-      { src: galeriaRioHuatanay04, thumb: thumbRioHuatanay04, alt: 'Vista aérea del reservorio de agua potable junto a la ciudad de Cusco' },
-      { src: galeriaRioHuatanay05, thumb: thumbRioHuatanay05, alt: 'Trabajadores acarreando material por una escalinata de tierra en un barrio de Cusco, junto a una tubería azul' },
-      { src: galeriaRioHuatanay06, thumb: thumbRioHuatanay06, alt: 'Obrero con un equipo de rociado junto a una vereda de concreto recién vaciada en la avenida Luis Vallejo Santoni, Cusco' },
-      { src: galeriaRioHuatanay07, thumb: thumbRioHuatanay07, alt: 'Cuadrilla instalando tuberías azules en una ladera rocosa de Cusco, con topógrafos al fondo' },
-      { src: galeriaRioHuatanay08, thumb: thumbRioHuatanay08, alt: 'Cuadrilla excavando una zanja empinada entre viviendas para tender tuberías en un barrio de Cusco' },
-      { src: galeriaRioHuatanay09, thumb: thumbRioHuatanay09, alt: 'Personal de obra realizando una prueba de agua en una tubería junto a una escalinata, con un supervisor presente' },
-      { src: galeriaRioHuatanay10, thumb: thumbRioHuatanay10, alt: 'Obreros dando acabado a una vereda de concreto recién vaciada en una calle en pendiente' },
-      { src: galeriaRioHuatanay11, thumb: thumbRioHuatanay11, alt: 'Vista aérea del trazo de la línea de conducción sobre el cerro' },
+      { src: galeriaRioHuatanay04, thumb: thumbRioHuatanay04, alt: 'Cuadrilla instalando tuberías azules en una ladera rocosa de Cusco, con topógrafos al fondo' },
+      { src: galeriaRioHuatanay05, thumb: thumbRioHuatanay05, alt: 'Cuadrilla excavando una zanja empinada entre viviendas para tender tuberías en un barrio de Cusco' },
+      { src: galeriaRioHuatanay06, thumb: thumbRioHuatanay06, alt: 'Obreros dando acabado a una vereda de concreto recién vaciada en una calle en pendiente' },
+      { src: galeriaRioHuatanay07, thumb: thumbRioHuatanay07, alt: 'Vista aérea del trazo de la línea de conducción sobre el cerro' },
     ],
   },
   {
