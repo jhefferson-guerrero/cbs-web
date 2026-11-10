@@ -183,7 +183,7 @@ export const projects: Project[] = [
     title: 'Mejoramiento y ampliación de los servicios de saneamiento — EMAPA Pasco',
     location: 'Cerro de Pasco, Pasco',
     cover: galeriaPasco01,
-    coverSrcSet: `${coverPasco640} 640w, ${coverPasco960} 960w, ${galeriaPasco01} 1038w`,
+    coverSrcSet: `${coverPasco640} 640w, ${coverPasco960} 960w, ${galeriaPasco01} 1600w`,
     client: { name: 'Gobierno Regional de Pasco', logo: logoClienteGorePasco },
     contractor: {
       name: 'Consorcio Saneamiento Señor Cautivo',
