@@ -48,7 +48,7 @@
       ]
     },
     {
-      "source": "/hero-planta.webp",
+      "source": "/hero-zanja.webp",
       "headers": [
         { "key": "Cache-Control", "value": "public, max-age=3600, must-revalidate" }
       ]

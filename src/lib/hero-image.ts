@@ -1,18 +1,18 @@
 // Fuente única de verdad para las variantes responsive del fondo del hero.
 // Se mantiene sincronizado a mano con el aviso de precarga en
 // public/hero-preload.js, que no puede importar este módulo.
-export const HERO_IMAGE_SRC = '/hero-planta.webp'
+export const HERO_IMAGE_SRC = '/hero-zanja.webp'
 // La foto se recorta con object-cover para cubrir toda la pantalla: en una pantalla vertical (tablet) queda
 // mucho más ancha que ella (~1.78 veces su altura), así que calcular el tamaño solo con el ancho (100vw)
 // elegiría una variante demasiado chica y se vería borrosa. 178vh es el ancho real de la foto (relación
 // 1.78). En pantallas horizontales gana 100vw y nada cambia.
 export const HERO_IMAGE_SIZES = 'max(100vw, 178vh)'
 export const HERO_IMAGE_SRCSET =
-  '/hero-planta-640.webp 640w, /hero-planta-960.webp 960w, /hero-planta-1280.webp 1280w, /hero-planta.webp 1920w, /hero-planta-2560.webp 2560w'
+  '/hero-zanja-640.webp 640w, /hero-zanja-960.webp 960w, /hero-zanja-1280.webp 1280w, /hero-zanja.webp 1920w, /hero-zanja-2560.webp 2560w'
 
 // Celular vertical (menos de 640 px, donde el hero ancla la foto a la derecha): solo se ve la franja derecha
 // (poco más de un tercio del ancho de la foto), así que se descarga un recorte vertical de esa zona (un recorte de
-// 1147x1427) a la resolución original de la foto, en vez de la foto completa reducida y estirada. Se
+// 1235x1536) a la resolución original de la foto, en vez de la foto completa reducida y estirada. Se
 // mantiene sincronizado a mano con public/hero-preload.js. La posición equivalente al 90% de la foto
 // completa es 86% en el recorte (ver Hero.tsx).
 export const HERO_IMAGE_MOBILE_QUERY = '(max-width: 639.98px) and (orientation: portrait)'
@@ -26,12 +26,12 @@ export const HERO_IMAGE_SOURCES = [
     media: HERO_IMAGE_MOBILE_QUERY,
     type: 'image/avif',
     sizes: HERO_IMAGE_MOBILE_SIZES,
-    srcSet: '/hero-planta-movil-900.avif 900w, /hero-planta-movil.avif 1147w',
+    srcSet: '/hero-zanja-movil-900.avif 900w, /hero-zanja-movil.avif 1235w',
   },
   {
     media: HERO_IMAGE_MOBILE_QUERY,
     type: 'image/webp',
     sizes: HERO_IMAGE_MOBILE_SIZES,
-    srcSet: '/hero-planta-movil-900.webp 900w, /hero-planta-movil.webp 1147w',
+    srcSet: '/hero-zanja-movil-900.webp 900w, /hero-zanja-movil.webp 1235w',
   },
 ]

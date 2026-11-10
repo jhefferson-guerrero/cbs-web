@@ -18,15 +18,15 @@
         // gracias a type y baja el WebP de respaldo cuando se dibuja el hero.
         type: 'image/avif',
         sizes: 'max(100vw, 80vh)',
-        href: '/hero-planta-movil.avif',
-        srcset: '/hero-planta-movil-900.avif 900w, /hero-planta-movil.avif 1147w',
+        href: '/hero-zanja-movil.avif',
+        srcset: '/hero-zanja-movil-900.avif 900w, /hero-zanja-movil.avif 1235w',
       },
       {
         media: 'not all and (max-width: 639.98px) and (orientation: portrait)',
         sizes: 'max(100vw, 178vh)',
-        href: '/hero-planta.webp',
+        href: '/hero-zanja.webp',
         srcset:
-          '/hero-planta-640.webp 640w, /hero-planta-960.webp 960w, /hero-planta-1280.webp 1280w, /hero-planta.webp 1920w, /hero-planta-2560.webp 2560w',
+          '/hero-zanja-640.webp 640w, /hero-zanja-960.webp 960w, /hero-zanja-1280.webp 1280w, /hero-zanja.webp 1920w, /hero-zanja-2560.webp 2560w',
       },
     ],
     '/limp-city': [

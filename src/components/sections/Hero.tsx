@@ -82,7 +82,7 @@ export function Hero({ ready }: { ready: boolean }) {
             alt=""
             aria-hidden="true"
             width={2560}
-            height={1439}
+            height={1437}
             fetchPriority="high"
             decoding="async"
             initial={reduceMotion ? false : { scale: 1.06 }}
