@@ -33,7 +33,7 @@ export function Certificaciones() {
           <ul className="mt-12 grid grid-cols-1 gap-4 md:grid-cols-6 lg:mt-[clamp(1.5rem,5.5vh,4rem)] lg:grid-cols-5 lg:gap-[var(--cert-gap)] lg:[container-type:inline-size] [--cert-gap:clamp(0.75rem,1.4vw,1.5rem)]">
             {certifications.map((cert, i) => (
               <motion.li
-                key={cert.number}
+                key={`${cert.standard}-${cert.number}`}
                 initial={reduceMotion ? false : { opacity: 0, y: 28 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.3 }}
@@ -52,7 +52,7 @@ export function Certificaciones() {
                 <span aria-hidden="true" className="absolute inset-x-0 bottom-0 h-0.5 origin-left scale-x-0 bg-cyan-500 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-x-100" />
 
                 <div>
-                  <p className="font-mono text-base font-semibold uppercase tracking-[0.2em] text-cyan-400 lg:text-lg 2xl:text-xl">ISO</p>
+                  <p className="font-mono text-base font-semibold uppercase tracking-[0.2em] text-cyan-400 lg:text-lg 2xl:text-xl">{cert.standard}</p>
                   <p className="mt-2 font-mono text-5xl font-bold tabular-nums leading-none text-white lg:text-[clamp(1.75rem,3.2vw,4.25rem)]">
                     {cert.number}
                   </p>
