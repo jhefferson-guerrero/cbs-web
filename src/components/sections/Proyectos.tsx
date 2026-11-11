@@ -1,5 +1,5 @@
-import { useState } from 'react'
-import { AnimatePresence, motion, useReducedMotion } from 'motion/react'
+import { useEffect, useRef, useState } from 'react'
+import { AnimatePresence, motion, useInView, useReducedMotion } from 'motion/react'
 import { ArrowLeftIcon, ArrowRightIcon, MapPinIcon } from '@phosphor-icons/react'
 import { PageLink } from '@/components/ui/PageLink'
 import { useMediaQuery } from '@/lib/use-media-query'
@@ -20,6 +20,21 @@ export function Proyectos() {
   const reduceMotion = useReducedMotion()
   const isDesktop = useMediaQuery('(min-width: 1024px)')
   const [active, setActive] = useState(0)
+  // Las fotos de los proyectos que no se ven están apiladas con opacidad 0. El navegador las deja "perezosas" (lazy) y,
+  // aunque ya hayan bajado, no las decodifica (convierte a píxeles) hasta que se pintan: al pulsar la flecha la foto
+  // nueva se decodificaba en ese momento y se veía un rato el fondo azul. Cuando la sección se acerca a la pantalla se
+  // piden todas y se decodifican de antemano.
+  const slidesRef = useRef<HTMLDivElement>(null)
+  const nearScreen = useInView(slidesRef, { once: true, margin: '600px 0px 600px 0px' })
+  useEffect(() => {
+    if (!nearScreen) return
+    const images = slidesRef.current?.querySelectorAll('img') ?? []
+    images.forEach((img) => {
+      const decode = () => void img.decode().catch(() => undefined)
+      if (img.complete) decode()
+      else img.addEventListener('load', decode, { once: true })
+    })
+  }, [nearScreen])
 
   const count = projects.length
   const current = projects[active]
@@ -72,6 +87,7 @@ export function Proyectos() {
             {/* Proyecto activo. Las fotos de todos los proyectos están apiladas y solo cambia cuál se ve: así la
                 siguiente ya está descargada cuando se pulsa y no hay parpadeo. */}
             <motion.div
+              ref={slidesRef}
               drag={canSwitch && !isDesktop ? 'x' : false}
               dragConstraints={{ left: 0, right: 0 }}
               dragElastic={0.12}
@@ -90,7 +106,7 @@ export function Proyectos() {
                   alt={i === active ? project.title : ''}
                   aria-hidden={i === active ? undefined : true}
                   draggable={false}
-                  loading="lazy"
+                  loading={nearScreen ? 'eager' : 'lazy'}
                   decoding="async"
                   initial={false}
                   animate={{ opacity: i === active ? 1 : 0, scale: i === active ? 1 : 1.06 }}
