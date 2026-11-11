@@ -20,10 +20,11 @@ export function Proyectos() {
   const reduceMotion = useReducedMotion()
   const isDesktop = useMediaQuery('(min-width: 1024px)')
   const [active, setActive] = useState(0)
-  // Las fotos de los proyectos que no se ven están apiladas con opacidad 0. El navegador las deja "perezosas" (lazy) y,
-  // aunque ya hayan bajado, no las decodifica (convierte a píxeles) hasta que se pintan: al pulsar la flecha la foto
-  // nueva se decodificaba en ese momento y se veía un rato el fondo azul. Cuando la sección se acerca a la pantalla se
-  // piden todas y se decodifican de antemano.
+  // Las fotos de los proyectos que no se ven (las grandes, apiladas con opacidad 0, y las miniaturas de "Siguiente", que en
+  // escritorio están con display:none salvo la primera) no se pintan: el navegador las deja "perezosas" (lazy) y, aunque
+  // ya hayan bajado, no las decodifica (convierte a píxeles) hasta que se pintan. Al pulsar la flecha la foto nueva (o la
+  // nueva miniatura) se descargaba o decodificaba en ese momento y se veía un rato el fondo azul. Cuando la sección se
+  // acerca a la pantalla se piden todas y se decodifican de antemano.
   const slidesRef = useRef<HTMLDivElement>(null)
   const nearScreen = useInView(slidesRef, { once: true, margin: '600px 0px 600px 0px' })
   useEffect(() => {
@@ -83,11 +84,10 @@ export function Proyectos() {
           >
             {/* En escritorio la foto toma la altura disponible pero nunca pasa de 16:10 de proporción: con el título en la
                 columna de al lado queda alta, no como una franja ancha. */}
-            <div className="relative flex w-full flex-col gap-4 lg:block lg:aspect-[16/10] lg:max-h-full">
+            <div ref={slidesRef} className="relative flex w-full flex-col gap-4 lg:block lg:aspect-[16/10] lg:max-h-full">
             {/* Proyecto activo. Las fotos de todos los proyectos están apiladas y solo cambia cuál se ve: así la
                 siguiente ya está descargada cuando se pulsa y no hay parpadeo. */}
             <motion.div
-              ref={slidesRef}
               drag={canSwitch && !isDesktop ? 'x' : false}
               dragConstraints={{ left: 0, right: 0 }}
               dragElastic={0.12}
@@ -213,7 +213,7 @@ export function Proyectos() {
                         alt=""
                         aria-hidden="true"
                         draggable={false}
-                        loading="lazy"
+                        loading={nearScreen ? 'eager' : 'lazy'}
                         decoding="async"
                         className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                       />
