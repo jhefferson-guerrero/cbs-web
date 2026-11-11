@@ -32,8 +32,6 @@ import galeriaTambopata06 from '@/assets/images/proyectos/drenaje-tambopata/gale
 import thumbTambopata06 from '@/assets/images/proyectos/drenaje-tambopata/thumb-06.webp'
 import galeriaTambopata07 from '@/assets/images/proyectos/drenaje-tambopata/galeria-07.webp'
 import thumbTambopata07 from '@/assets/images/proyectos/drenaje-tambopata/thumb-07.webp'
-import galeriaTambopata08 from '@/assets/images/proyectos/drenaje-tambopata/galeria-08.webp'
-import thumbTambopata08 from '@/assets/images/proyectos/drenaje-tambopata/thumb-08.webp'
 import galeriaQuerpon01 from '@/assets/images/proyectos/puente-querpon/galeria-01.webp'
 import thumbQuerpon01 from '@/assets/images/proyectos/puente-querpon/thumb-01.webp'
 import galeriaQuerpon02 from '@/assets/images/proyectos/puente-querpon/galeria-02.webp'
@@ -149,7 +147,6 @@ export const projects: Project[] = [
       { src: galeriaTambopata05, thumb: thumbTambopata05, alt: 'Vista aérea de la cárcava de la Costanera, con viviendas al borde del talud' },
       { src: galeriaTambopata06, thumb: thumbTambopata06, alt: 'Esquema conceptual de la cárcava Costanera Norte: canal escalonado, pozo de disipación, contención de taludes y control de desembocadura' },
       { src: galeriaTambopata07, thumb: thumbTambopata07, alt: 'Vista aérea del talud boscoso sobre el río, con la ciudad al fondo' },
-      { src: galeriaTambopata08, thumb: thumbTambopata08, alt: 'Vista aérea del puerto sobre el río, con embarcaciones amarradas y viviendas en la orilla' },
     ],
   },
   {
