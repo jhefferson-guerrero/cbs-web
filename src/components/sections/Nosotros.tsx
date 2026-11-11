@@ -181,12 +181,12 @@ export function Nosotros() {
           <motion.span
             aria-hidden="true"
             variants={cornerVariants(0.2)}
-            className="absolute right-9 top-9 h-7 w-7 border-r-2 border-t-2 border-white/70"
+            className="absolute right-5 top-5 h-7 w-7 border-r-2 border-t-2 border-white/70"
           />
           <motion.span
             aria-hidden="true"
             variants={cornerVariants(0.3)}
-            className="absolute bottom-9 left-9 h-7 w-7 border-b-2 border-l-2 border-white/70"
+            className="absolute bottom-5 left-5 h-7 w-7 border-b-2 border-l-2 border-white/70"
           />
 
           {/* Cortina navy que tapa la foto y se achica hacia la izquierda, revelándola
