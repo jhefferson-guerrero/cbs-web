@@ -34,8 +34,6 @@ import galeriaTambopata07 from '@/assets/images/proyectos/drenaje-tambopata/gale
 import thumbTambopata07 from '@/assets/images/proyectos/drenaje-tambopata/thumb-07.webp'
 import galeriaTambopata08 from '@/assets/images/proyectos/drenaje-tambopata/galeria-08.webp'
 import thumbTambopata08 from '@/assets/images/proyectos/drenaje-tambopata/thumb-08.webp'
-import galeriaTambopata09 from '@/assets/images/proyectos/drenaje-tambopata/galeria-09.webp'
-import thumbTambopata09 from '@/assets/images/proyectos/drenaje-tambopata/thumb-09.webp'
 import galeriaQuerpon01 from '@/assets/images/proyectos/puente-querpon/galeria-01.webp'
 import thumbQuerpon01 from '@/assets/images/proyectos/puente-querpon/thumb-01.webp'
 import galeriaQuerpon02 from '@/assets/images/proyectos/puente-querpon/galeria-02.webp'
@@ -145,14 +143,13 @@ export const projects: Project[] = [
     funding: { name: 'Banco Interamericano de Desarrollo', logo: logoFinanciamientoBid },
     gallery: [
       { src: galeriaTambopata01, thumb: thumbTambopata01, alt: 'Vista aérea de Puerto Maldonado en la confluencia de los ríos Madre de Dios y Tambopata' },
-      { src: galeriaTambopata02, thumb: thumbTambopata02, alt: 'Vista aérea de la plaza principal de Puerto Maldonado' },
-      { src: galeriaTambopata03, thumb: thumbTambopata03, alt: 'Objetivos físicos del sistema de drenaje pluvial urbano' },
+      { src: galeriaTambopata02, thumb: thumbTambopata02, alt: 'Objetivos físicos del sistema de drenaje pluvial urbano' },
+      { src: galeriaTambopata03, thumb: thumbTambopata03, alt: 'Vista aérea de la plaza principal de Puerto Maldonado' },
       { src: galeriaTambopata04, thumb: thumbTambopata04, alt: 'Estudio de diseño: mapa de soluciones conceptuales del sistema de drenaje pluvial' },
       { src: galeriaTambopata05, thumb: thumbTambopata05, alt: 'Esquema conceptual de la cárcava Costanera Norte: canal escalonado, pozo de disipación, contención de taludes y control de desembocadura' },
       { src: galeriaTambopata06, thumb: thumbTambopata06, alt: 'Vista aérea de la cárcava de la Costanera, con viviendas al borde del talud' },
-      { src: galeriaTambopata07, thumb: thumbTambopata07, alt: 'Vista aérea de la cárcava de la Costanera desde otro ángulo, con viviendas junto al borde' },
-      { src: galeriaTambopata08, thumb: thumbTambopata08, alt: 'Vista aérea del talud boscoso sobre el río, con la ciudad al fondo' },
-      { src: galeriaTambopata09, thumb: thumbTambopata09, alt: 'Vista aérea del puerto sobre el río, con embarcaciones amarradas y viviendas en la orilla' },
+      { src: galeriaTambopata07, thumb: thumbTambopata07, alt: 'Vista aérea del talud boscoso sobre el río, con la ciudad al fondo' },
+      { src: galeriaTambopata08, thumb: thumbTambopata08, alt: 'Vista aérea del puerto sobre el río, con embarcaciones amarradas y viviendas en la orilla' },
     ],
   },
   {
