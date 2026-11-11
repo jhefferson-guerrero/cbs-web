@@ -176,7 +176,7 @@ export function Nosotros() {
             />
           </picture>
           </Parallax>
-          <div className="absolute inset-0 bg-gradient-to-br from-cyan-700/70 via-navy-900/30 to-navy-950/70" />
+          <div className="absolute inset-0 bg-gradient-to-br from-cyan-700/50 via-navy-900/20 to-navy-950/50" />
 
           <motion.span
             aria-hidden="true"
