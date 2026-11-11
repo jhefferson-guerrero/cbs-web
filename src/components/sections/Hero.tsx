@@ -140,7 +140,7 @@ export function Hero({ ready }: { ready: boolean }) {
             >
               Desde nuestra fundación en Brasil, en 2009, y con la experiencia adquirida y el firme
               propósito de expansión, iniciamos con éxito nuestra incursión en el mercado peruano en
-              2023, ejecutando los siguientes proyectos: abastecimiento de agua,
+              2023, ejecutando proyectos de abastecimiento de agua,
               represas, alcantarillado sanitario, drenaje urbano, defensa ribereña e infraestructura
               urbana.
             </motion.p>
