@@ -114,13 +114,13 @@ export function Proyectos() {
                     transition={{ duration: reduceMotion ? 0 : 0.4, ease: EASE }}
                   >
                     {/* La categoría no se muestra aquí: el propio título ya dice si es agua potable o drenaje. */}
-                    {/* El título largo ("Obra — Lugar") se parte en dos niveles: la obra grande y el lugar debajo, más chico. */}
+                    {/* El título largo ("Obra — Lugar") se parte en dos niveles: la obra grande y el lugar debajo, más chico (en celular se oculta el segundo para no recargar el texto). */}
                     <h3 className="text-2xl font-bold leading-[1.15] text-white sm:text-3xl lg:text-[clamp(1.75rem,5vh,3.25rem)]">
                       {mainTitle}
                       {subTitle && (
                         <>
                           <span className="sr-only"> — </span>
-                          <span className="mt-2 block text-base font-medium leading-snug text-white/80 sm:text-lg lg:mt-[clamp(0.5rem,1.6vh,1rem)] lg:text-[clamp(1.05rem,2.5vh,1.6rem)]">
+                          <span className="mt-2 hidden text-base font-medium leading-snug text-white/80 sm:block sm:text-lg lg:mt-[clamp(0.5rem,1.6vh,1rem)] lg:text-[clamp(1.05rem,2.5vh,1.6rem)]">
                             {subTitle}
                           </span>
                         </>
