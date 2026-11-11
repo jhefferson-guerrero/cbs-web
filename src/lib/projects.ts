@@ -152,7 +152,7 @@ export const projects: Project[] = [
   {
     slug: 'puente-querpon',
     category: 'Infraestructura vial',
-    title: 'Construcción del puente Querpón y obras de protección — Tramo 5 Piura – Olmos',
+    title: 'Construcción del puente Querpón y obras de protección — Tramo N° 5: Piura – Olmos',
     location: 'Olmos, Lambayeque',
     cover: galeriaQuerpon03,
     coverSrcSet: `${coverQuerpon640} 640w, ${coverQuerpon960} 960w, ${coverQuerpon1280} 1280w, ${galeriaQuerpon03} 1600w`,
