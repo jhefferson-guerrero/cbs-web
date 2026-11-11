@@ -187,7 +187,7 @@ export const projects: Project[] = [
       { src: galeriaPasco02, thumb: thumbPasco02, alt: 'Personal de obra junto a una zanja abierta y una cámara de concreto en una calle de Cerro de Pasco' },
       { src: galeriaPasco03, thumb: thumbPasco03, alt: 'Personal del consorcio haciendo una prueba de estanqueidad en una cámara de concreto junto a una tubería' },
       { src: galeriaPasco04, thumb: thumbPasco04, alt: 'Personal del consorcio midiendo el nivel de agua en una cámara de concreto durante la prueba de estanqueidad' },
-      { src: galeriaPasco05, thumb: thumbPasco05, alt: 'Personal del consorcio junto a una cámara de concreto y una tubería naranja en una calle de Cerro de Pasco' },
+      { src: galeriaPasco05, thumb: thumbPasco05, alt: 'Tres trabajadores del consorcio junto a una cámara de concreto y una tubería naranja durante una medición en obra, en una calle de Cerro de Pasco' },
     ],
   },
 ]
