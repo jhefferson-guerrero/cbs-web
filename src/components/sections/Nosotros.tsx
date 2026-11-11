@@ -154,25 +154,25 @@ export function Nosotros() {
           viewport={{ once: true, amount: 0.15 }}
           className="relative h-full min-h-[360px] overflow-hidden lg:min-h-0"
         >
-          {/* La mesa de planos y el grupo están al lado derecho de la foto (del 50% al 91% del ancho): se ancla
-              a la derecha para que se vea completa. travel más corto = la capa se amplía menos y no recorta. */}
+          {/* La foto (estructura circular en obra, Río Huatanay) se centra; la capa se amplía poco con travel corto
+              para no recortar de más. */}
           <Parallax travel={10}>
-          {/* Mismos píxeles en dos formatos: AVIF (392 KB) para los navegadores que lo entienden y el WebP (665 KB)
+          {/* Mismos píxeles en dos formatos: AVIF (350 KB) para los navegadores que lo entienden y el WebP (479 KB)
               de respaldo para los demás. `contents` hace que el <picture> no afecte al diseño. */}
           <picture className="contents">
             <source srcSet={nosotrosPhotoAvif} type="image/avif" />
             <motion.img
               src={nosotrosPhoto}
-              alt="Equipo de CBS con cascos y chalecos revisando planos sobre una mesa en una obra de infraestructura"
-              width={2744}
-              height={1536}
+              alt="Personal de CBS trabajando sobre el armado de acero de una estructura circular de concreto en una obra de saneamiento"
+              width={1600}
+              height={1267}
               loading="lazy"
               decoding="async"
               initial={reduceMotion ? false : { scale: 1.15 }}
               whileInView={{ scale: 1 }}
               viewport={{ once: true, amount: 0.15 }}
               transition={{ duration: 1.1, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
-              className="h-full w-full object-cover object-[88%_65%]"
+              className="h-full w-full object-cover object-center"
             />
           </picture>
           </Parallax>
