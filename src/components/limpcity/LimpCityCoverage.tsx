@@ -67,7 +67,7 @@ export function LimpCityCoverage() {
         </p>
         <div className="contents text-left lg:block">
           <h2 className="text-[1.625rem] font-semibold leading-tight tracking-tight text-navy-900 min-[400px]:text-3xl md:text-4xl lg:text-[clamp(2.25rem,5.4vh,3.75rem)]">
-            Área de <span className="text-moss-700">actuación</span>
+            Áreas de <span className="text-moss-700">actuación</span>
           </h2>
           <p className="col-span-2 text-[15.5px] leading-relaxed text-slate-700 lg:mt-[clamp(0.25rem,1.2vh,0.75rem)] lg:text-[clamp(15.5px,1.9vh,19px)]">
             Prestamos servicio de limpieza urbana en siete ciudades del nordeste de Brasil.
