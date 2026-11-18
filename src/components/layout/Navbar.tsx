@@ -229,7 +229,7 @@ export function Navbar({ ready }: { ready: boolean }) {
               width={800}
               height={324}
               className={cn(
-                '[grid-area:1/1] h-9 w-auto',
+                '[grid-area:1/1] h-8 w-auto',
                 isSolid ? 'opacity-100' : 'opacity-0',
               )}
             />
@@ -239,7 +239,7 @@ export function Navbar({ ready }: { ready: boolean }) {
               width={800}
               height={324}
               className={cn(
-                '[grid-area:1/1] h-9 w-auto brightness-0 invert',
+                '[grid-area:1/1] h-8 w-auto brightness-0 invert',
                 isSolid ? 'opacity-0' : 'opacity-100',
               )}
             />
@@ -253,7 +253,7 @@ export function Navbar({ ready }: { ready: boolean }) {
               height={222}
               loading="lazy"
               className={cn(
-                '[grid-area:1/1] h-9 w-auto xl:h-10 2xl:h-12',
+                '[grid-area:1/1] h-8 w-auto xl:h-9 2xl:h-11',
                 isSolid ? 'opacity-100' : 'opacity-0',
               )}
             />
@@ -264,7 +264,7 @@ export function Navbar({ ready }: { ready: boolean }) {
               height={222}
               loading="lazy"
               className={cn(
-                '[grid-area:1/1] h-9 w-auto brightness-0 invert xl:h-10 2xl:h-12',
+                '[grid-area:1/1] h-8 w-auto brightness-0 invert xl:h-9 2xl:h-11',
                 isSolid ? 'opacity-0' : 'opacity-100',
               )}
             />
