@@ -9,7 +9,7 @@ export const SITE_LOCALE = 'es_PE'
 export const FOUNDING_YEAR = 2009
 
 /** Logo para los datos estructurados y las tarjetas (archivo en public/). */
-export const SITE_LOGO = { path: '/logo-cbs.png', width: 1080, height: 211 }
+export const SITE_LOGO = { path: '/logo-cbs.png', width: 1200, height: 222 }
 
 /** Imagen de las tarjetas al compartir (1200x630, en public/og/). */
 export const OG_IMAGE_SIZE = { width: 1200, height: 630 }

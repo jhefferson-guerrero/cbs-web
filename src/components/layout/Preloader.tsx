@@ -163,8 +163,8 @@ export function Preloader({ onReady }: { onReady: () => void }) {
               src={logoMobileCbs}
               alt=""
               aria-hidden="true"
-              width={652}
-              height={296}
+              width={800}
+              height={324}
               className="h-20 w-auto sm:h-24"
             />
           </motion.div>

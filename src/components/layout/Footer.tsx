@@ -24,8 +24,8 @@ export function Footer() {
               <img
                 src={logoCbs}
                 alt="CBS - Construtora Baiana de Saneamento"
-                width={1080}
-                height={211}
+                width={1200}
+                height={222}
                 loading="lazy"
                 className="h-11 w-auto max-w-none brightness-0 invert 2xl:h-14"
               />
