@@ -157,7 +157,7 @@ export function Nosotros() {
           {/* La foto (cuadrilla en la obra de un canal de drenaje) se ancla a la derecha, donde está el grupo; la capa se amplía poco con travel corto
               para no recortar de más. */}
           <Parallax travel={10}>
-          {/* Mismos píxeles en dos formatos: AVIF (348 KB) para los navegadores que lo entienden y el WebP (646 KB)
+          {/* Mismos píxeles en dos formatos: AVIF (293 KB) para los navegadores que lo entienden y el WebP (525 KB)
               de respaldo para los demás. `contents` hace que el <picture> no afecte al diseño. */}
           <picture className="contents">
             <source srcSet={nosotrosPhotoAvif} type="image/avif" />
