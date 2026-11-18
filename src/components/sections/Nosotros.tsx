@@ -1,6 +1,5 @@
 import { useRef } from 'react'
 import { motion, useInView, useReducedMotion } from 'motion/react'
-import { Parallax } from '@/components/ui/Parallax'
 import { cn } from '@/lib/utils'
 import nosotrosPhoto from '@/assets/images/nosotros.webp'
 import nosotrosPhotoAvif from '@/assets/images/nosotros.avif'
@@ -154,9 +153,9 @@ export function Nosotros() {
           viewport={{ once: true, amount: 0.15 }}
           className="relative h-full min-h-[360px] overflow-hidden lg:min-h-0"
         >
-          {/* La foto (cuadrilla en la obra de un canal de drenaje) se ancla a la derecha, donde está el grupo; la capa se amplía poco con travel corto
-              para no recortar de más. */}
-          <Parallax travel={10}>
+          {/* La foto (cuadrilla en la obra de un canal de drenaje) se ancla a la derecha, donde está el grupo. Sin parallax:
+              la foto no se mueve al hacer scroll. */}
+          <div className="absolute inset-0 overflow-hidden">
           {/* Mismos píxeles en dos formatos: AVIF (293 KB) para los navegadores que lo entienden y el WebP (525 KB)
               de respaldo para los demás. `contents` hace que el <picture> no afecte al diseño. */}
           <picture className="contents">
@@ -175,7 +174,7 @@ export function Nosotros() {
               className="h-full w-full object-cover object-[65%_50%]"
             />
           </picture>
-          </Parallax>
+          </div>
           <div className="absolute inset-0 bg-gradient-to-br from-cyan-700/50 via-navy-900/20 to-navy-950/50" />
 
           <motion.span
