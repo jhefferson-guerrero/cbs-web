@@ -221,7 +221,7 @@ export function Navbar({ ready }: { ready: boolean }) {
       )}
     >
       <nav id="site-navbar" className="mx-auto flex h-14 max-w-[1400px] items-center justify-between px-6 lg:h-16 lg:px-10 xl:max-w-[1600px] xl:px-12 2xl:h-20 2xl:max-w-[1850px] 2xl:px-16">
-        <a href={sectionHref(pathname, '#top')} className="relative block shrink-0" aria-label="CBS - Inicio">
+        <a href={sectionHref(pathname, '#top')} className="relative block shrink-0 origin-left rounded-md outline-none transition-transform duration-300 hover:scale-105 focus-visible:ring-2 focus-visible:ring-cyan-400" aria-label="CBS - Inicio">
           <span className="grid lg:hidden">
             <img
               src={logoMobileCbs}
