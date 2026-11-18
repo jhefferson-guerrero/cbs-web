@@ -154,25 +154,25 @@ export function Nosotros() {
           viewport={{ once: true, amount: 0.15 }}
           className="relative h-full min-h-[360px] overflow-hidden lg:min-h-0"
         >
-          {/* La foto (estructura circular en obra, Río Huatanay) se centra; la capa se amplía poco con travel corto
+          {/* La foto (cuadrilla en la obra de un canal de drenaje) se ancla a la derecha, donde está el grupo; la capa se amplía poco con travel corto
               para no recortar de más. */}
           <Parallax travel={10}>
-          {/* Mismos píxeles en dos formatos: AVIF (350 KB) para los navegadores que lo entienden y el WebP (479 KB)
+          {/* Mismos píxeles en dos formatos: AVIF (348 KB) para los navegadores que lo entienden y el WebP (646 KB)
               de respaldo para los demás. `contents` hace que el <picture> no afecte al diseño. */}
           <picture className="contents">
             <source srcSet={nosotrosPhotoAvif} type="image/avif" />
             <motion.img
               src={nosotrosPhoto}
-              alt="Personal de CBS trabajando sobre el armado de acero de una estructura circular de concreto en una obra de saneamiento"
-              width={1600}
-              height={1267}
+              alt="Cuadrilla de obreros con uniforme naranja construyendo un canal de drenaje urbano de concreto, con una bomba de concreto al fondo"
+              width={2400}
+              height={1792}
               loading="lazy"
               decoding="async"
               initial={reduceMotion ? false : { scale: 1.15 }}
               whileInView={{ scale: 1 }}
               viewport={{ once: true, amount: 0.15 }}
               transition={{ duration: 1.1, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
-              className="h-full w-full object-cover object-center"
+              className="h-full w-full object-cover object-[65%_50%]"
             />
           </picture>
           </Parallax>
