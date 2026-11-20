@@ -146,7 +146,7 @@ export const projects: Project[] = [
       { src: galeriaTambopata04, thumb: thumbTambopata04, alt: 'Estudio de diseño: mapa de soluciones conceptuales del sistema de drenaje pluvial' },
       { src: galeriaTambopata05, thumb: thumbTambopata05, alt: 'Vista aérea de la cárcava de la Costanera, con viviendas al borde del talud' },
       { src: galeriaTambopata06, thumb: thumbTambopata06, alt: 'Esquema conceptual de la cárcava Costanera Norte: canal escalonado, pozo de disipación, contención de taludes y control de desembocadura' },
-      { src: galeriaTambopata07, thumb: thumbTambopata07, alt: 'Vista aérea del talud boscoso sobre el río, con la ciudad al fondo' },
+      { src: galeriaTambopata07, thumb: thumbTambopata07, alt: 'Vista aérea de un gran deslizamiento de tierra junto al río, con viviendas y vegetación alrededor' },
     ],
   },
   {
