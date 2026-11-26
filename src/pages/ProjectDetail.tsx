@@ -46,31 +46,26 @@ export function ProjectDetail({ ready = true }: { ready?: boolean }) {
               decoding="async"
               className="absolute inset-0 h-full w-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-105 group-focus-visible:scale-105 motion-reduce:transition-none"
             />
-            <div aria-hidden="true" className="absolute inset-0 bg-navy-950/60" />
-            <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-r from-navy-950/90 via-navy-950/55 to-navy-950/10" />
+            {/* Velo solo del lado del texto: a la derecha la foto se ve casi sin oscurecer. */}
+            <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-r from-navy-950/90 via-navy-950/60 via-40% to-navy-950/5" />
 
             <motion.div
               initial={reduceMotion ? false : { opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.4 }}
               transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-              className="relative mx-auto flex min-h-[18rem] w-full max-w-[1400px] flex-col justify-center gap-6 px-6 py-14 sm:min-h-[20rem] lg:min-h-[22rem] lg:flex-row lg:items-center lg:justify-between lg:gap-10 lg:px-10 xl:px-16 2xl:min-h-[26rem] 2xl:max-w-[1700px] 2xl:px-14"
+              className="relative mx-auto flex w-full max-w-[1400px] flex-col justify-center gap-5 px-6 py-10 lg:min-h-[13.5rem] lg:flex-row lg:items-center lg:justify-between lg:gap-10 lg:px-10 xl:px-16 2xl:min-h-[15rem] 2xl:max-w-[1700px] 2xl:px-14"
             >
               <div className="max-w-2xl">
                 <p className="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-cyan-400 2xl:text-sm">
                   Siguiente proyecto
                 </p>
-                <p className="mt-4 text-2xl font-bold leading-tight text-white sm:text-3xl lg:text-4xl 2xl:text-5xl">
+                <p className="mt-3 text-xl font-bold leading-tight text-white sm:text-2xl lg:text-[1.75rem] 2xl:text-3xl">
                   {nextProject.title.split(' — ')[0]}
                 </p>
-                {nextProject.title.includes(' — ') && (
-                  <p className="mt-2 text-base font-medium text-white/80 sm:text-lg 2xl:text-xl">
-                    {nextProject.title.split(' — ').slice(1).join(' — ')}
-                  </p>
-                )}
-                <p className="mt-4 flex items-center gap-1.5 text-sm text-navy-100 2xl:text-base">
+                <p className="mt-2 flex items-center gap-1.5 text-sm text-navy-100 2xl:text-base">
                   <MapPinIcon size={16} weight="regular" className="shrink-0 text-cyan-400" />
-                  {nextProject.location}
+                  {[...nextProject.title.split(' — ').slice(1), nextProject.location].join(' · ')}
                 </p>
               </div>
 
