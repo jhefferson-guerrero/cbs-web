@@ -218,7 +218,7 @@ export function ProjectGallery({ images }: { images: GalleryImage[] }) {
 
   return (
     <section className="border-t border-navy-100 bg-slate-50">
-      <div className="mx-auto w-full max-w-[1400px] px-6 py-14 lg:px-10 lg:py-16 xl:px-16 2xl:max-w-[1700px] 2xl:px-14 2xl:py-20">
+      <div className="mx-auto w-full max-w-[1400px] px-6 py-14 pb-24 lg:px-10 lg:py-16 lg:pb-32 xl:px-16 2xl:max-w-[1700px] 2xl:px-14 2xl:py-20 2xl:pb-40">
         <div className="mx-auto max-w-5xl 2xl:max-w-[1450px]">
           <motion.p
             initial={reduceMotion ? false : { opacity: 0, y: 20 }}
