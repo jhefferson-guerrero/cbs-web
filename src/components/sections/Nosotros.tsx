@@ -175,8 +175,6 @@ export function Nosotros() {
             />
           </picture>
           </div>
-          <div className="absolute inset-0 bg-gradient-to-br from-cyan-700/50 via-navy-900/20 to-navy-950/50" />
-
           <motion.span
             aria-hidden="true"
             variants={cornerVariants(0.2)}
