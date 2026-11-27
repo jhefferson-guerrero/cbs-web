@@ -120,7 +120,7 @@ interface ViewProps {
 
 // Escritorio: franjas verticales, la activa abierta. El ancho de cada columna se anima con grid-template-columns.
 // Segundos entre la entrada de una franja y la siguiente.
-const STRIP_STAGGER = 0.14
+const STRIP_STAGGER = 0.2
 
 function ProjectStrips({
   active,
@@ -129,10 +129,15 @@ function ProjectStrips({
   reduceMotion,
 }: ViewProps & { onActivate: (index: number) => void; reduceMotion: boolean | null }) {
   const columns = projects.map((_, i) => (i === active ? '5fr' : '1fr')).join(' ')
+  // La entrada arranca cuando las franjas ya se ven casi completas (no apenas asoman por el borde), para que no se
+  // pierda mientras la página todavía se desplaza hacia la sección.
+  const listRef = useRef<HTMLUListElement>(null)
+  const shown = useInView(listRef, { once: true, amount: 0.6 })
 
   return (
     <>
       <ul
+        ref={listRef}
         style={{ '--cols': columns } as CSSProperties}
         className="absolute inset-0 grid gap-3 [grid-template-columns:var(--cols)] [grid-template-rows:minmax(0,1fr)] transition-[grid-template-columns] duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] motion-reduce:transition-none"
       >
@@ -144,10 +149,9 @@ function ProjectStrips({
             <motion.li
               key={project.slug}
               onMouseEnter={() => onActivate(i)}
-              initial={reduceMotion ? false : { opacity: 0, y: 32 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.2 }}
-              transition={{ duration: 0.8, delay: 0.1 + i * STRIP_STAGGER, ease: EASE }}
+              initial={reduceMotion ? false : { opacity: 0, y: 56 }}
+              animate={shown ? { opacity: 1, y: 0 } : undefined}
+              transition={{ duration: 0.9, delay: 0.1 + i * STRIP_STAGGER, ease: EASE }}
               className="relative min-h-0 min-w-0 overflow-hidden bg-navy-950 shadow-card"
             >
               {/* Botón que cubre la franja cerrada: abre la franja con el foco de teclado o un toque. Va primero en el
@@ -262,8 +266,7 @@ function ProjectStrips({
           key={corner}
           aria-hidden="true"
           initial={reduceMotion ? false : { opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true, amount: 0.2 }}
+          animate={shown ? { opacity: 1 } : undefined}
           transition={{ duration: 0.5, delay: 0.1 + projects.length * STRIP_STAGGER + 0.3, ease: EASE }}
           className={cn('absolute z-30 h-6 w-6 border-white/70', corner)}
         />
