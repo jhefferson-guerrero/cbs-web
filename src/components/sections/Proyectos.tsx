@@ -3,14 +3,15 @@ import { AnimatePresence, motion, useInView, useReducedMotion } from 'motion/rea
 import { ArrowLeftIcon, ArrowRightIcon, MapPinIcon } from '@phosphor-icons/react'
 import { PageLink } from '@/components/ui/PageLink'
 import { useMediaQuery } from '@/lib/use-media-query'
+import { COVER_FEATURE_SIZES, COVER_STRIP_SIZES, COVER_THUMB_SIZES, DESKTOP_QUERY } from '@/lib/project-images'
 import { projects } from '@/lib/projects'
 import { cn } from '@/lib/utils'
 
-// Tamaños reales de las fotos para que el navegador elija la versión más chica que alcance. Celular: la foto grande
-// ocupa todo el ancho y las miniaturas un tercio. Escritorio: la franja abierta ocupa poco más de la mitad del ancho.
-const FEATURE_SIZES = '100vw'
-const THUMB_SIZES = '34vw'
-const STRIP_SIZES = '55vw'
+// Los tamaños de las portadas (sizes) viven en lib/project-images.ts: la precarga de la Home usa los mismos, así el
+// navegador descarga por adelantado la misma variante que luego se pinta.
+const FEATURE_SIZES = COVER_FEATURE_SIZES
+const THUMB_SIZES = COVER_THUMB_SIZES
+const STRIP_SIZES = COVER_STRIP_SIZES
 
 const EASE = [0.16, 1, 0.3, 1] as const
 const pad = (n: number) => String(n).padStart(2, '0')
@@ -21,7 +22,7 @@ const pad = (n: number) => String(n).padStart(2, '0')
 // de los demás debajo, flechas y deslizamiento. Sin reproducción automática.
 export function Proyectos() {
   const reduceMotion = useReducedMotion()
-  const isDesktop = useMediaQuery('(min-width: 1024px)')
+  const isDesktop = useMediaQuery(DESKTOP_QUERY)
   const [active, setActive] = useState(0)
   // Las fotos que no se ven (en celular, las grandes apiladas con opacidad 0) no se pintan: el navegador las deja
   // "perezosas" (lazy) y, aunque ya hayan bajado, no las decodifica (convierte a píxeles) hasta que se pintan. Al pulsar

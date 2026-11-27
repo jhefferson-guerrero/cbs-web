@@ -136,7 +136,7 @@ export const projects: Project[] = [
     title: 'Sistema de drenaje pluvial urbano — Sector Tambopata',
     location: 'Distrito de Tambopata, Madre de Dios',
     cover: galeriaTambopata01,
-    coverSrcSet: `${coverTambopata640} 640w, ${coverTambopata960} 960w, ${galeriaTambopata01} 1365w`,
+    coverSrcSet: `${coverTambopata640} 640w, ${coverTambopata960} 960w, ${galeriaTambopata01} 2400w`,
     client: { name: 'Programa Nacional de Saneamiento Urbano', logo: logoClientePnsu },
     contractor: { name: 'Consorcio Tambopata', logo: logoContratistaTambopata, note: ['CBS Líder, 50% de participación', 'Conduto, 50% de participación'] },
     amount: 'S/ 323,553,522',

@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import { prefetchProjectsWhenNear } from '@/lib/prefetch-projects'
+import { prefetchProjectCovers } from '@/lib/project-images'
 import { Hero } from '@/components/sections/Hero'
 import { Nosotros } from '@/components/sections/Nosotros'
 import { Certificaciones } from '@/components/sections/Certificaciones'
@@ -12,6 +13,10 @@ import { Contacto } from '@/components/sections/Contacto'
 export function Home({ ready }: { ready: boolean }) {
   // Al llegar a Experiencia (o a Proyectos) se precargan las páginas de proyecto y sus portadas.
   useEffect(() => prefetchProjectsWhenNear(['experiencia', 'proyectos']), [])
+
+  // Las portadas de la sección Proyectos se descargan y decodifican apenas termina el preloader y el navegador está
+  // ocioso, sin esperar a acercarse a la sección: así, al llegar (bajando rápido o saltando desde el menú), ya están.
+  useEffect(() => (ready ? prefetchProjectCovers() : undefined), [ready])
 
   return (
     <main>
