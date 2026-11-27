@@ -58,6 +58,7 @@ import galeriaPasco05 from '@/assets/images/proyectos/cerro-de-pasco/galeria-05.
 import thumbPasco05 from '@/assets/images/proyectos/cerro-de-pasco/thumb-05.webp'
 import coverPasco640 from '@/assets/images/proyectos/cerro-de-pasco/cover-640.webp'
 import coverPasco960 from '@/assets/images/proyectos/cerro-de-pasco/cover-960.webp'
+import coverPasco1600 from '@/assets/images/proyectos/cerro-de-pasco/cover-1600.webp'
 import logoClienteGorePasco from '@/assets/images/proyectos/logos/cliente-gobierno-regional-pasco.webp'
 import logoContratistaSenorCautivo from '@/assets/images/proyectos/logos/contratista-saneamiento-senor-cautivo.webp'
 import logoClientePnsu from '@/assets/images/proyectos/logos/cliente-pnsu.webp'
@@ -175,8 +176,8 @@ export const projects: Project[] = [
     category: 'Agua potable y saneamiento',
     title: 'Mejoramiento y ampliación de los servicios de saneamiento — EMAPA Pasco',
     location: 'Cerro de Pasco, Pasco',
-    cover: galeriaPasco01,
-    coverSrcSet: `${coverPasco640} 640w, ${coverPasco960} 960w, ${galeriaPasco01} 1600w`,
+    cover: coverPasco1600,
+    coverSrcSet: `${coverPasco640} 640w, ${coverPasco960} 960w, ${coverPasco1600} 1600w`,
     client: { name: 'Gobierno Regional de Pasco', logo: logoClienteGorePasco },
     contractor: {
       name: 'Consorcio Saneamiento Señor Cautivo',
