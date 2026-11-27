@@ -153,8 +153,8 @@ export function Nosotros() {
           viewport={{ once: true, amount: 0.15 }}
           className="relative h-full min-h-[360px] overflow-hidden lg:min-h-0"
         >
-          {/* La foto (cuadrilla en la obra de un canal de drenaje) se ancla a la derecha, donde está el grupo. Sin parallax:
-              la foto no se mueve al hacer scroll. */}
+          {/* La foto (grúa colocando una losa sobre un canal de drenaje) va centrada: la losa y la cuadrilla ocupan casi todo
+              el ancho. Sin parallax: la foto no se mueve al hacer scroll. */}
           <div className="absolute inset-0 overflow-hidden">
           {/* Mismos píxeles en dos formatos: AVIF (293 KB) para los navegadores que lo entienden y el WebP (525 KB)
               de respaldo para los demás. `contents` hace que el <picture> no afecte al diseño. */}
@@ -162,7 +162,7 @@ export function Nosotros() {
             <source srcSet={nosotrosPhotoAvif} type="image/avif" />
             <motion.img
               src={nosotrosPhoto}
-              alt="Cuadrilla de obreros con uniforme naranja construyendo un canal de drenaje urbano de concreto, con una bomba de concreto al fondo"
+              alt="Cuadrilla de obreros con uniforme naranja colocando con una grúa una losa prefabricada de concreto sobre un canal de drenaje urbano"
               width={2400}
               height={1792}
               loading="lazy"
@@ -171,7 +171,7 @@ export function Nosotros() {
               whileInView={{ scale: 1 }}
               viewport={{ once: true, amount: 0.15 }}
               transition={{ duration: 1.1, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
-              className="h-full w-full object-cover object-[65%_50%]"
+              className="h-full w-full object-cover object-[55%_50%]"
             />
           </picture>
           </div>
