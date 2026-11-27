@@ -67,25 +67,31 @@ export function Proyectos() {
             </p>
           </motion.div>
 
-          <motion.div
+          <div
             role="group"
             aria-roledescription={isDesktop ? undefined : 'carrusel'}
             aria-label="Proyectos"
-            initial={reduceMotion ? false : { opacity: 0, y: 28 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.8, delay: 0.1, ease: EASE }}
             className="mt-12 lg:mt-0 lg:flex lg:h-full lg:min-w-0 lg:flex-1 lg:items-center"
           >
             {/* En escritorio el bloque toma la altura disponible pero nunca pasa de 16:10 de proporción. */}
             <div ref={slidesRef} className="relative flex w-full flex-col gap-4 lg:block lg:aspect-[16/10] lg:max-h-full">
               {isDesktop ? (
-                <ProjectStrips active={active} onActivate={setActive} nearScreen={nearScreen} />
+                // Escritorio: cada franja anima su propia entrada, una tras otra (ver ProjectStrips).
+                <ProjectStrips active={active} onActivate={setActive} nearScreen={nearScreen} reduceMotion={reduceMotion} />
               ) : (
-                <ProjectCarousel active={active} onChange={setActive} nearScreen={nearScreen} />
+                // Celular y tableta: el carrusel entra completo, de una vez.
+                <motion.div
+                  initial={reduceMotion ? false : { opacity: 0, y: 28 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.2 }}
+                  transition={{ duration: 0.8, delay: 0.1, ease: EASE }}
+                  className="flex flex-col gap-4"
+                >
+                  <ProjectCarousel active={active} onChange={setActive} nearScreen={nearScreen} />
+                </motion.div>
               )}
             </div>
-          </motion.div>
+          </div>
 
           {/* Enlaces a todos los proyectos para buscadores y lectores de pantalla: en la vista solo uno está grande y los
               demás son botones que cambian de proyecto, no enlaces. */}
@@ -113,7 +119,15 @@ interface ViewProps {
 }
 
 // Escritorio: franjas verticales, la activa abierta. El ancho de cada columna se anima con grid-template-columns.
-function ProjectStrips({ active, onActivate, nearScreen }: ViewProps & { onActivate: (index: number) => void }) {
+// Segundos entre la entrada de una franja y la siguiente.
+const STRIP_STAGGER = 0.14
+
+function ProjectStrips({
+  active,
+  onActivate,
+  nearScreen,
+  reduceMotion,
+}: ViewProps & { onActivate: (index: number) => void; reduceMotion: boolean | null }) {
   const columns = projects.map((_, i) => (i === active ? '5fr' : '1fr')).join(' ')
 
   return (
@@ -127,9 +141,13 @@ function ProjectStrips({ active, onActivate, nearScreen }: ViewProps & { onActiv
           const [mainTitle, subTitle] = project.title.split(' — ')
 
           return (
-            <li
+            <motion.li
               key={project.slug}
               onMouseEnter={() => onActivate(i)}
+              initial={reduceMotion ? false : { opacity: 0, y: 32 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.8, delay: 0.1 + i * STRIP_STAGGER, ease: EASE }}
               className="relative min-h-0 min-w-0 overflow-hidden bg-navy-950 shadow-card"
             >
               {/* Botón que cubre la franja cerrada: abre la franja con el foco de teclado o un toque. Va primero en el
@@ -229,14 +247,27 @@ function ProjectStrips({ active, onActivate, nearScreen }: ViewProps & { onActiv
                   />
                 </PageLink>
               </div>
-            </li>
+            </motion.li>
           )
         })}
       </ul>
 
-      {/* Marcas en L en dos esquinas opuestas (arriba a la derecha y abajo a la izquierda), como en el hero y en Clientes. */}
-      <span aria-hidden="true" className="absolute right-5 top-5 z-30 h-6 w-6 border-r-2 border-t-2 border-white/70" />
-      <span aria-hidden="true" className="absolute bottom-5 left-5 z-30 h-6 w-6 border-b-2 border-l-2 border-white/70" />
+      {/* Marcas en L en dos esquinas opuestas (arriba a la derecha y abajo a la izquierda), como en el hero y en Clientes.
+          Aparecen cuando ya entró la última franja. */}
+      {[
+        'right-5 top-5 border-r-2 border-t-2',
+        'bottom-5 left-5 border-b-2 border-l-2',
+      ].map((corner) => (
+        <motion.span
+          key={corner}
+          aria-hidden="true"
+          initial={reduceMotion ? false : { opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.5, delay: 0.1 + projects.length * STRIP_STAGGER + 0.3, ease: EASE }}
+          className={cn('absolute z-30 h-6 w-6 border-white/70', corner)}
+        />
+      ))}
     </>
   )
 }
